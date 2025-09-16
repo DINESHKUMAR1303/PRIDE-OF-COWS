@@ -1,42 +1,190 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Notification bar container */
+.notification-bar {
+  background: #c29d5f;
+  color: white;
+  padding: 8px 0;
+  font-size: 14px;
+  overflow: hidden;       /* hide overflow so text scrolls out of view */
+  white-space: nowrap;    /* keep text on one line */
+  position: relative;
+}
+
+/* ticker wrapper (contains two copies of text) */
+.ticker {
+  display: inline-block;
+  /* animation duration controls speed: change 15s as needed */
+  animation: marquee 15s linear infinite;
+}
+
+/* each text block */
+.ticker__text {
+  display: inline-block;
+  padding: 0 48px 0 16px; /* space between repeats; tweak to your taste */
+}
+
+/* pause on hover */
+.notification-bar:hover .ticker {
+  animation-play-state: paused;
+}
+
+/* move first -> left by one full copy (50% of ticker width since we duplicated) */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+
+/* === Navbar === */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 40px;
+  background: white;
+  border-bottom: 1px solid #eee;
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  height: 40px;
+  margin-right: 20px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.pincode {
+  background: none;
+  border: 1px solid #c29d5f;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  color: #c29d5f;
+  font-weight: bold;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.menu {
+  display: flex;
+  gap: 20px;
+  list-style: none;
 }
 
-.card {
-  padding: 2em;
+.menu li {
+  cursor: pointer;
+  font-weight: 500;
+  color: #333;
 }
 
-.read-the-docs {
-  color: #888;
+.right button {
+  margin-left: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* ===  (Hero Section) === */
+
+/* Carousel*/
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fdfdfd;
+}
+
+.carousel-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.carousel-item {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Active slide */
+.carousel-item.active {
+  opacity: 1;
+  position: relative;
+}
+
+/* Arrows */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 10;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
+
+.arrow:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.arrow.left {
+  left: 20px;
+}
+
+.arrow.right {
+  right: 20px;
+}
+
+/* === Hero Text Overlay (optional, if you want text over slides) === */
+.hero-text {
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  max-width: 40%;
+  color: #2c3e50;
+  z-index: 5;
+}
+
+.hero-text h1 {
+  color: #b18c3d;
+  font-size: 42px;
+  margin-bottom: 20px;
+}
+
+.hero-text p {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.hero-text .sub-text {
+  font-weight: bold;
+  color: #b18c3d;
+}
+
+.shop-btn {
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: #0d3b66;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
 }
