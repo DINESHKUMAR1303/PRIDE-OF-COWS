@@ -1,39 +1,32 @@
-/* Notification bar container */
+/* === Notification Bar === */
 .notification-bar {
   background: #c29d5f;
   color: white;
   padding: 8px 0;
   font-size: 14px;
-  overflow: hidden;       /* hide overflow so text scrolls out of view */
-  white-space: nowrap;    /* keep text on one line */
+  overflow: hidden;
+  white-space: nowrap;
   position: relative;
 }
 
-/* ticker wrapper (contains two copies of text) */
-.ticker {
+/* scrolling single text */
+.ticker-text {
   display: inline-block;
-  /* animation duration controls speed: change 15s as needed */
-  animation: marquee 15s linear infinite;
+  padding-left: 100%; /* start fully off-screen */
+  animation: scroll-left 12s linear infinite;
 }
 
-/* each text block */
-.ticker__text {
-  display: inline-block;
-  padding: 0 48px 0 16px; /* space between repeats; tweak to your taste */
-}
-
-/* pause on hover */
-.notification-bar:hover .ticker {
+.notification-bar:hover .ticker-text {
   animation-play-state: paused;
 }
 
-/* move first -> left by one full copy (50% of ticker width since we duplicated) */
-@keyframes marquee {
+/* keyframes: single text, restart smoothly */
+@keyframes scroll-left {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(-100%);
   }
 }
 
