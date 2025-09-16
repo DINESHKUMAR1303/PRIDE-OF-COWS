@@ -12,7 +12,7 @@
 /* scrolling single text */
 .ticker-text {
   display: inline-block;
-  padding-left: 100%; /* start fully off-screen */
+  padding-left: 100%; 
   animation: scroll-left 12s linear infinite;
 }
 
@@ -29,55 +29,113 @@
     transform: translateX(-100%);
   }
 }
-
-
 /* === Navbar === */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 40px;
-  background: white;
+  padding: 12px 60px;
+  background: #f4f4f4;
   border-bottom: 1px solid #eee;
+  font-family: Arial, sans-serif;
+}
+
+/* Left Section */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .logo {
-  height: 40px;
-  margin-right: 20px;
+  height: 65px; /* slightly bigger logo */
 }
 
-.pincode {
+.pincode-btn {
   background: none;
-  border: 1px solid #c29d5f;
-  padding: 6px 12px;
-  border-radius: 20px;
-  cursor: pointer;
-  color: #c29d5f;
+  border: none;
+  color: #002147;
   font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
+.pincode-btn .icon {
+  color: #002147;
+  font-size: 18px;
+}
+
+/* Center Menu */
 .menu {
   display: flex;
-  gap: 20px;
+  gap: 32px;
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .menu li {
+  font-weight: bold;
+  color: #002147;
+  font-size: 16px;
   cursor: pointer;
-  font-weight: 500;
-  color: #333;
 }
 
-.right button {
-  margin-left: 12px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
+/* Right Section */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
 }
+
+.right-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.login {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.login-text {
+  font-weight: bold;
+  color: #c29d5f; /* gold */
+  font-size: 14px;
+}
+
+.cart {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+
+.cart-text {
+  font-weight: bold;
+  color: #002147;
+  font-size: 14px;
+}
+
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -14px;
+  background: white;
+  color: #c29d5f;
+  border: 1px solid #c29d5f;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+
 
 /* ===  (Hero Section) === */
-
 /* Carousel*/
 .carousel {
   position: relative;
