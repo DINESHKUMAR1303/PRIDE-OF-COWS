@@ -1,8 +1,8 @@
 import React from "react";
-import logo from "../images/logo.png";        // Pride of Cows logo
-import loginIcon from "../images/user.svg";  // your custom login icon
-import cartIcon from "../images/cart.svg";    // your custom cart icon
-import { FaMapMarkerAlt } from "react-icons/fa"; // keep only map pin
+import logo from "../images/logo.png";        
+import loginIcon from "../images/user.svg";  
+import cartIcon from "../images/cart.svg";    
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 const Navbar = () => {
   return (
