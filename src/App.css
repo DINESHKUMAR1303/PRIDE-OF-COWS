@@ -31,7 +31,6 @@
   }
 }
 
-
 /* ============================= */
 /* === Base Navbar (Desktop) === */
 /* ============================= */
@@ -157,7 +156,7 @@
   position: fixed;
   top: 0;
   right: -100%;
-  width: 80%;
+  width: 55%;
   height: 100%;
   background: #f9f9f9;
   box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
@@ -167,6 +166,7 @@
   justify-content: space-between;
   padding: 20px;
   z-index: 2000;
+  overflow-y: auto;
 }
 
 .mobile-menu.open {
@@ -178,6 +178,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.mobile-header h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #002147;
+  margin: 0;
 }
 
 /* Close button */
@@ -203,21 +213,72 @@
   color: #002147;
   border-bottom: 1px solid #eee;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-/* Footer with icons */
+.mobile-links li img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Section titles */
+.section-title {
+  font-size: 13px;
+  font-weight: bold;
+  color: #666;
+  text-transform: uppercase;
+  margin-top: 18px;
+  margin-bottom: 8px;
+  padding: 0;
+  border: none !important;
+  cursor: default !important;
+  display: block;
+}
+
+/* Remove hover for section titles */
+.section-title:hover {
+  background: none;
+  color: #666;
+}
+
+/* ============================= */
+/* === Sidebar Footer === */
+/* ============================= */
 .mobile-footer {
   text-align: center;
   padding: 20px 0;
   border-top: 1px solid #eee;
 }
 
-.app-icons i,
-.social-icons i {
+.mobile-footer p {
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #444;
+}
+
+.app-icons,
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
   font-size: 22px;
-  margin: 0 10px;
-  cursor: pointer;
   color: #002147;
+  margin-bottom: 12px;
+}
+
+.app-icons img,
+.social-icons img {
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.app-icons img:hover,
+.social-icons img:hover {
+  transform: scale(1.1);
 }
 
 /* ============================= */
@@ -233,6 +294,7 @@
     display: block;
   }
 }
+
 
 
 /* === Carousel (Hero Section) === */
