@@ -31,7 +31,10 @@
   }
 }
 
-/* === Navbar === */
+
+/* ============================= */
+/* === Base Navbar (Desktop) === */
+/* ============================= */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -40,9 +43,10 @@
   background: #f4f4f4;
   border-bottom: 1px solid #eee;
   font-family: Arial, sans-serif;
-  flex-wrap: wrap;
+  position: relative;
 }
 
+/* Left Section */
 .navbar-left {
   display: flex;
   align-items: center;
@@ -135,6 +139,101 @@
   padding: 2px 6px;
   border-radius: 50%;
 }
+
+/* === Toggle Icon (hidden by default) === */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #002147;
+}
+
+/* ============================= */
+/* === Sidebar / Mobile Menu === */
+/* ============================= */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 80%;
+  height: 100%;
+  background: #f9f9f9;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+  transition: right 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  z-index: 2000;
+}
+
+.mobile-menu.open {
+  right: 0;
+}
+
+/* Top header inside sidebar */
+.mobile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Close button */
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #002147;
+}
+
+/* Menu links */
+.mobile-links {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  flex-grow: 1;
+}
+
+.mobile-links li {
+  padding: 12px 0;
+  font-weight: bold;
+  color: #002147;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+/* Footer with icons */
+.mobile-footer {
+  text-align: center;
+  padding: 20px 0;
+  border-top: 1px solid #eee;
+}
+
+.app-icons i,
+.social-icons i {
+  font-size: 22px;
+  margin: 0 10px;
+  cursor: pointer;
+  color: #002147;
+}
+
+/* ============================= */
+/* === Responsive Rules === */
+/* ============================= */
+@media (max-width: 992px) {
+  .menu,
+  .cart {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}
+
 
 /* === Carousel (Hero Section) === */
 .carousel {
@@ -237,72 +336,4 @@
   border: none;
   border-radius: 25px;
   cursor: pointer;
-}
-
-/* === Responsive Design === */
-@media (max-width: 1024px) {
-  .navbar {
-    padding: 12px 30px;
-  }
-  .menu {
-    gap: 20px;
-  }
-  .hero-text {
-    max-width: 60%;
-  }
-}
-
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-  .menu {
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-  .hero-text {
-    top: 10%;
-    left: 5%;
-    max-width: 80%;
-  }
-  .hero-text h1 {
-    font-size: 28px;
-  }
-  .hero-text p {
-    font-size: 14px;
-  }
-  .carousel {
-    height: 350px;
-  }
-}
-
-@media (max-width: 480px) {
-  .navbar {
-    padding: 12px 16px;
-  }
-  .logo {
-    height: 50px;
-  }
-  .pincode-btn {
-    font-size: 12px;
-  }
-  .menu {
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-  }
-  .navbar-right {
-    gap: 16px;
-  }
-  .hero-text h1 {
-    font-size: 22px;
-  }
-  .hero-text p {
-    font-size: 12px;
-  }
-  .carousel {
-    height: 250px;
-  }
 }

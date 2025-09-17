@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
-import "../App.css"; // using your global css
+import "../App.css"; 
 
 // Import banner images
-import banner1 from "../images/milkpowder.jpg";
-import banner2 from "../images/banner.png";
-import banner3 from "../images/banner.png";
+import banner1 from "../images/powerpackedpanner.jpg";
+import banner2 from "../images/0fact.jpg";
+import banner3 from "../images/curdtheway.jpg";
+import banner4 from "../images/earnindulge.jpg";
+import banner5 from "../images/farmfreshmilk.jpg";
+import banner6 from "../images/fromourform.jpg";
+import banner7 from "../images/notjustghee.png";
+import banner8 from "../images/proteinwaffer.jpg";
+import banner9 from "../images/singleorginpanner.jpg";
+import banner10 from "../images/takethetaste.jpg";
+import banner11 from "../images/wholesomegoodness.jpg";
 
 const banners = [banner1, banner2, banner3];
 
