@@ -1,7 +1,7 @@
 import React from "react";
-import NotificationBar from "../components/NotificationBar";
-import Navbar from "../components/Navbar";
-import HeroSection from "../components/HeroSection";
+import NotificationBar from "../components/NotificationBar/NotificationBar";
+import Navbar from "../components/Navbar/Navbar";
+import HeroSection from "../components/Homebanner/Homebanner";
 
 const Home = () => {
   return (

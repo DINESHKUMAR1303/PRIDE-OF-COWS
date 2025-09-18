@@ -1,4 +1,5 @@
 import React from "react";
+import "./NotificationBar.css";   // <-- Correct relative path
 
 const NotificationBar = () => {
   const text =

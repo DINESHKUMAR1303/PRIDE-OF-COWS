@@ -1,24 +1,27 @@
 import React, { useState } from "react";
-import logo from "../images/icons/logo.png";
-import loginIcon from "../images/icons/user.svg";
-import cartIcon from "../images/icons/cart.svg";
+import "./Navbar.css"; 
+
+// ✅ Logo & Main Icons
+import logo from "../../images/icons/logo.png";
+import loginIcon from "../../images/icons/user.svg";
+import cartIcon from "../../images/icons/cart.svg";
 
 // ✅ Section Icons
-import enquiryIcon from "../images/icons/enquiry.svg";
-import helpIcon from "../images/icons/help.svg";
-import contactIcon from "../images/icons/contact.svg";
-import faqIcon from "../images/icons/faq.svg";
-import aboutIcon from "../images/icons/about.svg";
-import lifestyleIcon from "../images/icons/lifestyle.svg";
-import recipesIcon from "../images/icons/recipies.svg";
+import enquiryIcon from "../../images/icons/enquiry.svg";
+import helpIcon from "../../images/icons/help.svg";
+import contactIcon from "../../images/icons/contact.svg";
+import faqIcon from "../../images/icons/faq.svg";
+import aboutIcon from "../../images/icons/about.svg";
+import lifestyleIcon from "../../images/icons/lifestyle.svg";
+import recipesIcon from "../../images/icons/recipies.svg";
 
 // ✅ Footer Icons
-import appstoreIcon from "../images/icons/appstore.svg";
-import playstoreIcon from "../images/icons/playstore.svg";
-import instagramIcon from "../images/icons/instagram.svg";
-import facebookIcon from "../images/icons/facebook.svg";
-import twitterIcon from "../images/icons/twitter.svg";
-import youtubeIcon from "../images/icons/youtube.svg";
+import appstoreIcon from "../../images/icons/appstore.svg";
+import playstoreIcon from "../../images/icons/playstore.svg";
+import instagramIcon from "../../images/icons/instagram.svg";
+import facebookIcon from "../../images/icons/facebook.svg";
+import twitterIcon from "../../images/icons/twitter.svg";
+import youtubeIcon from "../../images/icons/youtube.svg";
 
 import { FaMapMarkerAlt, FaBars, FaTimes } from "react-icons/fa";
 
