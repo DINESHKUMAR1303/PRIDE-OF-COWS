@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "./Homebanner.css";  // Keep CSS inside the same folder (not App.css)
+import "./Homebanner.css";
 
-// Import banner images (relative to src/images)
+// Import banner images
 import banner1 from "../../images/powerpackedpanner.jpg";
 import banner2 from "../../images/0fact.jpg";
 import banner3 from "../../images/curdtheway.jpg";
@@ -32,7 +32,7 @@ const banners = [
 const Homebanner = () => {
   const [current, setCurrent] = useState(0);
 
-  // Auto slide every 5s
+  // Auto slide every 5 seconds
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % banners.length);
@@ -50,29 +50,42 @@ const Homebanner = () => {
   };
 
   return (
-    <section className="carousel">
-      {/* Left Arrow */}
-      <button className="arrow left" onClick={prevSlide}>
-        ◀
-      </button>
+    <div className="homebanner-wrapper">
+      {/* Carousel */}
+      <section className="carousel">
+        <div
+          className="carousel-inner"
+          style={{ transform: `translateX(-${current * 100}%)` }}
+        >
+          {banners.map((img, index) => (
+            <div key={index} className="carousel-item">
+              <img src={img} alt={`banner-${index}`} />
+            </div>
+          ))}
+        </div>
+      </section>
 
-      {/* Banner Slides */}
-      <div className="carousel-inner">
-        {banners.map((img, index) => (
-          <div
-            key={index}
-            className={`carousel-item ${index === current ? "active" : ""}`}
-          >
-            <img src={img} alt={`banner-${index}`} />
-          </div>
-        ))}
+      {/* Controls outside carousel */}
+      <div className="carousel-controls">
+        <button
+          className="arrow-button"
+          onClick={prevSlide}
+          aria-label="Previous slide"
+        >
+          ←
+        </button>
+
+        <div className="line"></div>
+
+        <button
+          className="arrow-button"
+          onClick={nextSlide}
+          aria-label="Next slide"
+        >
+          →
+        </button>
       </div>
-
-      {/* Right Arrow */}
-      <button className="arrow right" onClick={nextSlide}>
-        ▶
-      </button>
-    </section>
+    </div>
   );
 };
 

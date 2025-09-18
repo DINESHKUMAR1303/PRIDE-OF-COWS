@@ -1,263 +1,80 @@
+/* Wrapper holds carousel + controls */
+.homebanner-wrapper {
+  width: 100%;
+  max-width: 100%;  /* Full width */
+  margin: 0 auto;
+}
 
 /* ============================= */
-/* === Carousel Base Styles === */
+/* === Carousel Container === */
 /* ============================= */
 .carousel {
   position: relative;
   width: 100%;
-  max-width: 1920px; /* Cap width for large screens */
-  height: 500px; /* Default height for desktop */
+  height: 500px;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background: #fff;
-  margin: 0 auto;
-  /* Accessibility: ARIA role */
-  role: "region";
-  aria-label: "Image carousel";
 }
 
-/* Inner container for all slides */
 .carousel-inner {
   display: flex;
-  width: 100%;
   height: 100%;
-  transition: transform 0.6s ease-in-out; /* Smooth slide transitions */
+  transition: transform 0.6s ease-in-out;
 }
 
-/* Each slide */
 .carousel-item {
   flex: 0 0 100%;
-  display: none; /* Hidden by default */
-  justify-content: center;
-  align-items: center;
+}
+
+.carousel-item img {
+  width: 100%;
   height: 100%;
-  padding: 40px 80px;
+  object-fit: cover;
+}
+
+/* ============================= */
+/* === Controls (outside) === */
+/* ============================= */
+.carousel-controls {
+  margin-top: 24px; /* push controls slightly below carousel */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 24px;
+  padding: 0 40px; /* give some spacing on sides */
   box-sizing: border-box;
 }
 
-/* Active slide */
-.carousel-item.active {
-  display: flex; /* Show active slide */
+/* Line between arrows */
+.carousel-controls .line {
+  flex-grow: 1;
+  height: 2px;
+  background: #ccc;
+  max-width: 850px;
+  border-radius: 1px;
 }
 
-/* Slide image */
-.carousel-item img {
-  max-height: 380px;
-  width: auto;
-  object-fit: contain; /* Ensure images fit without distortion */
-  max-width: 100%; /* Prevent overflow */
-}
-
-/* ============================= */
-/* === Navigation Arrows === */
-/* ============================= */
-.arrow {
-  position: absolute;
-  bottom: 20px;
-  background: white;
-  border: 1px solid #ddd;
+/* Arrow buttons */
+.arrow-button {
+  background: #fff;
+  border: 1px solid #e0e0e0;   /* thin border */
   color: #002147;
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 18px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  width: 44px;
-  height: 44px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
-  transition: background 0.3s ease, color 0.3s ease;
-  z-index: 10; /* Ensure arrows are above slides */
-  /* Accessibility: ARIA labels */
+  transition: all 0.25s ease;
 }
 
-.arrow.left {
-  left: calc(50% - 60px); /* Fixed spacing for consistent positioning */
-  aria-label: "Previous slide";
-}
-
-.arrow.right {
-  right: calc(50% - 60px); /* Fixed spacing for consistent positioning */
-  aria-label: "Next slide";
-}
-
-.arrow:hover,
-.arrow:focus {
+.arrow-button:hover {
   background: #002147;
-  color: white;
-  outline: none;
-}
-
-.arrow:focus {
-  outline: 2px solid #c29d5f;
-  outline-offset: 2px;
-}
-
-/* ============================= */
-/* === Text Area (Placeholder) === */
-/* ============================= */
-/* Included for future text/button content */
-.carousel-text {
-  max-width: 50%;
-  padding-right: 20px;
-}
-
-.carousel-text h1 {
-  font-size: 40px;
-  font-weight: bold;
-  color: #c29d5f; /* Gold heading */
-  margin-bottom: 15px;
-  text-transform: uppercase;
-  line-height: 1.2;
-}
-
-.carousel-text p {
-  font-size: 16px;
-  font-weight: 600;
-  color: #002147; /* Dark blue */
-  margin-bottom: 10px;
-}
-
-.carousel-text .subtext {
-  font-size: 14px;
-  color: #c29d5f;
-  margin-bottom: 20px;
-}
-
-.carousel-text button {
-  background: #002147;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 25px;
-  border: 2px solid #002147;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.carousel-text button:hover,
-.carousel-text button:focus {
-  background: white;
-  color: #002147;
-}
-
-.carousel-text button:focus {
-  outline: 2px solid #c29d5f;
-  outline-offset: 2px;
-}
-
-/* ============================= */
-/* === Responsive Rules === */
-/* ============================= */
-@media (max-width: 1200px) {
-  .carousel {
-    height: 400px; /* Reduce height for tablets */
-  }
-
-  .carousel-item {
-    padding: 30px 40px; /* Adjust padding */
-  }
-
-  .carousel-item img {
-    max-height: 300px; /* Smaller images */
-  }
-
-  .carousel-text h1 {
-    font-size: 32px; /* Smaller heading */
-  }
-
-  .arrow.left {
-    left: calc(50% - 50px); /* Adjust arrow positioning */
-  }
-
-  .arrow.right {
-    right: calc(50% - 50px);
-  }
-}
-
-@media (max-width: 992px) {
-  .carousel {
-    height: auto; /* Allow flexible height */
-    flex-direction: column;
-  }
-
-  .carousel-item {
-    flex-direction: column;
-    padding: 20px;
-    text-align: center;
-  }
-
-  .carousel-text {
-    max-width: 100%;
-    margin-bottom: 20px;
-    padding-right: 0;
-  }
-
-  .carousel-text h1 {
-    font-size: 28px;
-  }
-
-  .carousel-item img {
-    max-height: 250px;
-  }
-
-  .arrow.left {
-    left: calc(50% - 50px);
-  }
-
-  .arrow.right {
-    right: calc(50% - 50px);
-  }
-}
-
-@media (max-width: 600px) {
-  .carousel-item {
-    padding: 15px; /* Minimal padding */
-  }
-
-  .carousel-text h1 {
-    font-size: 24px;
-  }
-
-  .carousel-text p {
-    font-size: 14px;
-  }
-
-  .carousel-text .subtext {
-    font-size: 12px;
-  }
-
-  .carousel-item img {
-    max-height: 200px; /* Smaller images for mobile */
-  }
-
-  .arrow {
-    width: 36px;
-    height: 36px;
-    font-size: 16px;
-  }
-
-  .arrow.left {
-    left: calc(50% - 45px);
-  }
-
-  .arrow.right {
-    right: calc(50% - 45px);
-  }
-}
-
-@media (max-width: 400px) {
-  .carousel-text h1 {
-    font-size: 20px; /* Minimal heading size */
-  }
-
-  .carousel-item {
-    padding: 10px;
-  }
-
-  .carousel-item img {
-    max-height: 150px; /* Tiny images for small screens */
-  }
+  color: #fff;
+  border-color: #002147;
+  transform: scale(1.05);
 }
