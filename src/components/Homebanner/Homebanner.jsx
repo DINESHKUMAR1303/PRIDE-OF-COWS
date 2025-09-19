@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Homebanner.css";
 
-// Import banner images
+// Import banner images (replace with your actual images)
 import banner1 from "../../images/powerpackedpanner.jpg";
 import banner2 from "../../images/0fact.jpg";
 import banner3 from "../../images/curdtheway.jpg";
@@ -14,7 +14,6 @@ import banner9 from "../../images/singleorginpanner.jpg";
 import banner10 from "../../images/takethetaste.jpg";
 import banner11 from "../../images/wholesomegoodness.jpg";
 
-// Banner list
 const banners = [
   banner1,
   banner2,
@@ -32,7 +31,6 @@ const banners = [
 const Homebanner = () => {
   const [current, setCurrent] = useState(0);
 
-  // Auto slide every 5 seconds
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % banners.length);
@@ -51,7 +49,6 @@ const Homebanner = () => {
 
   return (
     <div className="homebanner-wrapper">
-      {/* Carousel */}
       <section className="carousel">
         <div
           className="carousel-inner"
@@ -65,7 +62,6 @@ const Homebanner = () => {
         </div>
       </section>
 
-      {/* Controls outside carousel */}
       <div className="carousel-controls">
         <button
           className="arrow-button"
@@ -74,9 +70,7 @@ const Homebanner = () => {
         >
           ←
         </button>
-
         <div className="line"></div>
-
         <button
           className="arrow-button"
           onClick={nextSlide}

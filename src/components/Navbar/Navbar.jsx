@@ -5,6 +5,7 @@ import "./Navbar.css";
 import logo from "../../images/icons/logo.png";
 import loginIcon from "../../images/icons/user.svg";
 import cartIcon from "../../images/icons/cart.svg";
+import locationIcon from "../../images/icons/location.svg";
 
 // ✅ Section Icons
 import enquiryIcon from "../../images/icons/enquiry.svg";
@@ -23,7 +24,7 @@ import facebookIcon from "../../images/icons/facebook.svg";
 import twitterIcon from "../../images/icons/twitter.svg";
 import youtubeIcon from "../../images/icons/youtube.svg";
 
-import { FaMapMarkerAlt, FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -36,7 +37,7 @@ const Navbar = () => {
         <div className="navbar-left">
           <img src={logo} alt="Pride of Cows" className="logo" />
           <button className="pincode-btn">
-            <FaMapMarkerAlt className="icon" />
+            <img src={locationIcon} alt="Location" className="location-icon" />
             ENTER A PINCODE
           </button>
         </div>
