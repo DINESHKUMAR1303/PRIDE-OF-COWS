@@ -74,13 +74,13 @@ const Navbar = () => {
         {/* Right Section */}
         <div className="navbar-right">
           {/* Login */}
-          <div className="vertical-item login">
+          <div className="login">
             <img src={loginIcon} alt="login" className="right-icon" />
             <span className="login-text">LOGIN</span>
           </div>
 
           {/* Cart */}
-          <div className="vertical-item cart">
+          <div className="cart">
             <div className="cart-wrapper">
               <img src={cartIcon} alt="cart" className="right-icon" />
               <span className="cart-count">0</span>
@@ -103,13 +103,13 @@ const Navbar = () => {
       <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
         <div className="mobile-header">
           {/* Login */}
-          <div className="vertical-item login">
+          <div className="login">
             <img src={loginIcon} alt="login" className="right-icon" />
             <span className="login-text">LOGIN</span>
           </div>
 
           {/* Cart */}
-          <div className="vertical-item cart">
+          <div className="cart">
             <div className="cart-wrapper">
               <img src={cartIcon} alt="cart" className="right-icon" />
               <span className="cart-count">0</span>
