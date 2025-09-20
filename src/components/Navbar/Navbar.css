@@ -37,8 +37,8 @@
 }
 
 .pincode-btn img {
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
 }
 
 /* Center Menu */
@@ -316,6 +316,34 @@
   }
 }
 
+/* Ultra-wide screens (2560px and up) */
+@media (min-width: 2560px) {
+  .navbar {
+    padding: 20px 200px;
+  }
+  .logo {
+    height: 100px;
+  }
+  .menu li {
+    font-size: 22px;
+  }
+  .pincode-btn {
+    font-size: 20px;
+  }
+  .right-icon {
+    width: 32px;
+    height: 32px;
+  }
+  .login-text,
+  .cart-text {
+    font-size: 18px;
+  }
+  .cart-count {
+    font-size: 14px;
+    padding: 4px 8px;
+  }
+}
+
 /* Tablets */
 @media (max-width: 991px) {
   .menu,
@@ -344,7 +372,7 @@
   }
 }
 
-/* Small phones */
+/* Small phones (up to 480px) */
 @media (max-width: 480px) {
   .navbar {
     padding: 8px 15px;
@@ -368,5 +396,32 @@
   .modal {
     width: 90%;
     padding: 20px;
+  }
+}
+
+/* Extra-small phones (320px) */
+@media (max-width: 320px) {
+  .navbar {
+    padding: 6px 10px;
+  }
+  .logo {
+    height: 40px;
+  }
+  .pincode-btn {
+    font-size: 12px;
+    gap: 4px;
+  }
+  .pincode-btn img {
+    width: 16px;
+    height: 16px;
+  }
+  .menu-toggle {
+    font-size: 22px;
+  }
+  .mobile-links li {
+    font-size: 13px;
+  }
+  .mobile-footer p {
+    font-size: 11px;
   }
 }

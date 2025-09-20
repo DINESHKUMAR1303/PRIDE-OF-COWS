@@ -2,18 +2,11 @@
 /* === Wrapper (outer) === */
 /* ============================= */
 .homebanner-wrapper {
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 12px;
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
-}
-
-@media (min-width: 1024px) {
-  .homebanner-wrapper {
-    max-width: 100%;
-    padding: 0;
-  }
 }
 
 /* ============================= */
@@ -21,21 +14,22 @@
 /* ============================= */
 .carousel {
   position: relative;
-  width: 100%;
+  width: 100vw;
   height: 180px;            /* default mobile height */
   overflow: hidden;
   background: #fff;
+  margin: 0;
+  padding: 0;
+  border: none;
 }
 
-/* Ensure inner flex element centers items vertically */
 .carousel-inner {
   display: flex;
   height: 100%;
   transition: transform 0.5s ease-in-out;
-  align-items: center; /* vertical center so contain images sit nicely */
+  align-items: center;
 }
 
-/* Each slide */
 .carousel-item {
   flex: 0 0 100%;
   width: 100%;
@@ -46,12 +40,11 @@
   box-sizing: border-box;
 }
 
-/* Image defaults */
 .carousel-item img {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;       /* default: cover on larger screens */
+  object-fit: cover;        /* default for large screens */
   object-position: center;
   max-width: 100%;
   max-height: 100%;
@@ -59,7 +52,17 @@
 }
 
 /* ============================= */
-/* === Controls (below images) === */
+/* === Mobile (<= 480px) fix === */
+/* ============================= */
+@media (max-width: 480px) {
+  .carousel-item img {
+    object-fit: contain;   /* show full image without hiding */
+    background: #fff;      /* fill empty sides with white */
+  }
+}
+
+/* ============================= */
+/* === Controls === */
 /* ============================= */
 .carousel-controls {
   margin-top: 12px;
@@ -72,7 +75,6 @@
   box-sizing: border-box;
 }
 
-/* center separator line */
 .carousel-controls .line {
   flex-grow: 1;
   height: 2px;
@@ -118,23 +120,13 @@
 /* ============================= */
 @media (max-width: 320px) {
   .carousel {
-    height: 140px; /* shave height for tiny screens */
+    height: 140px;
   }
-
-  .carousel-item img {
-    object-fit: contain;  /* show full image */
-    width: auto;          /* keep aspect ratio centered */
-    height: 100%;
-    max-width: 100%;
-    background: #fff;
-  }
-
   .arrow-button {
     font-size: 12px;
     width: 28px;
     height: 28px;
   }
-
   .carousel-controls .line {
     max-width: 180px;
   }
@@ -145,25 +137,13 @@
 /* ============================= */
 @media (min-width: 321px) and (max-width: 375px) {
   .carousel {
-    height: 150px; /* tuned specifically to include 375px */
+    height: 150px;
   }
-
-  /* Force contain and center so the whole image is visible at 375px */
-  .carousel-item img {
-    object-fit: contain !important;
-    width: auto;
-    height: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-    background: #fff;
-  }
-
   .arrow-button {
     font-size: 13px;
     width: 30px;
     height: 30px;
   }
-
   .carousel-controls .line {
     max-width: 200px;
   }
@@ -176,22 +156,11 @@
   .carousel {
     height: 170px;
   }
-
-  .carousel-item img {
-    object-fit: contain;
-    width: auto;
-    height: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-    background: #fff;
-  }
-
   .arrow-button {
     font-size: 14px;
     width: 32px;
     height: 32px;
   }
-
   .carousel-controls .line {
     max-width: 250px;
   }
@@ -204,21 +173,84 @@
   .carousel {
     height: 260px;
   }
-
   .carousel-item img {
-    object-fit: cover; /* use cover for tablet and up */
-    width: 100%;
-    height: 100%;
+    object-fit: cover;  /* go back to cover for big screens */
   }
-
   .arrow-button {
     font-size: 16px;
     width: 40px;
     height: 40px;
   }
-
   .carousel-controls .line {
     max-width: 600px;
+  }
+}
+/* ============================= */
+/* === Carousel (Base) === */
+/* ============================= */
+.carousel {
+  position: relative;
+  width: 100vw;
+  height: auto;         /* no forced height */
+  overflow: hidden;
+  background: #fff;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.carousel-item {
+  flex: 0 0 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: auto;         /* keep natural ratio */
+  object-fit: contain;  /* never crop */
+  background: #fff;     /* fill sides if needed */
+}
+
+
+
+
+/* ============================= */
+/* === Extra small phones (<= 320px) === */
+/* ============================= */
+@media (max-width: 320px) {
+  .carousel-item img {
+    max-height: 140px;   /* cap height */
+  }
+}
+
+/* ============================= */
+/* === Small phones (321px - 375px) === */
+/* ============================= */
+@media (min-width: 321px) and (max-width: 375px) {
+  .carousel-item img {
+    max-height: 150px;
+  }
+}
+
+/* ============================= */
+/* === Small phones (376px - 480px) === */
+/* ============================= */
+@media (min-width: 376px) and (max-width: 480px) {
+  .carousel-item img {
+    max-height: 170px;
+  }
+}
+
+/* ============================= */
+/* === Tablets (>= 640px) === */
+/* ============================= */
+@media (min-width: 640px) {
+  .carousel-item img {
+    max-height: 260px;
+    object-fit: cover;   /* switch to cover for banner look */
   }
 }
 
@@ -226,29 +258,26 @@
 /* === Desktop (>= 1024px) === */
 /* ============================= */
 @media (min-width: 1024px) {
-  .carousel {
-    height: 500px;
-  }
-
   .carousel-item img {
-    object-fit: cover;
-  }
-
-  .arrow-button {
-    font-size: 18px;
-    width: 48px;
-    height: 48px;
-  }
-
-  .carousel-controls .line {
-    max-width: 800px;
+    max-height: 500px;
+    object-fit: cover;   /* full bleed on desktop */
   }
 }
 
-/* accessibility: ensure images scale but not overflow */
-.carousel-item img, .carousel-item picture, .carousel-item video {
-  max-width: 100%;
-  max-height: 100%;
-  height: auto;
-  width: auto;
+/* ============================= */
+/* === Ultra-wide (>= 1920px) === */
+/* ============================= */
+@media (min-width: 1920px) {
+  .carousel-item img {
+    max-height: 650px;
+  }
+}
+
+/* ============================= */
+/* === 4K screens (>= 2560px) === */
+/* ============================= */
+@media (min-width: 2560px) {
+  .carousel-item img {
+    max-height: 800px;
+  }
 }

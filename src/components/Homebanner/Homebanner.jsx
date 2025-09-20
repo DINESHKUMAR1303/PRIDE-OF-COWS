@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Homebanner.css";
 
-// Import banner images (replace with your actual images)
+
 import banner1 from "../../images/powerpackedpanner.jpg";
 import banner2 from "../../images/0fact.jpg";
 import banner3 from "../../images/curdtheway.jpg";
