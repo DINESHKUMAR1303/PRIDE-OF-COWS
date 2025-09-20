@@ -17,6 +17,7 @@
   display: flex;
   align-items: center;
   gap: 20px;
+  margin-left: 90px; /* shifted logo to left */
 }
 
 .logo {
@@ -303,62 +304,65 @@
 }
 
 /* ============================= */
-/* === Responsive Rules === */
+/* === Responsive Rules 320px → 2560px === */
 /* ============================= */
 
-/* Large screens (desktop) */
-@media (min-width: 1200px) {
+/* Extra small phones (up to 320px) */
+@media (max-width: 320px) {
   .navbar {
-    padding: 12px 80px;
-  }
-  .menu li {
-    font-size: 17px;
-  }
-}
-
-/* Ultra-wide screens (2560px and up) */
-@media (min-width: 2560px) {
-  .navbar {
-    padding: 20px 200px;
+    padding: 6px 10px;
   }
   .logo {
-    height: 100px;
-  }
-  .menu li {
-    font-size: 22px;
+    height: 40px;
   }
   .pincode-btn {
-    font-size: 20px;
+    font-size: 12px;
   }
-  .right-icon {
-    width: 32px;
-    height: 32px;
-  }
-  .login-text,
-  .cart-text {
-    font-size: 18px;
-  }
-  .cart-count {
-    font-size: 14px;
-    padding: 4px 8px;
-  }
-}
-
-/* Tablets */
-@media (max-width: 991px) {
-  .menu,
-  .cart {
-    display: none;
+  .pincode-btn img {
+    width: 16px;
+    height: 16px;
   }
   .menu-toggle {
-    display: block;
-  }
-  .logo {
-    height: 55px;
+    font-size: 22px;
   }
 }
 
-/* Small tablets & large phones */
+/* Small phones (321px – 375px) */
+@media (max-width: 375px) {
+  .navbar {
+    padding: 8px 12px;
+  }
+  .logo {
+    height: 42px;
+  }
+  .pincode-btn {
+    font-size: 13px;
+  }
+  .menu-toggle {
+    font-size: 24px;
+  }
+}
+
+/* Medium phones (376px – 480px) */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 8px 15px;
+  }
+  .logo {
+    height: 45px;
+  }
+  .mobile-menu {
+    width: 85%;
+  }
+  .mobile-links li {
+    font-size: 14px;
+  }
+  .mobile-footer p {
+    font-size: 12px;
+  }
+}
+
+/* Tablets (481px – 768px) */
 @media (max-width: 768px) {
   .navbar {
     padding: 10px 20px;
@@ -372,56 +376,110 @@
   }
 }
 
-/* Small phones (up to 480px) */
-@media (max-width: 480px) {
-  .navbar {
-    padding: 8px 15px;
-  }
-  .logo {
-    height: 45px;
+/* Small laptops & large tablets (769px – 991px) */
+@media (max-width: 991px) {
+  .menu,
+  .cart {
+    display: none;
   }
   .menu-toggle {
-    font-size: 24px;
+    display: block;
   }
-  .mobile-menu {
-    width: 85%;
-    max-width: none;
-  }
-  .mobile-links li {
-    font-size: 14px;
-  }
-  .mobile-footer p {
-    font-size: 12px;
-  }
-  .modal {
-    width: 90%;
-    padding: 20px;
+  .logo {
+    height: 55px;
   }
 }
 
-/* Extra-small phones (320px) */
-@media (max-width: 320px) {
+/* Standard desktops (992px – 1200px) */
+@media (min-width: 992px) and (max-width: 1199px) {
   .navbar {
-    padding: 6px 10px;
+    padding: 12px 60px;
   }
   .logo {
-    height: 40px;
+    height: 65px;
+  }
+  .menu li {
+    font-size: 16px;
+  }
+}
+
+/* Large desktops (1200px – 1600px) */
+@media (min-width: 1200px) and (max-width: 1599px) {
+  .navbar {
+    padding: 12px 80px;
+  }
+  .menu li {
+    font-size: 17px;
+  }
+}
+
+/* Extra large desktops (1600px – 1920px) */
+@media (min-width: 1600px) and (max-width: 1919px) {
+  .navbar {
+    padding: 15px 120px;
+  }
+  .logo {
+    height: 75px;
+  }
+  .menu li {
+    font-size: 18px;
   }
   .pincode-btn {
-    font-size: 12px;
-    gap: 4px;
+    font-size: 16px;
+  }
+}
+
+/* Full HD wide screens (1920px – 2559px) */
+@media (min-width: 1920px) and (max-width: 2559px) {
+  .navbar {
+    padding: 18px 150px;
+  }
+  .logo {
+    height: 80px;
+  }
+  .menu li {
+    font-size: 19px;
+  }
+  .pincode-btn {
+    font-size: 17px;
   }
   .pincode-btn img {
-    width: 16px;
-    height: 16px;
+    width: 26px;
+    height: 26px;
   }
-  .menu-toggle {
-    font-size: 22px;
+}
+
+/* Ultra-wide screens (2560px and above) */
+@media (min-width: 2560px) {
+  .navbar {
+    padding: 20px 180px;
   }
-  .mobile-links li {
+  .logo {
+    height: 90px;
+  }
+  .menu li {
+    font-size: 20px;
+  }
+  .pincode-btn {
+    font-size: 18px;
+    gap: 12px;
+  }
+  .pincode-btn img {
+    width: 28px;
+    height: 28px;
+  }
+  .right-icon {
+    width: 30px;
+    height: 30px;
+  }
+  .login-text,
+  .cart-text {
+    font-size: 16px;
+  }
+  .cart-count {
     font-size: 13px;
-  }
-  .mobile-footer p {
-    font-size: 11px;
+    padding: 3px 7px;
+    top: -8px;
+    right: -12px;
   }
 }
