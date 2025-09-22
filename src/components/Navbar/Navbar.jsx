@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Navbar.css"; 
+import "./Navbar.css";
 
 // ✅ Logo & Main Icons
 import logo from "../../images/icons/logo.png";
@@ -24,6 +24,16 @@ import facebookIcon from "../../images/icons/facebook.svg";
 import twitterIcon from "../../images/icons/twitter.svg";
 import youtubeIcon from "../../images/icons/youtube.svg";
 
+// ✅ Product Images (Shop dropdown)
+import allImg from "./images/allproducts.jpg";   
+import milkImg from "./images/milk.webp";
+import gheeImg from "./images/ghee.webp";
+import curdImg from "./images/curd.webp";
+import paneerImg from "./images/panner.webp";
+import powderImg from "./images/milkpowder.webp";
+import yogurtImg from "./images/yogurt.png";
+import proteinImg from "./images/proteinbar.jpg";
+
 import { FaBars, FaTimes } from "react-icons/fa";
 
 const Navbar = () => {
@@ -32,6 +42,21 @@ const Navbar = () => {
   const [location, setLocation] = useState("ENTER A PINCODE");
   const [pincode, setPincode] = useState("");
   const [place, setPlace] = useState("");
+
+  // ✅ Track hovered shop item
+  const [hoveredProduct, setHoveredProduct] = useState("All");
+
+  // ✅ Shop products list
+  const shopItems = [
+    { name: "All", img: allImg },  
+    { name: "Milk", img: milkImg },
+    { name: "Ghee", img: gheeImg },
+    { name: "Curd", img: curdImg },
+    { name: "Paneer", img: paneerImg },
+    { name: "Whole Milk Powder", img: powderImg },
+    { name: "Yogurt", img: yogurtImg },
+    { name: "Protein Bar", img: proteinImg },
+  ];
 
   // ✅ Load from localStorage
   useEffect(() => {
@@ -63,13 +88,47 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Center + Right (Menu + Login + Cart grouped) */}
+        {/* Center + Right */}
         <div className="navbar-center">
           {/* Menu */}
           <ul className="menu">
-            <li>Shop ▾</li>
-            <li>Learn ▾</li>
-            <li>Blog ▾</li>
+            {/* Shop Dropdown */}
+            <li className="dropdown">
+              Shop <span className="arrow-icon">▾</span>
+              <div className="dropdown-menu">
+                <div className="dropdown-content">
+                  <ul className="shop-list">
+                    {shopItems.map((item) => (
+                      <li
+                        key={item.name}
+                        onMouseEnter={() => setHoveredProduct(item.name)}
+                      >
+                        {item.name}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="shop-preview">
+                    <img
+                      src={
+                        shopItems.find((p) => p.name === hoveredProduct)?.img
+                      }
+                      alt={hoveredProduct}
+                    />
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li className="dropdown">
+              Learn <span className="arrow-icon">▾</span>
+              <div className="dropdown-menu">Coming soon...</div>
+            </li>
+
+            <li className="dropdown">
+              Blog <span className="arrow-icon">▾</span>
+              <div className="dropdown-menu">Coming soon...</div>
+            </li>
+
             <li>Gift card</li>
           </ul>
 

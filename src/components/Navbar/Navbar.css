@@ -1,7 +1,7 @@
 /* ============================= */
 /* === Base Navbar (Desktop) === */
 /* ============================= */
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet");
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" );
 
 .navbar {
   display: flex;
@@ -31,7 +31,7 @@
   background: none;
   border: none;
   font-weight: bold;
-    color: #193b61;
+  color: #193b61;
   font-size: 15px;
   cursor: pointer;
   display: flex;
@@ -46,7 +46,7 @@
   height: 26px;
 }
 
-/* Center Menu */
+/* ================= Center Menu ================= */
 .navbar-center {
   display: flex;
   align-items: flex-end; /* align menu to bottom of logo */
@@ -64,14 +64,90 @@
 
 .menu li {
   font-weight: bold;
-  font-size: 16px;
+  font-size: 15px;
   cursor: pointer;
   transition: color 0.2s ease;
+  position: relative; /* required for dropdown */
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .menu li:hover {
   color: #c29d5f;
 }
+
+/* Arrow icon */
+.arrow-icon {
+  transition: transform 0.3s ease;
+  font-size: 0.75rem;
+}
+
+/* Rotate arrow when dropdown is open */
+.dropdown.open .arrow-icon {
+  transform: rotate(180deg);
+}
+
+/* ================= Dropdown Menu ================= */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  display: none;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  min-width: 420px;
+  padding: 15px;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Two-column layout inside dropdown */
+.dropdown-content {
+  display: flex;
+  gap: 20px;
+}
+
+/* Left: product list */
+.shop-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-width: 160px;
+}
+
+.shop-list li {
+  padding: 6px 0;
+  font-weight: normal;
+  font-size: 14px;
+  cursor: pointer;
+  color: #002147;
+}
+
+.shop-list li:hover {
+  color: #c29d5f;
+  text-decoration: underline;
+}
+
+/* Right: image preview */
+.shop-preview {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shop-preview img {
+  width: 180px;
+  height: auto;
+  object-fit: contain;
+  transition: opacity 0.3s ease-in-out;
+}
+
 
 /* Right Section */
 .navbar-right {
