@@ -4,8 +4,8 @@
 .navbar {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 12px 60px;
+  align-items: flex-end; /* align everything to bottom */
+  padding: 12px 150px;
   background: #f4f4f4;
   border-bottom: 1px solid #eee;
   font-family: Arial, sans-serif;
@@ -15,9 +15,8 @@
 /* Left Section */
 .navbar-left {
   display: flex;
-  align-items: center;
+  align-items: flex-end; /* align logo + pincode baseline */
   gap: 20px;
-  margin-left: 80px; /* shifted logo to left */
 }
 
 .logo {
@@ -34,22 +33,30 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-left: 12px;
+  gap: 5px;
+  padding-left: 22px;
+  padding-bottom: 19px; /* slight downward shift */
 }
 
 .pincode-btn img {
   width: 28px;
-  height: 28px;
+  height: 26px;
 }
 
 /* Center Menu */
+.navbar-center {
+  display: flex;
+  align-items: flex-end; /* align menu to bottom of logo */
+  gap: 40px;
+}
+
 .menu {
   display: flex;
-  gap: 32px;
+  gap: 35px;
   list-style: none;
   margin: 0;
   padding: 0;
+  padding-bottom: 15px; /* match baseline with pincode */
 }
 
 .menu li {
@@ -57,49 +64,58 @@
   color: #002147;
   font-size: 16px;
   cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.menu li:hover {
+  color: #c29d5f;
 }
 
 /* Right Section */
 .navbar-right {
   display: flex;
-  align-items: center;
-  gap: 32px;
+  align-items: flex-end; /* align login + cart baseline */
+  gap: 15px;
 }
 
-.right-icon {
-  width: 22px;
-  height: 22px;
-}
-
-.login {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.login-text {
-  font-weight: bold;
-  color: #c29d5f;
-  font-size: 14px;
-}
-
-/* === Cart === */
+.login, 
 .cart {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 6px;
+  cursor: pointer;
+  min-width: 60px;
+  padding-bottom: 8px; /* shift down slightly */
 }
 
-.cart-text {
+/* Icons */
+.right-icon {
+  width: 25px;
+  height: 25px;
+}
+
+/* Login text */
+.login-text {
+  color: #c29d5f; /* gold */
   font-weight: bold;
-  color: #002147;
-  font-size: 14px;
+  font-size: 12px;
+  text-align: center;
 }
 
-/* Wrapper for cart icon + badge */
+/* Cart text */
+.cart-text {
+  color: #002147; /* dark blue */
+  font-weight: bold;
+  font-size: 12px;
+  text-align: center;
+}
+
 .cart-wrapper {
   position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cart-count {
@@ -305,182 +321,22 @@
 }
 
 /* ============================= */
-/* === Responsive Rules 320px → 2560px === */
+/* === Responsive Rules === */
 /* ============================= */
 
-/* Extra small phones (up to 320px) */
-@media (max-width: 320px) {
-  .navbar {
-    padding: 6px 10px;
-  }
-  .logo {
-    height: 40px;
-  }
-  .pincode-btn {
-    font-size: 12px;
-  }
-  .pincode-btn img {
-    width: 16px;
-    height: 16px;
-  }
-  .menu-toggle {
-    font-size: 22px;
-  }
-}
-
-/* Small phones (321px – 375px) */
-@media (max-width: 375px) {
-  .navbar {
-    padding: 8px 12px;
-  }
-  .logo {
-    height: 42px;
-  }
-  .pincode-btn {
-    font-size: 13px;
-  }
-  .menu-toggle {
-    font-size: 24px;
-  }
-}
-
-/* Medium phones (376px – 480px) */
-@media (max-width: 480px) {
-  .navbar {
-    padding: 8px 15px;
-  }
-  .logo {
-    height: 45px;
-  }
-  .mobile-menu {
-    width: 85%;
-  }
-  .mobile-links li {
-    font-size: 14px;
-  }
-  .mobile-footer p {
-    font-size: 12px;
-  }
-}
-
-/* Tablets (481px – 768px) */
-@media (max-width: 768px) {
-  .navbar {
-    padding: 10px 20px;
-  }
-  .pincode-btn {
-    font-size: 14px;
-  }
-  .login-text,
-  .cart-text {
-    display: none;
-  }
-}
-
-/* Small laptops & large tablets (769px – 991px) */
+/* Tablets (up to 991px) */
 @media (max-width: 991px) {
-  .menu,
-  .cart {
+  .menu {
     display: none;
+  }
+  .navbar-right {
+    gap: 15px;
   }
   .menu-toggle {
     display: block;
   }
-  .logo {
-    height: 55px;
-  }
-}
-
-/* Standard desktops (992px – 1200px) */
-@media (min-width: 992px) and (max-width: 1199px) {
-  .navbar {
-    padding: 12px 60px;
-  }
-  .logo {
-    height: 65px;
-  }
-  .menu li {
-    font-size: 16px;
-  }
-}
-
-/* Large desktops (1200px – 1600px) */
-@media (min-width: 1200px) and (max-width: 1599px) {
-  .navbar {
-    padding: 12px 80px;
-  }
-  .menu li {
-    font-size: 17px;
-  }
-}
-
-/* Extra large desktops (1600px – 1920px) */
-@media (min-width: 1600px) and (max-width: 1919px) {
-  .navbar {
-    padding: 15px 120px;
-  }
-  .logo {
-    height: 75px;
-  }
-  .menu li {
-    font-size: 18px;
-  }
-  .pincode-btn {
-    font-size: 16px;
-  }
-}
-
-/* Full HD wide screens (1920px – 2559px) */
-@media (min-width: 1920px) and (max-width: 2559px) {
-  .navbar {
-    padding: 18px 150px;
-  }
-  .logo {
-    height: 80px;
-  }
-  .menu li {
-    font-size: 19px;
-  }
-  .pincode-btn {
-    font-size: 17px;
-  }
-  .pincode-btn img {
-    width: 26px;
-    height: 26px;
-  }
-}
-
-/* Ultra-wide screens (2560px and above) */
-@media (min-width: 2560px) {
-  .navbar {
-    padding: 20px 180px;
-  }
-  .logo {
-    height: 90px;
-  }
-  .menu li {
-    font-size: 20px;
-  }
-  .pincode-btn {
-    font-size: 18px;
-    gap: 12px;
-  }
-  .pincode-btn img {
-    width: 28px;
-    height: 28px;
-  }
-  .right-icon {
-    width: 30px;
-    height: 30px;
-  }
   .login-text,
   .cart-text {
-    font-size: 16px;
-  }
-  .cart-count {
-    font-size: 13px;
-    padding: 3px 7px;
-    top: -8px;
-    right: -12px;
+    display: none;
   }
 }

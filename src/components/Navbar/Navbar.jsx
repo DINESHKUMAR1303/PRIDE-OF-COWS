@@ -63,39 +63,42 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Center Menu */}
-        <ul className="menu">
-          <li>Shop ▾</li>
-          <li>Learn ▾</li>
-          <li>Blog ▾</li>
-          <li>Gift card</li>
-        </ul>
+        {/* Center + Right (Menu + Login + Cart grouped) */}
+        <div className="navbar-center">
+          {/* Menu */}
+          <ul className="menu">
+            <li>Shop ▾</li>
+            <li>Learn ▾</li>
+            <li>Blog ▾</li>
+            <li>Gift card</li>
+          </ul>
 
-        {/* Right Section */}
-        <div className="navbar-right">
-          {/* Login */}
-          <div className="login">
-            <img src={loginIcon} alt="login" className="right-icon" />
-            <span className="login-text">LOGIN</span>
-          </div>
-
-          {/* Cart */}
-          <div className="cart">
-            <div className="cart-wrapper">
-              <img src={cartIcon} alt="cart" className="right-icon" />
-              <span className="cart-count">0</span>
+          {/* Right Section */}
+          <div className="navbar-right">
+            {/* Login */}
+            <div className="login">
+              <img src={loginIcon} alt="login" className="right-icon" />
+              <span className="login-text">LOGIN</span>
             </div>
-            <span className="cart-text">CART</span>
-          </div>
 
-          {/* Toggle (mobile only) */}
-          <button
-            className="menu-toggle"
-            onClick={() => setMenuOpen(true)}
-            aria-label="Toggle menu"
-          >
-            <FaBars />
-          </button>
+            {/* Cart */}
+            <div className="cart">
+              <div className="cart-wrapper">
+                <img src={cartIcon} alt="cart" className="right-icon" />
+                <span className="cart-count">0</span>
+              </div>
+              <span className="cart-text">CART</span>
+            </div>
+
+            {/* Toggle (mobile only) */}
+            <button
+              className="menu-toggle"
+              onClick={() => setMenuOpen(true)}
+              aria-label="Toggle menu"
+            >
+              <FaBars />
+            </button>
+          </div>
         </div>
       </nav>
 
