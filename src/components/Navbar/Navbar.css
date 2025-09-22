@@ -1,6 +1,8 @@
 /* ============================= */
 /* === Base Navbar (Desktop) === */
 /* ============================= */
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet");
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -8,7 +10,8 @@
   padding: 12px 150px;
   background: #f4f4f4;
   border-bottom: 1px solid #eee;
-  font-family: Arial, sans-serif;
+  color: #193b61;
+  font-family: 'Lato', sans-serif;  
   position: relative;
 }
 
@@ -27,8 +30,8 @@
 .pincode-btn {
   background: none;
   border: none;
-  color: #002147;
   font-weight: bold;
+    color: #193b61;
   font-size: 15px;
   cursor: pointer;
   display: flex;
@@ -61,7 +64,6 @@
 
 .menu li {
   font-weight: bold;
-  color: #002147;
   font-size: 16px;
   cursor: pointer;
   transition: color 0.2s ease;
@@ -105,7 +107,6 @@
 
 /* Cart text */
 .cart-text {
-  color: #002147; /* dark blue */
   font-weight: bold;
   font-size: 12px;
   text-align: center;
@@ -139,7 +140,6 @@
   border: none;
   font-size: 28px;
   cursor: pointer;
-  color: #002147;
 }
 
 /* ============================= */
@@ -178,7 +178,7 @@
   border: none;
   font-size: 24px;
   cursor: pointer;
-  color: #002147;
+  
 }
 
 .mobile-links {
@@ -191,7 +191,7 @@
 .mobile-links li {
   padding: 12px 0;
   font-weight: bold;
-  color: #002147;
+
   border-bottom: 1px solid #eee;
   cursor: pointer;
   display: flex;
