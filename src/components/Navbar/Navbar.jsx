@@ -25,7 +25,7 @@ import twitterIcon from "../../images/icons/twitter.svg";
 import youtubeIcon from "../../images/icons/youtube.svg";
 
 // ✅ Product Images (Shop dropdown)
-import allImg from "./images/allproducts.jpg";   
+import allImg from "./images/allproducts.jpg";
 import milkImg from "./images/milk.webp";
 import gheeImg from "./images/ghee.webp";
 import curdImg from "./images/curd.webp";
@@ -46,9 +46,12 @@ const Navbar = () => {
   // ✅ Track hovered shop item
   const [hoveredProduct, setHoveredProduct] = useState("All");
 
+  // ✅ Track open dropdown
+  const [openDropdown, setOpenDropdown] = useState(null);
+
   // ✅ Shop products list
   const shopItems = [
-    { name: "All", img: allImg },  
+    { name: "All", img: allImg },
     { name: "Milk", img: milkImg },
     { name: "Ghee", img: gheeImg },
     { name: "Curd", img: curdImg },
@@ -75,6 +78,23 @@ const Navbar = () => {
     }
   };
 
+  // ✅ Reusable Chevron Icon
+  const ChevronIcon = ({ isOpen }) => (
+    <svg
+      className={`arrow-icon ${isOpen ? "open" : ""}`}
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  );
+
   return (
     <>
       {/* ================== NAVBAR ================== */}
@@ -93,8 +113,12 @@ const Navbar = () => {
           {/* Menu */}
           <ul className="menu">
             {/* Shop Dropdown */}
-            <li className="dropdown">
-              Shop <span className="arrow-icon">▾</span>
+            <li
+              className={`dropdown ${openDropdown === "shop" ? "open" : ""}`}
+              onMouseEnter={() => setOpenDropdown("shop")}
+              onMouseLeave={() => setOpenDropdown(null)}
+            >
+              Shop <ChevronIcon isOpen={openDropdown === "shop"} />
               <div className="dropdown-menu">
                 <div className="dropdown-content">
                   <ul className="shop-list">
@@ -119,13 +143,23 @@ const Navbar = () => {
               </div>
             </li>
 
-            <li className="dropdown">
-              Learn <span className="arrow-icon">▾</span>
+            {/* Learn Dropdown */}
+            <li
+              className={`dropdown ${openDropdown === "learn" ? "open" : ""}`}
+              onMouseEnter={() => setOpenDropdown("learn")}
+              onMouseLeave={() => setOpenDropdown(null)}
+            >
+              Learn <ChevronIcon isOpen={openDropdown === "learn"} />
               <div className="dropdown-menu">Coming soon...</div>
             </li>
 
-            <li className="dropdown">
-              Blog <span className="arrow-icon">▾</span>
+            {/* Blog Dropdown */}
+            <li
+              className={`dropdown ${openDropdown === "blog" ? "open" : ""}`}
+              onMouseEnter={() => setOpenDropdown("blog")}
+              onMouseLeave={() => setOpenDropdown(null)}
+            >
+              Blog <ChevronIcon isOpen={openDropdown === "blog"} />
               <div className="dropdown-menu">Coming soon...</div>
             </li>
 
