@@ -6,8 +6,9 @@
   font-size: 14px;
   overflow: hidden;
   white-space: nowrap;
-  position: relative;
+  position: relative;  /* stays in normal flow so it scrolls away */
   text-align: center;
+  z-index: 1200;
 }
 
 /* scrolling single text */

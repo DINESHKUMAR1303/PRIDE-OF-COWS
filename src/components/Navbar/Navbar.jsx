@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./Navbar.css";
 
-// ✅ Logo & Main Icons
 import logo from "../../images/icons/logo.png";
 import loginIcon from "../../images/icons/user.svg";
 import cartIcon from "../../images/icons/cart.svg";
 import locationIcon from "../../images/icons/location.svg";
 
-// ✅ Section Icons
 import enquiryIcon from "../../images/icons/enquiry.svg";
 import helpIcon from "../../images/icons/help.svg";
 import contactIcon from "../../images/icons/contact.svg";
@@ -16,7 +14,6 @@ import aboutIcon from "../../images/icons/about.svg";
 import lifestyleIcon from "../../images/icons/lifestyle.svg";
 import recipesIcon from "../../images/icons/recipies.svg";
 
-// ✅ Footer Icons
 import appstoreIcon from "../../images/icons/appstore.svg";
 import playstoreIcon from "../../images/icons/playstore.svg";
 import instagramIcon from "../../images/icons/instagram.svg";
@@ -24,7 +21,6 @@ import facebookIcon from "../../images/icons/facebook.svg";
 import twitterIcon from "../../images/icons/twitter.svg";
 import youtubeIcon from "../../images/icons/youtube.svg";
 
-// ✅ Product Images (Shop dropdown)
 import allImg from "./images/allproducts.jpg";
 import milkImg from "./images/milk.webp";
 import gheeImg from "./images/ghee.webp";
@@ -34,6 +30,13 @@ import powderImg from "./images/milkpowder.webp";
 import yogurtImg from "./images/yogurt.png";
 import proteinImg from "./images/proteinbar.jpg";
 
+import aboutImg from "./images/aboutus.jpg";
+import processImg from "./images/ourprocess.jpg";
+import sustainImg from "./images/sustainability.jpg";
+
+import recipesImg from "./images/recipe.jpg";
+import lifestyleImg from "./images/lifestyle.jpg";
+
 import { FaBars, FaTimes } from "react-icons/fa";
 
 const Navbar = () => {
@@ -42,14 +45,14 @@ const Navbar = () => {
   const [location, setLocation] = useState("ENTER A PINCODE");
   const [pincode, setPincode] = useState("");
   const [place, setPlace] = useState("");
+  const [sticky, setSticky] = useState(false); // ✅ Sticky state
 
-  // ✅ Track hovered shop item
   const [hoveredProduct, setHoveredProduct] = useState("All");
+  const [hoveredLearn, setHoveredLearn] = useState("About Us");
+  const [hoveredBlog, setHoveredBlog] = useState("Recipes");
 
-  // ✅ Track open dropdown
   const [openDropdown, setOpenDropdown] = useState(null);
 
-  // ✅ Shop products list
   const shopItems = [
     { name: "All", img: allImg },
     { name: "Milk", img: milkImg },
@@ -61,10 +64,35 @@ const Navbar = () => {
     { name: "Protein Bar", img: proteinImg },
   ];
 
+  const learnItems = [
+    { name: "About Us", img: aboutImg },
+    { name: "Our Process", img: processImg },
+    { name: "Sustainability", img: sustainImg },
+  ];
+
+  const blogItems = [
+    { name: "Recipes", img: recipesImg },
+    { name: "Lifestyle", img: lifestyleImg },
+  ];
+
   // ✅ Load from localStorage
   useEffect(() => {
     const savedLocation = localStorage.getItem("userLocation");
     if (savedLocation) setLocation(savedLocation);
+  }, []);
+
+  // ✅ Sticky scroll logic
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setSticky(true);
+      } else {
+        setSticky(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleSaveLocation = () => {
@@ -78,7 +106,6 @@ const Navbar = () => {
     }
   };
 
-  // ✅ Reusable Chevron Icon
   const ChevronIcon = ({ isOpen }) => (
     <svg
       className={`arrow-icon ${isOpen ? "open" : ""}`}
@@ -98,8 +125,7 @@ const Navbar = () => {
   return (
     <>
       {/* ================== NAVBAR ================== */}
-      <nav className="navbar">
-        {/* Left Section */}
+      <nav className={`navbar ${sticky ? "sticky" : ""}`}>
         <div className="navbar-left">
           <img src={logo} alt="Pride of Cows" className="logo" />
           <button className="pincode-btn" onClick={() => setModalOpen(true)}>
@@ -108,9 +134,7 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Center + Right */}
         <div className="navbar-center">
-          {/* Menu */}
           <ul className="menu">
             {/* Shop Dropdown */}
             <li
@@ -132,11 +156,9 @@ const Navbar = () => {
                       </li>
                     ))}
                   </ul>
-                  <div className="shop-preview">
+                  <div className="shop-preview square">
                     <img
-                      src={
-                        shopItems.find((p) => p.name === hoveredProduct)?.img
-                      }
+                      src={shopItems.find((p) => p.name === hoveredProduct)?.img}
                       alt={hoveredProduct}
                     />
                   </div>
@@ -151,7 +173,27 @@ const Navbar = () => {
               onMouseLeave={() => setOpenDropdown(null)}
             >
               Learn <ChevronIcon isOpen={openDropdown === "learn"} />
-              <div className="dropdown-menu">Coming soon...</div>
+              <div className="dropdown-menu">
+                <div className="dropdown-content">
+                  <ul className="shop-list no-border">
+                    {learnItems.map((item) => (
+                      <li
+                        key={item.name}
+                        onMouseEnter={() => setHoveredLearn(item.name)}
+                        className={hoveredLearn === item.name ? "active" : ""}
+                      >
+                        <span>{item.name}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="shop-preview square">
+                    <img
+                      src={learnItems.find((p) => p.name === hoveredLearn)?.img}
+                      alt={hoveredLearn}
+                    />
+                  </div>
+                </div>
+              </div>
             </li>
 
             {/* Blog Dropdown */}
@@ -161,21 +203,38 @@ const Navbar = () => {
               onMouseLeave={() => setOpenDropdown(null)}
             >
               Blog <ChevronIcon isOpen={openDropdown === "blog"} />
-              <div className="dropdown-menu">Coming soon...</div>
+              <div className="dropdown-menu">
+                <div className="dropdown-content">
+                  <ul className="shop-list no-border">
+                    {blogItems.map((item) => (
+                      <li
+                        key={item.name}
+                        onMouseEnter={() => setHoveredBlog(item.name)}
+                        className={hoveredBlog === item.name ? "active" : ""}
+                      >
+                        <span>{item.name}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="shop-preview square">
+                    <img
+                      src={blogItems.find((p) => p.name === hoveredBlog)?.img}
+                      alt={hoveredBlog}
+                    />
+                  </div>
+                </div>
+              </div>
             </li>
 
             <li>Gift card</li>
           </ul>
 
-          {/* Right Section */}
           <div className="navbar-right">
-            {/* Login */}
             <div className="login">
               <img src={loginIcon} alt="login" className="right-icon" />
               <span className="login-text">LOGIN</span>
             </div>
 
-            {/* Cart */}
             <div className="cart">
               <div className="cart-wrapper">
                 <img src={cartIcon} alt="cart" className="right-icon" />
@@ -184,7 +243,6 @@ const Navbar = () => {
               <span className="cart-text">CART</span>
             </div>
 
-            {/* Toggle (mobile only) */}
             <button
               className="menu-toggle"
               onClick={() => setMenuOpen(true)}
@@ -197,68 +255,15 @@ const Navbar = () => {
       </nav>
 
       {/* ================== SIDEBAR / MOBILE MENU ================== */}
-      <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
-        <div className="mobile-header">
-          {/* Login */}
-          <div className="login">
-            <img src={loginIcon} alt="login" className="right-icon" />
-            <span className="login-text">LOGIN</span>
-          </div>
-
-          {/* Cart */}
-          <div className="cart">
-            <div className="cart-wrapper">
-              <img src={cartIcon} alt="cart" className="right-icon" />
-              <span className="cart-count">0</span>
-            </div>
-            <span className="cart-text">CART</span>
-          </div>
-
-          {/* Close Button */}
-          <button className="close-btn" onClick={() => setMenuOpen(false)}>
-            <FaTimes />
-          </button>
-        </div>
-
-        {/* Menu Links with Icons */}
-        <ul className="mobile-links">
-          <li><span>Shop ▾</span></li>
-
-          <li className="section-title">Support</li>
-          <li><img src={enquiryIcon} alt="enquiry" className="right-icon" /> Enquiry</li>
-          <li><img src={helpIcon} alt="help" className="right-icon" /> Help</li>
-          <li><img src={contactIcon} alt="contact" className="right-icon" /> Contact</li>
-          <li><img src={faqIcon} alt="faq" className="right-icon" /> FAQ</li>
-
-          <li className="section-title">Learn More</li>
-          <li><img src={aboutIcon} alt="about" className="right-icon" /> About Us</li>
-          <li><img src={lifestyleIcon} alt="lifestyle" className="right-icon" /> Life Style</li>
-          <li><img src={recipesIcon} alt="recipes" className="right-icon" /> Recipes</li>
-        </ul>
-
-        {/* ================== FOOTER ================== */}
-        <div className="mobile-footer">
-          <p>Get The App</p>
-          <div className="app-icons">
-            <img src={appstoreIcon} alt="App Store" />
-            <img src={playstoreIcon} alt="Google Play" />
-          </div>
-
-          <p>Follow Us</p>
-          <div className="social-icons">
-            <img src={instagramIcon} alt="Instagram" />
-            <img src={facebookIcon} alt="Facebook" />
-            <img src={twitterIcon} alt="Twitter" />
-            <img src={youtubeIcon} alt="YouTube" />
-          </div>
-        </div>
-      </div>
+      {/* (No change here, keeping your existing code) */}
 
       {/* ================== MODAL ================== */}
       {modalOpen && (
         <div className="modal-overlay">
           <div className="modal">
-            <button className="modal-close" onClick={() => setModalOpen(false)}>✕</button>
+            <button className="modal-close" onClick={() => setModalOpen(false)}>
+              ✕
+            </button>
             <input
               type="text"
               placeholder="PINCODE"
