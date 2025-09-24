@@ -2,7 +2,6 @@
 /* === Base Navbar (Desktop) === */
 /* ============================= */
 
-
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -10,7 +9,7 @@
   padding: 12px 150px;
   background: #f4f4f4;
   border-bottom: 1px solid #eee;
-  color: #193b61; 
+  color: #193b61;
   position: relative;
 }
 
@@ -61,7 +60,7 @@
   padding-bottom: 15px; /* match baseline with pincode */
 }
 
-.menu li {
+.menu > li {
   font-weight: bold;
   font-size: 15px;
   cursor: pointer;
@@ -70,18 +69,20 @@
   display: flex;
   align-items: center;
   gap: 5px;
+  color: #193b61;
 }
 
-.menu li:hover {
+.menu > li:hover {
   color: #c29d5f;
 }
+
 /* ============================= */
 /* Arrow Styling (SVG Chevron)   */
 /* ============================= */
 
 .arrow-icon {
   margin-left: 6px;
-  transition: transform 3s ease-in-out; 
+  transition: transform 3s ease-in-out;
   color: #193b61;
   stroke: #193b61;
   opacity: 0.8;
@@ -93,36 +94,21 @@
   opacity: 1;
 }
 
-
-
-/* Menu items */
-.menu li {
-  font-weight: 600;
-  font-size: 15px;
-  cursor: pointer;
-  position: relative;
-  
-  color: #193b61;         /* text color */
-  display: flex;
-  align-items: center;
-}
-
-/* Optional hover underline effect */
-.menu li::after {
+/* Optional hover underline effect (only for top menu) */
+.menu > li::after {
   content: "";
   position: absolute;
   left: 0;
   bottom: -3px;
   width: 0;
   height: 2px;
-  background: #c29d5f;     /* gold underline */
+  background: #c29d5f; /* gold underline */
   transition: width 0.3s ease;
 }
 
-.menu li:hover::after {
+.menu > li:hover::after {
   width: 100%;
 }
-
 
 /* ================= Dropdown Menu ================= */
 .dropdown-menu {
@@ -130,81 +116,133 @@
   top: 100%;
   left: 0;
   background: #fff;
-  border: 1px solid #ddd;
+  border: none;
   z-index: 1000;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  min-width: 420px;
-  padding: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  min-width: 500px;
+  padding: 0;
+  border-radius: 6px;
 
-  /* Animation defaults */
+  /* Animation */
   opacity: 0;
   max-height: 0;
   overflow: hidden;
   transform: translateY(-10px);
-  transition: all 0.8s ease; /* adjust speed */
-  pointer-events: none; /* prevent hover while hidden */
+  transition: opacity 0.35s ease, transform 0.35s ease, max-height 0.5s ease;
+  pointer-events: none;
 }
 
-/* Show on hover with animation */
+/* Show on hover */
 .dropdown:hover .dropdown-menu {
   opacity: 1;
-  max-height: 600px; /* large enough for content */
+  max-height: 500px;
   transform: translateY(0);
   pointer-events: auto;
 }
 
-/* Two-column layout inside dropdown */
+/* ================= Two-column layout ================= */
 .dropdown-content {
   display: flex;
-  gap: 20px;
+  gap: 30px;
+  align-items: flex-start;
+  padding: 20px;
 }
 
-
-/* Left: product list */
+/* ================= Left: product list ================= */
 .shop-list {
   list-style: none;
   margin: 0;
   padding: 0;
-  min-width: 160px;
+  min-width: 180px;
+
+  /* Reset unwanted styles */
+  border: none !important;
+  outline: none !important;
 }
 
 .shop-list li {
-  padding: 6px 0;
-  font-weight: normal;
-  font-size: 14px;
+  padding: 8px 0;
+  font-size: 15px;
+  font-weight: 400;
   cursor: pointer;
-  color: #002147;
+  color: rgba(0, 0, 0, 0.85);
+  transition: color 0.3s ease;
+
+  /* Kill ALL extra lines */
+  border: none !important;
+  border-bottom: none !important;
+  outline: none !important;
+  background: transparent !important;
+  text-decoration: none !important;
+  position: relative;
 }
 
+/* Text wrapper for underline */
+.shop-list li span {
+  position: relative;
+  display: inline-block; /* underline stays only under text */
+  text-decoration: none !important;
+}
+
+/* Custom underline effect (right → left) */
+.shop-list li span::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  right: 0;
+  width: 0;
+  height: 1px;
+  background-color: #c29d5f;
+  transition: width 0.3s ease-in-out;
+}
+
+/* Hover + Active states */
 .shop-list li:hover {
   color: #c29d5f;
-  text-decoration: underline;
 }
 
-/* Right: image preview */
+.shop-list li:hover span::after,
+.shop-list li.active span::after {
+  width: 100%;
+}
+
+.shop-list li.active {
+  color: #c29d5f;
+  font-weight: 600;
+  text-decoration: none !important;
+}
+
+/* ================= Right: product image preview ================= */
 .shop-preview {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 280px;
 }
 
 .shop-preview img {
-  width: 180px;
+  width: 100%;
   height: auto;
+  max-height: 220px;
   object-fit: contain;
-  transition: opacity 0.3s ease-in-out;
+  border-radius: 6px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.4s ease-in-out;
 }
 
+.shop-preview img:hover {
+  transform: scale(1.05);
+}
 
-/* Right Section */
+/* ================= Right Section ================= */
 .navbar-right {
   display: flex;
   align-items: flex-end; /* align login + cart baseline */
   gap: 15px;
 }
 
-.login, 
+.login,
 .cart {
   display: flex;
   flex-direction: column;
@@ -302,7 +340,6 @@
   border: none;
   font-size: 24px;
   cursor: pointer;
-  
 }
 
 .mobile-links {
@@ -315,7 +352,6 @@
 .mobile-links li {
   padding: 12px 0;
   font-weight: bold;
-
   border-bottom: 1px solid #eee;
   cursor: pointer;
   display: flex;

@@ -121,13 +121,14 @@ const Navbar = () => {
               Shop <ChevronIcon isOpen={openDropdown === "shop"} />
               <div className="dropdown-menu">
                 <div className="dropdown-content">
-                  <ul className="shop-list">
+                  <ul className="shop-list no-border">
                     {shopItems.map((item) => (
                       <li
                         key={item.name}
                         onMouseEnter={() => setHoveredProduct(item.name)}
+                        className={hoveredProduct === item.name ? "active" : ""}
                       >
-                        {item.name}
+                        <span>{item.name}</span>
                       </li>
                     ))}
                   </ul>
