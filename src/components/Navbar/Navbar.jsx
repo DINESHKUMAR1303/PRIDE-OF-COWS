@@ -45,12 +45,11 @@ const Navbar = () => {
   const [location, setLocation] = useState("ENTER A PINCODE");
   const [pincode, setPincode] = useState("");
   const [place, setPlace] = useState("");
-  const [sticky, setSticky] = useState(false); // ✅ Sticky state
+  const [sticky, setSticky] = useState(false);
 
   const [hoveredProduct, setHoveredProduct] = useState("All");
   const [hoveredLearn, setHoveredLearn] = useState("About Us");
   const [hoveredBlog, setHoveredBlog] = useState("Recipes");
-
   const [openDropdown, setOpenDropdown] = useState(null);
 
   const shopItems = [
@@ -75,23 +74,16 @@ const Navbar = () => {
     { name: "Lifestyle", img: lifestyleImg },
   ];
 
-  // ✅ Load from localStorage
   useEffect(() => {
     const savedLocation = localStorage.getItem("userLocation");
     if (savedLocation) setLocation(savedLocation);
   }, []);
 
-  // ✅ Sticky scroll logic
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setSticky(true);
-      } else {
-        setSticky(false);
-      }
+      setSticky(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -124,7 +116,6 @@ const Navbar = () => {
 
   return (
     <>
-      {/* ================== NAVBAR ================== */}
       <nav className={`navbar ${sticky ? "sticky" : ""}`}>
         <div className="navbar-left">
           <img src={logo} alt="Pride of Cows" className="logo" />
@@ -136,7 +127,6 @@ const Navbar = () => {
 
         <div className="navbar-center">
           <ul className="menu">
-            {/* Shop Dropdown */}
             <li
               className={`dropdown ${openDropdown === "shop" ? "open" : ""}`}
               onMouseEnter={() => setOpenDropdown("shop")}
@@ -166,7 +156,6 @@ const Navbar = () => {
               </div>
             </li>
 
-            {/* Learn Dropdown */}
             <li
               className={`dropdown ${openDropdown === "learn" ? "open" : ""}`}
               onMouseEnter={() => setOpenDropdown("learn")}
@@ -196,7 +185,6 @@ const Navbar = () => {
               </div>
             </li>
 
-            {/* Blog Dropdown */}
             <li
               className={`dropdown ${openDropdown === "blog" ? "open" : ""}`}
               onMouseEnter={() => setOpenDropdown("blog")}
@@ -254,10 +242,6 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* ================== SIDEBAR / MOBILE MENU ================== */}
-      {/* (No change here, keeping your existing code) */}
-
-      {/* ================== MODAL ================== */}
       {modalOpen && (
         <div className="modal-overlay">
           <div className="modal">

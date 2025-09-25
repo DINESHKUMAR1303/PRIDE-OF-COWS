@@ -32,6 +32,12 @@
   transition: height 0.3s ease;
 }
 
+/* ✅ Pincode button shifts down slightly when sticky */
+.navbar.sticky .pincode-btn {
+  transform: translateY(6px);
+  transition: transform 0.3s ease;
+}
+
 /* Left Section */
 .navbar-left {
   display: flex;
@@ -56,7 +62,8 @@
   align-items: center;
   gap: 5px;
   padding-left: 22px;
-  padding-bottom: 19px; /* slight downward shift */
+  padding-bottom: 19px; /* baseline alignment */
+  transition: transform 0.3s ease;
 }
 
 .pincode-btn img {
@@ -483,20 +490,124 @@
 /* ============================= */
 /* === Responsive Rules === */
 /* ============================= */
+/* ============================= */
+/* === Responsive Rules (320px - 2560px) === */
+/* ============================= */
 
-/* Tablets (up to 991px) */
-@media (max-width: 991px) {
+/* ====== Mobile (320px - 767px) ====== */
+@media (max-width: 767px) {
+  .navbar {
+    padding: 8px 20px;
+  }
+
   .menu {
     display: none;
   }
+
   .navbar-right {
-    gap: 15px;
+    gap: 10px;
   }
+
   .menu-toggle {
     display: block;
   }
+
   .login-text,
   .cart-text {
     display: none;
   }
+
+  .logo {
+    height: 45px;
+  }
+
+  .pincode-btn {
+    font-size: 12px;
+    gap: 4px;
+  }
 }
+
+/* ====== Tablet (768px - 1023px) ====== */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .navbar {
+    padding: 10px 40px;
+  }
+
+  .menu {
+    display: none; /* Use sidebar instead */
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .logo {
+    height: 55px;
+  }
+
+  .pincode-btn {
+    font-size: 13px;
+  }
+}
+
+/* ====== Small Desktop (1024px - 1439px) ====== */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .navbar {
+    padding: 10px 80px;
+  }
+
+  .logo {
+    height: 60px;
+  }
+
+  .menu {
+    gap: 25px;
+  }
+
+  .menu > li {
+    font-size: 14px;
+  }
+}
+
+/* ====== Large Desktop (1440px - 1920px) ====== */
+@media (min-width: 1440px) and (max-width: 1920px) {
+  .navbar {
+    padding: 12px 150px;
+  }
+
+  .logo {
+    height: 65px;
+  }
+
+  .menu {
+    gap: 35px;
+  }
+
+  .menu > li {
+    font-size: 15px;
+  }
+}
+
+/* ====== Ultra-Wide Screens (1921px - 2560px) ====== */
+@media (min-width: 1921px) and (max-width: 2560px) {
+  .navbar {
+    padding: 20px 250px;
+  }
+
+  .logo {
+    height: 75px;
+  }
+
+  .menu {
+    gap: 45px;
+  }
+
+  .menu > li {
+    font-size: 16px;
+  }
+
+  .pincode-btn {
+    font-size: 16px;
+  }
+}
+
