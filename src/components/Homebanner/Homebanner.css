@@ -7,6 +7,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* ============================= */
@@ -15,7 +16,7 @@
 .carousel {
   position: relative;
   width: 100vw;
-  height: 180px;            /* default mobile height */
+  height: auto;            /* default mobile height */
   overflow: hidden;
   background: #fff;
   margin: 0;

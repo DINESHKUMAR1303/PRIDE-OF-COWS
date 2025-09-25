@@ -32,6 +32,7 @@
   transition: height 0.3s ease;
 }
 
+
 /* ✅ Pincode button shifts down slightly when sticky */
 .navbar.sticky .pincode-btn {
   transform: translateY(6px);
@@ -142,7 +143,7 @@
   position: absolute;
   top: 100%;
   left: 0;
-  background: #fff;
+  background-color: #f4f4f4; 
   border: none;
   z-index: 1000;
   box-shadow: 0 8px 20px rgba(0,0,0,0.12);
@@ -249,15 +250,15 @@
 .navbar-right {
   display: flex;
   align-items: flex-end; /* align login + cart baseline */
-  gap: 15px;
+  gap: 8px; /* reduced gap between login & cart */
 }
 
 .login,
 .cart {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* ✅ always stacked vertical */
   align-items: center;
-  gap: 6px;
+  gap: 4px; /* reduced gap between icon & text */
   cursor: pointer;
   min-width: 60px;
   padding-bottom: 8px; /* shift down slightly */
@@ -269,6 +270,7 @@
 }
 
 .login-text {
+  display: block; /* ✅ always under icon */
   color: #c29d5f;
   font-weight: bold;
   font-size: 12px;
@@ -276,6 +278,7 @@
 }
 
 .cart-text {
+  display: block; /* ✅ always under icon */
   font-weight: bold;
   font-size: 12px;
   text-align: center;
@@ -490,22 +493,17 @@
 /* ============================= */
 /* === Responsive Rules === */
 /* ============================= */
-/* ============================= */
-/* === Responsive Rules (320px - 2560px) === */
-/* ============================= */
-/* ====== Mobile View (320px - 767px) ====== */
-@media (max-width: 767px) {
+/* ====== Mobile View (320px - 766px) ====== */
+@media (max-width: 766px) {
   .navbar {
     padding: 10px 20px;
     align-items: center;
   }
 
-  /* Hide full menu */
   .menu {
     display: none;
   }
 
-  /* Left section: logo only */
   .navbar-left {
     flex: 1;
   }
@@ -514,65 +512,92 @@
     height: 45px;
   }
 
-  /* Pincode hidden on mobile */
   .pincode-btn {
     display: none;
   }
 
-  /* Right section: login + hamburger */
   .navbar-right {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 8px;
   }
 
-  /* Login stays visible */
   .login {
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     padding-bottom: 0;
   }
 
   .login-text {
-    display: inline;
-    font-size: 13px;
+    display: block;
+    font-size: 12px;
+    text-align: center;
   }
 
-  /* Cart hidden on mobile */
   .cart {
-    display: none;
+    display: none; /* ✅ hide cart in mobile */
   }
 
-  /* Show hamburger */
   .menu-toggle {
     display: block;
     font-size: 22px;
   }
 }
 
-/* ====== Tablet (768px - 1023px) ====== */
-@media (min-width: 768px) and (max-width: 1023px) {
+/* ====== Tablet (767px - 1023px) ====== */
+@media (min-width: 767px) and (max-width: 1023px) {
   .navbar {
-    padding: 10px 40px;
+    padding: 10px 20px;
+    align-items: center;
   }
 
   .menu {
-    display: none; /* Use sidebar instead */
+    display: none;
+  }
+
+  .navbar-left {
+    flex: 1;
+  }
+
+  .logo {
+    height: 50px;
+  }
+
+  .pincode-btn {
+    display: none;
+  }
+
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .login {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding-bottom: 0;
+  }
+
+  .login-text {
+    display: block;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .cart {
+    display: none; /* ✅ hide cart in tablet too */
   }
 
   .menu-toggle {
     display: block;
-  }
-
-  .logo {
-    height: 55px;
-  }
-
-  .pincode-btn {
-    font-size: 13px;
+    font-size: 22px;
   }
 }
+
+
 
 /* ====== Small Desktop (1024px - 1439px) ====== */
 @media (min-width: 1024px) and (max-width: 1439px) {
@@ -634,4 +659,3 @@
     font-size: 16px;
   }
 }
-

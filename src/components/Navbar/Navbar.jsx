@@ -242,6 +242,7 @@ const Navbar = () => {
         </div>
       </nav>
 
+      {/* Location Modal */}
       {modalOpen && (
         <div className="modal-overlay">
           <div className="modal">
@@ -263,6 +264,67 @@ const Navbar = () => {
             <button className="continue-btn" onClick={handleSaveLocation}>
               CONTINUE
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Mobile Side Menu */}
+      {menuOpen && (
+        <div className="side-menu-overlay" onClick={() => setMenuOpen(false)}>
+          <div className="side-menu" onClick={(e) => e.stopPropagation()}>
+            <button className="close-btn" onClick={() => setMenuOpen(false)}>
+              <FaTimes />
+            </button>
+
+            <div className="side-menu-content">
+              <div className="side-login">
+                <img src={loginIcon} alt="login" className="right-icon" />
+                <span>Login</span>
+              </div>
+
+              <div className="side-section">
+                <h4>Shop</h4>
+                <ul>
+                  {shopItems.map((item) => (
+                    <li key={item.name}>{item.name}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="side-section">
+                <h4>Support</h4>
+                <ul>
+                  <li><img src={enquiryIcon} alt="" /> Enquiry</li>
+                  <li><img src={helpIcon} alt="" /> Help</li>
+                  <li><img src={contactIcon} alt="" /> Contact</li>
+                  <li><img src={faqIcon} alt="" /> FAQ</li>
+                </ul>
+              </div>
+
+              <div className="side-section">
+                <h4>Learn More</h4>
+                <ul>
+                  <li><img src={aboutIcon} alt="" /> About Us</li>
+                  <li><img src={lifestyleIcon} alt="" /> Life Style</li>
+                  <li><img src={recipesIcon} alt="" /> Recipes</li>
+                </ul>
+              </div>
+
+              <div className="side-footer">
+                <div className="app-links">
+                  <span>Get The App</span>
+                  <img src={appstoreIcon} alt="App Store" />
+                  <img src={playstoreIcon} alt="Play Store" />
+                </div>
+                <div className="social-links">
+                  <span>Follow Us</span>
+                  <img src={instagramIcon} alt="Instagram" />
+                  <img src={facebookIcon} alt="Facebook" />
+                  <img src={twitterIcon} alt="Twitter" />
+                  <img src={youtubeIcon} alt="YouTube" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
