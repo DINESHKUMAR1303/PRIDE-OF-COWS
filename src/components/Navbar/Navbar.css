@@ -493,37 +493,61 @@
 /* ============================= */
 /* === Responsive Rules (320px - 2560px) === */
 /* ============================= */
-
-/* ====== Mobile (320px - 767px) ====== */
+/* ====== Mobile View (320px - 767px) ====== */
 @media (max-width: 767px) {
   .navbar {
-    padding: 8px 20px;
+    padding: 10px 20px;
+    align-items: center;
   }
 
+  /* Hide full menu */
   .menu {
     display: none;
   }
 
-  .navbar-right {
-    gap: 10px;
-  }
-
-  .menu-toggle {
-    display: block;
-  }
-
-  .login-text,
-  .cart-text {
-    display: none;
+  /* Left section: logo only */
+  .navbar-left {
+    flex: 1;
   }
 
   .logo {
     height: 45px;
   }
 
+  /* Pincode hidden on mobile */
   .pincode-btn {
-    font-size: 12px;
-    gap: 4px;
+    display: none;
+  }
+
+  /* Right section: login + hamburger */
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  /* Login stays visible */
+  .login {
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    padding-bottom: 0;
+  }
+
+  .login-text {
+    display: inline;
+    font-size: 13px;
+  }
+
+  /* Cart hidden on mobile */
+  .cart {
+    display: none;
+  }
+
+  /* Show hamburger */
+  .menu-toggle {
+    display: block;
+    font-size: 22px;
   }
 }
 
