@@ -12,24 +12,7 @@
   color: #193b61;
   position: relative;
   transition: all 0.3s ease-in-out;
-  z-index: 1000;
-}
-
-/* === Sticky Navbar === */
-.navbar.sticky {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: #ffffff; /* lighter background like screenshot */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  padding: 8px 120px; /* reduce padding slightly */
-  align-items: center;
-}
-
-.navbar.sticky .logo {
-  height: 50px; /* shrink logo */
-  transition: height 0.3s ease;
+  z-index: 1100;
 }
 
 
@@ -315,113 +298,189 @@
 }
 
 /* ============================= */
-/* === Sidebar / Mobile Menu === */
+/* Side Menu (Mobile Drawer) */
 /* ============================= */
-.mobile-menu {
+.side-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 2000; /* above navbar */
+}
+
+.side-menu-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.side-menu {
   position: fixed;
   top: 0;
   right: -100%;
-  width: 70%;
-  max-width: 320px;
-  height: 100%;
-  background: #f9f9f9;
+  width: 80%;
+  max-width: 340px;
+  height: 100vh;
+  background: #fff;
   box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
   transition: right 0.3s ease;
+  z-index: 2100; /* above overlay */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 20px;
-  z-index: 2000;
-  overflow-y: auto;
 }
 
-.mobile-menu.open {
+.side-menu.active {
   right: 0;
 }
 
-.mobile-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
+/* Close Button */
 .close-btn {
   background: none;
   border: none;
   font-size: 24px;
+  padding: 16px;
   cursor: pointer;
+  align-self: flex-end;
+  color: #193b61;
 }
 
-.mobile-links {
-  list-style: none;
-  padding: 0;
-  margin: 20px 0;
-  flex-grow: 1;
+/* Content */
+.side-menu-content {
+  padding: 10px 20px 30px;
+  flex: 1;
+  overflow-y: auto;
 }
 
-.mobile-links li {
-  padding: 12px 0;
-  font-weight: bold;
-  border-bottom: 1px solid #eee;
-  cursor: pointer;
+/* Login */
+.side-login {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #193b61;
+  cursor: pointer;
+  padding: 14px 0;
+  border-bottom: 1px solid #eee;
 }
 
-.mobile-links li img {
+.side-login img {
   width: 20px;
   height: 20px;
 }
 
-.section-title {
-  font-size: 13px;
-  font-weight: bold;
-  color: #666;
-  text-transform: uppercase;
-  margin-top: 18px;
-  margin-bottom: 8px;
-  padding: 0;
-  border: none !important;
-  cursor: default !important;
-  display: block;
+/* Accordion */
+.accordion-header {
+  background: none;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: #193b61;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 14px 0;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
 }
 
-/* ============================= */
-/* === Sidebar Footer === */
-/* ============================= */
-.mobile-footer {
-  text-align: center;
-  padding: 20px 0;
-  border-top: 1px solid #eee;
+.accordion-list {
+  list-style: none;
+  margin: 0;
+  padding-left: 15px;
 }
 
-.mobile-footer p {
+.accordion-list li {
+  padding: 10px 0;
   font-size: 14px;
-  margin-bottom: 8px;
-  color: #444;
+  color: #333;
+  border-bottom: 1px solid #f1f1f1;
+  cursor: pointer;
 }
 
-.app-icons,
-.social-icons {
+.accordion-list li:hover {
+  color: #0077cc;
+}
+
+/* Sections */
+.side-section {
+  margin-top: 20px;
+}
+
+.side-section h4 {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  color: #193b61;
+}
+
+.side-section ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.side-section ul li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  font-size: 14px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.side-section ul li img {
+  width: 20px;
+  height: 20px;
+}
+
+.side-section ul li:hover {
+  color: #0077cc;
+}
+
+/* Footer */
+.side-footer {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  text-align: center;
+}
+
+.side-footer span {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #193b61;
+  margin-bottom: 8px;
+}
+
+.app-links,
+.social-links {
   display: flex;
   justify-content: center;
-  gap: 18px;
-  margin-bottom: 12px;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
 }
 
-.app-icons img,
-.social-icons img {
-  width: 26px;
-  height: 26px;
+.app-links img,
+.social-links img {
+  height: 28px;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease;
 }
 
-.app-icons img:hover,
-.social-icons img:hover {
+.app-links img:hover,
+.social-links img:hover {
   transform: scale(1.1);
 }
+
+
 
 /* ============================= */
 /* === Location Modal === */

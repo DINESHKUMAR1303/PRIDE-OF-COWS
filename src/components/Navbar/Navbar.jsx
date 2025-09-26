@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { FiMenu, FiX, FiChevronDown } from "react-icons/fi";
 import "./Navbar.css";
 
 import logo from "../../images/icons/logo.png";
@@ -45,7 +46,6 @@ const Navbar = () => {
   const [location, setLocation] = useState("ENTER A PINCODE");
   const [pincode, setPincode] = useState("");
   const [place, setPlace] = useState("");
-  const [sticky, setSticky] = useState(false);
 
   const [hoveredProduct, setHoveredProduct] = useState("All");
   const [hoveredLearn, setHoveredLearn] = useState("About Us");
@@ -79,14 +79,6 @@ const Navbar = () => {
     if (savedLocation) setLocation(savedLocation);
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setSticky(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   const handleSaveLocation = () => {
     const selected = place || pincode;
     if (selected) {
@@ -116,7 +108,8 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className={`navbar ${sticky ? "sticky" : ""}`}>
+      {/* === Top Navbar === */}
+      <nav className="navbar">
         <div className="navbar-left">
           <img src={logo} alt="Pride of Cows" className="logo" />
           <button className="pincode-btn" onClick={() => setModalOpen(true)}>
@@ -127,6 +120,7 @@ const Navbar = () => {
 
         <div className="navbar-center">
           <ul className="menu">
+            {/* Shop Dropdown */}
             <li
               className={`dropdown ${openDropdown === "shop" ? "open" : ""}`}
               onMouseEnter={() => setOpenDropdown("shop")}
@@ -156,6 +150,7 @@ const Navbar = () => {
               </div>
             </li>
 
+            {/* Learn Dropdown */}
             <li
               className={`dropdown ${openDropdown === "learn" ? "open" : ""}`}
               onMouseEnter={() => setOpenDropdown("learn")}
@@ -185,6 +180,7 @@ const Navbar = () => {
               </div>
             </li>
 
+            {/* Blog Dropdown */}
             <li
               className={`dropdown ${openDropdown === "blog" ? "open" : ""}`}
               onMouseEnter={() => setOpenDropdown("blog")}
@@ -217,6 +213,7 @@ const Navbar = () => {
             <li>Gift card</li>
           </ul>
 
+          {/* Right Side */}
           <div className="navbar-right">
             <div className="login">
               <img src={loginIcon} alt="login" className="right-icon" />
@@ -242,7 +239,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Location Modal */}
+      {/* === Location Modal === */}
       {modalOpen && (
         <div className="modal-overlay">
           <div className="modal">
@@ -268,66 +265,106 @@ const Navbar = () => {
         </div>
       )}
 
-      {/* Mobile Side Menu */}
-      {menuOpen && (
-        <div className="side-menu-overlay" onClick={() => setMenuOpen(false)}>
-          <div className="side-menu" onClick={(e) => e.stopPropagation()}>
-            <button className="close-btn" onClick={() => setMenuOpen(false)}>
-              <FaTimes />
-            </button>
+{/* === Mobile Side Menu === */}
+{menuOpen && (
+  <div
+    className="side-menu-overlay active"
+    onClick={() => setMenuOpen(false)}
+  >
+    <div
+      className="side-menu active"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Close Button */}
+      <button className="close-btn" onClick={() => setMenuOpen(false)}>
+        <FaTimes />
+      </button>
 
-            <div className="side-menu-content">
-              <div className="side-login">
-                <img src={loginIcon} alt="login" className="right-icon" />
-                <span>Login</span>
-              </div>
+      <div className="side-menu-content">
+        {/* Login */}
+        <div className="side-login">
+          <img src={loginIcon} alt="login" className="right-icon" />
+          <span>Login</span>
+        </div>
 
-              <div className="side-section">
-                <h4>Shop</h4>
-                <ul>
-                  {shopItems.map((item) => (
-                    <li key={item.name}>{item.name}</li>
-                  ))}
-                </ul>
-              </div>
+        {/* Shop Accordion */}
+        <div className="accordion">
+          <button
+            className="accordion-header"
+            onClick={() =>
+              setOpenDropdown(openDropdown === "shop" ? null : "shop")
+            }
+            aria-expanded={openDropdown === "shop"}
+          >
+            Shop <ChevronIcon isOpen={openDropdown === "shop"} />
+          </button>
+          {openDropdown === "shop" && (
+            <ul className="accordion-list">
+              {shopItems.map((item) => (
+                <li key={item.name} onClick={() => setMenuOpen(false)}>
+                  {item.name}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
-              <div className="side-section">
-                <h4>Support</h4>
-                <ul>
-                  <li><img src={enquiryIcon} alt="" /> Enquiry</li>
-                  <li><img src={helpIcon} alt="" /> Help</li>
-                  <li><img src={contactIcon} alt="" /> Contact</li>
-                  <li><img src={faqIcon} alt="" /> FAQ</li>
-                </ul>
-              </div>
+        {/* Support (Static List) */}
+        <div className="side-section">
+          <h4>Support</h4>
+          <ul>
+            <li onClick={() => setMenuOpen(false)}>
+              <img src={enquiryIcon} alt="" /> Enquiry
+            </li>
+            <li onClick={() => setMenuOpen(false)}>
+              <img src={helpIcon} alt="" /> Help
+            </li>
+            <li onClick={() => setMenuOpen(false)}>
+              <img src={contactIcon} alt="" /> Contact
+            </li>
+            <li onClick={() => setMenuOpen(false)}>
+              <img src={faqIcon} alt="" /> FAQ
+            </li>
+          </ul>
+        </div>
 
-              <div className="side-section">
-                <h4>Learn More</h4>
-                <ul>
-                  <li><img src={aboutIcon} alt="" /> About Us</li>
-                  <li><img src={lifestyleIcon} alt="" /> Life Style</li>
-                  <li><img src={recipesIcon} alt="" /> Recipes</li>
-                </ul>
-              </div>
+        {/* Learn More (Static List) */}
+        <div className="side-section">
+          <h4>Learn More</h4>
+          <ul>
+            <li onClick={() => setMenuOpen(false)}>
+              <img src={aboutIcon} alt="" /> About Us
+            </li>
+            <li onClick={() => setMenuOpen(false)}>
+              <img src={lifestyleIcon} alt="" /> Life Style
+            </li>
+            <li onClick={() => setMenuOpen(false)}>
+              <img src={recipesIcon} alt="" /> Recipes
+            </li>
+          </ul>
+        </div>
 
-              <div className="side-footer">
-                <div className="app-links">
-                  <span>Get The App</span>
-                  <img src={appstoreIcon} alt="App Store" />
-                  <img src={playstoreIcon} alt="Play Store" />
-                </div>
-                <div className="social-links">
-                  <span>Follow Us</span>
-                  <img src={instagramIcon} alt="Instagram" />
-                  <img src={facebookIcon} alt="Facebook" />
-                  <img src={twitterIcon} alt="Twitter" />
-                  <img src={youtubeIcon} alt="YouTube" />
-                </div>
-              </div>
-            </div>
+        {/* Footer */}
+        <div className="side-footer">
+          <div className="app-links">
+            <span>Get The App</span>
+            <img src={appstoreIcon} alt="App Store" />
+            <img src={playstoreIcon} alt="Play Store" />
+          </div>
+          <div className="social-links">
+            <span>Follow Us</span>
+            <img src={instagramIcon} alt="Instagram" />
+            <img src={facebookIcon} alt="Facebook" />
+            <img src={twitterIcon} alt="Twitter" />
+            <img src={youtubeIcon} alt="YouTube" />
           </div>
         </div>
-      )}
+      </div>
+    </div>
+  </div>
+)}
+
+
     </>
   );
 };
