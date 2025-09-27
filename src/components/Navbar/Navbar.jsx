@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { FiMenu, FiX, FiChevronDown } from "react-icons/fi";
+import { FaBars, FaTimes } from "react-icons/fa";
 import "./Navbar.css";
 
+// === Icons & Images ===
 import logo from "../../images/icons/logo.png";
 import loginIcon from "../../images/icons/user.svg";
 import cartIcon from "../../images/icons/cart.svg";
@@ -22,6 +23,7 @@ import facebookIcon from "../../images/icons/facebook.svg";
 import twitterIcon from "../../images/icons/twitter.svg";
 import youtubeIcon from "../../images/icons/youtube.svg";
 
+// === Dropdown Preview Images ===
 import allImg from "./images/allproducts.jpg";
 import milkImg from "./images/milk.webp";
 import gheeImg from "./images/ghee.webp";
@@ -38,8 +40,6 @@ import sustainImg from "./images/sustainability.jpg";
 import recipesImg from "./images/recipe.jpg";
 import lifestyleImg from "./images/lifestyle.jpg";
 
-import { FaBars, FaTimes } from "react-icons/fa";
-
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -52,6 +52,7 @@ const Navbar = () => {
   const [hoveredBlog, setHoveredBlog] = useState("Recipes");
   const [openDropdown, setOpenDropdown] = useState(null);
 
+  // === Shop / Learn / Blog Dropdown Data ===
   const shopItems = [
     { name: "All", img: allImg },
     { name: "Milk", img: milkImg },
@@ -74,6 +75,7 @@ const Navbar = () => {
     { name: "Lifestyle", img: lifestyleImg },
   ];
 
+  // === Restore Saved Location from localStorage ===
   useEffect(() => {
     const savedLocation = localStorage.getItem("userLocation");
     if (savedLocation) setLocation(savedLocation);
@@ -90,6 +92,7 @@ const Navbar = () => {
     }
   };
 
+  // === Small Chevron Arrow Icon ===
   const ChevronIcon = ({ isOpen }) => (
     <svg
       className={`arrow-icon ${isOpen ? "open" : ""}`}
@@ -265,7 +268,7 @@ const Navbar = () => {
         </div>
       )}
 
-{/* === Mobile Side Menu === */}
+     {/* === Mobile Side Menu === */}
 {menuOpen && (
   <div
     className="side-menu-overlay active"
@@ -275,16 +278,17 @@ const Navbar = () => {
       className="side-menu active"
       onClick={(e) => e.stopPropagation()}
     >
-      {/* Close Button */}
-      <button className="close-btn" onClick={() => setMenuOpen(false)}>
-        <FaTimes />
-      </button>
-
       <div className="side-menu-content">
-        {/* Login */}
+        
+        {/* Login Row with Close Button */}
         <div className="side-login">
-          <img src={loginIcon} alt="login" className="right-icon" />
-          <span>Login</span>
+          <div className="side-login-left">
+            <img src={loginIcon} alt="login" className="right-icon" />
+            <span className="login-text">Login</span>
+          </div>
+          <button className="close-btn" onClick={() => setMenuOpen(false)}>
+            <FaTimes />
+          </button>
         </div>
 
         {/* Shop Accordion */}
@@ -296,7 +300,8 @@ const Navbar = () => {
             }
             aria-expanded={openDropdown === "shop"}
           >
-            Shop <ChevronIcon isOpen={openDropdown === "shop"} />
+            <span>Shop</span>
+            <ChevronIcon isOpen={openDropdown === "shop"} />
           </button>
           {openDropdown === "shop" && (
             <ul className="accordion-list">
@@ -309,38 +314,24 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* Support (Static List) */}
+        {/* Support Section */}
         <div className="side-section">
           <h4>Support</h4>
           <ul>
-            <li onClick={() => setMenuOpen(false)}>
-              <img src={enquiryIcon} alt="" /> Enquiry
-            </li>
-            <li onClick={() => setMenuOpen(false)}>
-              <img src={helpIcon} alt="" /> Help
-            </li>
-            <li onClick={() => setMenuOpen(false)}>
-              <img src={contactIcon} alt="" /> Contact
-            </li>
-            <li onClick={() => setMenuOpen(false)}>
-              <img src={faqIcon} alt="" /> FAQ
-            </li>
+            <li><img src={enquiryIcon} alt="" /> Enquiry</li>
+            <li><img src={helpIcon} alt="" /> Help</li>
+            <li><img src={contactIcon} alt="" /> Contact</li>
+            <li><img src={faqIcon} alt="" /> FAQ</li>
           </ul>
         </div>
 
-        {/* Learn More (Static List) */}
+        {/* Learn More Section */}
         <div className="side-section">
           <h4>Learn More</h4>
           <ul>
-            <li onClick={() => setMenuOpen(false)}>
-              <img src={aboutIcon} alt="" /> About Us
-            </li>
-            <li onClick={() => setMenuOpen(false)}>
-              <img src={lifestyleIcon} alt="" /> Life Style
-            </li>
-            <li onClick={() => setMenuOpen(false)}>
-              <img src={recipesIcon} alt="" /> Recipes
-            </li>
+            <li><img src={aboutIcon} alt="" /> About Us</li>
+            <li><img src={lifestyleIcon} alt="" /> Life Style</li>
+            <li><img src={recipesIcon} alt="" /> Recipes</li>
           </ul>
         </div>
 
