@@ -268,7 +268,7 @@ const Navbar = () => {
         </div>
       )}
 
-     {/* === Mobile Side Menu === */}
+{/* === Mobile Side Menu === */}
 {menuOpen && (
   <div
     className="side-menu-overlay active"
@@ -315,7 +315,7 @@ const Navbar = () => {
         </div>
 
         {/* Support Section */}
-        <div className="side-section">
+        <div className="side-section support">
           <h4>Support</h4>
           <ul>
             <li><img src={enquiryIcon} alt="" /> Enquiry</li>
@@ -326,7 +326,7 @@ const Navbar = () => {
         </div>
 
         {/* Learn More Section */}
-        <div className="side-section">
+        <div className="side-section learn-more">
           <h4>Learn More</h4>
           <ul>
             <li><img src={aboutIcon} alt="" /> About Us</li>

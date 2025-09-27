@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Suranna&display=swap');
 /* ============================= */
 /* === Base Navbar (Desktop) === */
 /* ============================= */
@@ -344,8 +345,8 @@
   gap: 10px;
 }
 .side-login-left img {
-  width: 24px;
-  height: 24px;
+  width: 28px; /* bigger login icon */
+  height: 28px;
 }
 .side-login .login-text {
   font-size: 18px;
@@ -365,7 +366,7 @@
 .accordion-header {
   width: 100%;
   display: flex;
-  margin-left:-8px ;
+  margin-left: -7px; /* move Shop slightly left */
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
@@ -403,21 +404,33 @@
 }
 
 /* ===== Section blocks ===== */
+.side-section {
+  border-top: none; /* default: no line */
+}
+
+/* Add line above only Support & Learn More */
+.side-section.support,
+.side-section.learn-more {
+  border-top: 1px solid var(--line);
+}
+
 .side-section h4 {
   margin: 0;
-  margin-left: -5px;
+  margin-left: -7px;
   padding: 14px 20px 8px;
   font-size: 14px;
   font-weight: 700;
   color: var(--navy);
   letter-spacing: 0.3px;
-  border-top: 1px solid var(--line);
+  border: none; /* no borders on heading */
 }
+
 .side-section ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
+
 .side-section li {
   display: flex;
   align-items: center;
@@ -438,34 +451,51 @@
   background: #f9fbfd;
 }
 
+/* ✅ Remove bottom border from last item in each section */
+.side-section ul li:last-child {
+  border-bottom: none;
+}
+
 /* ===== Footer ===== */
 .side-footer {
   border-top: 1px solid var(--line);
-  padding: 18px 20px 22px;
+  padding: 24px 20px;
   text-align: center;
   background: var(--white);
 }
+
+/* Footer rows */
 .app-links,
 .social-links {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 16px;
+  gap: 10px; /* tighter space between text & icons */
+  margin-bottom: 20px;
 }
+
+/* ✅ Updated text style */
 .app-links span,
 .social-links span {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--muted);
-  margin-right: 4px;
+  font-size: 16px;
+  font-family: 'Suranna', serif;
+  color: #616161;
+  margin: 0; /* remove extra bottom margin */
+  line-height: 1; /* keep text vertically centered */
+  display: flex;
+  align-items: center; /* align text to icons */
 }
+
+/* Icons */
 .app-links img {
-  height: 28px;
+  height: 26px;
 }
+
 .social-links img {
-  height: 24px;
+  height: 22px;
 }
+
+/* Hover effect */
 .app-links img,
 .social-links img {
   cursor: pointer;
@@ -475,11 +505,6 @@
 .social-links img:hover {
   opacity: 0.7;
 }
-
-
-
-
-
 
 
 
