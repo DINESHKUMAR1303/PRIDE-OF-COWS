@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 import "./Navbar.css";
 
 // === Icons & Images ===
@@ -40,6 +40,28 @@ import sustainImg from "./images/sustainability.jpg";
 import recipesImg from "./images/recipe.jpg";
 import lifestyleImg from "./images/lifestyle.jpg";
 
+// === Custom Hamburger Icon ===
+const CustomMenuIcon = ({
+  size = 28,
+  color = "#193B61",
+  topThickness = 1.5,
+  middleThickness = 2,
+  bottomThickness = 1.5,
+}) => {
+  const gap = size * 0.2;
+  const topY = 4;
+  const middleY = topY + gap;
+  const bottomY = topY + gap * 2;
+
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <rect x="6" y={topY} width="12" height={topThickness} rx={topThickness / 2} fill={color} />
+      <rect x="6" y={middleY} width="20" height={middleThickness} rx={middleThickness / 2} fill={color} />
+      <rect x="6" y={bottomY} width="12" height={bottomThickness} rx={bottomThickness / 2} fill={color} />
+    </svg>
+  );
+};
+
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -52,7 +74,7 @@ const Navbar = () => {
   const [hoveredBlog, setHoveredBlog] = useState("Recipes");
   const [openDropdown, setOpenDropdown] = useState(null);
 
-  // === Shop / Learn / Blog Dropdown Data ===
+  // Dropdown items
   const shopItems = [
     { name: "All", img: allImg },
     { name: "Milk", img: milkImg },
@@ -75,7 +97,6 @@ const Navbar = () => {
     { name: "Lifestyle", img: lifestyleImg },
   ];
 
-  // === Restore Saved Location from localStorage ===
   useEffect(() => {
     const savedLocation = localStorage.getItem("userLocation");
     if (savedLocation) setLocation(savedLocation);
@@ -92,7 +113,6 @@ const Navbar = () => {
     }
   };
 
-  // === Small Chevron Arrow Icon ===
   const ChevronIcon = ({ isOpen }) => (
     <svg
       className={`arrow-icon ${isOpen ? "open" : ""}`}
@@ -144,10 +164,7 @@ const Navbar = () => {
                     ))}
                   </ul>
                   <div className="shop-preview square">
-                    <img
-                      src={shopItems.find((p) => p.name === hoveredProduct)?.img}
-                      alt={hoveredProduct}
-                    />
+                    <img src={shopItems.find((p) => p.name === hoveredProduct)?.img} alt={hoveredProduct} />
                   </div>
                 </div>
               </div>
@@ -174,10 +191,7 @@ const Navbar = () => {
                     ))}
                   </ul>
                   <div className="shop-preview square">
-                    <img
-                      src={learnItems.find((p) => p.name === hoveredLearn)?.img}
-                      alt={hoveredLearn}
-                    />
+                    <img src={learnItems.find((p) => p.name === hoveredLearn)?.img} alt={hoveredLearn} />
                   </div>
                 </div>
               </div>
@@ -204,10 +218,7 @@ const Navbar = () => {
                     ))}
                   </ul>
                   <div className="shop-preview square">
-                    <img
-                      src={blogItems.find((p) => p.name === hoveredBlog)?.img}
-                      alt={hoveredBlog}
-                    />
+                    <img src={blogItems.find((p) => p.name === hoveredBlog)?.img} alt={hoveredBlog} />
                   </div>
                 </div>
               </div>
@@ -231,12 +242,8 @@ const Navbar = () => {
               <span className="cart-text">CART</span>
             </div>
 
-            <button
-              className="menu-toggle"
-              onClick={() => setMenuOpen(true)}
-              aria-label="Toggle menu"
-            >
-              <FaBars />
+            <button className="menu-toggle" onClick={() => setMenuOpen(true)} aria-label="Toggle menu">
+              <CustomMenuIcon size={28} color="#001F3F" />
             </button>
           </div>
         </div>
@@ -249,12 +256,7 @@ const Navbar = () => {
             <button className="modal-close" onClick={() => setModalOpen(false)}>
               ✕
             </button>
-            <input
-              type="text"
-              placeholder="PINCODE"
-              value={pincode}
-              onChange={(e) => setPincode(e.target.value)}
-            />
+            <input type="text" placeholder="PINCODE" value={pincode} onChange={(e) => setPincode(e.target.value)} />
             <input
               type="text"
               placeholder="Search for a place"
@@ -268,94 +270,76 @@ const Navbar = () => {
         </div>
       )}
 
-{/* === Mobile Side Menu === */}
-{menuOpen && (
-  <div
-    className="side-menu-overlay active"
-    onClick={() => setMenuOpen(false)}
-  >
-    <div
-      className="side-menu active"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <div className="side-menu-content">
-        
-        {/* Login Row with Close Button */}
-        <div className="side-login">
-          <div className="side-login-left">
-            <img src={loginIcon} alt="login" className="right-icon" />
-            <span className="login-text">Login</span>
-          </div>
-          <button className="close-btn" onClick={() => setMenuOpen(false)}>
-            <FaTimes />
-          </button>
-        </div>
+      {/* === Mobile Side Menu (Offcanvas) === */}
+      <div className={`side-menu-overlay ${menuOpen ? "active" : ""}`} onClick={() => setMenuOpen(false)}></div>
 
-        {/* Shop Accordion */}
-        <div className="accordion">
-          <button
-            className="accordion-header"
-            onClick={() =>
-              setOpenDropdown(openDropdown === "shop" ? null : "shop")
-            }
-            aria-expanded={openDropdown === "shop"}
-          >
-            <span>Shop</span>
-            <ChevronIcon isOpen={openDropdown === "shop"} />
-          </button>
-          {openDropdown === "shop" && (
-            <ul className="accordion-list">
-              {shopItems.map((item) => (
-                <li key={item.name} onClick={() => setMenuOpen(false)}>
-                  {item.name}
-                </li>
-              ))}
+      <div className={`side-menu ${menuOpen ? "active" : ""}`}>
+        <div className="side-menu-content">
+          <div className="side-login">
+            <div className="side-login-left">
+              <img src={loginIcon} alt="login" className="right-icon" />
+              <span className="login-text">Login</span>
+            </div>
+            <button className="close-btn" onClick={() => setMenuOpen(false)}>
+              <FaTimes />
+            </button>
+          </div>
+
+          <div className="accordion">
+            <button
+              className="accordion-header"
+              onClick={() => setOpenDropdown(openDropdown === "shop" ? null : "shop")}
+              aria-expanded={openDropdown === "shop"}
+            >
+              <span>Shop</span>
+              <ChevronIcon isOpen={openDropdown === "shop"} />
+            </button>
+            {openDropdown === "shop" && (
+              <ul className="accordion-list">
+                {shopItems.map((item) => (
+                  <li key={item.name} onClick={() => setMenuOpen(false)}>
+                    {item.name}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          <div className="side-section support">
+            <h4>Support</h4>
+            <ul>
+              <li><img src={enquiryIcon} alt="" /> Enquiry</li>
+              <li><img src={helpIcon} alt="" /> Help</li>
+              <li><img src={contactIcon} alt="" /> Contact</li>
+              <li><img src={faqIcon} alt="" /> FAQ</li>
             </ul>
-          )}
-        </div>
-
-        {/* Support Section */}
-        <div className="side-section support">
-          <h4>Support</h4>
-          <ul>
-            <li><img src={enquiryIcon} alt="" /> Enquiry</li>
-            <li><img src={helpIcon} alt="" /> Help</li>
-            <li><img src={contactIcon} alt="" /> Contact</li>
-            <li><img src={faqIcon} alt="" /> FAQ</li>
-          </ul>
-        </div>
-
-        {/* Learn More Section */}
-        <div className="side-section learn-more">
-          <h4>Learn More</h4>
-          <ul>
-            <li><img src={aboutIcon} alt="" /> About Us</li>
-            <li><img src={lifestyleIcon} alt="" /> Life Style</li>
-            <li><img src={recipesIcon} alt="" /> Recipes</li>
-          </ul>
-        </div>
-
-        {/* Footer */}
-        <div className="side-footer">
-          <div className="app-links">
-            <span>Get The App</span>
-            <img src={appstoreIcon} alt="App Store" />
-            <img src={playstoreIcon} alt="Play Store" />
           </div>
-          <div className="social-links">
-            <span>Follow Us</span>
-            <img src={instagramIcon} alt="Instagram" />
-            <img src={facebookIcon} alt="Facebook" />
-            <img src={twitterIcon} alt="Twitter" />
-            <img src={youtubeIcon} alt="YouTube" />
+
+          <div className="side-section learn-more">
+            <h4>Learn More</h4>
+            <ul>
+              <li><img src={aboutIcon} alt="" /> About Us</li>
+              <li><img src={lifestyleIcon} alt="" /> Lifestyle</li>
+              <li><img src={recipesIcon} alt="" /> Recipes</li>
+            </ul>
+          </div>
+
+          <div className="side-footer">
+            <div className="app-links">
+              <span>Get The App</span>
+              <img src={appstoreIcon} alt="App Store" />
+              <img src={playstoreIcon} alt="Play Store" />
+            </div>
+            <div className="social-links">
+              <span>Follow Us</span>
+              <img src={instagramIcon} alt="Instagram" />
+              <img src={facebookIcon} alt="Facebook" />
+              <img src={twitterIcon} alt="Twitter" />
+              <img src={youtubeIcon} alt="YouTube" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-)}
-
-
     </>
   );
 };

@@ -298,6 +298,57 @@
   cursor: pointer;
 }
 
+/* === Offcanvas Mobile Side Menu === */
+
+.side-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease-in-out;
+  z-index: 4000;
+}
+
+/* Overlay visible when active */
+.side-menu-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Side menu panel */
+.side-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 80%;
+  height: 100%;
+  background: #fff;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.15);
+  transform: translateX(100%);
+  transition: transform 0.4s ease-in-out;
+  z-index: 4010;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Slide in when active */
+.side-menu.active {
+  transform: translateX(0);
+}
+
+/* Content styling (optional for padding, scroll, etc.) */
+.side-menu-content {
+  overflow-y: auto;
+  height: 100%;
+  padding: 1.5rem;
+}
+
+
+
 /* ============================= */
 /* ===  Side menu Overlay === */
 /* ============================= */
@@ -456,10 +507,12 @@
   border-bottom: none;
 }
 
-/* ===== Footer ===== */
+/* ============================= */
+/* === Footer Section (Side Menu) === */
+/* ============================= */
 .side-footer {
   border-top: 1px solid var(--line);
-  padding: 24px 20px;
+  padding: 40px 0 60px; /* balanced top and bottom spacing */
   text-align: center;
   background: var(--white);
 }
@@ -470,37 +523,40 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px; /* tighter space between text & icons */
-  margin-bottom: 20px;
+  gap: 10px; /* even spacing between text & icons */
+  margin-bottom: 25px; /* space between rows */
 }
 
-/* ✅ Updated text style */
+/* Footer text */
 .app-links span,
 .social-links span {
-  font-size: 16px;
+  font-size: 17px; /* slightly larger for readability */
   font-family: 'Suranna', serif;
-  color: #616161;
-  margin: 0; /* remove extra bottom margin */
-  line-height: 1; /* keep text vertically centered */
+  color: #616161; /* subtle grey like original */
+  margin-right: 8px; /* little gap before icons */
+  line-height: 1;
   display: flex;
-  align-items: center; /* align text to icons */
+  align-items: center;
+  letter-spacing: 0.3px;
 }
 
-/* Icons */
+/* App store icons */
 .app-links img {
-  height: 26px;
-}
-
-.social-links img {
-  height: 22px;
-}
-
-/* Hover effect */
-.app-links img,
-.social-links img {
+  height: 28px;
+  width: auto;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s ease;
 }
+
+/* Social media icons */
+.social-links img {
+  height: 24px;
+  width: auto;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+/* Hover fade */
 .app-links img:hover,
 .social-links img:hover {
   opacity: 0.7;
@@ -579,50 +635,52 @@
 /* ============================= */
 /* === Responsive Rules === */
 /* ============================= */
-/* ====== Mobile View (320px - 766px) ====== */
-@media (max-width: 766px) {
-  .navbar {
-    padding: 10px 20px;
-    align-items: center;
-  }
 
-  .menu {
-    display: none;
+/* ====== Mobile View (320px - 767px) ====== */
+@media (max-width: 767px) {
+  .navbar {
+    padding: 10px 15px;
+    align-items: center;
   }
 
   .navbar-left {
     flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
   .logo {
-    height: 45px;
+    height: 55px; /* optimized for mobile */
   }
 
   .pincode-btn {
     display: none;
   }
 
+  .menu {
+    display: none;
+  }
+
   .navbar-right {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 8px; /* perfect spacing for small screens */
   }
 
-  .login {
+  .login,
+  .cart {
+    display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 2px;
     padding-bottom: 0;
   }
 
-  .login-text {
-    display: block;
-    font-size: 12px;
+  .login-text,
+  .cart-text {
+    font-size: 11px;
     text-align: center;
-  }
-
-  .cart {
-    display: none; /* ✅ hide cart in mobile */
   }
 
   .menu-toggle {
@@ -631,50 +689,51 @@
   }
 }
 
-/* ====== Tablet (767px - 1023px) ====== */
+/* ====== Tablet View (767px - 1023px) ====== */
 @media (min-width: 767px) and (max-width: 1023px) {
   .navbar {
     padding: 10px 20px;
     align-items: center;
   }
 
-  .menu {
-    display: none;
-  }
-
   .navbar-left {
     flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 15px;
   }
 
   .logo {
-    height: 50px;
+    height: 65px; /* bigger logo for tablet */
   }
 
   .pincode-btn {
     display: none;
   }
 
+  .menu {
+    display: none;
+  }
+
   .navbar-right {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
   }
 
-  .login {
+  .login,
+  .cart {
+    display: flex;
     flex-direction: column;
     align-items: center;
     gap: 4px;
     padding-bottom: 0;
   }
 
-  .login-text {
-    display: block;
+  .login-text,
+  .cart-text {
     font-size: 12px;
     text-align: center;
-  }
-
-  .cart {
-    display: none; /* ✅ hide cart in tablet too */
   }
 
   .menu-toggle {
@@ -682,8 +741,6 @@
     font-size: 22px;
   }
 }
-
-
 
 /* ====== Small Desktop (1024px - 1439px) ====== */
 @media (min-width: 1024px) and (max-width: 1439px) {
@@ -724,7 +781,7 @@
 }
 
 /* ====== Ultra-Wide Screens (1921px - 2560px) ====== */
-@media (min-width: 1921px) and (max-width: 2560px) {
+@media (min-width: 1921px) {
   .navbar {
     padding: 20px 250px;
   }
@@ -745,3 +802,4 @@
     font-size: 16px;
   }
 }
+
