@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Homebanner.css";
 
-
 import banner1 from "../../images/powerpackedpanner.jpg";
 import banner2 from "../../images/0fact.jpg";
 import banner3 from "../../images/curdtheway.jpg";
@@ -63,20 +62,70 @@ const Homebanner = () => {
       </section>
 
       <div className="carousel-controls">
+        {/* Previous Button */}
         <button
           className="arrow-button"
           onClick={prevSlide}
           aria-label="Previous slide"
         >
-          ←
+          <svg
+            width="27"
+            height="13"
+            viewBox="0 0 27 13"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6 1L1 6.5L6 12"
+              stroke="#193B61"
+              strokeWidth="1"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <line
+              x1="1"
+              y1="6.5"
+              x2="26"
+              y2="6.5"
+              stroke="#193B61"
+              strokeWidth="1"
+              strokeLinecap="round"
+            />
+          </svg>
         </button>
+
         <div className="line"></div>
+
+        {/* Next Button */}
         <button
           className="arrow-button"
           onClick={nextSlide}
           aria-label="Next slide"
         >
-          →
+          <svg
+            width="27"
+            height="13"
+            viewBox="0 0 27 13"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M21 1L26 6.5L21 12"
+              stroke="#193B61"
+              strokeWidth="1"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <line
+              x1="1"
+              y1="6.5"
+              x2="26"
+              y2="6.5"
+              stroke="#193B61"
+              strokeWidth="1"
+              strokeLinecap="round"
+            />
+          </svg>
         </button>
       </div>
     </div>

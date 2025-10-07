@@ -1,9 +1,9 @@
 /* === Notification Bar === */
 .notification-bar {
-  background: #c29d5f;
+  background: #ae8a49;
   color: white;
-  padding: 8px 0;
-  font-size: 14px;
+  padding: 10px 0;
+  font-size: 16px;
   overflow: hidden;
   white-space: nowrap;
   position: relative;  /* stays in normal flow so it scrolls away */

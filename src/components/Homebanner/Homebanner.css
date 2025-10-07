@@ -1,6 +1,3 @@
-/* ============================= */
-/* === Wrapper (outer) === */
-/* ============================= */
 .homebanner-wrapper {
   width: 100vw;
   max-width: 100vw;
@@ -8,276 +5,113 @@
   padding: 0;
   box-sizing: border-box;
   overflow-x: hidden;
+  background: #f5f5f5; 
 }
 
-/* ============================= */
-/* === Carousel Container === */
-/* ============================= */
+/* Carousel Container */
 .carousel {
   position: relative;
   width: 100vw;
-  height: auto;            /* default mobile height */
   overflow: hidden;
   background: #fff;
   margin: 0;
   padding: 0;
-  border: none;
 }
 
 .carousel-inner {
   display: flex;
-  height: 100%;
   transition: transform 0.5s ease-in-out;
-  align-items: center;
 }
 
 .carousel-item {
   flex: 0 0 100%;
   width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
 }
 
 .carousel-item img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;        /* default for large screens */
-  object-position: center;
-  max-width: 100%;
-  max-height: 100%;
-  margin: 0 auto;
+  height: auto;
+  object-fit: cover;
 }
 
-/* ============================= */
-/* === Mobile (<= 480px) fix === */
-/* ============================= */
-@media (max-width: 480px) {
-  .carousel-item img {
-    object-fit: contain;   /* show full image without hiding */
-    background: #fff;      /* fill empty sides with white */
-  }
-}
-
-/* ============================= */
-/* === Controls === */
-/* ============================= */
+/* Controls (Arrows + Line) */
 .carousel-controls {
   margin-top: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  gap: 12px;
+  gap: 20px;
   padding: 0 12px;
   box-sizing: border-box;
 }
 
 .carousel-controls .line {
   flex-grow: 1;
-  height: 2px;
-  background: #d1d5db;
-  max-width: 300px;
+  height: 1px;
+  background: #cdd3da;
+  max-width: 850px;
   border-radius: 1px;
 }
 
 /* ============================= */
-/* === Arrows === */
+/* === Arrow Buttons (Final) === */
 /* ============================= */
 .arrow-button {
   background: #fff;
-  border: 1px solid #d1d5db;
-  color: #1e3a8a;
-  font-size: 14px;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  cursor: pointer;
+  border: none;
+  color: #193B61;
+  width: 65px;               /* pill width */
+  height: 41px;              /* pill height */
+  border-radius: 9999px;     /* smooth pill shape */
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all 0.22s ease;
-  touch-action: manipulation;
+  cursor: pointer;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
+/* Simple color feedback */
 .arrow-button:hover {
-  background: #1e3a8a;
-  color: #fff;
-  border-color: #1e3a8a;
-  transform: scale(1.06);
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
 
+/* SVG arrow styling */
+.arrow-button svg {
+  width: 26px;
+  height: 13px;
+  stroke: #193B61;
+  stroke-width: 1; /* thin, elegant line */
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Left arrow slides left */
+.arrow-button:hover svg {
+  transform: translateX(-5px);
+}
+
+/* Right arrow slides right */
+.arrow-button:last-of-type:hover svg {
+  transform: translateX(5px);
+}
+
+/* Focus ring for accessibility */
 .arrow-button:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(30,58,138,0.18);
+  box-shadow: 0 0 0 3px rgba(25, 59, 97, 0.15);
 }
 
-/* ============================= */
-/* === Extra small phones (<= 320px) === */
-/* ============================= */
-@media (max-width: 320px) {
-  .carousel {
-    height: 140px;
-  }
+/* Responsive Adjustments */
+@media (max-width: 480px) {
   .arrow-button {
-    font-size: 12px;
-    width: 28px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
   }
+
   .carousel-controls .line {
-    max-width: 180px;
-  }
-}
-/* ============================= */
-/* === Small phones (321px - 375px) === */
-/* ============================= */
-@media (min-width: 321px) and (max-width: 375px) {
-  .carousel {
-    height: 180px;   /* increased from 150px */
-  }
-  .arrow-button {
-    font-size: 13px;
-    width: 30px;
-    height: 30px;
-  }
-  .carousel-controls .line {
-    max-width: 220px;  /* slightly increased */
-  }
-}
-
-/* ============================= */
-/* === Small phones (376px - 480px) === */
-/* ============================= */
-@media (min-width: 376px) and (max-width: 480px) {
-  .carousel {
-    height: 200px;   /* increased from 170px */
-  }
-  .arrow-button {
-    font-size: 14px;
-    width: 32px;
-    height: 32px;
-  }
-  .carousel-controls .line {
-    max-width: 270px;  /* slightly increased */
-  }
-}
-
-/* ============================= */
-/* === Tablets (>= 640px) === */
-/* ============================= */
-@media (min-width: 640px) {
-  .carousel {
-    height: 260px;
-  }
-  .carousel-item img {
-    object-fit: cover;  /* go back to cover for big screens */
-  }
-  .arrow-button {
-    font-size: 16px;
-    width: 40px;
-    height: 40px;
-  }
-  .carousel-controls .line {
-    max-width: 600px;
-  }
-}
-/* ============================= */
-/* === Carousel (Base) === */
-/* ============================= */
-.carousel {
-  position: relative;
-  width: 100vw;
-  height: auto;         /* no forced height */
-  overflow: hidden;
-  background: #fff;
-  margin: 0;
-  padding: 0;
-  border: none;
-}
-
-.carousel-item {
-  flex: 0 0 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.carousel-item img {
-  width: 100%;
-  height: auto;         /* keep natural ratio */
-  object-fit: contain;  /* never crop */
-  background: #fff;     /* fill sides if needed */
-}
-
-
-
-
-/* ============================= */
-/* === Extra small phones (<= 320px) === */
-/* ============================= */
-@media (max-width: 320px) {
-  .carousel-item img {
-    max-height: 140px;   /* cap height */
-  }
-}
-
-/* ============================= */
-/* === Small phones (321px - 375px) === */
-/* ============================= */
-@media (min-width: 321px) and (max-width: 375px) {
-  .carousel-item img {
-    max-height: 150px;
-  }
-}
-
-/* ============================= */
-/* === Small phones (376px - 480px) === */
-/* ============================= */
-@media (min-width: 376px) and (max-width: 480px) {
-  .carousel-item img {
-    max-height: 170px;
-  }
-}
-
-/* ============================= */
-/* === Tablets (>= 640px) === */
-/* ============================= */
-@media (min-width: 640px) {
-  .carousel-item img {
-    max-height: 260px;
-    object-fit: cover;   /* switch to cover for banner look */
-  }
-}
-
-/* ============================= */
-/* === Desktop (>= 1024px) === */
-/* ============================= */
-@media (min-width: 1024px) {
-  .carousel-item img {
-    max-height: 500px;
-    object-fit: cover;   /* full bleed on desktop */
-  }
-}
-
-/* ============================= */
-/* === Ultra-wide (>= 1920px) === */
-/* ============================= */
-@media (min-width: 1920px) {
-  .carousel-item img {
-    max-height: 650px;
-  }
-}
-
-/* ============================= */
-/* === 4K screens (>= 2560px) === */
-/* ============================= */
-@media (min-width: 2560px) {
-  .carousel-item img {
-    max-height: 800px;
+    max-width: 220px;
   }
 }
