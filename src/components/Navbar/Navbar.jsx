@@ -68,6 +68,7 @@ const Navbar = () => {
   const [location, setLocation] = useState("ENTER A PINCODE");
   const [pincode, setPincode] = useState("");
   const [place, setPlace] = useState("");
+  const [cartCount, setCartCount] = useState(0); // 🟡 NEW: Cart count state
 
   const [hoveredProduct, setHoveredProduct] = useState("All");
   const [hoveredLearn, setHoveredLearn] = useState("About Us");
@@ -227,22 +228,31 @@ const Navbar = () => {
             <li>Gift card</li>
           </ul>
 
-          {/* Right Side */}
+          {/* === Right Side === */}
           <div className="navbar-right">
             <div className="login">
               <img src={loginIcon} alt="login" className="right-icon" />
               <span className="login-text">LOGIN</span>
             </div>
 
+            {/* 🟡 Updated Cart Section */}
             <div className="cart">
               <div className="cart-wrapper">
                 <img src={cartIcon} alt="cart" className="right-icon" />
-                <span className="cart-count">0</span>
+                {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
               </div>
               <span className="cart-text">CART</span>
             </div>
 
-            <button className="menu-toggle" onClick={() => setMenuOpen(true)} aria-label="Toggle menu">
+            {/* 🟢 When menu opens, example count shows */}
+            <button
+              className="menu-toggle"
+              onClick={() => {
+                setMenuOpen(true);
+                setCartCount(2); // Example: show number when menu opens
+              }}
+              aria-label="Toggle menu"
+            >
               <CustomMenuIcon size={28} color="#001F3F" />
             </button>
           </div>
@@ -270,7 +280,7 @@ const Navbar = () => {
         </div>
       )}
 
-      {/* === Mobile Side Menu (Offcanvas) === */}
+      {/* === Mobile Side Menu === */}
       <div className={`side-menu-overlay ${menuOpen ? "active" : ""}`} onClick={() => setMenuOpen(false)}></div>
 
       <div className={`side-menu ${menuOpen ? "active" : ""}`}>
