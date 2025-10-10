@@ -15,7 +15,7 @@
 
 /* ===== Modal Box ===== */
 .login-modal {
-  background: #f7f7f7;
+  background:  #f4f4f4;
   width: 540px;
   height: 100vh;
   box-shadow: -4px 0 25px rgba(0, 0, 0, 0.15);
@@ -121,7 +121,7 @@
   font-size: 28px;
   color: #1a1a1a;
   font-weight: 500;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 2px solid #ddd;
   padding-bottom: 10px;
   margin-bottom: 30px;
   line-height: 1.4;
