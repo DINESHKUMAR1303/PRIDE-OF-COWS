@@ -15,16 +15,16 @@
 
 /* ===== Modal Box ===== */
 .login-modal {
-  background: #fff;
+  background: #f7f7f7;
   width: 540px;
   height: 100vh;
-  max-height: 100vh;
-  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.2);
+  box-shadow: -4px 0 25px rgba(0, 0, 0, 0.15);
   overflow-y: auto;
   position: relative;
   display: flex;
   flex-direction: column;
   border-radius: 0;
+  font-family: "Inter", sans-serif;
 }
 
 /* ===== Animations ===== */
@@ -50,7 +50,6 @@
   }
 }
 
-/* Apply animations */
 .slide-in {
   animation: slideInRight 0.4s ease forwards;
 }
@@ -60,13 +59,12 @@
 }
 
 /* ===== Close Button ===== */
-
 .register__close {
   position: absolute;
-  top: 40px;
-  right: 30px;
-  width: 22px;
-  height: 35px;
+  top: 26px;
+  right: 26px;
+  width: 32px;
+  height: 32px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -75,14 +73,13 @@
 }
 
 .register__close svg {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
 }
 
 .register__close circle {
   fill: #f2f2f2;
-  stroke: #919191;
-  stroke-width: 1;
+  stroke: #b1b1b1;
 }
 
 .register__close path {
@@ -91,91 +88,108 @@
   stroke-linecap: round;
 }
 
-
 /* ===== Image + Logo ===== */
 .image-container {
   position: relative;
   width: 100%;
-  height: 280px;
+  height: 260px;
   overflow: hidden;
 }
 
 .background-image {
   width: 100%;
   height: 100%;
-  
+  object-fit: cover;
 }
 
 .overlay-logo {
   position: absolute;
-  top: 28px;
-  left: 18%;
-  transform: translateX(-50%);
-  width: 130px;
+  top: 26px;
+  left: 32px;
+  width: 140px;
   z-index: 2;
 }
 
 /* ===== Modal Body ===== */
 .login-modal-body {
-  padding: 10px;
-  text-align: center;
+  padding: 36px 40px;
+  padding-top: 20px;
 }
 
 .login-modal-body h2 {
-  font-family: "suranna", serif;
+  font-family: "Suranna", serif;
   font-size: 28px;
-  color: #222;
+  color: #1a1a1a;
   font-weight: 500;
   border-bottom: 1px solid #ddd;
-  padding-bottom: 5px;
-  margin-bottom: 18px;
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+  line-height: 1.4;
 }
 
+/* ===== Input & Label ===== */
 .label {
   display: block;
   text-align: left;
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 5px;
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 6px;
+  font-weight: 500;
 }
 
 .login-input {
+  display: block;
   width: 100%;
-  padding: 12px 14px;
-  border-radius: 25px;
+  padding: 14px 18px;
+  border-radius: 28px;
   border: 1px solid #ccc;
   outline: none;
   font-size: 15px;
-  margin-bottom: 18px;
-  transition: border-color 0.3s ease;
+  color: #333;
+  margin-bottom: 22px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
 .login-input:focus {
   border-color: #002856;
+  box-shadow: 0 0 4px rgba(0, 40, 86, 0.25);
 }
 
+/* ===== Button ===== */
 .send-otp-btn {
+  display: block;
   width: 100%;
   background: #002856;
   color: #fff;
   border: none;
-  padding: 12px;
-  border-radius: 25px;
-  font-weight: 600;
+  padding: 14px;
+  border-radius: 28px;
+  font-weight: 700;
   font-size: 16px;
   cursor: pointer;
   transition: background 0.3s ease;
+  margin-top: 4px;
+  box-sizing: border-box;
 }
 
 .send-otp-btn:hover {
   background: #001a40;
 }
 
+/* ===== Terms ===== */
 .terms {
-  font-size: 13px;
+  font-size: 14px;
   color: #555;
   text-align: left;
-  margin-top: 12px;
+  margin-top: 24px;
+  line-height: 1.6;
+  display: flex;
+  align-items: center;
+}
+
+.terms input {
+  margin-right: 8px;
 }
 
 .terms a {
@@ -183,14 +197,11 @@
   text-decoration: underline;
 }
 
-.terms input {
-  margin-right: 6px;
-}
-
-/* Hide scrollbar but allow scroll */
+/* ===== Scrollbar ===== */
 .login-modal::-webkit-scrollbar {
   width: 6px;
 }
+
 .login-modal::-webkit-scrollbar-thumb {
   background: transparent;
 }

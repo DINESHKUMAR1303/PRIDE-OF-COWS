@@ -24,6 +24,7 @@ const LoginModal = ({ onClose }) => {
         className={`login-modal ${closing ? "slide-out" : "slide-in"}`}
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Close Button */}
         <div className="register__close" onClick={handleClose}>
           <svg
             width="22"
@@ -41,19 +42,23 @@ const LoginModal = ({ onClose }) => {
           </svg>
         </div>
 
+        {/* Image Section */}
         <div className="image-container">
           <img src={milkPour} alt="Pouring milk" className="background-image" />
           <img src={logo} alt="Pride of Cows Logo" className="overlay-logo" />
         </div>
 
+        {/* Body */}
         <div className="login-modal-body">
           <h2>Welcome to the Pride of Cows Family.</h2>
+
           <label className="label">Phone number</label>
           <input
             type="text"
             placeholder="Enter valid 10-digit phone number"
             className="login-input"
           />
+
           <button className="send-otp-btn">Send OTP</button>
 
           <p className="terms">
