@@ -23,7 +23,6 @@ import facebookIcon from "../../images/icons/facebook.svg";
 import twitterIcon from "../../images/icons/twitter.svg";
 import youtubeIcon from "../../images/icons/youtube.svg";
 
-// === Dropdown Preview Images ===
 import allImg from "./images/allproducts.jpg";
 import milkImg from "./images/milk.webp";
 import gheeImg from "./images/ghee.webp";
@@ -39,6 +38,9 @@ import sustainImg from "./images/sustainability.jpg";
 
 import recipesImg from "./images/recipe.jpg";
 import lifestyleImg from "./images/lifestyle.jpg";
+
+// 🟢 Import Login Modal
+import LoginModal from "./LoginModal";
 
 // === Custom Hamburger Icon ===
 const CustomMenuIcon = ({
@@ -65,17 +67,17 @@ const CustomMenuIcon = ({
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false); // 🟢 New: Login Modal State
   const [location, setLocation] = useState("ENTER A PINCODE");
   const [pincode, setPincode] = useState("");
   const [place, setPlace] = useState("");
-  const [cartCount, setCartCount] = useState(0); // 🟡 NEW: Cart count state
+  const [cartCount, setCartCount] = useState(0);
 
   const [hoveredProduct, setHoveredProduct] = useState("All");
   const [hoveredLearn, setHoveredLearn] = useState("About Us");
   const [hoveredBlog, setHoveredBlog] = useState("Recipes");
   const [openDropdown, setOpenDropdown] = useState(null);
 
-  // Dropdown items
   const shopItems = [
     { name: "All", img: allImg },
     { name: "Milk", img: milkImg },
@@ -144,7 +146,6 @@ const Navbar = () => {
 
         <div className="navbar-center">
           <ul className="menu">
-            {/* Shop Dropdown */}
             <li
               className={`dropdown ${openDropdown === "shop" ? "open" : ""}`}
               onMouseEnter={() => setOpenDropdown("shop")}
@@ -171,7 +172,6 @@ const Navbar = () => {
               </div>
             </li>
 
-            {/* Learn Dropdown */}
             <li
               className={`dropdown ${openDropdown === "learn" ? "open" : ""}`}
               onMouseEnter={() => setOpenDropdown("learn")}
@@ -198,7 +198,6 @@ const Navbar = () => {
               </div>
             </li>
 
-            {/* Blog Dropdown */}
             <li
               className={`dropdown ${openDropdown === "blog" ? "open" : ""}`}
               onMouseEnter={() => setOpenDropdown("blog")}
@@ -230,12 +229,12 @@ const Navbar = () => {
 
           {/* === Right Side === */}
           <div className="navbar-right">
-            <div className="login">
+            {/* 🟢 LOGIN Button Opens Modal */}
+            <div className="login" onClick={() => setLoginOpen(true)}>
               <img src={loginIcon} alt="login" className="right-icon" />
               <span className="login-text">LOGIN</span>
             </div>
 
-            {/* 🟡 Updated Cart Section */}
             <div className="cart">
               <div className="cart-wrapper">
                 <img src={cartIcon} alt="cart" className="right-icon" />
@@ -244,12 +243,11 @@ const Navbar = () => {
               <span className="cart-text">CART</span>
             </div>
 
-            {/* 🟢 When menu opens, example count shows */}
             <button
               className="menu-toggle"
               onClick={() => {
                 setMenuOpen(true);
-                setCartCount(2); // Example: show number when menu opens
+                setCartCount(2);
               }}
               aria-label="Toggle menu"
             >
@@ -280,13 +278,16 @@ const Navbar = () => {
         </div>
       )}
 
+      {/* === Login Modal === */}
+      {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} />}
+
       {/* === Mobile Side Menu === */}
       <div className={`side-menu-overlay ${menuOpen ? "active" : ""}`} onClick={() => setMenuOpen(false)}></div>
 
       <div className={`side-menu ${menuOpen ? "active" : ""}`}>
         <div className="side-menu-content">
           <div className="side-login">
-            <div className="side-login-left">
+            <div className="side-login-left" onClick={() => setLoginOpen(true)}>
               <img src={loginIcon} alt="login" className="right-icon" />
               <span className="login-text">Login</span>
             </div>
