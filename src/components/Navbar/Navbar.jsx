@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaTimes } from "react-icons/fa";
 import "./Navbar.css";
 
@@ -57,9 +57,30 @@ const CustomMenuIcon = ({
 
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <rect x="6" y={topY} width="12" height={topThickness} rx={topThickness / 2} fill={color} />
-      <rect x="6" y={middleY} width="20" height={middleThickness} rx={middleThickness / 2} fill={color} />
-      <rect x="6" y={bottomY} width="12" height={bottomThickness} rx={bottomThickness / 2} fill={color} />
+      <rect
+        x="6"
+        y={topY}
+        width="12"
+        height={topThickness}
+        rx={topThickness / 2}
+        fill={color}
+      />
+      <rect
+        x="6"
+        y={middleY}
+        width="20"
+        height={middleThickness}
+        rx={middleThickness / 2}
+        fill={color}
+      />
+      <rect
+        x="6"
+        y={bottomY}
+        width="12"
+        height={bottomThickness}
+        rx={bottomThickness / 2}
+        fill={color}
+      />
     </svg>
   );
 };
@@ -67,7 +88,7 @@ const CustomMenuIcon = ({
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false); // 🟢 New: Login Modal State
+  const [loginOpen, setLoginOpen] = useState(false); // 🟢 Login Modal State
   const [location, setLocation] = useState("ENTER A PINCODE");
   const [pincode, setPincode] = useState("");
   const [place, setPlace] = useState("");
@@ -77,6 +98,12 @@ const Navbar = () => {
   const [hoveredLearn, setHoveredLearn] = useState("About Us");
   const [hoveredBlog, setHoveredBlog] = useState("Recipes");
   const [openDropdown, setOpenDropdown] = useState(null);
+
+  // Sticky-related refs & state
+  const navRef = useRef(null);
+  const navOffsetTop = useRef(0);
+  const [isSticky, setIsSticky] = useState(false);
+  const [navHeight, setNavHeight] = useState(0);
 
   const shopItems = [
     { name: "All", img: allImg },
@@ -101,9 +128,48 @@ const Navbar = () => {
   ];
 
   useEffect(() => {
+    // load saved location
     const savedLocation = localStorage.getItem("userLocation");
     if (savedLocation) setLocation(savedLocation);
-  }, []);
+
+    // set initial nav measurements
+    const setMeasurements = () => {
+      if (navRef.current) {
+        // compute offset relative to document top — more robust than offsetTop in some layouts
+        const rect = navRef.current.getBoundingClientRect();
+        navOffsetTop.current = rect.top + window.pageYOffset;
+        setNavHeight(Math.round(rect.height));
+      }
+    };
+
+    setMeasurements();
+
+    const handleScroll = () => {
+      // if pageYOffset goes past the nav's original offset, enable fixed sticky
+      if (typeof window !== "undefined") {
+        if (window.pageYOffset > navOffsetTop.current) {
+          if (!isSticky) setIsSticky(true);
+        } else {
+          if (isSticky) setIsSticky(false);
+        }
+      }
+    };
+
+    const handleResize = () => {
+      // recalc offsets/heights on resize
+      setMeasurements();
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize);
+
+    // cleanup
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSticky]);
 
   const handleSaveLocation = () => {
     const selected = place || pincode;
@@ -132,14 +198,45 @@ const Navbar = () => {
     </svg>
   );
 
+  /**
+   * Important: do NOT set width: '100%' on the inline fixed style.
+   * width: '100%' + padding (content-box) can cause the navbar to overflow
+   * and push the right-side icons off-screen. Instead use left/right: 0
+   * and boxSizing: 'border-box' so CSS padding is included in width calculation.
+   *
+   * Also ensure overflow is visible so icons are not clipped.
+   */
+  const fixedStyle = isSticky
+    ? {
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        boxSizing: "border-box",
+        overflow: "visible",
+        zIndex: 2000,
+      }
+    : undefined;
+
   return (
     <>
+      {/* spacer prevents content jump when nav becomes fixed */}
+      {isSticky && <div style={{ height: navHeight }} aria-hidden="true" />}
+
       {/* === Top Navbar === */}
-      <nav className="navbar">
+      <nav
+        ref={navRef}
+        className={`navbar ${isSticky ? "sticky" : ""}`}
+        style={fixedStyle}
+      >
         <div className="navbar-left">
           <img src={logo} alt="Pride of Cows" className="logo" />
           <button className="pincode-btn" onClick={() => setModalOpen(true)}>
-            <img src={locationIcon} alt="Location" className="location-icon" />
+            <img
+              src={locationIcon}
+              alt="Location"
+              className="location-icon"
+            />
             {location}
           </button>
         </div>
@@ -166,7 +263,12 @@ const Navbar = () => {
                     ))}
                   </ul>
                   <div className="shop-preview square">
-                    <img src={shopItems.find((p) => p.name === hoveredProduct)?.img} alt={hoveredProduct} />
+                    <img
+                      src={
+                        shopItems.find((p) => p.name === hoveredProduct)?.img
+                      }
+                      alt={hoveredProduct}
+                    />
                   </div>
                 </div>
               </div>
@@ -192,7 +294,12 @@ const Navbar = () => {
                     ))}
                   </ul>
                   <div className="shop-preview square">
-                    <img src={learnItems.find((p) => p.name === hoveredLearn)?.img} alt={hoveredLearn} />
+                    <img
+                      src={
+                        learnItems.find((p) => p.name === hoveredLearn)?.img
+                      }
+                      alt={hoveredLearn}
+                    />
                   </div>
                 </div>
               </div>
@@ -218,7 +325,10 @@ const Navbar = () => {
                     ))}
                   </ul>
                   <div className="shop-preview square">
-                    <img src={blogItems.find((p) => p.name === hoveredBlog)?.img} alt={hoveredBlog} />
+                    <img
+                      src={blogItems.find((p) => p.name === hoveredBlog)?.img}
+                      alt={hoveredBlog}
+                    />
                   </div>
                 </div>
               </div>
@@ -229,7 +339,7 @@ const Navbar = () => {
 
           {/* === Right Side === */}
           <div className="navbar-right">
-            {/* 🟢 LOGIN Button Opens Modal */}
+            {/* LOGIN Button Opens Modal */}
             <div className="login" onClick={() => setLoginOpen(true)}>
               <img src={loginIcon} alt="login" className="right-icon" />
               <span className="login-text">LOGIN</span>
@@ -264,7 +374,12 @@ const Navbar = () => {
             <button className="modal-close" onClick={() => setModalOpen(false)}>
               ✕
             </button>
-            <input type="text" placeholder="PINCODE" value={pincode} onChange={(e) => setPincode(e.target.value)} />
+            <input
+              type="text"
+              placeholder="PINCODE"
+              value={pincode}
+              onChange={(e) => setPincode(e.target.value)}
+            />
             <input
               type="text"
               placeholder="Search for a place"
@@ -282,7 +397,10 @@ const Navbar = () => {
       {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} />}
 
       {/* === Mobile Side Menu === */}
-      <div className={`side-menu-overlay ${menuOpen ? "active" : ""}`} onClick={() => setMenuOpen(false)}></div>
+      <div
+        className={`side-menu-overlay ${menuOpen ? "active" : ""}`}
+        onClick={() => setMenuOpen(false)}
+      ></div>
 
       <div className={`side-menu ${menuOpen ? "active" : ""}`}>
         <div className="side-menu-content">

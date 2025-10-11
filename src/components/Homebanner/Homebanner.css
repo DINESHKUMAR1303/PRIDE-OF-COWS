@@ -101,7 +101,7 @@
 /* Focus ring for accessibility */
 .arrow-button:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(25, 59, 97, 0.15);
+  
 }
 
 /* ============================= */
