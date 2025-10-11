@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./ProductCarousel.css";
 
-// Import product images
+// === Product Images ===
 import prod1 from "./images/onelitermilk.png";
 import prod2 from "./images/purecurd.png";
 import prod3 from "./images/ghee.png";
@@ -40,14 +40,20 @@ const ProductCarousel = () => {
 
   return (
     <section className="product-section">
+      {/* === Subtitle === */}
+      <p className="product-subtitle">FARM TO TABLE</p>
+
+      {/* === Main Heading === */}
       <h2 className="product-heading">From Our Pride Of Cows Family To Yours</h2>
+
+      {/* === Description === */}
       <p className="product-sub">
         Our Promise - Holistic cow care with a round-the-clock system maintenance,
         our Single Origin pure milk is delivered fresh, nutritious,
         and creamy within 24 hours of milking.
       </p>
 
-      {/* Carousel */}
+      {/* === Carousel === */}
       <div className="product-carousel-wrapper">
         <div
           className="product-carousel-inner"
@@ -76,7 +82,7 @@ const ProductCarousel = () => {
         </div>
       </div>
 
-      {/* Controls */}
+      {/* === Controls === */}
       <div className="product-carousel-controls">
         <button className="product-arrow left" onClick={prevSlide}>
           ←

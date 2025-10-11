@@ -21,7 +21,7 @@
 
 /* ✅ Optional subtle shadow when sticky (you can keep or remove) */
 .navbar.sticky {
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);;
   background: #f4f4f4;
 }
 
