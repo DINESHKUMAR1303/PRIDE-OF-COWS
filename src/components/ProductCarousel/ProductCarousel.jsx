@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./ProductCarousel.css";
 
-// === Product Images ===
 import prod1 from "./images/onelitermilk.png";
 import prod2 from "./images/purecurd.png";
 import prod3 from "./images/ghee.png";
@@ -19,47 +18,58 @@ const products = [
 ];
 
 const ProductCarousel = () => {
-  const [current, setCurrent] = useState(0);
-  const itemsToShow = 5; // ✅ Show 5 products at a time
+  const itemsToShow = 5;
+  const total = products.length;
 
-  // Auto slide every 10 seconds
+  // Triple array for infinite illusion
+  const extendedProducts = [...products, ...products, ...products];
+
+  const [current, setCurrent] = useState(total); // Start from middle copy
+  const transitionRef = useRef(true);
+
+  const nextSlide = () => setCurrent((prev) => prev + 1);
+  const prevSlide = () => setCurrent((prev) => prev - 1);
+
+  // Handle infinite loop without jump
   useEffect(() => {
-    const timer = setInterval(() => {
-      nextSlide();
-    }, 10000);
-    return () => clearInterval(timer);
-  }, [current]);
+    if (!transitionRef.current) return;
 
-  const nextSlide = () => {
-    setCurrent((prev) => (prev + 1) % products.length); // ✅ Infinite loop
-  };
-
-  const prevSlide = () => {
-    setCurrent((prev) => (prev - 1 + products.length) % products.length); // ✅ Infinite loop
-  };
+    if (current >= total * 2) {
+      // End reached → reset instantly to middle
+      transitionRef.current = false;
+      setTimeout(() => {
+        setCurrent(total);
+        transitionRef.current = true;
+      }, 50);
+    } else if (current < total) {
+      // Start reached → reset instantly to middle copy end
+      transitionRef.current = false;
+      setTimeout(() => {
+        setCurrent(total * 2 - 1);
+        transitionRef.current = true;
+      }, 50);
+    }
+  }, [current, total]);
 
   return (
     <section className="product-section">
-      {/* === Subtitle === */}
       <p className="product-subtitle">FARM TO TABLE</p>
-
-      {/* === Main Heading === */}
       <h2 className="product-heading">From Our Pride Of Cows Family To Yours</h2>
-
-      {/* === Description === */}
       <p className="product-sub">
         Our Promise - Holistic cow care with a round-the-clock system maintenance,
         our Single Origin pure milk is delivered fresh, nutritious,
         and creamy within 24 hours of milking.
       </p>
 
-      {/* === Carousel === */}
       <div className="product-carousel-wrapper">
         <div
           className="product-carousel-inner"
-          style={{ transform: `translateX(-${current * (100 / itemsToShow)}%)` }}
+          style={{
+            transform: `translateX(-${current * (100 / itemsToShow)}%)`,
+            transition: transitionRef.current ? "transform 0.5s ease-in-out" : "none",
+          }}
         >
-          {products.map((prod, index) => (
+          {extendedProducts.map((prod, index) => (
             <div key={index} className="product-carousel-item">
               <div className="product-card-inner">
                 <div className="product-image-wrap">
@@ -68,10 +78,7 @@ const ProductCarousel = () => {
                 <div className="product-meta">
                   <span className="product-weight">{prod.weight}</span>
                   <span className="product-price">
-                    {prod.price}{" "}
-                    {prod.oldPrice && (
-                      <span className="old-price">{prod.oldPrice}</span>
-                    )}
+                    {prod.price} {prod.oldPrice && <span className="old-price">{prod.oldPrice}</span>}
                   </span>
                 </div>
                 <p className="product-title">{prod.title}</p>
@@ -82,15 +89,10 @@ const ProductCarousel = () => {
         </div>
       </div>
 
-      {/* === Controls === */}
       <div className="product-carousel-controls">
-        <button className="product-arrow left" onClick={prevSlide}>
-          ←
-        </button>
+        <button className="product-arrow left" onClick={prevSlide}>←</button>
         <div className="product-line"></div>
-        <button className="product-arrow right" onClick={nextSlide}>
-          →
-        </button>
+        <button className="product-arrow right" onClick={nextSlide}>→</button>
       </div>
     </section>
   );
