@@ -35,14 +35,12 @@ const ProductCarousel = () => {
     if (!transitionRef.current) return;
 
     if (current >= total * 2) {
-      // End reached → reset instantly to middle
       transitionRef.current = false;
       setTimeout(() => {
         setCurrent(total);
         transitionRef.current = true;
       }, 50);
     } else if (current < total) {
-      // Start reached → reset instantly to middle copy end
       transitionRef.current = false;
       setTimeout(() => {
         setCurrent(total * 2 - 1);

@@ -1,6 +1,7 @@
 /* ============================= */
-/* === Section === */
+/* === Product Section Styles === */
 /* ============================= */
+
 .product-section {
   background: #f4f4f4;
   padding: 5px 20px 90px;
@@ -9,9 +10,6 @@
   overflow: hidden;
 }
 
-/* ============================= */
-/* === Subtitle === */
-/* ============================= */
 .product-subtitle {
   letter-spacing: 4px;
   color: #616161;
@@ -21,9 +19,6 @@
   font-weight: 400;
 }
 
-/* ============================= */
-/* === Main Heading === */
-/* ============================= */
 .product-heading {
   font-family: Georgia, "Times New Roman", serif;
   font-size: 50px;
@@ -33,9 +28,6 @@
   line-height: 1.2;
 }
 
-/* ============================= */
-/* === Sub Description === */
-/* ============================= */
 .product-sub {
   max-width: 650px;
   margin: 0 auto;
@@ -49,37 +41,38 @@
 /* ============================= */
 /* === Carousel Wrapper === */
 /* ============================= */
+
 .product-carousel-wrapper {
   width: 100%;
-  max-width: 1400px;
-  margin: 50px auto 0;
+  max-width: 1500px;
+  margin: 60px auto 0;
   overflow: hidden;
   position: relative;
+  padding: 0 80px; /* controls how much of first/last card peeks */
 }
 
-/* ============================= */
-/* === Carousel Track === */
-/* ============================= */
 .product-carousel-inner {
   display: flex;
   will-change: transform;
   align-items: stretch;
 }
 
-/* ============================= */
-/* === Product Card === */
-/* ============================= */
+/* === 3 visible cards + peek === */
 .product-carousel-item {
-  flex: 0 0 20%; /* 5 visible */
-  padding: 18px;
+  flex: 0 0 25.22%; /* 3 visible */
+  padding: 20px;
   box-sizing: border-box;
 }
 
+/* ============================= */
+/* === Product Card === */
+/* ============================= */
+
 .product-card-inner {
   background: #edecea;
-  border-radius: 18px;
+  border-radius: 20px;
   height: 420px;
-  padding: 28px 20px;
+  padding: 32px 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -92,30 +85,29 @@
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
-/* ============================= */
-/* === Product Image === */
-/* ============================= */
+/* Bigger product image area */
 .product-image-wrap {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 200px;
+  height: 260px;
 }
 
 .product-image-wrap img {
-  max-width: 85%;
+  max-width: 95%;
   max-height: 100%;
   object-fit: contain;
   transition: transform 0.4s ease;
 }
 
 .product-card-inner:hover img {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 /* ============================= */
-/* === Product Meta === */
+/* === Text + Price Info === */
 /* ============================= */
+
 .product-meta {
   display: flex;
   justify-content: space-between;
@@ -141,22 +133,23 @@
   font-size: 0.9rem;
 }
 
-/* ============================= */
-/* === Product Title + CTA === */
-/* ============================= */
 .product-title {
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #222;
-  margin: 8px 0 12px;
+  margin: 10px 0 14px;
   min-height: 40px;
   line-height: 1.4;
 }
+
+/* ============================= */
+/* === CTA Button === */
+/* ============================= */
 
 .product-cta {
   background: #0a2e5d;
   color: #fff;
   border: none;
-  padding: 12px 18px;
+  padding: 14px 20px;
   border-radius: 30px;
   cursor: pointer;
   font-weight: 700;
@@ -172,13 +165,14 @@
 /* ============================= */
 /* === Carousel Controls === */
 /* ============================= */
+
 .product-carousel-controls {
-  margin-top: 26px;
+  margin-top: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 18px;
-  max-width: 1400px;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -187,7 +181,7 @@
   height: 2px;
   background: #d0d0d0;
   flex: 1;
-  max-width: 920px;
+  max-width: 800px;
   border-radius: 2px;
 }
 
@@ -213,54 +207,31 @@
 }
 
 /* ============================= */
-/* === Responsive Breakpoints === */
+/* === Responsive Design === */
 /* ============================= */
+
 @media (max-width: 1200px) {
-  .product-heading {
-    font-size: 40px;
-  }
-  .product-card-inner {
-    height: 380px;
-  }
-  .product-image-wrap {
-    height: 180px;
-  }
+  .product-heading { font-size: 40px; }
+  .product-card-inner { height: 420px; }
+  .product-image-wrap { height: 220px; }
 }
 
 @media (max-width: 992px) {
-  .product-carousel-item {
-    flex: 0 0 33.33%;
-  }
-  .product-card-inner {
-    height: 360px;
-  }
+  .product-carousel-item { flex: 0 0 50%; }
+  .product-card-inner { height: 400px; }
+  .product-image-wrap { height: 210px; }
 }
 
 @media (max-width: 768px) {
-  .product-carousel-item {
-    flex: 0 0 50%;
-  }
-  .product-heading {
-    font-size: 32px;
-  }
-  .product-card-inner {
-    height: 340px;
-  }
+  .product-carousel-item { flex: 0 0 100%; }
+  .product-heading { font-size: 32px; }
+  .product-card-inner { height: auto; padding: 24px 18px; }
+  .product-image-wrap { height: 200px; }
 }
 
 @media (max-width: 480px) {
-  .product-carousel-item {
-    flex: 0 0 100%;
-  }
-  .product-heading {
-    font-size: 26px;
-  }
-  .product-card-inner {
-    height: auto;
-    padding: 20px 15px;
-  }
-  .product-subtitle {
-    font-size: 16px;
-    letter-spacing: 2px;
-  }
+  .product-heading { font-size: 26px; }
+  .product-subtitle { font-size: 16px; letter-spacing: 2px; }
+  .product-card-inner { height: auto; padding: 20px 15px; }
+  .product-image-wrap { height: 180px; }
 }
