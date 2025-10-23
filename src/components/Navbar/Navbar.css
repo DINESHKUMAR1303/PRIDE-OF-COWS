@@ -36,8 +36,8 @@
 .cart-text {
   display: inline-block;
   font-size: 14px;
-  margin-left: 6px;
-  line-height: 1; /* prevent clipping */
+  margin-left: 2px;
+  line-height: 1.5; /* prevent clipping */
   color: #193b61;
 }
 
