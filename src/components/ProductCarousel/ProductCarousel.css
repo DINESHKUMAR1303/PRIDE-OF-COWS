@@ -5,34 +5,25 @@
 .single-origin-section {
   background-color: #edecea;
   text-align: center;
-  padding: 140px 20px 120px; /* adjusted for larger logo */
+  padding: 60px 20px 100px;
   font-family: "Times New Roman", Georgia, serif;
   color: #333;
   width: 100%;
   box-sizing: border-box;
-  position: relative;
 }
 
-/* === Centered Logo (No Background) === */
 .logo-wrapper {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: none; /* no background patch */
-  padding: 0;
-  border-radius: 0;
-  z-index: 5;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
 }
 
 .origin-logo {
-  width: 180px;
-  height: 180px;
+  height: 120px;
+  width: auto;
   object-fit: contain;
-  display: block;
 }
 
-/* === Titles === */
 .origin-title {
   font-size: 32px;
   font-weight: 400;
@@ -49,7 +40,6 @@
   color: #5c4033;
 }
 
-/* === Features Grid === */
 .origin-features {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -84,7 +74,6 @@
   display: block;
 }
 
-/* === Know More Button === */
 .know-more-btn {
   margin-top: 60px;
   background-color: #b38a3b;
@@ -112,68 +101,51 @@
   transform: scale(0.98);
 }
 
-/* === Responsive Adjustments === */
+/* Responsive for Single Origin */
 @media (max-width: 1024px) {
   .origin-features {
     grid-template-columns: repeat(2, 1fr);
     gap: 40px 60px;
   }
-
   .origin-heading {
     font-size: 34px;
   }
-
   .origin-title {
     font-size: 28px;
-  }
-
-  .origin-logo {
-    width: 150px;
-    height: 150px;
   }
 }
 
 @media (max-width: 600px) {
   .single-origin-section {
-    padding: 100px 15px 80px;
+    padding: 50px 15px 80px;
   }
-
-  .logo-wrapper {
-    top: 0;
-    transform: translate(-50%, -40%);
-  }
-
   .origin-logo {
-    width: 120px;
-    height: 120px;
+    height: 100px;
   }
-
+  .logo-wrapper {
+    margin-bottom: 20px;
+  }
   .origin-title {
     font-size: 22px;
     margin-bottom: 6px;
   }
-
   .origin-heading {
     font-size: 26px;
     margin: 0 0 40px;
   }
-
   .origin-features {
     grid-template-columns: 1fr;
     gap: 30px;
     margin-bottom: 40px;
   }
-
   .feature-img {
     width: 55px;
     height: 55px;
     margin-bottom: 12px;
   }
-
   .feature-text {
     font-size: 16px;
   }
-
   .know-more-btn {
     margin-top: 40px;
     padding: 10px 30px;
@@ -185,26 +157,18 @@
   .origin-heading {
     font-size: 24px;
   }
-
   .origin-title {
     font-size: 20px;
   }
-
-  .origin-logo {
-    width: 100px;
-    height: 100px;
-  }
 }
 
-
-
 /* ============================= */
-/* === Product Section Styles === */
+/* === PRODUCT SECTION === */
 /* ============================= */
 
 .product-section {
   background: #f4f4f4;
-  padding: 140px 20px 90px; /* top padding increased to balance logo overlap */
+  padding: 5px 20px 90px;
   text-align: center;
   font-family: "Times New Roman", Times, serif;
   overflow: hidden;
@@ -239,7 +203,7 @@
 }
 
 /* ============================= */
-/* === Carousel Wrapper === */
+/* === PRODUCT CAROUSEL === */
 /* ============================= */
 
 .product-carousel-wrapper {
@@ -248,7 +212,7 @@
   margin: 60px auto 0;
   overflow: hidden;
   position: relative;
-  padding: 0 80px;
+  padding: 0;
 }
 
 .product-carousel-inner {
@@ -258,14 +222,14 @@
 }
 
 .product-carousel-item {
-  flex: 0 0 calc((100% - 80px) / 4);
+  flex: 0 0 100%;
   padding: 20px;
   box-sizing: border-box;
   will-change: transform;
 }
 
 /* ============================= */
-/* === Product Card === */
+/* === PRODUCT CARD === */
 /* ============================= */
 
 .product-card-inner {
@@ -303,7 +267,7 @@
 }
 
 /* ============================= */
-/* === Text + Price Info === */
+/* === TEXT + PRICE === */
 /* ============================= */
 
 .product-meta {
@@ -340,7 +304,7 @@
 }
 
 /* ============================= */
-/* === CTA Button === */
+/* === CTA BUTTON === */
 /* ============================= */
 
 .product-cta {
@@ -361,7 +325,7 @@
 }
 
 /* ============================= */
-/* === Controls (Arrows + Line) === */
+/* === CONTROLS === */
 /* ============================= */
 
 .carousel-controls {
@@ -401,18 +365,12 @@
 }
 
 .arrow-button:hover {
-  background: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
 
 .arrow-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-
-.arrow-button:focus {
-  outline: none;
-  /* box-shadow: 0 0 0 3px rgba(25, 59, 97, 0.3); */
 }
 
 .arrow-button svg {
@@ -432,66 +390,73 @@
 }
 
 /* ============================= */
-/* === Responsive Design === */
+/* === RESPONSIVE BREAKPOINTS (Fixed 1436–2560px) === */
 /* ============================= */
 
-@media (max-width: 1200px) {
-  .product-heading {
-    font-size: 40px;
-  }
-  .product-card-inner {
-    height: 420px;
-  }
-  .product-image-wrap {
-    height: 220px;
-  }
-}
-
-@media (max-width: 992px) {
+/* 2560px and above — show 5 products */
+@media (min-width: 2560px) {
   .product-carousel-item {
-    flex: 0 0 calc((100% - 40px) / 2);
+    flex: 0 0 20%;
   }
-  .product-card-inner {
-    height: 400px;
-  }
-  .product-image-wrap {
-    height: 210px;
+
+  .product-carousel-inner {
+    width: 100%;
+    margin: 0 auto;
   }
 }
 
-/* CHANGED: Now only applies from 320px to 768px */
-@media (max-width: 768px) and (min-width: 320px) {
-  .product-carousel-wrapper {
-    padding: 0 20px;
+/* 1920px–2559px — show 5 products nicely spaced */
+@media (max-width: 2559px) and (min-width: 1920px) {
+  .product-carousel-item {
+    flex: 0 0 20%;
   }
+
+  .product-carousel-inner {
+    width: 100%;
+  }
+}
+
+/* 1440px–1919px — show 4 products (your preferred layout) */
+@media (max-width: 1919px) and (min-width: 1440px) {
+  .product-carousel-item {
+    flex: 0 0 25%;
+  }
+
+  .product-carousel-inner {
+    width: 100%;
+  }
+}
+
+/* 992px–1439px — show 3 products */
+@media (max-width: 1439px) and (min-width: 992px) {
+  .product-carousel-item {
+    flex: 0 0 33.3333%;
+  }
+
+  .product-carousel-inner {
+    width: 100%;
+  }
+}
+
+/* 768px–991px — show 2 products */
+@media (max-width: 991px) and (min-width: 768px) {
+  .product-carousel-item {
+    flex: 0 0 50%;
+  }
+
+  .product-carousel-inner {
+    width: 100%;
+  }
+}
+
+/* 320px–767px — show 1 product */
+@media (max-width: 767px) {
   .product-carousel-item {
     flex: 0 0 100%;
   }
-  .product-heading {
-    font-size: 32px;
-  }
-  .product-card-inner {
-    height: auto;
-    padding: 24px 18px;
-  }
-  .product-image-wrap {
-    height: 200px;
+
+  .product-carousel-inner {
+    width: 100%;
   }
 }
 
-@media (max-width: 480px) {
-  .product-heading {
-    font-size: 26px;
-  }
-  .product-subtitle {
-    font-size: 16px;
-    letter-spacing: 2px;
-  }
-  .product-card-inner {
-    height: auto;
-    padding: 20px 15px;
-  }
-  .product-image-wrap {
-    height: 180px;
-  }
-}
