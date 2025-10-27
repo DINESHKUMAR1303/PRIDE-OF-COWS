@@ -5,25 +5,34 @@
 .single-origin-section {
   background-color: #edecea;
   text-align: center;
-  padding: 60px 20px 100px;
+  padding: 140px 20px 120px; /* adjusted for larger logo */
   font-family: "Times New Roman", Georgia, serif;
   color: #333;
   width: 100%;
   box-sizing: border-box;
+  position: relative;
 }
 
+/* === Centered Logo (No Background) === */
 .logo-wrapper {
-  margin-bottom: 30px;
-  display: flex;
-  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: none; /* no background patch */
+  padding: 0;
+  border-radius: 0;
+  z-index: 5;
 }
 
 .origin-logo {
-  height: 120px;
-  width: auto;
+  width: 180px;
+  height: 180px;
   object-fit: contain;
+  display: block;
 }
 
+/* === Titles === */
 .origin-title {
   font-size: 32px;
   font-weight: 400;
@@ -40,6 +49,7 @@
   color: #5c4033;
 }
 
+/* === Features Grid === */
 .origin-features {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -74,6 +84,7 @@
   display: block;
 }
 
+/* === Know More Button === */
 .know-more-btn {
   margin-top: 60px;
   background-color: #b38a3b;
@@ -101,51 +112,68 @@
   transform: scale(0.98);
 }
 
-/* Responsive for Single Origin */
+/* === Responsive Adjustments === */
 @media (max-width: 1024px) {
   .origin-features {
     grid-template-columns: repeat(2, 1fr);
     gap: 40px 60px;
   }
+
   .origin-heading {
     font-size: 34px;
   }
+
   .origin-title {
     font-size: 28px;
+  }
+
+  .origin-logo {
+    width: 150px;
+    height: 150px;
   }
 }
 
 @media (max-width: 600px) {
   .single-origin-section {
-    padding: 50px 15px 80px;
+    padding: 100px 15px 80px;
   }
-  .origin-logo {
-    height: 100px;
-  }
+
   .logo-wrapper {
-    margin-bottom: 20px;
+    top: 0;
+    transform: translate(-50%, -40%);
   }
+
+  .origin-logo {
+    width: 120px;
+    height: 120px;
+  }
+
   .origin-title {
     font-size: 22px;
     margin-bottom: 6px;
   }
+
   .origin-heading {
     font-size: 26px;
     margin: 0 0 40px;
   }
+
   .origin-features {
     grid-template-columns: 1fr;
     gap: 30px;
     margin-bottom: 40px;
   }
+
   .feature-img {
     width: 55px;
     height: 55px;
     margin-bottom: 12px;
   }
+
   .feature-text {
     font-size: 16px;
   }
+
   .know-more-btn {
     margin-top: 40px;
     padding: 10px 30px;
@@ -157,18 +185,26 @@
   .origin-heading {
     font-size: 24px;
   }
+
   .origin-title {
     font-size: 20px;
   }
+
+  .origin-logo {
+    width: 100px;
+    height: 100px;
+  }
 }
 
+
+
 /* ============================= */
-/* === PRODUCT SECTION === */
+/* === Product Section Styles === */
 /* ============================= */
 
 .product-section {
   background: #f4f4f4;
-  padding: 5px 20px 90px;
+  padding: 140px 20px 90px; /* top padding increased to balance logo overlap */
   text-align: center;
   font-family: "Times New Roman", Times, serif;
   overflow: hidden;
@@ -203,7 +239,7 @@
 }
 
 /* ============================= */
-/* === PRODUCT CAROUSEL === */
+/* === Carousel Wrapper === */
 /* ============================= */
 
 .product-carousel-wrapper {
@@ -212,7 +248,7 @@
   margin: 60px auto 0;
   overflow: hidden;
   position: relative;
-  padding: 0;
+  padding: 0 80px;
 }
 
 .product-carousel-inner {
@@ -222,14 +258,14 @@
 }
 
 .product-carousel-item {
-  flex: 0 0 100%;
+  flex: 0 0 calc((100% - 80px) / 4);
   padding: 20px;
   box-sizing: border-box;
   will-change: transform;
 }
 
 /* ============================= */
-/* === PRODUCT CARD === */
+/* === Product Card === */
 /* ============================= */
 
 .product-card-inner {
@@ -267,7 +303,7 @@
 }
 
 /* ============================= */
-/* === TEXT + PRICE === */
+/* === Text + Price Info === */
 /* ============================= */
 
 .product-meta {
@@ -304,7 +340,7 @@
 }
 
 /* ============================= */
-/* === CTA BUTTON === */
+/* === CTA Button === */
 /* ============================= */
 
 .product-cta {
@@ -325,7 +361,7 @@
 }
 
 /* ============================= */
-/* === CONTROLS === */
+/* === Controls (Arrows + Line) === */
 /* ============================= */
 
 .carousel-controls {
@@ -365,12 +401,18 @@
 }
 
 .arrow-button:hover {
+  background: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
 
 .arrow-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.arrow-button:focus {
+  outline: none;
+  /* box-shadow: 0 0 0 3px rgba(25, 59, 97, 0.3); */
 }
 
 .arrow-button svg {
@@ -390,45 +432,66 @@
 }
 
 /* ============================= */
-/* === RESPONSIVE BREAKPOINTS === */
+/* === Responsive Design === */
 /* ============================= */
 
-/* 2560px+ — show 5 */
-@media (min-width: 2560px) {
-  .product-carousel-item {
-    flex: 0 0 calc(20%);
+@media (max-width: 1200px) {
+  .product-heading {
+    font-size: 40px;
+  }
+  .product-card-inner {
+    height: 420px;
+  }
+  .product-image-wrap {
+    height: 220px;
   }
 }
 
-/* 1438px–2559px — show 5 (slightly hidden edges) */
-@media (min-width: 1438px) and (max-width: 2559px) {
+@media (max-width: 992px) {
   .product-carousel-item {
-    flex: 0 0 calc(27%);
+    flex: 0 0 calc((100% - 40px) / 2);
   }
-
-  .product-carousel-inner {
-    width: 92%; /* controls how much of the first/last cards are visible */
-    margin: 0 auto;
+  .product-card-inner {
+    height: 400px;
+  }
+  .product-image-wrap {
+    height: 210px;
   }
 }
 
-/* 992px–1437px — show 3 */
-@media (max-width: 1437px) and (min-width: 992px) {
-  .product-carousel-item {
-    flex: 0 0 calc(33.3333%);
+/* CHANGED: Now only applies from 320px to 768px */
+@media (max-width: 768px) and (min-width: 320px) {
+  .product-carousel-wrapper {
+    padding: 0 20px;
   }
-}
-
-/* 768px–991px — show 2 */
-@media (max-width: 991px) and (min-width: 768px) {
-  .product-carousel-item {
-    flex: 0 0 calc(50%);
-  }
-}
-
-/* 320px–767px — show 1 */
-@media (max-width: 767px) {
   .product-carousel-item {
     flex: 0 0 100%;
+  }
+  .product-heading {
+    font-size: 32px;
+  }
+  .product-card-inner {
+    height: auto;
+    padding: 24px 18px;
+  }
+  .product-image-wrap {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-heading {
+    font-size: 26px;
+  }
+  .product-subtitle {
+    font-size: 16px;
+    letter-spacing: 2px;
+  }
+  .product-card-inner {
+    height: auto;
+    padding: 20px 15px;
+  }
+  .product-image-wrap {
+    height: 180px;
   }
 }
