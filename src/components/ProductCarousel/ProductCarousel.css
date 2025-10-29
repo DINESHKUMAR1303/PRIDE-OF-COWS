@@ -390,25 +390,13 @@
 }
 
 /* ============================= */
-/* === RESPONSIVE BREAKPOINTS (Fixed 1436–2560px) === */
+/* === RESPONSIVE BREAKPOINTS === */
 /* ============================= */
 
-/* 2560px and above — show 5 products */
+/* 2560px and above — show 6 full products */
 @media (min-width: 2560px) {
   .product-carousel-item {
-    flex: 0 0 20%;
-  }
-
-  .product-carousel-inner {
-    width: 100%;
-    margin: 0 auto;
-  }
-}
-
-/* 1920px–2559px — show 5 products nicely spaced */
-@media (max-width: 2559px) and (min-width: 1920px) {
-  .product-carousel-item {
-    flex: 0 0 20%;
+    flex: 0 0 16.6667%;
   }
 
   .product-carousel-inner {
@@ -416,14 +404,15 @@
   }
 }
 
-/* 1440px–1919px — show 4 products (your preferred layout) */
-@media (max-width: 1919px) and (min-width: 1440px) {
+/* 1440px–2559px — show 5 products with slight edge clipping (first/last ~10% cutoff) */
+@media (max-width: 2559px) and (min-width: 1440px) {
   .product-carousel-item {
-    flex: 0 0 25%;
+    flex: 0 0 20%;
   }
 
   .product-carousel-inner {
-    width: 100%;
+    width: calc(100% + 4%);
+    margin-left: -2%;
   }
 }
 
@@ -459,4 +448,3 @@
     width: 100%;
   }
 }
-

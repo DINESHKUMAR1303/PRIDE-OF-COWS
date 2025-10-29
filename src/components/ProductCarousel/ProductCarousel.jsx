@@ -35,11 +35,14 @@ const features = [
 ];
 
 const ProductCarousel = () => {
-  // === CAROUSEL LOGIC (100% UNCHANGED) ===
+  // === CAROUSEL LOGIC (UPDATED FOR 2560px TO SHOW 6 FULL ITEMS) ===
   const getItemsToShow = () => {
-    if (window.innerWidth < 768) return 1;
-    if (window.innerWidth < 992) return 2;
-    return 4;
+    const w = window.innerWidth;
+    if (w < 768) return 1;
+    if (w < 992) return 2;
+    if (w < 1440) return 3;
+    if (w < 2560) return 5;
+    return 6;
   };
 
   const [itemsToShow, setItemsToShow] = useState(getItemsToShow());
