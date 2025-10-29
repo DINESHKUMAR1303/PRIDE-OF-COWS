@@ -101,18 +101,19 @@
   border: none;
   border-radius: 25px;
   padding: 12px 40px;
-  font-size: 16px;
+  font-size: 16px; /* Assuming this matches the image; verify if different */
   font-weight: 600;
   letter-spacing: 1px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), color 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.2s ease;
   min-width: 180px;
   display: inline-block;
 }
 
 .know-more-btn:hover,
 .know-more-btn:focus {
-  background-color: #a1782d;
+  background-color: #ffffff; /* White background on hover */
+  color: #b38a3b; /* Text color after hover */
   transform: scale(1.05);
   outline: none;
 }
@@ -171,7 +172,7 @@
   .know-more-btn {
     margin-top: 40px;
     padding: 10px 30px;
-    font-size: 15px;
+    font-size: 15px; /* Assuming this matches the image; verify if different */
   }
 }
 
@@ -338,7 +339,7 @@
   cursor: pointer;
   font-weight: 700;
   width: 100%;
-  transition: background 0.3s ease, color 0.3s ease; /* Smooth transition for background and text */
+  transition: background 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), color 1.2s cubic-bezier(0.25, 0.1, 0.25, 1); /* Smoother transition */
 }
 
 .product-cta:hover {
