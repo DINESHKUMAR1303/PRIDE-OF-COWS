@@ -17,7 +17,7 @@ import prod4 from "./images/panner.png";
 import prod5 from "./images/proteinbar.png";
 import prod6 from "./images/proteinbarpack.png";
 
-// === DATA ===
+// === PRODUCT DATA ===
 const products = [
   { id: 1, img: prod1, title: "Milk", price: "₹120", weight: "1L" },
   { id: 2, img: prod2, title: "Curd", price: "₹95", weight: "320g" },
@@ -27,15 +27,16 @@ const products = [
   { id: 6, img: prod6, title: "Protein Box Pack", price: "₹475", weight: "320g" },
 ];
 
+// === FEATURE DATA ===
 const features = [
   { icon: unmatched, line1: "Unmatched Premium", line2: "Single Origin Milk", alt: "Premium milk" },
-  { icon: sourced,   line1: "Sourced from picturesque", line2: "Bhagyalaxmi Dairy Farm", alt: "Farm sourcing" },
-  { icon: innovation,line1: "Innovative & Advanced", line2: "Techniques", alt: "Innovation" },
+  { icon: sourced, line1: "Sourced from picturesque", line2: "Bhagyalaxmi Dairy Farm", alt: "Farm sourcing" },
+  { icon: innovation, line1: "Innovative & Advanced", line2: "Techniques", alt: "Innovation" },
   { icon: healthier, line1: "Healthier Family & A", line2: "Healthier You", alt: "Healthy family" },
 ];
 
 const ProductCarousel = () => {
-  // === CAROUSEL LOGIC (UPDATED FOR 2560px TO SHOW 6 FULL ITEMS) ===
+  // === RESPONSIVE CAROUSEL SETTINGS ===
   const getItemsToShow = () => {
     const w = window.innerWidth;
     if (w < 768) return 1;
@@ -59,7 +60,6 @@ const ProductCarousel = () => {
 
   useEffect(() => {
     if (!transitionRef.current) return;
-
     if (current >= total * 2) {
       transitionRef.current = false;
       setTimeout(() => {
@@ -87,7 +87,7 @@ const ProductCarousel = () => {
 
   return (
     <>
-      {/* ====== PRODUCT CAROUSEL – FIRST (ON TOP) ====== */}
+      {/* ================= PRODUCT CAROUSEL ================= */}
       <section className="product-section">
         <p className="product-subtitle">FARM TO TABLE</p>
         <h2 className="product-heading">From Our Pride Of Cows Family To Yours</h2>
@@ -118,10 +118,7 @@ const ProductCarousel = () => {
                     </span>
                   </div>
                   <p className="product-title">{prod.title}</p>
-                  <button
-                    className="product-cta"
-                    onClick={() => console.log(`Shop ${prod.title}`)}
-                  >
+                  <button className="product-cta" onClick={() => console.log(`Shop ${prod.title}`)}>
                     Shop Now
                   </button>
                 </div>
@@ -131,12 +128,7 @@ const ProductCarousel = () => {
         </div>
 
         <div className="carousel-controls">
-          <button
-            className="arrow-button"
-            onClick={prevSlide}
-            aria-label="Previous slide"
-            disabled={!transitionRef.current}
-          >
+          <button className="arrow-button" onClick={prevSlide} aria-label="Previous slide">
             <svg width="27" height="13" viewBox="0 0 27 13" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M6 1L1 6.5L6 12" stroke="#193B61" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
               <line x1="1" y1="6.5" x2="26" y2="6.5" stroke="#193B61" strokeWidth="1" strokeLinecap="round" />
@@ -145,12 +137,7 @@ const ProductCarousel = () => {
 
           <div className="line"></div>
 
-          <button
-            className="arrow-button"
-            onClick={nextSlide}
-            aria-label="Next slide"
-            disabled={!transitionRef.current}
-          >
+          <button className="arrow-button" onClick={nextSlide} aria-label="Next slide">
             <svg width="27" height="13" viewBox="0 0 27 13" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M21 1L26 6.5L21 12" stroke="#193B61" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
               <line x1="1" y1="6.5" x2="26" y2="6.5" stroke="#193B61" strokeWidth="1" strokeLinecap="round" />
@@ -159,24 +146,25 @@ const ProductCarousel = () => {
         </div>
       </section>
 
-      {/* ====== SINGLE ORIGIN SECTION – BELOW ====== */}
+      {/* ================= SINGLE ORIGIN SECTION ================= */}
       <section className="single-origin-section" aria-labelledby="origin-heading">
         <div className="logo-wrapper">
           <img
             src={logo}
             alt="Single Origin Farm to Home logo - Established 2011"
             className="origin-logo"
-            loading="lazy"
           />
         </div>
 
         <h2 className="origin-title">Be A Part Of Our</h2>
-        <h1 id="origin-heading" className="origin-heading">Single Origin Milk Story</h1>
+        <h1 id="origin-heading" className="origin-heading">
+          Single Origin Milk Story
+        </h1>
 
         <div className="origin-features">
           {features.map((f, i) => (
             <div className="feature-card" key={i}>
-              <img src={f.icon} alt={f.alt} className="feature-img" loading="lazy" />
+              <img src={f.icon} alt={f.alt} className="feature-img" />
               <p className="feature-text">
                 <span>{f.line1}</span>
                 <span>{f.line2}</span>

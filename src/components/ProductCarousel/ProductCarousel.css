@@ -1,12 +1,12 @@
 /* ======================================== */
-/* SINGLE ORIGIN SECTION (Merged – Scoped)  */
+/* SINGLE ORIGIN SECTION (Final Version) */
 /* ======================================== */
 
 .single-origin-section {
   position: relative;
   background-color: #edecea;
   text-align: center;
-  padding: 120px 20px 100px; /* increased top padding for logo space */
+  padding: 120px 20px 100px;
   font-family: "Times New Roman", Georgia, serif;
   color: #333;
   width: 100%;
@@ -17,13 +17,13 @@
   margin-top: -60px; /* slight overlap with product section */
 }
 
+/* === Center Logo Between Sections === */
 .logo-wrapper {
   position: absolute;
-  top: -85px; /* centers logo between both sections */
+  top: -85px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 5;
-  margin-bottom: 0; /* no need for spacing in absolute position */
   display: flex;
   justify-content: center;
 }
@@ -34,22 +34,26 @@
   object-fit: contain;
 }
 
+/* === Titles === */
 .origin-title {
-  font-size: 32px;
+  font-family: "Suranna", serif;
+  font-size: 58px;
   font-weight: 400;
-  margin: 0 0 8px 0;
+  color: #2B2B2B;
+  margin: 0 109px 10px 109px;
   line-height: 1.2;
-  color: #5c4033;
 }
 
 .origin-heading {
-  font-size: 40px;
-  font-weight: 500;
-  margin: 0 0 60px 0;
+  font-family: "Suranna", serif;
+  font-size: 58px;
+  font-weight: 400;
+  color: #2B2B2B;
+  margin: 0 109px 40px 109px;
   line-height: 1.2;
-  color: #5c4033;
 }
 
+/* === Features === */
 .origin-features {
   display: flex;
   justify-content: space-around;
@@ -63,7 +67,6 @@
 .feature-card {
   text-align: center;
   max-width: 220px;
-  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -84,9 +87,9 @@
 }
 
 .feature-text {
-  font-size: 16px; /* Adjusted to match image text size */
+  font-size: 16px;
   line-height: 1.4;
-  color: #333333; /* Adjusted to match darker text in image */
+  color: #333333;
   margin: 0;
 }
 
@@ -94,6 +97,7 @@
   display: block;
 }
 
+/* === Button === */
 .know-more-btn {
   margin-top: 60px;
   background-color: #b38a3b;
@@ -101,19 +105,21 @@
   border: none;
   border-radius: 25px;
   padding: 12px 40px;
-  font-size: 16px; /* Assuming this matches the image; verify if different */
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: 1px;
   cursor: pointer;
-  transition: background 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), color 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.2s ease;
+  transition: background 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
+              color 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
+              transform 0.2s ease;
   min-width: 180px;
   display: inline-block;
 }
 
 .know-more-btn:hover,
 .know-more-btn:focus {
-  background-color: #ffffff; /* White background on hover */
-  color: #b38a3b; /* Text color after hover */
+  background-color: #ffffff;
+  color: #b38a3b;
   transform: scale(1.05);
   outline: none;
 }
@@ -122,68 +128,106 @@
   transform: scale(0.98);
 }
 
-/* Responsive for Single Origin */
+/* === Responsive === */
+@media (max-width: 768px) {
+  .origin-title,
+  .origin-heading {
+    font-size: 34px;
+    margin: 0 40px 20px;
+  }
+  .origin-logo {
+    height: 120px;
+  }
+  .logo-wrapper {
+    top: -60px;
+  }
+  .origin-features {
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+  }
+}
+
+
+/* ======================================== */
+/* Responsive Adjustments */
+/* ======================================== */
+
 @media (max-width: 1024px) {
+  .origin-heading {
+    font-size: 44px;
+    margin: 0 60px 30px 60px;
+  }
+
+  .origin-title {
+    font-size: 28px;
+  }
+
   .origin-features {
     flex-direction: column;
     align-items: center;
     gap: 40px 60px;
   }
-  .origin-heading {
-    font-size: 34px;
-  }
-  .origin-title {
-    font-size: 28px;
-  }
 }
 
 @media (max-width: 600px) {
   .single-origin-section {
-    padding: 90px 15px 80px; /* reduced a bit for smaller screens */
+    padding: 90px 15px 80px;
   }
+
   .origin-logo {
     height: 100px;
   }
+
   .logo-wrapper {
-    top: -50px; /* adjusted for smaller screens */
+    top: -50px;
   }
+
   .origin-title {
     font-size: 22px;
     margin-bottom: 6px;
   }
+
   .origin-heading {
-    font-size: 26px;
-    margin: 0 0 40px;
+    font-size: 32px;
+    margin: 0 20px 30px 20px;
   }
+
   .origin-features {
     grid-template-columns: 1fr;
     gap: 30px;
     margin-bottom: 40px;
     width: 90%;
   }
+
   .feature-img {
     width: 55px;
     height: 55px;
     margin-bottom: 12px;
   }
+
   .feature-text {
-    font-size: 16px;
+    font-size: 15px;
   }
+
   .know-more-btn {
     margin-top: 40px;
     padding: 10px 30px;
-    font-size: 15px; /* Assuming this matches the image; verify if different */
+    font-size: 15px;
   }
 }
 
 @media (max-width: 380px) {
   .origin-heading {
-    font-size: 24px;
+    font-size: 26px;
+    margin: 0 15px 25px 15px;
   }
+
   .origin-title {
     font-size: 20px;
   }
 }
+
 
 /* ============================= */
 /* === PRODUCT SECTION === */
