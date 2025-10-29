@@ -184,7 +184,6 @@
   }
 }
 
-
 /* ============================= */
 /* === PRODUCT SECTION === */
 /* ============================= */
@@ -339,12 +338,12 @@
   cursor: pointer;
   font-weight: 700;
   width: 100%;
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition: background 0.3s ease, color 0.3s ease; /* Smooth transition for background and text */
 }
 
 .product-cta:hover {
-  background: #133a72;
-  transform: translateY(-2px);
+  background: #ffffff; /* White background on hover */
+  color: #0a2e5d; /* Blue text on hover */
 }
 
 /* ============================= */
