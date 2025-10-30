@@ -27,12 +27,12 @@ const products = [
   { id: 6, img: prod6, title: "Protein Box Pack", price: "₹475", weight: "320g" },
 ];
 
-// === FEATURE DATA ===
+// === FEATURE DATA (Joined lines) ===
 const features = [
-  { icon: unmatched, line1: "Unmatched Premium", line2: "Single Origin Milk", alt: "Premium milk" },
-  { icon: sourced, line1: "Sourced from picturesque", line2: "Bhagyalaxmi Dairy Farm", alt: "Farm sourcing" },
-  { icon: innovation, line1: "Innovative & Advanced", line2: "Techniques", alt: "Innovation" },
-  { icon: healthier, line1: "Healthier Family & A", line2: "Healthier You", alt: "Healthy family" },
+  { icon: unmatched, text: "Unmatched Premium Single Origin Milk", alt: "Premium milk" },
+  { icon: sourced, text: "Sourced from picturesque Bhagyalaxmi Dairy Farm", alt: "Farm sourcing" },
+  { icon: innovation, text: "Innovative & Advanced Techniques", alt: "Innovation" },
+  { icon: healthier, text: "Healthier Family & A Healthier You", alt: "Healthy family" },
 ];
 
 const ProductCarousel = () => {
@@ -165,10 +165,7 @@ const ProductCarousel = () => {
           {features.map((f, i) => (
             <div className="feature-card" key={i}>
               <img src={f.icon} alt={f.alt} className="feature-img" />
-              <p className="feature-text">
-                <span>{f.line1}</span>
-                <span>{f.line2}</span>
-              </p>
+              <p className="feature-text">{f.text}</p>
             </div>
           ))}
         </div>
