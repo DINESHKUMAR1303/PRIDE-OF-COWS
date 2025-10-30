@@ -3,7 +3,7 @@ import NotificationBar from "../components/NotificationBar/NotificationBar";
 import Navbar from "../components/Navbar/Navbar";
 import Homebanner from "../components/Homebanner/Homebanner";
 import ProductCarousel from "../components/ProductCarousel/ProductCarousel";
-// import SingleOrigin from "../components/SingleOrgin/SingleOrgin";
+import ContactSection from "../components/ContactSection/ContactSection";
 const Home = () => {
   return (
     <>
@@ -11,7 +11,7 @@ const Home = () => {
       <Navbar />
       <Homebanner />
       <ProductCarousel />
-      {/* <SingleOrigin/> */}
+      <ContactSection/>
     </>
   );
 };

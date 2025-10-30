@@ -1,0 +1,276 @@
+/* ======================================== */
+/* CONTACT SECTION */
+/* ======================================== */
+
+.contact-section {
+  background-color: #f4f4f4; /* Light beige background as per image */
+  padding: 100px 50px; /* Generous side gaps matching image whitespace */
+  font-family: "Times New Roman", Georgia, serif;
+  color: #333;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-card {
+  background: #edecea;  /* Light beige card background */
+  padding: 50px 40px; /* Internal gaps for form elements */
+  border-radius: 12px; /* Subtle rounding */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Soft shadow for depth */
+  max-width: 700px;
+  margin: 0 auto 80px; /* Center and bottom gap */
+}
+
+.contact-title {
+  font-family: "Suranna", serif;
+  font-size: 48px;
+  font-weight: 400;
+  color: #2B2B2B;
+  margin: 0 0 50px 0; /* Larger bottom gap under title */
+  line-height: 1.2;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* Increased gap between rows for breathing room */
+}
+
+.form-row {
+  display: flex;
+  gap: 25px; /* Gap between paired inputs */
+  flex-wrap: wrap;
+}
+
+.form-group {
+  flex: 1;
+  min-width: 250px; /* Minimum width for better alignment */
+  text-align: left;
+}
+
+.form-group.full-width {
+  text-align: left;
+  min-width: 100%;
+}
+
+.form-group label {
+  display: block;
+  font-size: 16px;
+  font-weight: 400;
+  color: #999; /* Light gray labels as per image */
+  margin-bottom: 10px; /* Gap under label */
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 15px 18px; /* Slightly larger padding for inputs */
+  border: 1px solid #e0e0e0; /* Light gray border */
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: inherit;
+  background-color: #fff; /* White input background */
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #b38a3b;
+  box-shadow: 0 0 0 2px rgba(179, 138, 59, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px; /* Taller textarea for enquiry */
+}
+
+.submit-btn {
+  background-color: #b38a3b;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 16px 45px; /* Larger padding for button */
+  font-family: "Times New Roman", Georgia, serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  align-self: center;
+  min-width: 220px;
+  margin-top: 10px; /* Small top gap for button */
+}
+
+.submit-btn:hover {
+  background-color: #a07a2e;
+  transform: translateY(-2px);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+/* Connect Section - Below the form with gap */
+.connect-section {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 60px; /* Gap above connect title */
+  border-top: 1px solid #e0e0e0;
+}
+
+.connect-title {
+  font-family: "Times New Roman", Georgia, serif;
+  font-size: 24px;
+  color: #2B2B2B;
+  margin: 0 0 30px 0;
+  font-weight: 400;
+}
+
+.connect-info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #193B61;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 400;
+  transition: color 0.3s ease;
+}
+
+.contact-item:hover {
+  color: #b38a3b;
+}
+
+.icon {
+  font-size: 18px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #f0f8ff; /* Match section background */
+  border-radius: 50%;
+  color: #193B61;
+  text-decoration: none;
+  font-size: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.social-link:hover {
+  background-color: #b38a3b;
+  color: #fff;
+}
+
+/* ======================================== */
+/* Responsive Adjustments */
+/* ======================================== */
+
+@media (max-width: 768px) {
+  .contact-section {
+    padding: 80px 30px; /* Reduced side padding on mobile */
+  }
+
+  .form-card {
+    padding: 40px 30px; /* Adjusted internal padding */
+    margin-bottom: 60px;
+  }
+
+  .contact-title {
+    font-size: 36px;
+    margin-bottom: 40px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .form-group {
+    min-width: 100%;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 14px 16px;
+  }
+
+  .submit-btn {
+    padding: 14px 35px;
+    font-size: 15px;
+    min-width: 200px;
+  }
+
+  .connect-title {
+    font-size: 22px;
+    margin-bottom: 25px;
+  }
+
+  .connect-info {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .social-icons {
+    gap: 12px;
+  }
+
+  .social-link {
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-section {
+    padding: 60px 20px;
+  }
+
+  .form-card {
+    padding: 30px 25px;
+  }
+
+  .contact-title {
+    font-size: 30px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 12px 14px;
+    font-size: 15px;
+  }
+
+  .submit-btn {
+    padding: 12px 30px;
+    font-size: 14px;
+  }
+
+  .connect-info {
+    gap: 15px;
+  }
+
+  .contact-item {
+    font-size: 15px;
+  }
+}
