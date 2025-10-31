@@ -119,11 +119,11 @@
 /* === Button === */
 .know-more-btn {
   margin-top: -25px; /* Reduced gap from 40px to 20px */
-  background-color: #b38a3b;
+  background-color: #ae8a49;
   color: #fff;
   border: none;
   border-radius: 25px;
-  padding: 12px 40px; /* Exact vertical 12px, horizontal 40px */
+  padding: 14px 20px; /* Exact vertical 12px, horizontal 40px */
   font-family: "Times New Roman", Georgia, serif;
   font-size: 16px; /* Exact size */
   font-weight: 600; /* Bold weight */
