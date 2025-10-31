@@ -106,31 +106,41 @@
   min-width: 500px;
 }
 
-/* === Button with Hover – TEXT NOW CENTERED === */
+/* === SEND ENQUIRY BUTTON – EXACT HOVER FROM know-more-btn === */
 .submit-btn {
   background-color: #b19153;
   color: #fff;
   font-weight: 600;
   padding: 14px 50px;
-  border: 2px solid #b19153;
+  border: 2px solid #ffffff;
   border-radius: 40px;
   cursor: pointer;
-  transition: all 0.3s ease;
   font-size: 16px;
   white-space: nowrap;
   min-width: 180px;
   z-index: 1;
 
-  /* CENTER TEXT PERFECTLY */
   display: flex;
   justify-content: center;
   align-items: center;
+
+  transition: 
+    background 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
+    color 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 0.2s ease;
 }
 
-.submit-btn:hover {
-  background-color: white;
-  color: #ae8a49;
-  border: 2px solid #ae8a49;
+.submit-btn:hover,
+.submit-btn:focus {
+  background-color: #ffffff;
+  color: #b38a3b;
+  border-color: #ffffff;
+  transform: scale(1.05);
+  outline: none;
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
 }
 
 /* === Connect Section === */
@@ -160,6 +170,7 @@
   align-items: center;
   gap: 8px;
   transition: opacity 0.3s;
+  margin-top: -45px;
 }
 
 .contact-links a:hover {
