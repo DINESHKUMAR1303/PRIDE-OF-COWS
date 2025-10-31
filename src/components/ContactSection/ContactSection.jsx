@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import "./ContactSection.css";
 
+import whatsapp from "./images/whatsApp.svg";
+import phone from "./images/phone.svg";
+import mail from "./images/mail.svg";
+import instagram from "./images/instagram.svg";
+import facebook from "./images/facebook.svg";
+import twitter from "./images/twitter.svg";
+import youtube from "./images/youtube.svg";
+
 const ContactSection = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -19,103 +27,113 @@ const ContactSection = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here (e.g., API call)
     console.log("Form submitted:", formData);
   };
 
   return (
-    <section className="contact-section">
-      <div className="form-card">
+    <section className="contact-outer">
+      <div className="contact-section">
         <h2 className="contact-title">Delighted To Serve You</h2>
-        
+
         <form className="contact-form" onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="form-group">
-              <label htmlFor="name">Your Name*</label>
               <input
-                type="text"
                 id="name"
+                type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
                 required
               />
+              <label htmlFor="name">Your Name*</label>
             </div>
             <div className="form-group">
-              <label htmlFor="mobile">Your Mobile No.*</label>
               <input
-                type="tel"
                 id="mobile"
+                type="tel"
                 name="mobile"
                 value={formData.mobile}
                 onChange={handleChange}
                 required
               />
+              <label htmlFor="mobile">Your Mobile No.*</label>
             </div>
           </div>
 
           <div className="form-row">
             <div className="form-group">
-              <label htmlFor="email">Your Email*</label>
               <input
-                type="email"
                 id="email"
+                type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
               />
+              <label htmlFor="email">Your Email ID*</label>
             </div>
             <div className="form-group">
-              <label htmlFor="location">Your Location*</label>
               <input
-                type="text"
                 id="location"
+                type="text"
                 name="location"
                 value={formData.location}
                 onChange={handleChange}
                 required
               />
+              <label htmlFor="location">Your Location*</label>
             </div>
           </div>
 
           <div className="form-group full-width">
-            <label htmlFor="enquiry">Enquiry*</label>
             <textarea
               id="enquiry"
               name="enquiry"
               value={formData.enquiry}
               onChange={handleChange}
-              rows="5"
+              rows="4"
               required
-            ></textarea>
+            />
+            <label htmlFor="enquiry">Enquiry*</label>
           </div>
 
-          <button type="submit" className="submit-btn">
-            SEND ENQUIRY
-          </button>
+          <div className="submit-wrapper">
+            <div className="line full-line"></div>
+            <button type="submit" className="submit-btn">
+              SEND ENQUIRY
+            </button>
+            <div className="line full-line"></div>
+          </div>
         </form>
-      </div>
 
-      <div className="connect-section">
-        <h3 className="connect-title">Connect with Us</h3>
-        <div className="connect-info">
-          <a href="tel:+9126815615" className="contact-item">
-            <span className="icon phone-icon">📞</span>
-            +91-26815615
-          </a>
-          <a href="tel:+9126815615" className="contact-item">
-            <span className="icon phone-icon">📞</span>
-            +91-26815615
-          </a>
-          <a href="mailto:bookings@prideofcows.com" className="contact-item">
-            <span className="icon email-icon">✉️</span>
-            bookings@prideofcows.com
-          </a>
-          <div className="social-icons">
-            <a href="#" className="social-link fb">📘</a>
-            <a href="#" className="social-link x">🕊️</a>
-            <a href="#" className="social-link ig">📷</a>
+        <div className="connect-section">
+          <h3>Connect with Us</h3>
+          <div className="contact-links">
+            <a href="https://wa.me/912268156815">
+              <img src={whatsapp} alt="WhatsApp" />
+              +91-22-68156815
+            </a>
+            <a href="tel:+912268156815">
+              <img src={phone} alt="Phone" />
+              +91-22-68156815
+            </a>
+            <a href="mailto:bookings@prideofcows.com">
+              <img src={mail} alt="Mail" />
+              bookings@prideofcows.com
+            </a>
+            <a href="#" className="social-icon">
+              <img src={instagram} alt="Instagram" />
+            </a>
+            <a href="#" className="social-icon">
+              <img src={facebook} alt="Facebook" />
+            </a>
+            <a href="#" className="social-icon">
+              <img src={twitter} alt="Twitter" />
+            </a>
+            <a href="#" className="social-icon">
+              <img src={youtube} alt="YouTube" />
+            </a>
           </div>
         </div>
       </div>
