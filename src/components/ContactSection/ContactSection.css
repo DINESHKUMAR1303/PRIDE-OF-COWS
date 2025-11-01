@@ -65,7 +65,7 @@
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-bottom-color: #b19153;
+  border-bottom-color: #ae8a49;
 }
 
 .form-group label {
@@ -133,7 +133,7 @@
 .submit-btn:hover,
 .submit-btn:focus {
   background-color: #ffffff;
-  color: #b38a3b;
+  color: #ae8a49;
   border-color: #ffffff;
   transform: scale(1.05);
   outline: none;
