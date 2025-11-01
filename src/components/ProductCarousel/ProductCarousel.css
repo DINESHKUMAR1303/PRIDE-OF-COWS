@@ -64,7 +64,7 @@
   grid-template-rows: auto auto;
   justify-items: center;
   align-items: start;
-  gap: 60px 80px; /* Exact vertical 60px, horizontal 80px */
+  gap: 10px 10px; /* Exact vertical 60px, horizontal 80px */
   max-width: 1200px;
   width: 90%;
   margin: 0 auto 60px auto; /* Exact margins: 60px bottom */
