@@ -330,6 +330,145 @@
   }
 }
 
+/* ===================================================== */
+/* === APP DOWNLOAD SECTION (Get The Pride Of Cows App) === */
+/* ===================================================== */
+
+.app-download-outer {
+  background-color: #f4f4f4;
+
+}
+
+.app-download-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  font-family: "Times New Roman", serif;
+  color: #1a1a1a;
+}
+
+.app-download-title {
+  font-size: 52px;
+  font-family: suranna, serif;
+  font-weight: 400;
+  margin-bottom: 1px;
+}
+
+.app-download-subtext {
+  font-size: 18px;
+  color: #444;
+  margin-bottom: 60px;
+}
+
+/* Buttons layout */
+.app-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+/* Individual button */
+.app-btn {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 30px;
+  border: 1.5px solid #1a1a1a;
+  border-radius: 40px;
+  text-decoration: none;
+  color: #1a1a1a;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  background-color: #fff;
+}
+
+.app-btn:hover {
+  background-color: #f1f1f1;
+  transform: translateY(-3px);
+}
+
+/* Icon circle */
+.app-icon-circle {
+  width: 50px;
+  height: 50px;
+  border: 1.5px solid #1a1a1a;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+
+.app-icon-circle img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+/* Text styling */
+.app-text {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.app-text span {
+  font-size: 13px;
+  color: #444;
+}
+
+.app-text strong {
+  font-size: 17px;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app-download-title {
+    font-size: 36px;
+  }
+
+  .app-download-subtext {
+    font-size: 16px;
+  }
+
+  .app-btn {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+
+  .app-icon-circle {
+    width: 45px;
+    height: 45px;
+  }
+
+  .app-text strong {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-download-title {
+    font-size: 28px;
+  }
+
+  .app-download-subtext {
+    font-size: 14px;
+  }
+
+  .app-buttons {
+    gap: 20px;
+  }
+
+  .app-btn {
+    padding: 14px 24px;
+  }
+}
 
 
 
