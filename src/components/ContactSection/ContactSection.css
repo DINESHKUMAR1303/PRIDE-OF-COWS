@@ -88,7 +88,7 @@
   color: #a18348;
 }
 
-/* === Submit Wrapper – FULL LINES === */
+/* === Submit Wrapper === */
 .submit-wrapper {
   display: flex;
   align-items: center;
@@ -119,15 +119,10 @@
   white-space: nowrap;
   min-width: 180px;
   z-index: 1;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
-  transition: 
-    background 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
-    color 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
-    transform 0.2s ease;
+  transition: background 1.2s, color 1.2s, transform 0.2s ease;
 }
 
 .submit-btn:hover,
@@ -152,7 +147,7 @@
   color: #1a1a1a;
 }
 
-/* === Contact Links (New Layout with Dots) === */
+/* === Contact Links === */
 .contact-links {
   display: flex;
   justify-content: center;
@@ -190,14 +185,14 @@
   height: 25px;
 }
 
-/* === Increase only Twitter & YouTube icons === */
+/* Increase only Twitter & YouTube icons */
 .contact-links img[alt="Twitter"] {
   width: 34px;
   height: 25px;
 }
 
 .contact-links img[alt="YouTube"] {
-  width: 37px; /* slightly larger */
+  width: 37px;
   height: 27px;
 }
 
@@ -214,121 +209,6 @@
   font-size: 18px;
 }
 
-/* === Responsive === */
-@media (max-width: 1024px) {
-  .contact-title {
-    font-size: 48px;
-  }
-
-  .connect-section h3 {
-    font-size: 34px;
-  }
-
-  .contact-links a {
-    font-size: 15px;
-  }
-}
-
-@media (max-width: 768px) {
-  .form-row {
-    flex-direction: column;
-    gap: 25px;
-  }
-
-  .contact-title {
-    font-size: 32px;
-    margin-bottom: 40px;
-  }
-
-  .contact-section {
-    padding: 60px 20px;
-  }
-
-  .submit-wrapper {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .line.full-line {
-    width: 100%;
-    max-width: 120px;
-  }
-
-  .submit-btn {
-    width: 100%;
-    max-width: 250px;
-  }
-
-  .connect-section h3 {
-    font-size: 30px;
-  }
-
-  .contact-links {
-    gap: 10px;
-  }
-
-  .contact-links a {
-    font-size: 14px;
-  }
-
-  .contact-links img {
-    width: 20px;
-    height: 20px;
-  }
-
-  /* Slightly larger Twitter & YouTube for mobile */
-  .contact-links img[alt="Twitter"] {
-    width: 28px;
-    height: 22px;
-  }
-
-  .contact-links img[alt="YouTube"] {
-    width: 31px;
-    height: 24px;
-  }
-
-  .contact-links a:not(:last-child)::after {
-    margin-left: 8px;
-    font-size: 16px;
-  }
-}
-
-@media (max-width: 480px) {
-  .contact-section {
-    padding: 40px 15px;
-  }
-
-  .contact-title {
-    font-size: 26px;
-  }
-
-  .connect-section h3 {
-    font-size: 26px;
-  }
-
-  .contact-links {
-    gap: 8px;
-  }
-
-  .contact-links a {
-    font-size: 13px;
-  }
-
-  .contact-links img {
-    width: 18px;
-    height: 18px;
-  }
-
-  .contact-links img[alt="Twitter"] {
-    width: 24px;
-    height: 20px;
-  }
-
-  .contact-links img[alt="YouTube"] {
-    width: 27px;
-    height: 22px;
-  }
-}
 
 /* ===================================================== */
 /* === APP DOWNLOAD SECTION (Get The Pride Of Cows App) === */
@@ -336,29 +216,30 @@
 
 .app-download-outer {
   background-color: #f4f4f4;
-  padding: 5px 0 100px;
-
+  padding: 20px 0 100px;
 }
 
 .app-download-section {
   max-width: 1200px;
   margin: 0 auto;
   text-align: center;
-  font-family: sans-serif ;
+  font-family: sans-serif;
   color: #1a1a1a;
 }
 
 .app-download-title {
-  font-size: 52px;
+  font-size: 58px;
   font-family: suranna, serif;
   font-weight: 400;
-  margin-bottom: 1px;
+  margin-bottom: 6px;
+  margin-top: 30px;
 }
 
 .app-download-subtext {
-  font-size: 18px;
+  font-size: 17px;
   color: #444;
-  margin-bottom: 60px;
+  margin-bottom: 30px;
+  margin-top:-23px;
 }
 
 /* Buttons layout */
@@ -376,36 +257,36 @@
   align-items: center;
   gap: 16px;
   padding: 16px 30px;
-  border: 1.5px solid #1a1a1a;
+  border: 1.5px solid #16385c;
   border-radius: 40px;
   text-decoration: none;
-  color: #1a1a1a;
+  color: #16385c;
   font-size: 15px;
-  transition: all 0.3s ease;
-  background-color: #fff;
+  background-color: #f4f4f4;
+  transition: all 0.35s ease-in-out;
 }
 
+/* Hover effect (navy background, white text/icons) */
 .app-btn:hover {
-  background-color: #f1f1f1;
-  transform: translateY(-3px);
+  background-color: #16385c;
+  color: #ffffff;
+  border-color: #16385c;
 }
 
-/* Icon circle */
-.app-icon-circle {
-  width: 50px;
-  height: 50px;
-  border: 1.5px solid #1a1a1a;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #fff;
-}
-
-.app-icon-circle img {
-  width: 24px;
-  height: 24px;
+/* Icon styling (navy by default, turns pure white on hover) */
+.app-icon {
+  width: 26px;
+  height: 26px;
   object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(17%) sepia(33%) 
+    saturate(900%) hue-rotate(179deg) brightness(95%) contrast(92%);
+  transition: all 0.35s ease-in-out;
+}
+
+/* Force pure white icon on hover */
+.app-btn:hover .app-icon {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) 
+    saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
 }
 
 /* Text styling */
@@ -418,13 +299,15 @@
 
 .app-text span {
   font-size: 13px;
-  color: #444;
+  color: inherit;
+  transition: all 0.35s ease-in-out;
 }
 
 .app-text strong {
   font-size: 17px;
-  color: #1a1a1a;
+  color: inherit;
   font-weight: 500;
+  transition: all 0.35s ease-in-out;
 }
 
 /* Responsive */
@@ -443,9 +326,9 @@
     justify-content: center;
   }
 
-  .app-icon-circle {
-    width: 45px;
-    height: 45px;
+  .app-icon {
+    width: 24px;
+    height: 24px;
   }
 
   .app-text strong {
