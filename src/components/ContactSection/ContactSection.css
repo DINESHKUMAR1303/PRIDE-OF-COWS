@@ -1,7 +1,7 @@
 /* === Outer Wrapper === */
 .contact-outer {
   background-color: #f4f4f4;
-  padding: 100px 0;
+  padding: 100px 0 0px;
 }
 
 /* === Inner Section === */
@@ -9,7 +9,7 @@
   background-color: #edecea;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 80px 40px;
+  padding: 80px 40px 60px;
   text-align: center;
   font-family: "Times New Roman", serif;
   color: #333;
@@ -336,6 +336,7 @@
 
 .app-download-outer {
   background-color: #f4f4f4;
+  padding: 5px 0 100px;
 
 }
 
