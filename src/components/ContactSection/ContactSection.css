@@ -239,7 +239,7 @@
   font-size: 17px;
   color: #444;
   margin-bottom: 30px;
-  margin-top:-23px;
+  margin-top: -23px;
 }
 
 /* Buttons layout */
@@ -264,6 +264,7 @@
   font-size: 15px;
   background-color: #f4f4f4;
   transition: all 0.35s ease-in-out;
+  cursor: pointer;
 }
 
 /* Hover effect (navy background, white text/icons) */
@@ -273,20 +274,20 @@
   border-color: #16385c;
 }
 
-/* Icon styling (navy by default, turns pure white on hover) */
+/* Icon styling (navy by default, turns white on hover) */
 .app-icon {
-  width: 26px;
-  height: 26px;
+  width: 32px;
+  height: 37px;
   object-fit: contain;
-  filter: brightness(0) saturate(100%) invert(17%) sepia(33%) 
-    saturate(900%) hue-rotate(179deg) brightness(95%) contrast(92%);
-  transition: all 0.35s ease-in-out;
+  transition: filter 0.35s ease-in-out;
+  filter: brightness(0) saturate(100%) invert(17%) sepia(33%) saturate(900%)
+    hue-rotate(179deg) brightness(95%) contrast(92%);
 }
 
-/* Force pure white icon on hover */
+/* Make icon turn white when hovering over the entire button */
 .app-btn:hover .app-icon {
-  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) 
-    saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%)
+    hue-rotate(0deg) brightness(100%) contrast(100%);
 }
 
 /* Text styling */
@@ -300,14 +301,14 @@
 .app-text span {
   font-size: 13px;
   color: inherit;
-  transition: all 0.35s ease-in-out;
+  transition: color 0.35s ease-in-out;
 }
 
 .app-text strong {
   font-size: 17px;
   color: inherit;
   font-weight: 500;
-  transition: all 0.35s ease-in-out;
+  transition: color 0.35s ease-in-out;
 }
 
 /* Responsive */
@@ -353,6 +354,3 @@
     padding: 14px 24px;
   }
 }
-
-
-

@@ -154,9 +154,7 @@ const ContactSection = () => {
 
           <div className="app-buttons">
             <a href="#" className="app-btn" target="_blank" rel="noopener noreferrer">
-              <div className="app-icon-circle">
-                <img src={appstore} alt="App Store" />
-              </div>
+              <img src={appstore} alt="App Store" className="app-icon" />
               <div className="app-text">
                 <span>Download the iOS app on</span>
                 <strong>App Store</strong>
@@ -164,9 +162,7 @@ const ContactSection = () => {
             </a>
 
             <a href="#" className="app-btn" target="_blank" rel="noopener noreferrer">
-              <div className="app-icon-circle">
-                <img src={playstore} alt="Google Play" />
-              </div>
+              <img src={playstore} alt="Google Play" className="app-icon" />
               <div className="app-text">
                 <span>Get the Android app on</span>
                 <strong>Google Play</strong>
