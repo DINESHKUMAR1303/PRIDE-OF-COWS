@@ -49,6 +49,7 @@ const ContactSection = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
+                  placeholder=" "
                   required
                 />
                 <label htmlFor="name">Your Name*</label>
@@ -60,6 +61,7 @@ const ContactSection = () => {
                   name="mobile"
                   value={formData.mobile}
                   onChange={handleChange}
+                  placeholder=" "
                   required
                 />
                 <label htmlFor="mobile">Your Mobile No.*</label>
@@ -74,6 +76,7 @@ const ContactSection = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
+                  placeholder=" "
                   required
                 />
                 <label htmlFor="email">Your Email ID*</label>
@@ -85,6 +88,7 @@ const ContactSection = () => {
                   name="location"
                   value={formData.location}
                   onChange={handleChange}
+                  placeholder=" "
                   required
                 />
                 <label htmlFor="location">Your Location*</label>
@@ -98,47 +102,55 @@ const ContactSection = () => {
                 value={formData.enquiry}
                 onChange={handleChange}
                 rows="4"
+                placeholder=" "
                 required
               />
               <label htmlFor="enquiry">Enquiry*</label>
             </div>
 
             <div className="submit-wrapper">
-              <div className="line full-line"></div>
               <button type="submit" className="submit-btn">
                 SEND ENQUIRY
               </button>
-              <div className="line full-line"></div>
             </div>
           </form>
 
+          {/* ====== CONNECT SECTION ====== */}
           <div className="connect-section">
             <h3>Connect with Us</h3>
             <div className="contact-links">
-              <a href="https://wa.me/912268156815">
-                <img src={whatsapp} alt="WhatsApp" />
-                +91-22-68156815
-              </a>
-              <a href="tel:+912268156815">
-                <img src={phone} alt="Phone" />
-                +91-22-68156815
-              </a>
-              <a href="mailto:bookings@prideofcows.com">
-                <img src={mail} alt="Mail" />
-                bookings@prideofcows.com
-              </a>
-              <a href="#" className="social-icon">
-                <img src={instagram} alt="Instagram" />
-              </a>
-              <a href="#" className="social-icon">
-                <img src={facebook} alt="Facebook" />
-              </a>
-              <a href="#" className="social-icon">
-                <img src={twitter} alt="Twitter" />
-              </a>
-              <a href="#" className="social-icon">
-                <img src={youtube} alt="YouTube" />
-              </a>
+              <div className="contact-items">
+                <a href="https://wa.me/912268156815" className="contact-item">
+                  <img src={whatsapp} alt="WhatsApp" />
+                  +91-22-68156815
+                </a>
+                <a href="tel:+912268156815" className="contact-item">
+                  <img src={phone} alt="Phone" />
+                  +91-22-68156815
+                </a>
+                <a
+                  href="mailto:bookings@prideofcows.com"
+                  className="contact-item"
+                >
+                  <img src={mail} alt="Mail" />
+                  bookings@prideofcows.com
+                </a>
+              </div>
+
+              <div className="social-icons">
+                <a href="#" className="social-icon">
+                  <img src={instagram} alt="Instagram" />
+                </a>
+                <a href="#" className="social-icon">
+                  <img src={facebook} alt="Facebook" />
+                </a>
+                <a href="#" className="social-icon">
+                  <img src={twitter} alt="Twitter" />
+                </a>
+                <a href="#" className="social-icon">
+                  <img src={youtube} alt="YouTube" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -149,11 +161,17 @@ const ContactSection = () => {
         <div className="app-download-section">
           <h2 className="app-download-title">Get The Pride Of Cows App</h2>
           <p className="app-download-subtext">
-            Be the first to receive exclusive deals, product updates and special perks!
+            Be the first to receive exclusive deals, product updates and special
+            perks!
           </p>
 
           <div className="app-buttons">
-            <a href="#" className="app-btn" target="_blank" rel="noopener noreferrer">
+            <a
+              href="#"
+              className="app-btn"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <img src={appstore} alt="App Store" className="app-icon" />
               <div className="app-text">
                 <span>Download the iOS app on</span>
@@ -161,7 +179,12 @@ const ContactSection = () => {
               </div>
             </a>
 
-            <a href="#" className="app-btn" target="_blank" rel="noopener noreferrer">
+            <a
+              href="#"
+              className="app-btn"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <img src={playstore} alt="Google Play" className="app-icon" />
               <div className="app-text">
                 <span>Get the Android app on</span>

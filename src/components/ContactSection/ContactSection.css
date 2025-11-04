@@ -65,7 +65,7 @@
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-bottom-color: #ae8a49;
+  border-bottom-color: #16385c;
 }
 
 .form-group label {
@@ -85,43 +85,45 @@
 .form-group textarea:valid ~ label {
   top: -8px;
   font-size: 14px;
-  color: #a18348;
+  color: #16385c;
 }
 
 /* === Submit Wrapper === */
 .submit-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-  margin-top: 70px;
-  width: 100%;
   position: relative;
+  max-width: 1200px;
+  margin: 80px auto 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.line.full-line {
-  flex: 1;
-  height: 0.2px;
+/* Full-width line across section */
+.submit-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
   background-color: #ccc;
-  min-width: 500px;
+  transform: translateY(-50%);
+  z-index: 0;
 }
 
 /* === SEND ENQUIRY BUTTON === */
 .submit-btn {
-  background-color: #b19153;
+  background-color: #ae8a49;
   color: #fff;
   font-weight: 600;
   padding: 14px 50px;
-  border: 2px solid #ffffff;
+  border: none;
   border-radius: 40px;
   cursor: pointer;
   font-size: 16px;
   white-space: nowrap;
-  min-width: 180px;
   z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative;
   transition: background 1.2s, color 1.2s, transform 0.2s ease;
 }
 
@@ -129,7 +131,7 @@
 .submit-btn:focus {
   background-color: #ffffff;
   color: #ae8a49;
-  border-color: #ffffff;
+  
   transform: scale(1.05);
   outline: none;
 }
@@ -138,80 +140,96 @@
   transform: scale(0.98);
 }
 
-/* === Connect Section === */
+/* ===================================================== */
+/* === CONNECT SECTION (UPDATED FOR 1440PX ALIGNMENT) === */
+/* ===================================================== */
+
+.connect-section {
+  text-align: center;
+  margin-top: -40px;
+}
+
 .connect-section h3 {
   font-size: 40px;
   font-family: suranna, serif;
   font-weight: 400;
-  margin: -50px 0 0px;
+  margin-bottom: 35px;
   color: #1a1a1a;
 }
 
-/* === Contact Links === */
+/* Align all in one line */
 .contact-links {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding: 0 20px;
+  gap: 35px;
+  flex-wrap: nowrap;
 }
 
-.contact-links a {
-  text-decoration: none;
-  color: #1a1a1a;
-  font-size: 16px;
+/* CONTACT ITEMS */
+.contact-items {
   display: flex;
   align-items: center;
-  gap: 6px;
-  position: relative;
+  gap: 35px;
 }
 
-.contact-links a:not(:last-child)::after {
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: #16385c;
+  text-decoration: none;
+  font-weight: 400;
+  transition: color 0.3s ease;
+}
+
+.contact-item:hover {
+  text-decoration: underline;
+}
+
+/* Dots between items */
+.contact-item:not(:last-child)::after {
   content: "•";
   color: #c7c7c7;
-  margin-left: 12px;
+  margin-left: 18px;
   font-size: 18px;
 }
 
-.contact-links img {
+/* CONTACT ICONS */
+.contact-item img {
   width: 22px;
   height: 22px;
   object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(17%) sepia(33%) saturate(900%) hue-rotate(179deg) brightness(95%) contrast(92%);
 }
 
-.contact-links .social-icon img {
+/* SOCIAL ICONS */
+.social-icons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-left: 5px;
+}
+
+.social-icon img {
   width: 25px;
   height: 25px;
+  filter: brightness(0) saturate(100%) invert(17%) sepia(33%) saturate(900%) hue-rotate(179deg) brightness(95%) contrast(92%);
 }
 
-/* Increase only Twitter & YouTube icons */
-.contact-links img[alt="Twitter"] {
-  width: 34px;
+.social-icon img[alt="Twitter"] {
+  width: 32px;
   height: 25px;
 }
 
-.contact-links img[alt="YouTube"] {
-  width: 37px;
-  height: 27px;
+.social-icon img[alt="YouTube"] {
+  width: 33px;
+  height: 25px;
 }
-
-/* Remove dots between social icons */
-.contact-links .social-icon:not(:last-child)::after {
-  content: none;
-}
-
-/* Add dot before first social icon group */
-.contact-links a[href*="prideofcows.com"]::after {
-  content: "•";
-  color: #c7c7c7;
-  margin-left: 12px;
-  font-size: 18px;
-}
-
 
 /* ===================================================== */
-/* === APP DOWNLOAD SECTION (Get The Pride Of Cows App) === */
+/* === APP DOWNLOAD SECTION === */
 /* ===================================================== */
 
 .app-download-outer {
@@ -242,7 +260,6 @@
   margin-top: -23px;
 }
 
-/* Buttons layout */
 .app-buttons {
   display: flex;
   justify-content: center;
@@ -251,7 +268,6 @@
   flex-wrap: wrap;
 }
 
-/* Individual button */
 .app-btn {
   display: flex;
   align-items: center;
@@ -267,14 +283,12 @@
   cursor: pointer;
 }
 
-/* Hover effect (navy background, white text/icons) */
 .app-btn:hover {
   background-color: #16385c;
   color: #ffffff;
   border-color: #16385c;
 }
 
-/* Icon styling (navy by default, turns white on hover) */
 .app-icon {
   width: 32px;
   height: 37px;
@@ -284,13 +298,10 @@
     hue-rotate(179deg) brightness(95%) contrast(92%);
 }
 
-/* Make icon turn white when hovering over the entire button */
 .app-btn:hover .app-icon {
-  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%)
-    hue-rotate(0deg) brightness(100%) contrast(100%);
+  filter: brightness(0) invert(1);
 }
 
-/* Text styling */
 .app-text {
   text-align: left;
   display: flex;
@@ -300,57 +311,97 @@
 
 .app-text span {
   font-size: 13px;
-  color: inherit;
-  transition: color 0.35s ease-in-out;
 }
 
 .app-text strong {
-  font-size: 17px;
-  color: inherit;
+  font-size: 20px;
+  font-family: suranna;
   font-weight: 500;
-  transition: color 0.35s ease-in-out;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .app-download-title {
-    font-size: 36px;
+/* ======================================== */
+/* === RESPONSIVE STYLES === */
+/* ======================================== */
+
+@media (max-width: 1023px) and (min-width: 320px) {
+  .contact-links {
+    flex-direction: column;
+    gap: 20px;
   }
 
-  .app-download-subtext {
-    font-size: 16px;
-  }
-
-  .app-btn {
-    width: 100%;
-    max-width: 300px;
+  .contact-items {
+    flex-wrap: wrap;
     justify-content: center;
+    gap: 25px 35px;
   }
 
-  .app-icon {
-    width: 24px;
-    height: 24px;
+  .social-icons {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
   }
 
-  .app-text strong {
-    font-size: 16px;
+  .connect-section h3 {
+    font-size: 34px;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
+  .contact-title,
   .app-download-title {
-    font-size: 28px;
+    font-size: 38px;
   }
 
-  .app-download-subtext {
-    font-size: 14px;
+  .form-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .submit-btn {
+    padding: 12px 40px;
+    font-size: 15px;
+  }
+
+  .connect-section h3 {
+    font-size: 30px;
   }
 
   .app-buttons {
+    flex-direction: column;
     gap: 20px;
   }
 
   .app-btn {
-    padding: 14px 24px;
+    width: 85%;
+    justify-content: center;
+    padding: 14px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-title,
+  .app-download-title {
+    font-size: 30px;
+  }
+
+  .connect-section h3 {
+    font-size: 26px;
+  }
+
+  .contact-items {
+    gap: 20px;
+  }
+
+  .social-icons {
+    gap: 18px;
+  }
+
+  .contact-item {
+    font-size: 13px;
+  }
+
+  .contact-item img {
+    width: 20px;
+    height: 20px;
   }
 }
