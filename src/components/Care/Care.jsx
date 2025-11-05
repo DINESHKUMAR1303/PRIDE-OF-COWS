@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Care.css";
 
+// Import images
 import you1 from "./images/child.png";
 import you2 from "./images/childwithmom.jpg";
 import cow1 from "./images/tractor.jpg";
@@ -76,22 +77,40 @@ const Care = () => {
         <p className="care-subtitle">A PLACE FULL OF LOVE</p>
         <h2 className="care-title">Our Care Manifesto For</h2>
 
+        {/* TABS WITH LINE + DOTS */}
         <div className="care-tabs">
           {Object.keys(content).map((key) => (
             <button
               key={key}
               className={`care-tab ${activeTab === key ? "active" : ""}`}
               onClick={() => setActiveTab(key)}
+              data-tab={key}
+              role="tab"
+              aria-selected={activeTab === key}
+              aria-controls={`panel-${key}`}
             >
               {content[key].title}
             </button>
           ))}
+
+          {/* UNDERLINE + 3 DOTS */}
+          <div className="tab-underline">
+            <span className={`dot ${activeTab === "you" ? "active" : ""}`} />
+            <span className={`dot ${activeTab === "cows" ? "active" : ""}`} />
+            <span className={`dot ${activeTab === "nature" ? "active" : ""}`} />
+          </div>
         </div>
 
-        <div className="care-content">
+        {/* CONTENT */}
+        <div
+          className="care-content"
+          key={activeTab}
+          id={`panel-${activeTab}`}
+          role="tabpanel"
+        >
           <div className="care-text">
-            {active.points.map((item, index) => (
-              <div key={index} className="care-point">
+            {active.points.map((item, i) => (
+              <div key={i} className="care-point">
                 <h4>{item.heading}</h4>
                 <p>{item.text}</p>
               </div>
@@ -99,8 +118,18 @@ const Care = () => {
           </div>
 
           <div className="care-images">
-            <img src={active.images[0]} alt="" className="care-img top" />
-            <img src={active.images[1]} alt="" className="care-img bottom" />
+            <img
+              src={active.images[0]}
+              alt={`${active.title} – top image`}
+              className="care-img top"
+              loading="lazy"
+            />
+            <img
+              src={active.images[1]}
+              alt={`${active.title} – bottom image`}
+              className="care-img bottom"
+              loading="lazy"
+            />
           </div>
         </div>
       </div>
