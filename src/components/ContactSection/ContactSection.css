@@ -153,7 +153,7 @@
   font-size: 40px;
   font-family: suranna, serif;
   font-weight: 400;
-  margin-bottom: 35px;
+  margin-bottom: 0px;
   color: #1a1a1a;
 }
 
@@ -208,7 +208,7 @@
 .social-icons {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   margin-left: 5px;
 }
 

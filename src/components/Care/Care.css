@@ -1,0 +1,198 @@
+/* ========================================= */
+/* CARE SECTION */
+/* ========================================= */
+
+.care-outer {
+  background-color: #f8f8f8;
+  padding: 120px 0;
+  font-family: "Times New Roman", serif;
+  color: #1a1a1a;
+}
+
+.care-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.care-subtitle {
+  font-size: 18px;
+  letter-spacing: 2px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.care-title {
+  font-size: 52px;
+  margin-bottom: 50px;
+  color: #1a1a1a;
+}
+
+.care-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 120px;
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.care-tab {
+  font-size: 38px;
+  background: none;
+  border: none;
+  color: #c1cbd8;
+  cursor: pointer;
+  position: relative;
+  font-family: "Times New Roman", serif;
+  transition: color 0.3s ease;
+}
+
+.care-tab.active {
+  color: #0f2b50;
+}
+
+.care-tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: #0f2b50;
+  border-radius: 50%;
+}
+
+.care-content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 60px;
+}
+
+.care-text {
+  flex: 1;
+}
+
+.care-point {
+  margin-bottom: 50px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 20px;
+}
+
+.care-point h4 {
+  font-size: 22px;
+  color: #0f2b50;
+  margin-bottom: 8px;
+}
+
+.care-point p {
+  font-size: 18px;
+  color: #333;
+  margin-left: 25px;
+  line-height: 1.6;
+}
+
+.care-images {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.care-img {
+  width: 350px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.care-img.top {
+  position: relative;
+  z-index: 2;
+}
+
+.care-img.bottom {
+  position: absolute;
+  right: -80px;
+  bottom: -80px;
+  z-index: 1;
+}
+
+/* ========================================= */
+/* RESPONSIVE */
+/* ========================================= */
+
+@media (max-width: 1024px) {
+  .care-tabs {
+    gap: 80px;
+  }
+
+  .care-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .care-images {
+    margin-top: 50px;
+  }
+
+  .care-img {
+    width: 300px;
+  }
+
+  .care-img.bottom {
+    right: -50px;
+    bottom: -50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .care-title {
+    font-size: 40px;
+    text-align: center;
+  }
+
+  .care-tab {
+    font-size: 28px;
+  }
+
+  .care-content {
+    gap: 40px;
+  }
+
+  .care-point h4 {
+    font-size: 20px;
+  }
+
+  .care-point p {
+    font-size: 16px;
+  }
+
+  .care-img {
+    width: 260px;
+  }
+}
+
+@media (max-width: 480px) {
+  .care-subtitle {
+    text-align: center;
+  }
+
+  .care-title {
+    font-size: 32px;
+  }
+
+  .care-tabs {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .care-tab {
+    font-size: 24px;
+  }
+
+  .care-img {
+    width: 220px;
+  }
+}
