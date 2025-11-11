@@ -21,9 +21,8 @@
   letter-spacing: 4px;
   color: #616161;
   margin-bottom: -12px;
-  padding-right: 900px;
   margin-top: -50px;
-  text-align: center;
+  text-align: left;
 }
 .care-title {
   font-size: 58px;
@@ -256,7 +255,7 @@
   }
 
   .care-subtitle {
-    font-size: 20.25px;
+    font-size: 17px;
     letter-spacing: 3.38px;
     margin-bottom: -1.12px;
   }
