@@ -120,13 +120,13 @@ const Care = () => {
           <div className="care-images">
             <img
               src={active.images[0]}
-              alt={`${active.title} – top image`}
+              alt={`${active.title} – top-left image`}
               className="care-img top"
               loading="lazy"
             />
             <img
               src={active.images[1]}
-              alt={`${active.title} – bottom image`}
+              alt={`${active.title} – bottom-right image`}
               className="care-img bottom"
               loading="lazy"
             />
