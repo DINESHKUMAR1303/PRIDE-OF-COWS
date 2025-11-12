@@ -5,6 +5,7 @@ import Homebanner from "../components/Homebanner/Homebanner";
 import ProductCarousel from "../components/ProductCarousel/ProductCarousel";
 import ContactSection from "../components/ContactSection/ContactSection";
 import Care from "../components/Care/Care";
+import HealthLifestyle from "../components/HealthLifestyle/HealthLifestyle";
 const Home = () => {
   return (
     <>
@@ -14,6 +15,7 @@ const Home = () => {
       <ProductCarousel />
       <ContactSection/>
       <Care/>
+      <HealthLifestyle/>
     </>
   );
 };

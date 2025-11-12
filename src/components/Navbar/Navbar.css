@@ -10,6 +10,7 @@
   padding: 16px 150px; /* ✅ slight more padding for breathing room */
   background: #f4f4f4;
   border-bottom: 1px solid #eee;
+  box-shadow: 0 6px 20px -5px rgba(163, 163, 163, 0.1882352941);
   color: #193b61;
 
   /* ✅ Sticky Fix */
