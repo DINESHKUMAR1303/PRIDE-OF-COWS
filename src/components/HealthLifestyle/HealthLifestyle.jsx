@@ -19,6 +19,7 @@ const cards = [
 ];
 
 const HealthLifestyle = () => {
+  // === Determine items to show based on window width ===
   const getItemsToShow = () => {
     const w = window.innerWidth;
     if (w < 768) return 1;
@@ -29,17 +30,20 @@ const HealthLifestyle = () => {
 
   const [itemsToShow, setItemsToShow] = useState(getItemsToShow());
   const total = cards.length;
+
+  // Extend cards for infinite loop
   const extendedCards = useMemo(() => [...cards, ...cards, ...cards], []);
   const [current, setCurrent] = useState(total);
   const transitionRef = useRef(true);
 
+  // Handle window resize
   useEffect(() => {
     const handleResize = () => setItemsToShow(getItemsToShow());
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Infinite looping adjustment
+  // Infinite loop logic
   useEffect(() => {
     if (!transitionRef.current) return;
     if (current >= total * 2) {
@@ -71,12 +75,8 @@ const HealthLifestyle = () => {
     <section className="health-outer" aria-label="Health lifestyle carousel">
       <h2 className="health-title">Health Is A Lifestyle</h2>
 
-      <div
-        className="health-cards-wrapper"
-        {...handlers}
-        role="region"
-        aria-label="Health Lifestyle Carousel"
-      >
+      {/* === Carousel Wrapper === */}
+      <div className="health-cards-wrapper" {...handlers}>
         <div
           className="health-cards-inner"
           style={{
@@ -93,7 +93,7 @@ const HealthLifestyle = () => {
         </div>
       </div>
 
-      {/* ARROWS + LINE CONTROLS */}
+      {/* === Carousel Controls === */}
       <div className="carousel-controls">
         <button className="arrow-button" onClick={prevSlide} aria-label="Previous slide">
           <svg width="27" height="13" viewBox="0 0 27 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -112,6 +112,7 @@ const HealthLifestyle = () => {
         </button>
       </div>
 
+      {/* === View All Button === */}
       <button className="view-all">VIEW ALL</button>
     </section>
   );
