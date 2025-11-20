@@ -1,11 +1,11 @@
 /* ========================================= */
-/* HEALTH IS A LIFESTYLE SECTION – REFINED */
+/* HEALTH IS A LIFESTYLE SECTION – MATCHES PRODUCT BREAKPOINTS */
 /* ========================================= */
 
 .health-outer {
   background-color: #f4f4f4;
   text-align: center;
-  padding: 30px 0 80px;
+  padding: 0px 0 80px;
   font-family: "Suranna", serif;
   color: #1a1a1a;
   position: relative;
@@ -21,20 +21,25 @@
   color: #2b2b2b;
 }
 
-/* === Cards Wrapper & Inner === */
+/* === Wrapper === */
 .health-cards-wrapper {
   overflow: hidden;
   position: relative;
+  padding: 0 40px;
+  box-sizing: border-box;
 }
 
+/* === Inner === */
 .health-cards-inner {
   display: flex;
   gap: 40px;
-  transition: transform 0.5s ease-in-out;
   will-change: transform;
 }
 
-/* === Individual Card === */
+/* ========================================= */
+/* CARD — FIXED SIZE LIKE PRODUCT CARDS */
+/* ========================================= */
+
 .health-card {
   background: #f8f8f8;
   width: 260px;
@@ -45,6 +50,7 @@
   cursor: grab;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .health-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
@@ -56,6 +62,7 @@
   object-fit: cover;
   transition: transform 0.4s ease;
 }
+
 .health-card:hover img {
   transform: scale(1.05);
 }
@@ -69,132 +76,145 @@
   min-height: 80px;
 }
 
-/* === View All Button === */
+/* ========================================= */
+/* VIEW ALL BUTTON → KNOW MORE EFFECT */
+/* ========================================= */
+
 .view-all {
-  background-color: #b48b47;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 600;
-  padding: 14px 50px;
-  border-radius: 40px;
-  border: none;
-  cursor: pointer;
   margin-top: 40px;
-  transition: all 0.3s ease;
-}
-.view-all:hover {
-  background-color: #a67c3f;
-  transform: scale(1.05);
+  background-color: #ae8a49;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 14px 50px;
+  font-family: sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  line-height: 20px;
+  cursor: pointer;
+  min-width: 180px;
+
+  transition: background 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
+              color 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
+              transform 0.2s ease;
 }
 
-/* ========================================= */
-/* ARROW CONTROLS + LINE DESIGN */
-/* ========================================= */
+.view-all:hover,
+.view-all:focus {
+  background-color: #ffffff;
+  color: #b38a3b;
+  transform: scale(1.05);
+  outline: none;
+}
+
+.view-all:active {
+  transform: scale(0.98);
+}
+
+/* ARROWS */
 .carousel-controls {
   margin-top: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
   gap: 20px;
-  padding: 0 12px;
-  box-sizing: border-box;
-  position: relative;
-  z-index: 10;
-}
-
-.carousel-controls .line {
-  flex-grow: 1;
-  height: 2px;
-  background: #cdd3da;
-  max-width: 850px;
-  border-radius: 1px;
-}
-
-.arrow-button {
-  background: #fff;
-  border: none;
-  color: #193b61;
-  width: 65px;
-  height: 41px;
-  border-radius: 9999px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-}
-.arrow-button:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-  transform: scale(1.05);
-}
-.arrow-button svg {
-  width: 26px;
-  height: 13px;
-  stroke: #193b61;
-  stroke-width: 1;
-  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-}
-.arrow-button:hover svg {
-  transform: translateX(-5px);
-}
-.arrow-button:last-of-type:hover svg {
-  transform: translateX(5px);
-}
-
-/* === Dragging / Active state === */
-.health-cards-inner:active {
-  cursor: grabbing;
 }
 
 /* ========================================= */
-/* RESPONSIVE BREAKPOINTS */
+/* RESPONSIVE BREAKPOINTS (MATCH PRODUCT)   */
 /* ========================================= */
-@media (max-width: 1024px) {
-  .health-title {
-    font-size: 48px;
-    margin-bottom: 50px;
-  }
+
+/* ===== 2560px — show 6 cards ===== */
+@media (min-width: 2560px) {
   .health-card {
-    width: 220px;
-    min-width: 220px;
+    width: calc(100% / 6 - 40px);
+    min-width: calc(100% / 6 - 40px);
   }
 }
 
-@media (max-width: 768px) {
+/* ===== 1440px–2559px — slight clipping ===== */
+@media (max-width: 2559px) and (min-width: 1440px) {
+  .health-cards-wrapper {
+    padding: 0 20px;
+  }
+
+  .health-cards-inner {
+    width: calc(100% + 4%);
+    margin-left: -2%;
+  }
+
+  .health-card {
+    width: 260px;
+    min-width: 260px;
+  }
+}
+
+/* ===== 992px–1439px — show 3 cards ===== */
+@media (max-width: 1439px) and (min-width: 992px) {
+  .health-card {
+    width: calc((100% - 80px) / 3);
+    min-width: calc((100% - 80px) / 3);
+  }
+
+  .health-cards-wrapper {
+    padding: 0 30px;
+  }
+}
+
+/* ===== 768px–991px — show 2 cards ===== */
+@media (max-width: 991px) and (min-width: 768px) {
+  .health-card {
+    width: calc((100% - 40px) / 2);
+    min-width: calc((100% - 40px) / 2);
+  }
+
+  .health-cards-wrapper {
+    padding: 0 30px;
+  }
+}
+
+/* ========================================= */
+/* ===== MOBILE (320px–767px) — 1 FULL CARD */
+/* ========================================= */
+
+@media (max-width: 767px) {
+  .health-cards-wrapper {
+    padding: 0 20px;
+  }
+
   .health-cards-inner {
     gap: 20px;
+    padding-left: 5px;
   }
+
   .health-card {
-    width: 80%;
-    min-width: 80%;
+    width: 100%;
+    min-width: 100%;
+    border-radius: 14px;
   }
+
+  .health-card img {
+    height: 260px;
+  }
+
   .health-title {
-    font-size: 36px;
-    margin-bottom: 40px;
-  }
-  .view-all {
-    font-size: 16px;
-    padding: 12px 40px;
+    font-size: 34px;
+    margin-bottom: 30px;
   }
 }
 
+/* ===== Extra small (<480px) ===== */
 @media (max-width: 480px) {
+  .health-cards-wrapper {
+    padding: 0 12px;
+  }
+
+  .health-card img {
+    height: 240px;
+  }
+
   .health-title {
     font-size: 28px;
-    margin-bottom: 30px;
-  }
-  .health-card {
-    width: 90%;
-    min-width: 90%;
-  }
-  .health-card p {
-    font-size: 16px;
-    padding: 15px;
-  }
-  .view-all {
-    font-size: 14px;
-    padding: 12px 35px;
   }
 }
