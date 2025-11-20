@@ -2,13 +2,12 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useSwipeable } from "react-swipeable";
 import "./Testimonials.css";
 
-// === AVATARS (replace with your images) ===
-import avatar1 from "../Testimonials/images/kareena.jpg"
-import avatar2 from "../Testimonials/images/sachinanand.jpg"
-import avatar3 from "../Testimonials/images/aishwarya.jpg"
-import avatar4 from "../Testimonials/images/malvikaraaj.jpg"
-import avatar5 from "../Testimonials/images/lata.jpg"
-
+// === AVATARS ===
+import avatar1 from "../Testimonials/images/kareena.jpg";
+import avatar2 from "../Testimonials/images/sachinanand.jpg";
+import avatar3 from "../Testimonials/images/aishwarya.jpg";
+import avatar4 from "../Testimonials/images/malvikaraaj.jpg";
+import avatar5 from "../Testimonials/images/lata.jpg";
 
 // === DATA ===
 const testimonials = [
@@ -55,7 +54,6 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
-  // how many cards conceptually visible (used only for breakpoints logic if needed later)
   const getItemsToShow = () => {
     const w = window.innerWidth;
     if (w < 768) return 1;
@@ -68,7 +66,6 @@ const Testimonials = () => {
   const [itemsToShow, setItemsToShow] = useState(getItemsToShow());
   const total = testimonials.length;
 
-  // infinite loop: clone list 3x
   const extendedTestimonials = useMemo(
     () => [...testimonials, ...testimonials, ...testimonials],
     []
@@ -80,12 +77,24 @@ const Testimonials = () => {
   const cardRef = useRef(null);
   const [slideWidth, setSlideWidth] = useState(300);
 
-  // compute slide width = card width + gap
+  // ==========================================================
+  // NEW: PERFECT MOBILE SLIDE WIDTH
+  // ==========================================================
   const calculateSlideWidth = () => {
     if (!cardRef.current) return;
+
     const el = cardRef.current;
-    const style = window.getComputedStyle(el);
-    const gap = 40; // matches .testimonials-cards-inner gap on desktop
+    const screenWidth = window.innerWidth;
+
+    // MOBILE (1 card full width)
+    if (screenWidth < 768) {
+      const mobilePadding = 60; // wrapper padding (0 20px) + small gap buffer
+      setSlideWidth(screenWidth - mobilePadding);
+      return;
+    }
+
+    // TABLET / DESKTOP
+    const gap = screenWidth < 992 ? 24 : 32;
     setSlideWidth(el.offsetWidth + gap);
   };
 
@@ -99,11 +108,10 @@ const Testimonials = () => {
   }, []);
 
   useEffect(() => {
-    // initial measurement
     setTimeout(calculateSlideWidth, 50);
   }, []);
 
-  // infinite loop logic
+  // Infinite loop logic
   useEffect(() => {
     if (!transitionRef.current) return;
 
@@ -112,13 +120,13 @@ const Testimonials = () => {
       setTimeout(() => {
         setCurrent(total);
         transitionRef.current = true;
-      }, 500);
+      }, 300);
     } else if (current < total) {
       transitionRef.current = false;
       setTimeout(() => {
         setCurrent(total * 2 - 1);
         transitionRef.current = true;
-      }, 500);
+      }, 300);
     }
   }, [current, total]);
 
