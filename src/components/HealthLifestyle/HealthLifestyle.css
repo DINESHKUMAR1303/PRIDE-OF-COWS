@@ -121,6 +121,10 @@
   gap: 20px;
 }
 
+.carousel-controls .line {
+  height: 1px;
+}
+
 /* ========================================= */
 /* RESPONSIVE BREAKPOINTS (MATCH PRODUCT)   */
 /* ========================================= */
