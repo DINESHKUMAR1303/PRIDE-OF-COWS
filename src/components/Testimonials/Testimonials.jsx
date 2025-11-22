@@ -13,8 +13,7 @@ import avatar5 from "../Testimonials/images/lata.jpg";
 const testimonials = [
   {
     id: 1,
-    quote:
-      "Pride of Cows ghee is pure and aromatic. It makes every meal special!",
+    quote: "Pride of Cows ghee is pure and aromatic. It makes every meal special!",
     name: "Kareena Kapoor Khan",
     role: "Actor",
     avatar: avatar1,
@@ -56,16 +55,17 @@ const testimonials = [
 const Testimonials = () => {
   const getItemsToShow = () => {
     const w = window.innerWidth;
-    if (w < 768) return 1;
-    if (w < 992) return 2;
-    if (w < 1440) return 3;
-    if (w < 1920) return 4;
-    return 5;
+    if (w < 768) return 1;   // Mobile
+    if (w < 992) return 2;   // Tablet
+    if (w < 1440) return 3;  // Laptop
+    if (w < 1920) return 4;  // Desktop
+    return 5;                // Ultra-wide
   };
 
   const [itemsToShow, setItemsToShow] = useState(getItemsToShow());
   const total = testimonials.length;
 
+  // Triple dataset for infinite loop
   const extendedTestimonials = useMemo(
     () => [...testimonials, ...testimonials, ...testimonials],
     []
@@ -75,27 +75,33 @@ const Testimonials = () => {
   const transitionRef = useRef(true);
 
   const cardRef = useRef(null);
-  const [slideWidth, setSlideWidth] = useState(300);
+  const [slideWidth, setSlideWidth] = useState(350);
 
   // ==========================================================
-  // NEW: PERFECT MOBILE SLIDE WIDTH
+  // FIXED RESPONSIVE WIDTH (MOBILE 100% EXACT CENTERED)
   // ==========================================================
   const calculateSlideWidth = () => {
     if (!cardRef.current) return;
 
-    const el = cardRef.current;
     const screenWidth = window.innerWidth;
 
-    // MOBILE (1 card full width)
+    // ⭐ EXACT MOBILE FIX — 320px card width
     if (screenWidth < 768) {
-      const mobilePadding = 60; // wrapper padding (0 20px) + small gap buffer
-      setSlideWidth(screenWidth - mobilePadding);
+      setSlideWidth(320 + 20); // 20px gap
       return;
     }
 
-    // TABLET / DESKTOP
-    const gap = screenWidth < 992 ? 24 : 32;
-    setSlideWidth(el.offsetWidth + gap);
+    // Tablet — use 2 cards
+    if (screenWidth < 992) {
+      const padding = 80;
+      const gap = 24;
+      const cardWidth = (screenWidth - padding - gap) / 2;
+      setSlideWidth(cardWidth + gap);
+      return;
+    }
+
+    // Desktop/Laptop
+    setSlideWidth(cardRef.current.offsetWidth + 32);
   };
 
   useEffect(() => {
@@ -108,10 +114,10 @@ const Testimonials = () => {
   }, []);
 
   useEffect(() => {
-    setTimeout(calculateSlideWidth, 50);
+    setTimeout(calculateSlideWidth, 150);
   }, []);
 
-  // Infinite loop logic
+  // Infinite Loop Reset Logic
   useEffect(() => {
     if (!transitionRef.current) return;
 
@@ -141,11 +147,10 @@ const Testimonials = () => {
   });
 
   return (
-    <section className="testimonials-outer" aria-label="Customer testimonials">
+    <section className="testimonials-outer">
       <p className="testimonials-subtitle">Testimonials</p>
       <h2 className="testimonials-title">Real People, Genuine Feedback</h2>
 
-      {/* Slider */}
       <div className="testimonials-cards-wrapper" {...handlers}>
         <div
           className="testimonials-cards-inner"
@@ -178,57 +183,20 @@ const Testimonials = () => {
         </div>
       </div>
 
-      {/* Controls */}
       <div className="testimonials-controls">
-        <button
-          className="testi-arrow-button"
-          onClick={prevSlide}
-          aria-label="Previous testimonial"
-        >
+        <button className="testi-arrow-button" onClick={prevSlide}>
           <svg width="27" height="13" viewBox="0 0 27 13" fill="none">
-            <path
-              d="M6 12L1 6.5L6 1"
-              stroke="#193B61"
-              strokeWidth="1"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <line
-              x1="1"
-              y1="6.5"
-              x2="26"
-              y2="6.5"
-              stroke="#193B61"
-              strokeWidth="1"
-              strokeLinecap="round"
-            />
+            <path d="M6 12L1 6.5L6 1" stroke="#193B61" strokeWidth="1" />
+            <line x1="1" y1="6.5" x2="26" y2="6.5" stroke="#193B61" strokeWidth="1" />
           </svg>
         </button>
 
-        <div className="testimonials-line" />
+        <div className="testimonials-line"></div>
 
-        <button
-          className="testi-arrow-button"
-          onClick={nextSlide}
-          aria-label="Next testimonial"
-        >
+        <button className="testi-arrow-button" onClick={nextSlide}>
           <svg width="27" height="13" viewBox="0 0 27 13" fill="none">
-            <path
-              d="M21 1L26 6.5L21 12"
-              stroke="#193B61"
-              strokeWidth="1"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <line
-              x1="1"
-              y1="6.5"
-              x2="26"
-              y2="6.5"
-              stroke="#193B61"
-              strokeWidth="1"
-              strokeLinecap="round"
-            />
+            <path d="M21 1L26 6.5L21 12" stroke="#193B61" strokeWidth="1" />
+            <line x1="1" y1="6.5" x2="26" y2="6.5" stroke="#193B61" strokeWidth="1" />
           </svg>
         </button>
       </div>
