@@ -44,10 +44,7 @@
   gap: 20px;
 }
 
-/* ========================================= */
-/* DEFAULT DESKTOP                           */
-/* ========================================= */
-
+/* Default card style */
 .testimonial-card {
   padding: 20px;
   background: #ffffff;
@@ -56,16 +53,13 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: auto;
   box-sizing: border-box;
 }
 
 /* ========================================= */
 /* TABLET — EXACT 2 FULL CARDS CENTERED      */
 /* ========================================= */
-
 @media (min-width: 768px) and (max-width: 991px) {
-
   .testimonials-cards-wrapper {
     padding-left: calc((100vw - (2 * 360px) - 20px) / 2);
     padding-right: calc((100vw - (2 * 360px) - 20px) / 2);
@@ -83,12 +77,9 @@
 }
 
 /* ========================================= */
-/* SPECIAL FIX — 1024px to 1199px            */
-/* SHOW 2 FULL CARDS, CENTERED               */
+/* 1024px–1199px — 2 LARGE CENTERED CARDS    */
 /* ========================================= */
-
 @media (min-width: 1024px) and (max-width: 1199px) {
-
   .testimonials-cards-wrapper {
     padding-left: calc((100vw - (2 * 380px) - 24px) / 2);
     padding-right: calc((100vw - (2 * 380px) - 24px) / 2);
@@ -106,33 +97,52 @@
 }
 
 /* ========================================= */
-/* LAPTOP — 3 CARDS                          */
+/* 1200px–1439px — 3 CARDS                   */
 /* ========================================= */
-
 @media (min-width: 1200px) and (max-width: 1439px) {
   .testimonial-card {
     flex: 0 0 33.333%;
   }
 }
 
-/* DESKTOP — 4 CARDS */
+/* ========================================= */
+/* 1440px–1919px → 5 CARDS with STRONG CUT   */
+/* ========================================= */
 @media (min-width: 1440px) and (max-width: 1919px) {
+
+  /* Bigger inner width for bigger cut */
+  .testimonials-cards-inner {
+    width: calc(100% + 260px);  /* control cut depth */
+    margin-left: -130px;        /* equal left cut */
+    gap: 32px;                  /* clean spacing */
+  }
+
+  /* 5 cards layout */
   .testimonial-card {
-    flex: 0 0 25%;
+    flex: 0 0 20% !important;
+    max-width: 20% !important;
+  }
+
+  /* cut on right side also */
+  .testimonials-cards-wrapper {
+    padding-left: 130px;
+    padding-right: 130px;
+    overflow: hidden;
   }
 }
 
-/* LARGE DESKTOP — 5 CARDS */
+/* ========================================= */
+/* 1920px+ → 5 FULL CARDS                    */
+/* ========================================= */
 @media (min-width: 1920px) {
   .testimonial-card {
-    flex: 0 0 20%;
+    flex: 0 0 20% !important;
   }
 }
 
 /* ========================================= */
-/* MOBILE — EXACT 320PX CARD CENTERED        */
+/* MOBILE — EXACT 320PX CENTERED             */
 /* ========================================= */
-
 @media (max-width: 767px) {
 
   .testimonials-cards-wrapper {
@@ -197,7 +207,10 @@
   margin: 0;
 }
 
-/* Controls */
+/* ========================================= */
+/* CONTROLS                                  */
+/* ========================================= */
+
 .testimonials-controls {
   margin-top: 45px;
   display: flex;
