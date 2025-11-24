@@ -227,7 +227,7 @@
 
 .testimonials-line {
   flex-grow: 1;
-  height: 2px;
+  height: 1px;
   background: #d3d0c8;
   max-width: 850px;
   border-radius: 1px;
