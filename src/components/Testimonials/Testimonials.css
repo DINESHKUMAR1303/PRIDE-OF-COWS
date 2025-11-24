@@ -115,19 +115,17 @@
 }
 
 /* ========================================= */
-/* DESKTOP — 1440px: 3 FULL CARDS + SIDE CUT */
+/* DESKTOP — 1440px: 3 FULL CARDS + CUT      */
 /* ========================================= */
 
 @media (min-width: 1440px) and (max-width: 1919px) {
 
-  /* 3 Cards in center */
   .testimonial-card {
     flex: 0 0 360px !important;
     max-width: 360px !important;
     min-width: 360px !important;
   }
 
-  /* Equal left/right cut */
   .testimonials-cards-wrapper {
     padding-left: calc((100vw - (3 * 360px) - (2 * 20px)) / 2);
     padding-right: calc((100vw - (3 * 360px) - (2 * 20px)) / 2);
@@ -139,7 +137,7 @@
 }
 
 /* ========================================= */
-/* LARGE DESKTOP — 5 CARDS FULL              */
+/* LARGE DESKTOP — 5 CARDS                   */
 /* ========================================= */
 
 @media (min-width: 1920px) {
@@ -212,28 +210,32 @@
   font-size: 14px;
   color: #666;
   margin: 0;
-  font-style:italic;
+  font-style: italic;
 }
 
-/* ============ CONTROLS ============== */
+/* ========================================= */
+/* CONTROLS (MATCHED WITH HEALTH LIFESTYLE)  */
+/* ========================================= */
 
 .testimonials-controls {
   margin-top: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 20px;
 }
 
-.testimonials-line {
-  flex-grow: 1;
+.line {
   height: 1px;
-  background: #d3d0c8;
+  background: #ccc;
   max-width: 850px;
-  border-radius: 1px;
+  width: 100%;
+  flex-grow: 0;  /* stop stretching */
 }
 
-.testi-arrow-button {
+
+/* SAME EXACT ARROW STYLE */
+.arrow-button {
   background: #ffffff;
   border: none;
   width: 70px;
@@ -244,5 +246,10 @@
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  transition: 0.2s ease;
+  transition: 0.3s ease;
+}
+
+.arrow-button:hover {
+  transform: scale(1.05);
+  background: #f7f7f7;
 }

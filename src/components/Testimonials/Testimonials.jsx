@@ -55,17 +55,16 @@ const testimonials = [
 const Testimonials = () => {
   const getItemsToShow = () => {
     const w = window.innerWidth;
-    if (w < 768) return 1;       // Mobile
-    if (w < 992) return 2;       // Tablet
-    if (w < 1440) return 3;      // Laptop
-    if (w < 1920) return 4;      // Desktop
-    return 5;                    // Ultra-wide
+    if (w < 768) return 1;
+    if (w < 992) return 2;
+    if (w < 1440) return 3;
+    if (w < 1920) return 4;
+    return 5;
   };
 
   const [itemsToShow, setItemsToShow] = useState(getItemsToShow());
   const total = testimonials.length;
 
-  // Triple dataset for infinite loop
   const extendedTestimonials = useMemo(
     () => [...testimonials, ...testimonials, ...testimonials],
     []
@@ -77,21 +76,17 @@ const Testimonials = () => {
   const cardRef = useRef(null);
   const [slideWidth, setSlideWidth] = useState(350);
 
-  // ==========================================================
-  // RESPONSIVE SLIDE WIDTH CALCULATION
-  // ==========================================================
+  // Calculate slide width
   const calculateSlideWidth = () => {
     if (!cardRef.current) return;
 
     const screen = window.innerWidth;
 
-    // ⭐ Mobile exact 320px
     if (screen < 768) {
-      setSlideWidth(320 + 20);   // card 320 + gap 20
+      setSlideWidth(320 + 20);
       return;
     }
 
-    // ⭐ Tablet (2 full cards)
     if (screen < 992) {
       const gap = 24;
       const totalPadding = 80;
@@ -100,8 +95,6 @@ const Testimonials = () => {
       return;
     }
 
-    // ⭐ Laptop, Desktop, Ultrawide
-    // Using actual card width + consistent gap
     const cardW = cardRef.current.offsetWidth;
     setSlideWidth(cardW + 24);
   };
@@ -120,9 +113,7 @@ const Testimonials = () => {
     setTimeout(calculateSlideWidth, 150);
   }, []);
 
-  // ==========================================================
-  // INFINITE LOOP CORE LOGIC
-  // ==========================================================
+  // Infinite Loop Logic
   useEffect(() => {
     if (!transitionRef.current) return;
 
@@ -161,9 +152,7 @@ const Testimonials = () => {
           className="testimonials-cards-inner"
           style={{
             transform: `translateX(-${current * slideWidth}px)`,
-            transition: transitionRef.current
-              ? "transform 0.5s ease-in-out"
-              : "none",
+            transition: transitionRef.current ? "transform 0.5s ease-in-out" : "none",
           }}
         >
           {extendedTestimonials.map((item, index) => (
@@ -188,17 +177,18 @@ const Testimonials = () => {
         </div>
       </div>
 
+      {/* ===== ARROWS MATCHING HEALTH LIFESTYLE ===== */}
       <div className="testimonials-controls">
-        <button className="testi-arrow-button" onClick={prevSlide}>
+        <button className="arrow-button" onClick={prevSlide}>
           <svg width="27" height="13" viewBox="0 0 27 13" fill="none">
             <path d="M6 12L1 6.5L6 1" stroke="#193B61" strokeWidth="1" />
             <line x1="1" y1="6.5" x2="26" y2="6.5" stroke="#193B61" strokeWidth="1" />
           </svg>
         </button>
 
-        <div className="testimonials-line"></div>
+        <div className="line"></div>
 
-        <button className="testi-arrow-button" onClick={nextSlide}>
+        <button className="arrow-button" onClick={nextSlide}>
           <svg width="27" height="13" viewBox="0 0 27 13" fill="none">
             <path d="M21 1L26 6.5L21 12" stroke="#193B61" strokeWidth="1" />
             <line x1="1" y1="6.5" x2="26" y2="6.5" stroke="#193B61" strokeWidth="1" />
