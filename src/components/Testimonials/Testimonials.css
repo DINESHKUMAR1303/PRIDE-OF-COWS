@@ -41,7 +41,7 @@
   display: flex;
   will-change: transform;
   align-items: stretch;
-  gap: 20px;
+  gap: 32px;
 }
 
 /* Default card style */
@@ -49,7 +49,7 @@
   padding: 20px;
   background: #ffffff;
   border-radius: 20px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -77,7 +77,7 @@
 }
 
 /* ========================================= */
-/* 1024px–1199px — 2 LARGE CENTERED CARDS    */
+/* 1024px–1199px — LARGE 2 CENTERED CARDS    */
 /* ========================================= */
 @media (min-width: 1024px) and (max-width: 1199px) {
   .testimonials-cards-wrapper {
@@ -106,33 +106,31 @@
 }
 
 /* ========================================= */
-/* 1440px–1919px → 5 CARDS with STRONG CUT   */
+/* ⭐ 1440px–1919px — VERY LARGE CUT (LIKE YOUR SCREENSHOT) */
 /* ========================================= */
 @media (min-width: 1440px) and (max-width: 1919px) {
 
-  /* Bigger inner width for bigger cut */
+  /* EXTREME cut effect */
   .testimonials-cards-inner {
-    width: calc(100% + 260px);  /* control cut depth */
-    margin-left: -130px;        /* equal left cut */
-    gap: 32px;                  /* clean spacing */
+    width: calc(100% + 360px);   /* extend a lot */
+    margin-left: -180px;         /* equal left cut */
+    gap: 32px;
   }
 
-  /* 5 cards layout */
   .testimonial-card {
     flex: 0 0 20% !important;
     max-width: 20% !important;
   }
 
-  /* cut on right side also */
   .testimonials-cards-wrapper {
-    padding-left: 130px;
-    padding-right: 130px;
+    padding-left: 180px;         /* equal right cut */
+    padding-right: 180px;
     overflow: hidden;
   }
 }
 
 /* ========================================= */
-/* 1920px+ → 5 FULL CARDS                    */
+/* 1920px+ — FULL 5 CARDS                    */
 /* ========================================= */
 @media (min-width: 1920px) {
   .testimonial-card {
@@ -144,7 +142,6 @@
 /* MOBILE — EXACT 320PX CENTERED             */
 /* ========================================= */
 @media (max-width: 767px) {
-
   .testimonials-cards-wrapper {
     padding-left: calc((100vw - 320px) / 2);
     padding-right: calc((100vw - 320px) / 2);
@@ -197,7 +194,7 @@
 
 .testimonial-name {
   font-size: 17px;
-  margin: 0 0 10px;
+  margin: 0 0 -12px;
   color: #c1932d;
 }
 
@@ -237,6 +234,6 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
   transition: 0.2s ease;
 }
