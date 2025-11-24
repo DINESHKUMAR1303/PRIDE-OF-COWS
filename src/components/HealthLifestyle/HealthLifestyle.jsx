@@ -9,7 +9,7 @@ import img4 from "./images/milk4.jpg";
 import img5 from "./images/milk5.jpg";
 
 const cards = [
-  { img: img1, text: "The standard of milk" },
+  { img: img1, text: "The Standard of Milk" },
   {
     img: img2,
     text:

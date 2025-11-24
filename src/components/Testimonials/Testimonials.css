@@ -22,7 +22,7 @@
 .testimonials-title {
   font-size: 40px;
   font-weight: 400;
-  margin: 0 0 25px;
+  margin: 0 0 1px;
   line-height: 1.2;
 }
 
@@ -30,7 +30,7 @@
 .testimonials-cards-wrapper {
   width: 100%;
   max-width: 1500px;
-  margin: 60px auto 0;
+  margin: 25px auto 0;
   overflow: hidden;
   position: relative;
   padding: 0;
@@ -204,7 +204,7 @@
 
 .testimonial-name {
   font-size: 17px;
-  margin: 0 0 10px;
+  margin: 0 20px -13px;
   color: #c1932d;
 }
 
@@ -212,6 +212,7 @@
   font-size: 14px;
   color: #666;
   margin: 0;
+  font-style:italic;
 }
 
 /* ============ CONTROLS ============== */

@@ -43,7 +43,7 @@
 /* ========================================= */
 
 .health-card {
-  background: #f8f8f8;
+  background: #f4f4f4;
   width: 300px;
   min-width: 300px;
   border-radius: 10px;
@@ -58,10 +58,13 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
 }
 
+/* ===== FIX: IMAGE SHOULD NOT HIDE AT TOP ===== */
 .health-card img {
   width: 100%;
   height: 300px;
-  object-fit: cover;
+  object-fit: contain;   /* FIXED */
+  background: #f4f4f4;       /* keeps bottle visible cleanly */
+  padding: 10px 0;        /* spacing to avoid touching edges */
 }
 
 .health-card p {
