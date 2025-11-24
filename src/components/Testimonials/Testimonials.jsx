@@ -9,7 +9,14 @@ import avatar3 from "../Testimonials/images/aishwarya.jpg";
 import avatar4 from "../Testimonials/images/malvikaraaj.jpg";
 import avatar5 from "../Testimonials/images/lata.jpg";
 
-// === DATA ===
+// === INSTAGRAM IMAGES (replace with your real paths) ===
+import insta1 from "../Testimonials/images/image1.png";
+import insta2 from "../Testimonials/images/image2.jpg";
+import insta3 from "../Testimonials/images/image3.jpg";
+import insta4 from "../Testimonials/images/image4.jpg";
+import insta5 from "../Testimonials/images/image5.jpg";
+
+// === TESTIMONIAL DATA ===
 const testimonials = [
   {
     id: 1,
@@ -76,7 +83,7 @@ const Testimonials = () => {
   const cardRef = useRef(null);
   const [slideWidth, setSlideWidth] = useState(350);
 
-  // Calculate slide width
+  // ==== CALCULATE SLIDE WIDTH ====
   const calculateSlideWidth = () => {
     if (!cardRef.current) return;
 
@@ -113,7 +120,7 @@ const Testimonials = () => {
     setTimeout(calculateSlideWidth, 150);
   }, []);
 
-  // Infinite Loop Logic
+  // ==== INFINITE LOOP RESET ====
   useEffect(() => {
     if (!transitionRef.current) return;
 
@@ -143,59 +150,83 @@ const Testimonials = () => {
   });
 
   return (
-    <section className="testimonials-outer">
-      <p className="testimonials-subtitle">Testimonials</p>
-      <h2 className="testimonials-title">Real People, Genuine Feedback</h2>
+    <>
+      {/* ============================== */}
+      {/*        TESTIMONIALS SECTION    */}
+      {/* ============================== */}
+      <section className="testimonials-outer">
+        <p className="testimonials-subtitle">Testimonials</p>
+        <h2 className="testimonials-title">Real People, Genuine Feedback</h2>
 
-      <div className="testimonials-cards-wrapper" {...handlers}>
-        <div
-          className="testimonials-cards-inner"
-          style={{
-            transform: `translateX(-${current * slideWidth}px)`,
-            transition: transitionRef.current ? "transform 0.5s ease-in-out" : "none",
-          }}
-        >
-          {extendedTestimonials.map((item, index) => (
-            <article
-              className="testimonial-card"
-              key={`${item.id}-${index}`}
-              ref={index === 0 ? cardRef : null}
-            >
-              <p className="testimonial-quote">“{item.quote}”</p>
+        <div className="testimonials-cards-wrapper" {...handlers}>
+          <div
+            className="testimonials-cards-inner"
+            style={{
+              transform: `translateX(-${current * slideWidth}px)`,
+              transition: transitionRef.current
+                ? "transform 0.5s ease-in-out"
+                : "none",
+            }}
+          >
+            {extendedTestimonials.map((item, index) => (
+              <article
+                className="testimonial-card"
+                key={`${item.id}-${index}`}
+                ref={index === 0 ? cardRef : null}
+              >
+                <p className="testimonial-quote">“{item.quote}”</p>
 
-              <div className="testimonial-author">
-                <div className="testimonial-avatar">
-                  <img src={item.avatar} alt={item.name} />
+                <div className="testimonial-author">
+                  <div className="testimonial-avatar">
+                    <img src={item.avatar} alt={item.name} />
+                  </div>
+                  <div className="testimonial-author-text">
+                    <p className="testimonial-name">{item.name}</p>
+                    <p className="testimonial-role">{item.role}</p>
+                  </div>
                 </div>
-                <div className="testimonial-author-text">
-                  <p className="testimonial-name">{item.name}</p>
-                  <p className="testimonial-role">{item.role}</p>
-                </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* ===== ARROWS MATCHING HEALTH LIFESTYLE ===== */}
-      <div className="testimonials-controls">
-        <button className="arrow-button" onClick={prevSlide}>
-          <svg width="27" height="13" viewBox="0 0 27 13" fill="none">
-            <path d="M6 12L1 6.5L6 1" stroke="#193B61" strokeWidth="1" />
-            <line x1="1" y1="6.5" x2="26" y2="6.5" stroke="#193B61" strokeWidth="1" />
-          </svg>
-        </button>
+        {/* ARROWS (HEALTH LIFESTYLE STYLE) */}
+        <div className="testimonials-controls">
+          <button className="arrow-button" onClick={prevSlide}>
+            <svg width="27" height="13" viewBox="0 0 27 13" fill="none">
+              <path d="M6 12L1 6.5L6 1" stroke="#193B61" strokeWidth="1" />
+              <line x1="1" y1="6.5" x2="26" y2="6.5" stroke="#193B61" strokeWidth="1" />
+            </svg>
+          </button>
 
-        <div className="line"></div>
+          <div className="line"></div>
 
-        <button className="arrow-button" onClick={nextSlide}>
-          <svg width="27" height="13" viewBox="0 0 27 13" fill="none">
-            <path d="M21 1L26 6.5L21 12" stroke="#193B61" strokeWidth="1" />
-            <line x1="1" y1="6.5" x2="26" y2="6.5" stroke="#193B61" strokeWidth="1" />
-          </svg>
-        </button>
-      </div>
-    </section>
+          <button className="arrow-button" onClick={nextSlide}>
+            <svg width="27" height="13" viewBox="0 0 27 13" fill="none">
+              <path d="M21 1L26 6.5L21 12" stroke="#193B61" strokeWidth="1" />
+              <line x1="1" y1="6.5" x2="26" y2="6.5" stroke="#193B61" strokeWidth="1" />
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      {/* ============================== */}
+      {/*        INSTAGRAM SECTION       */}
+      {/* ============================== */}
+      <section className="instagram-section">
+        <h2 className="insta-title">Connect With Us On</h2>
+        <h3 className="insta-heading">Instagram</h3>
+        <p className="insta-handle">@prideofcowsindia</p>
+
+        <div className="insta-grid">
+          <img src={insta1} alt="Instagram 1" />
+          <img src={insta2} alt="Instagram 2" />
+          <img src={insta3} alt="Instagram 3" />
+          <img src={insta4} alt="Instagram 4" />
+          <img src={insta5} alt="Instagram 5" />
+        </div>
+      </section>
+    </>
   );
 };
 
