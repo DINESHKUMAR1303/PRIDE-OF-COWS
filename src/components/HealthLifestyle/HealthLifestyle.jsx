@@ -2,14 +2,12 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useSwipeable } from "react-swipeable";
 import "./HealthLifestyle.css";
 
-// === IMAGES ===
 import img1 from "./images/milk1.jpg";
 import img2 from "./images/milk2.jpg";
 import img3 from "./images/milk3.jpg";
 import img4 from "./images/milk4.jpg";
 import img5 from "./images/milk5.jpg";
 
-// === CARD DATA ===
 const cards = [
   { img: img1, text: "The standard of milk" },
   {
@@ -19,7 +17,8 @@ const cards = [
   },
   {
     img: img3,
-    text: "From farm to Glass: The story of single-origin milk and its benefits",
+    text:
+      "From farm to Glass: The story of single-origin milk and its benefits",
   },
   {
     img: img4,
@@ -34,63 +33,66 @@ const cards = [
 ];
 
 const HealthLifestyle = () => {
-  // Responsive visible items
   const getItemsToShow = () => {
     const w = window.innerWidth;
-    if (w < 768) return 1;
-    if (w < 992) return 2;
-    if (w < 1440) return 3;
-    return 4;
+    if (w < 768) return 1;  
+    if (w < 992) return 2;  
+    if (w < 1440) return 3; 
+    if (w < 1920) return 4; 
+    return 5;             
   };
 
   const [itemsToShow, setItemsToShow] = useState(getItemsToShow());
   const total = cards.length;
 
-  // Clone cards for infinite effect
   const extendedCards = useMemo(() => [...cards, ...cards, ...cards], []);
 
-  // Current index
   const [current, setCurrent] = useState(total);
-
   const transitionRef = useRef(true);
+
   const cardRef = useRef(null);
+  const [slideWidth, setSlideWidth] = useState(350);
 
-  // Slide width state
-  const [slideWidth, setSlideWidth] = useState(300);
-
-  // Calculate slide width correctly
   const calculateSlideWidth = () => {
     if (!cardRef.current) return;
 
-    const el = cardRef.current;
-    const style = window.getComputedStyle(el);
-    const marginRight = parseInt(style.marginRight || "40");
-    let w = el.offsetWidth + marginRight;
+    const screen = window.innerWidth;
 
-    // === MOBILE FIX ===
-    if (window.innerWidth < 768) {
-      w = el.offsetWidth + 25; // PERFECT GAP for centered card
+    // MOBILE 320px
+    if (screen < 768) {
+      setSlideWidth(320 + 20);
+      return;
     }
 
-    setSlideWidth(w);
+    // TABLET
+    if (screen < 992) {
+      const gap = 24;
+      const totalPadding = 80;
+      const cardW = (screen - totalPadding - gap) / 2;
+      setSlideWidth(cardW + gap);
+      return;
+    }
+
+    // LAPTOP + DESKTOP
+    const cardW = cardRef.current.offsetWidth;
+    setSlideWidth(cardW + 24);
   };
 
-  // Resize listener
   useEffect(() => {
-    const resizeHandler = () => {
+    calculateSlideWidth();
+    const handleResize = () => {
       setItemsToShow(getItemsToShow());
       calculateSlideWidth();
     };
-    window.addEventListener("resize", resizeHandler);
-    return () => window.removeEventListener("resize", resizeHandler);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // First render
   useEffect(() => {
-    setTimeout(() => calculateSlideWidth(), 50);
+    setTimeout(calculateSlideWidth, 150);
   }, []);
 
-  // Infinite loop
+  // INFINITE LOOP
   useEffect(() => {
     if (!transitionRef.current) return;
 
@@ -99,13 +101,13 @@ const HealthLifestyle = () => {
       setTimeout(() => {
         setCurrent(total);
         transitionRef.current = true;
-      }, 500);
+      }, 300);
     } else if (current < total) {
       transitionRef.current = false;
       setTimeout(() => {
         setCurrent(total * 2 - 1);
         transitionRef.current = true;
-      }, 500);
+      }, 300);
     }
   }, [current, total]);
 
@@ -120,10 +122,10 @@ const HealthLifestyle = () => {
   });
 
   return (
-    <section className="health-outer" aria-label="Health lifestyle carousel">
+    <section className="health-outer">
       <h2 className="health-title">Health Is A Lifestyle</h2>
 
-      {/* ==== Carousel Wrapper ==== */}
+      {/* ====== Carousel Wrapper ====== */}
       <div className="health-cards-wrapper" {...handlers}>
         <div
           className="health-cards-inner"
@@ -139,19 +141,15 @@ const HealthLifestyle = () => {
               className="health-card"
               key={`${index}-${card.text}`}
               ref={index === 0 ? cardRef : null}
-              style={{
-                // === MOBILE CENTER FIX ===
-                margin: window.innerWidth < 768 ? "0 auto" : "0",
-              }}
             >
-              <img src={card.img} alt={`Milk ${index + 1}`} loading="lazy" />
+              <img src={card.img} alt="milk" loading="lazy" />
               <p>{card.text}</p>
             </div>
           ))}
         </div>
       </div>
 
-      {/* ==== Controls ==== */}
+      {/* ====== Controls ====== */}
       <div className="carousel-controls">
         <button className="arrow-button" onClick={prevSlide}>
           <svg width="27" height="13" viewBox="0 0 27 13" fill="none">
@@ -170,7 +168,6 @@ const HealthLifestyle = () => {
         </button>
       </div>
 
-      {/* View All */}
       <button className="view-all">VIEW ALL</button>
     </section>
   );

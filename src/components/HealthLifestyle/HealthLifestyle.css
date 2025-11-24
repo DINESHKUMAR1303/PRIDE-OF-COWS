@@ -1,5 +1,5 @@
 /* ========================================= */
-/* HEALTH IS A LIFESTYLE SECTION – MATCHES PRODUCT BREAKPOINTS */
+/* HEALTH IS A LIFESTYLE SECTION             */
 /* ========================================= */
 
 .health-outer {
@@ -8,11 +8,9 @@
   padding: 0px 0 80px;
   font-family: "Suranna", serif;
   color: #1a1a1a;
-  position: relative;
   overflow: hidden;
 }
 
-/* === Title === */
 .health-title {
   font-size: 58px;
   font-weight: 400;
@@ -21,30 +19,34 @@
   color: #2b2b2b;
 }
 
-/* === Wrapper === */
+/* ========================================= */
+/* CAROUSEL WRAPPER                          */
+/* ========================================= */
+
 .health-cards-wrapper {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
   overflow: hidden;
   position: relative;
-  padding: 0 40px;
-  box-sizing: border-box;
+  padding: 0;
 }
 
-/* === Inner === */
 .health-cards-inner {
   display: flex;
-  gap: 40px;
   will-change: transform;
+  gap: 20px;
 }
 
 /* ========================================= */
-/* CARD — FIXED SIZE LIKE PRODUCT CARDS */
+/* CARD — BASE                               */
 /* ========================================= */
 
 .health-card {
   background: #f8f8f8;
-  width: 260px;
-  min-width: 260px;
-  border-radius: 12px;
+  width: 300px;
+  min-width: 300px;
+  border-radius: 10px;
   overflow: hidden;
   flex-shrink: 0;
   cursor: grab;
@@ -60,11 +62,6 @@
   width: 100%;
   height: 300px;
   object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-.health-card:hover img {
-  transform: scale(1.05);
 }
 
 .health-card p {
@@ -77,7 +74,111 @@
 }
 
 /* ========================================= */
-/* VIEW ALL BUTTON → KNOW MORE EFFECT */
+/* MOBILE — EXACT 320PX CENTERED             */
+/* ========================================= */
+
+@media (max-width: 767px) {
+  .health-cards-wrapper {
+    padding-left: calc((100vw - 320px) / 2);
+    padding-right: calc((100vw - 320px) / 2);
+  }
+
+  .health-cards-inner {
+    gap: 20px;
+  }
+
+  .health-card {
+    width: 320px !important;
+    min-width: 320px !important;
+  }
+
+  .health-title {
+    font-size: 34px;
+    margin-bottom: 30px;
+  }
+}
+
+/* ========================================= */
+/* TABLET — EXACT 2 FULL CARDS CENTERED      */
+/* ========================================= */
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .health-cards-wrapper {
+    padding-left: calc((100vw - (2 * 360px) - 20px) / 2);
+    padding-right: calc((100vw - (2 * 360px) - 20px) / 2);
+  }
+
+  .health-card {
+    flex: 0 0 360px !important;
+    max-width: 360px !important;
+    min-width: 360px !important;
+  }
+}
+
+/* ========================================= */
+/* SPECIAL FIX — 1024px to 1199px            */
+/* ========================================= */
+
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .health-cards-wrapper {
+    padding-left: calc((100vw - (2 * 380px) - 24px) / 2);
+    padding-right: calc((100vw - (2 * 380px) - 24px) / 2);
+  }
+
+  .health-cards-inner {
+    gap: 24px;
+  }
+
+  .health-card {
+    flex: 0 0 380px !important;
+    max-width: 380px !important;
+    min-width: 380px !important;
+  }
+}
+
+/* ========================================= */
+/* LAPTOP — 3 CARDS                          */
+/* ========================================= */
+
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .health-card {
+    flex: 0 0 33.333%;
+  }
+}
+
+/* ========================================= */
+/* DESKTOP — 1440px: 3 CARDS + CUT EFFECT    */
+/* ========================================= */
+
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .health-card {
+    flex: 0 0 360px !important;
+    max-width: 360px !important;
+    min-width: 360px !important;
+  }
+
+  .health-cards-wrapper {
+    padding-left: calc((100vw - (3 * 360px) - (2 * 20px)) / 2);
+    padding-right: calc((100vw - (3 * 360px) - (2 * 20px)) / 2);
+  }
+
+  .health-cards-inner {
+    gap: 20px;
+  }
+}
+
+/* ========================================= */
+/* LARGE DESKTOP — 5 CARDS                   */
+/* ========================================= */
+
+@media (min-width: 1920px) {
+  .health-card {
+    flex: 0 0 20%;
+  }
+}
+
+/* ========================================= */
+/* BUTTON                                     */
 /* ========================================= */
 
 .view-all {
@@ -87,32 +188,23 @@
   border: none;
   border-radius: 25px;
   padding: 14px 50px;
-  font-family: sans-serif;
   font-size: 16px;
   font-weight: 600;
   letter-spacing: 1px;
-  line-height: 20px;
   cursor: pointer;
-  min-width: 180px;
-
-  transition: background 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
-              color 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
-              transform 0.2s ease;
+  transition: 0.3s ease;
 }
 
-.view-all:hover,
-.view-all:focus {
-  background-color: #ffffff;
+.view-all:hover {
+  background: #fff;
   color: #b38a3b;
   transform: scale(1.05);
-  outline: none;
 }
 
-.view-all:active {
-  transform: scale(0.98);
-}
+/* ========================================= */
+/* CONTROLS                                  */
+/* ========================================= */
 
-/* ARROWS */
 .carousel-controls {
   margin-top: 40px;
   display: flex;
@@ -122,103 +214,7 @@
 }
 
 .carousel-controls .line {
+  flex-grow: 1;
   height: 1px;
-}
-
-/* ========================================= */
-/* RESPONSIVE BREAKPOINTS (MATCH PRODUCT)   */
-/* ========================================= */
-
-/* ===== 2560px — show 6 cards ===== */
-@media (min-width: 2560px) {
-  .health-card {
-    width: calc(100% / 6 - 40px);
-    min-width: calc(100% / 6 - 40px);
-  }
-}
-
-/* ===== 1440px–2559px — slight clipping ===== */
-@media (max-width: 2559px) and (min-width: 1440px) {
-  .health-cards-wrapper {
-    padding: 0 20px;
-  }
-
-  .health-cards-inner {
-    width: calc(100% + 4%);
-    margin-left: -2%;
-  }
-
-  .health-card {
-    width: 260px;
-    min-width: 260px;
-  }
-}
-
-/* ===== 992px–1439px — show 3 cards ===== */
-@media (max-width: 1439px) and (min-width: 992px) {
-  .health-card {
-    width: calc((100% - 80px) / 3);
-    min-width: calc((100% - 80px) / 3);
-  }
-
-  .health-cards-wrapper {
-    padding: 0 30px;
-  }
-}
-
-/* ===== 768px–991px — show 2 cards ===== */
-@media (max-width: 991px) and (min-width: 768px) {
-  .health-card {
-    width: calc((100% - 40px) / 2);
-    min-width: calc((100% - 40px) / 2);
-  }
-
-  .health-cards-wrapper {
-    padding: 0 30px;
-  }
-}
-
-/* ========================================= */
-/* ===== MOBILE (320px–767px) — 1 FULL CARD */
-/* ========================================= */
-
-@media (max-width: 767px) {
-  .health-cards-wrapper {
-    padding: 0 20px;
-  }
-
-  .health-cards-inner {
-    gap: 20px;
-    padding-left: 5px;
-  }
-
-  .health-card {
-    width: 100%;
-    min-width: 100%;
-    border-radius: 14px;
-  }
-
-  .health-card img {
-    height: 260px;
-  }
-
-  .health-title {
-    font-size: 34px;
-    margin-bottom: 30px;
-  }
-}
-
-/* ===== Extra small (<480px) ===== */
-@media (max-width: 480px) {
-  .health-cards-wrapper {
-    padding: 0 12px;
-  }
-
-  .health-card img {
-    height: 240px;
-  }
-
-  .health-title {
-    font-size: 28px;
-  }
+  background: #ccc;
 }

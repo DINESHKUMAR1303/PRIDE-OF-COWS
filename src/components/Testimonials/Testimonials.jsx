@@ -55,11 +55,11 @@ const testimonials = [
 const Testimonials = () => {
   const getItemsToShow = () => {
     const w = window.innerWidth;
-    if (w < 768) return 1;   // Mobile
-    if (w < 992) return 2;   // Tablet
-    if (w < 1440) return 3;  // Laptop
-    if (w < 1920) return 4;  // Desktop
-    return 5;                // Ultra-wide
+    if (w < 768) return 1;       // Mobile
+    if (w < 992) return 2;       // Tablet
+    if (w < 1440) return 3;      // Laptop
+    if (w < 1920) return 4;      // Desktop
+    return 5;                    // Ultra-wide
   };
 
   const [itemsToShow, setItemsToShow] = useState(getItemsToShow());
@@ -78,33 +78,36 @@ const Testimonials = () => {
   const [slideWidth, setSlideWidth] = useState(350);
 
   // ==========================================================
-  // FIXED RESPONSIVE WIDTH (MOBILE 100% EXACT CENTERED)
+  // RESPONSIVE SLIDE WIDTH CALCULATION
   // ==========================================================
   const calculateSlideWidth = () => {
     if (!cardRef.current) return;
 
-    const screenWidth = window.innerWidth;
+    const screen = window.innerWidth;
 
-    // ⭐ EXACT MOBILE FIX — 320px card width
-    if (screenWidth < 768) {
-      setSlideWidth(320 + 20); // 20px gap
+    // ⭐ Mobile exact 320px
+    if (screen < 768) {
+      setSlideWidth(320 + 20);   // card 320 + gap 20
       return;
     }
 
-    // Tablet — use 2 cards
-    if (screenWidth < 992) {
-      const padding = 80;
+    // ⭐ Tablet (2 full cards)
+    if (screen < 992) {
       const gap = 24;
-      const cardWidth = (screenWidth - padding - gap) / 2;
-      setSlideWidth(cardWidth + gap);
+      const totalPadding = 80;
+      const cardW = (screen - totalPadding - gap) / 2;
+      setSlideWidth(cardW + gap);
       return;
     }
 
-    // Desktop/Laptop
-    setSlideWidth(cardRef.current.offsetWidth + 32);
+    // ⭐ Laptop, Desktop, Ultrawide
+    // Using actual card width + consistent gap
+    const cardW = cardRef.current.offsetWidth;
+    setSlideWidth(cardW + 24);
   };
 
   useEffect(() => {
+    calculateSlideWidth();
     const handleResize = () => {
       setItemsToShow(getItemsToShow());
       calculateSlideWidth();
@@ -117,7 +120,9 @@ const Testimonials = () => {
     setTimeout(calculateSlideWidth, 150);
   }, []);
 
-  // Infinite Loop Reset Logic
+  // ==========================================================
+  // INFINITE LOOP CORE LOGIC
+  // ==========================================================
   useEffect(() => {
     if (!transitionRef.current) return;
 

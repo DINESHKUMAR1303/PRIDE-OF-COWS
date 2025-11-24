@@ -41,25 +41,31 @@
   display: flex;
   will-change: transform;
   align-items: stretch;
-  gap: 32px;
+  gap: 20px;
 }
 
-/* Default card style */
+/* ========================================= */
+/* DEFAULT DESKTOP                           */
+/* ========================================= */
+
 .testimonial-card {
   padding: 20px;
   background: #ffffff;
   border-radius: 20px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   gap: 10px;
+  height: auto;
   box-sizing: border-box;
 }
 
 /* ========================================= */
 /* TABLET — EXACT 2 FULL CARDS CENTERED      */
 /* ========================================= */
+
 @media (min-width: 768px) and (max-width: 991px) {
+
   .testimonials-cards-wrapper {
     padding-left: calc((100vw - (2 * 360px) - 20px) / 2);
     padding-right: calc((100vw - (2 * 360px) - 20px) / 2);
@@ -77,9 +83,11 @@
 }
 
 /* ========================================= */
-/* 1024px–1199px — LARGE 2 CENTERED CARDS    */
+/* SPECIAL FIX — 1024px to 1199px            */
 /* ========================================= */
+
 @media (min-width: 1024px) and (max-width: 1199px) {
+
   .testimonials-cards-wrapper {
     padding-left: calc((100vw - (2 * 380px) - 24px) / 2);
     padding-right: calc((100vw - (2 * 380px) - 24px) / 2);
@@ -97,8 +105,9 @@
 }
 
 /* ========================================= */
-/* 1200px–1439px — 3 CARDS                   */
+/* LAPTOP — 3 CARDS                          */
 /* ========================================= */
+
 @media (min-width: 1200px) and (max-width: 1439px) {
   .testimonial-card {
     flex: 0 0 33.333%;
@@ -106,42 +115,45 @@
 }
 
 /* ========================================= */
-/* ⭐ 1440px–1919px — VERY LARGE CUT (LIKE YOUR SCREENSHOT) */
+/* DESKTOP — 1440px: 3 FULL CARDS + SIDE CUT */
 /* ========================================= */
+
 @media (min-width: 1440px) and (max-width: 1919px) {
 
-  /* EXTREME cut effect */
-  .testimonials-cards-inner {
-    width: calc(100% + 360px);   /* extend a lot */
-    margin-left: -180px;         /* equal left cut */
-    gap: 32px;
-  }
-
+  /* 3 Cards in center */
   .testimonial-card {
-    flex: 0 0 20% !important;
-    max-width: 20% !important;
+    flex: 0 0 360px !important;
+    max-width: 360px !important;
+    min-width: 360px !important;
   }
 
+  /* Equal left/right cut */
   .testimonials-cards-wrapper {
-    padding-left: 180px;         /* equal right cut */
-    padding-right: 180px;
-    overflow: hidden;
+    padding-left: calc((100vw - (3 * 360px) - (2 * 20px)) / 2);
+    padding-right: calc((100vw - (3 * 360px) - (2 * 20px)) / 2);
+  }
+
+  .testimonials-cards-inner {
+    gap: 20px;
   }
 }
 
 /* ========================================= */
-/* 1920px+ — FULL 5 CARDS                    */
+/* LARGE DESKTOP — 5 CARDS FULL              */
 /* ========================================= */
+
 @media (min-width: 1920px) {
   .testimonial-card {
-    flex: 0 0 20% !important;
+    flex: 0 0 20%;
   }
 }
 
 /* ========================================= */
-/* MOBILE — EXACT 320PX CENTERED             */
+/* MOBILE — EXACT 320PX CARD CENTERED        */
 /* ========================================= */
+
 @media (max-width: 767px) {
+
   .testimonials-cards-wrapper {
     padding-left: calc((100vw - 320px) / 2);
     padding-right: calc((100vw - 320px) / 2);
@@ -158,9 +170,7 @@
   }
 }
 
-/* ========================================= */
-/* CARD CONTENT                              */
-/* ========================================= */
+/* ============ CARD CONTENT ============== */
 
 .testimonial-quote {
   font-family: "Lato", sans-serif;
@@ -194,7 +204,7 @@
 
 .testimonial-name {
   font-size: 17px;
-  margin: 0 0 -12px;
+  margin: 0 0 10px;
   color: #c1932d;
 }
 
@@ -204,9 +214,7 @@
   margin: 0;
 }
 
-/* ========================================= */
-/* CONTROLS                                  */
-/* ========================================= */
+/* ============ CONTROLS ============== */
 
 .testimonials-controls {
   margin-top: 45px;
@@ -234,6 +242,6 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   transition: 0.2s ease;
 }
