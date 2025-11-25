@@ -224,7 +224,7 @@ const Testimonials = () => {
           <img src={insta3} alt="Instagram 3" />
           <img src={insta4} alt="Instagram 4" />
           <img src={insta5} alt="Instagram 5" />
-          <img src={insta6} alt="Instagram 6" /> {/* ★ added */}
+          <img src={insta6} alt="Instagram 6" /> 
         </div>
       </section>
     </>
