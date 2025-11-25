@@ -157,8 +157,7 @@
 
 .footer-bottom {
   background: #f4f4f4;
-  padding: 25px 40px;
-  border-top: 1px solid #cfcfcf;
+  padding: 15px 100px;
   display: flex;
   justify-content: space-between;
   font-size: 20px;
