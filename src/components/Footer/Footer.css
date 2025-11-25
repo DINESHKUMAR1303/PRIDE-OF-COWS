@@ -1,0 +1,144 @@
+/* ======================= NEWSLETTER SECTION ======================= */
+
+.newsletter-section {
+  text-align: center;
+  padding: 10px 0 50px;
+  background: #f4f4f4;
+  font-family: "Suranna", serif;
+}
+
+.newsletter-title {
+  font-size: 30px;
+  color: #1a1a1a;
+  font-weight: 400;
+  margin-bottom: 0px;
+}
+
+.newsletter-input-wrapper {
+  position: relative;
+  width: 50%;
+  margin: auto;
+  border-bottom: 1px solid #b1b1b1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.newsletter-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-family: suranna,serif;
+  background: transparent;
+  font-size: 22px;
+  padding: 0px 0;
+  color: #333;
+}
+
+.newsletter-arrow {
+  font-size: 30px;
+  cursor: pointer;
+  color: #333;
+}
+
+
+/* ======================= MAIN FOOTER ======================= */
+
+.footer-section {
+  background: #f2f0ed;
+  padding: 60px 0 50px;
+  font-family: "Suranna", serif;
+  color: #1a1a1a;
+}
+
+.footer-container {
+  max-width: 1500px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) auto;
+  gap: 80px;
+  padding: 0 40px;
+}
+
+.footer-column p {
+  margin: 8px 0;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.footer-heading {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.footer-link-highlight {
+  color: #193B61;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.footer-contact {
+  margin: 10px 0;
+}
+
+.footer-social span,
+.footer-apps span {
+  margin-right: 12px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.footer-logo img {
+  width: 240px;
+  height: auto;
+}
+
+
+/* ======================= FOOTER BOTTOM ======================= */
+
+.footer-bottom {
+  background: #f2f0ed;
+  padding: 20px;
+  font-family: "Suranna", serif;
+  display: flex;
+  justify-content: space-around;
+  font-size: 18px;
+  border-top: 1px solid #ccc;
+}
+
+
+/* ======================= RESPONSIVE ======================= */
+
+@media (max-width: 1024px) {
+  .footer-container {
+    grid-template-columns: repeat(2, 1fr);
+    text-align: left;
+  }
+
+  .footer-logo {
+    grid-column: 1 / 3;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .newsletter-input-wrapper {
+    width: 80%;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .newsletter-input-wrapper {
+    width: 90%;
+  }
+}

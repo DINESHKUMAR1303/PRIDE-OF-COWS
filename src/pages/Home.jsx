@@ -7,6 +7,7 @@ import ContactSection from "../components/ContactSection/ContactSection";
 import Care from "../components/Care/Care";
 import HealthLifestyle from "../components/HealthLifestyle/HealthLifestyle";
 import Testimonials from "../components/Testimonials/Testimonials";
+import Footer from "../components/Footer/Footer";
 const Home = () => {
   return (
     <>
@@ -18,6 +19,7 @@ const Home = () => {
       <Care/>
       <HealthLifestyle/>
       <Testimonials/>
+      <Footer/>
     </>
   );
 };
