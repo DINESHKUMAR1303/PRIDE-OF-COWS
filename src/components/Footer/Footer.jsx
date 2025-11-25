@@ -1,8 +1,15 @@
 import React from "react";
 import "./Footer.css";
 
-// Single Origin Logo (replace with your actual path)
-import singleOrigin from "./images/singleoriginlogo.png";
+/* ========== ICON + LOGO IMPORTS ========== */
+import singleOrigin from "../Footer/images/singleoriginlogo.png";
+import mailIcon from "../Footer/images/mail.svg";
+import instaIcon from "../Footer/images/instagram.svg";
+import fbIcon from "../Footer/images/facebook.svg";
+import twitterIcon from "../Footer/images/twitter.svg";
+import ytIcon from "../Footer/images/youtube.svg";
+import appStoreIcon from "../Footer/images/appstore.svg";
+import playStoreIcon from "../Footer/images/playstore.svg";
 
 const Footer = () => {
   return (
@@ -18,6 +25,11 @@ const Footer = () => {
             className="newsletter-input"
           />
           <span className="newsletter-arrow">→</span>
+        </div>
+
+        {/* FLOATING LOGO BETWEEN BOTH SECTIONS */}
+        <div className="footer-floating-logo">
+          <img src={singleOrigin} alt="Single Origin Logo" />
         </div>
       </section>
 
@@ -59,7 +71,7 @@ const Footer = () => {
           </div>
 
           {/* CONTACT */}
-          <div className="footer-column">
+          <div className="footer-column footer-contact-column">
             <h3 className="footer-heading">Contact Us</h3>
 
             <p>Pride of Cows, 10th Floor, Nirmal Building,</p>
@@ -68,34 +80,32 @@ const Footer = () => {
 
             <p className="footer-contact">+91-22-68156815</p>
 
-            <p className="footer-contact">
-              📧 bookings@prideofcows.com
+            <p className="footer-contact email-row">
+              <img src={mailIcon} alt="mail" className="footer-icon" />
+              bookings@prideofcows.com
             </p>
 
+            {/* SOCIAL ICONS */}
             <div className="footer-social">
               <span>Follow Us</span>
-              <span>📸</span>
-              <span>📘</span>
-              <span>✖️</span>
-              <span>▶️</span>
+              <img src={instaIcon} alt="Instagram" className="footer-social-icon" />
+              <img src={fbIcon} alt="Facebook" className="footer-social-icon" />
+              <img src={twitterIcon} alt="Twitter" className="footer-social-icon" />
+              <img src={ytIcon} alt="YouTube" className="footer-social-icon" />
             </div>
 
+            {/* APP DOWNLOAD */}
             <div className="footer-apps">
               <span>Get the Pride of Cows App</span>
-              <span>🍎</span>
-              <span>▶️</span>
+              <img src={appStoreIcon} alt="App Store" className="footer-app-icon" />
+              <img src={playStoreIcon} alt="Play Store" className="footer-app-icon" />
             </div>
-          </div>
-
-          {/* LOGO */}
-          <div className="footer-logo">
-            <img src={singleOrigin} alt="Single Origin Logo" />
           </div>
 
         </div>
       </footer>
 
-      {/* ======================= BOTTOM BAR ======================= */}
+      {/* ======================= FOOTER BOTTOM ======================= */}
       <div className="footer-bottom">
         <p>Privacy Policy</p>
         <p>Terms & Conditions</p>
