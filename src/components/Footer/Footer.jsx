@@ -27,13 +27,13 @@ const Footer = () => {
           <span className="newsletter-arrow">→</span>
         </div>
 
-        {/* FLOATING LOGO BETWEEN BOTH SECTIONS */}
+        {/* Floating logo between sections */}
         <div className="footer-floating-logo">
           <img src={singleOrigin} alt="Single Origin Logo" />
         </div>
       </section>
 
-      {/* ======================= MAIN FOOTER ======================= */}
+      {/* ======================= MAIN FOOTER SECTION ======================= */}
       <footer className="footer-section">
         <div className="footer-container">
 
