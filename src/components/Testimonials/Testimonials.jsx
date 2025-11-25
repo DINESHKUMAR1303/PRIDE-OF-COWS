@@ -9,12 +9,13 @@ import avatar3 from "../Testimonials/images/aishwarya.jpg";
 import avatar4 from "../Testimonials/images/malvikaraaj.jpg";
 import avatar5 from "../Testimonials/images/lata.jpg";
 
-// === INSTAGRAM IMAGES (replace with your real paths) ===
+// === INSTAGRAM IMAGES ===
 import insta1 from "../Testimonials/images/image1.png";
 import insta2 from "../Testimonials/images/image2.jpg";
 import insta3 from "../Testimonials/images/image3.jpg";
 import insta4 from "../Testimonials/images/image4.jpg";
 import insta5 from "../Testimonials/images/image5.jpg";
+import insta6 from "../Testimonials/images/image6.png"; // ★ added 6th image
 
 // === TESTIMONIAL DATA ===
 const testimonials = [
@@ -27,8 +28,7 @@ const testimonials = [
   },
   {
     id: 2,
-    quote:
-      "Taimur loves ghee just like I do! I trust Pride of Cows for its purity and freshness.",
+    quote: "Taimur loves ghee just like I do! I trust Pride of Cows for its purity and freshness.",
     name: "Sachin Anand",
     role: "Actor",
     avatar: avatar2,
@@ -190,7 +190,7 @@ const Testimonials = () => {
           </div>
         </div>
 
-        {/* ARROWS (HEALTH LIFESTYLE STYLE) */}
+        {/* ARROWS */}
         <div className="testimonials-controls">
           <button className="arrow-button" onClick={prevSlide}>
             <svg width="27" height="13" viewBox="0 0 27 13" fill="none">
@@ -224,6 +224,7 @@ const Testimonials = () => {
           <img src={insta3} alt="Instagram 3" />
           <img src={insta4} alt="Instagram 4" />
           <img src={insta5} alt="Instagram 5" />
+          <img src={insta6} alt="Instagram 6" /> {/* ★ added */}
         </div>
       </section>
     </>

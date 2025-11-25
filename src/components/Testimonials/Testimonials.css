@@ -261,7 +261,7 @@
 /* ========================================= */
 
 .instagram-section {
-  padding: 40px 0; /* reduced from 80px */
+  padding: 40px 0;
   text-align: center;
   background: #f4f4f4;
   font-family: "Suranna", serif;
@@ -270,7 +270,7 @@
 /* Title: Connect With Us On */
 .insta-title {
   font-size: 58px;
-  margin: 0 0 10px 0; /* FIXED - removed negative spacing */
+  margin: 0 0 0px 0;
   color: #2b2b2b;
   font-weight: 400;
 }
@@ -278,7 +278,7 @@
 /* Heading: Instagram */
 .insta-heading {
   font-size: 58px;
-  margin: -60px 0 0px 0; /* reduced negative margin */
+  margin: -55px 0 0px 0; /* reduced negative margin */
   color: #2b2b2b;
   font-weight: 400;
 }
@@ -288,7 +288,7 @@
   font-size: 30px;
   font-family: Suranna, serif;
   color: #2b2b2b;
-  margin: -40px 0 10px 0; /* added spacing below */
+  margin: -40px 0 20px 0; /* better spacing */
 }
 
 /* Instagram Grid */
@@ -296,14 +296,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 30px; /* reduced gap from 40px */
-  flex-wrap: nowrap;
-  overflow-x: auto;
+
+  gap: 25px;                /* consistent gap */
+  flex-wrap: wrap;          /* FIX → prevents scrolling */
+  overflow: hidden;         /* FIX → removes scrollbar */
+
   padding: 0 20px;
 }
 
+/* Instagram Images */
 .insta-grid img {
-  width: 207px;
+  width: 180px;
   height: 200px;
   object-fit: cover;
   border-radius: 4px;
@@ -332,12 +335,13 @@
   }
 
   .insta-grid {
-    gap: 20px;
+    gap: 15px;
   }
 
   .insta-grid img {
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
   }
 }
+
 
