@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FaTimes } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 // === Icons & Images ===
@@ -42,44 +43,13 @@ import lifestyleImg from "./images/lifestyle.jpg";
 import LoginModal from "./LoginModal";
 
 // === Custom Hamburger Icon ===
-const CustomMenuIcon = ({
-  size = 28,
-  color = "#193B61",
-  topThickness = 1.5,
-  middleThickness = 2,
-  bottomThickness = 1.5,
-}) => {
+const CustomMenuIcon = ({ size = 28, color = "#193B61", topThickness = 1.5, middleThickness = 2, bottomThickness = 1.5 }) => {
   const gap = size * 0.2;
-  const topY = 4;
-  const middleY = topY + gap;
-  const bottomY = topY + gap * 2;
-
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <rect
-        x="6"
-        y={topY}
-        width="12"
-        height={topThickness}
-        rx={topThickness / 2}
-        fill={color}
-      />
-      <rect
-        x="6"
-        y={middleY}
-        width="20"
-        height={middleThickness}
-        rx={middleThickness / 2}
-        fill={color}
-      />
-      <rect
-        x="6"
-        y={bottomY}
-        width="12"
-        height={bottomThickness}
-        rx={bottomThickness / 2}
-        fill={color}
-      />
+      <rect x="6" y="4" width="12" height={topThickness} rx={1} fill={color} />
+      <rect x="6" y={4 + gap} width="20" height={middleThickness} rx={1} fill={color} />
+      <rect x="6" y={4 + gap * 2} width="12" height={bottomThickness} rx={1} fill={color} />
     </svg>
   );
 };
@@ -102,25 +72,25 @@ const Navbar = () => {
   const [isSticky, setIsSticky] = useState(false);
 
   const shopItems = [
-    { name: "All", img: allImg },
-    { name: "Milk", img: milkImg },
-    { name: "Ghee", img: gheeImg },
-    { name: "Curd", img: curdImg },
-    { name: "Paneer", img: paneerImg },
-    { name: "Whole Milk Powder", img: powderImg },
-    { name: "Yogurt", img: yogurtImg },
-    { name: "Protein Bar", img: proteinImg },
+    { name: "All", img: allImg, link: "/shop/all" },
+    { name: "Milk", img: milkImg, link: "/shop/milk" },
+    { name: "Ghee", img: gheeImg, link: "/shop/ghee" },
+    { name: "Curd", img: curdImg, link: "/shop/curd" },
+    { name: "Paneer", img: paneerImg, link: "/shop/paneer" },
+    { name: "Whole Milk Powder", img: powderImg, link: "/shop/whole-milk-powder" },
+    { name: "Yogurt", img: yogurtImg, link: "/shop/yogurt" },
+    { name: "Protein Bar", img: proteinImg, link: "/shop/protein-bar" },
   ];
 
   const learnItems = [
-    { name: "About Us", img: aboutImg },
-    { name: "Our Process", img: processImg },
-    { name: "Sustainability", img: sustainImg },
+    { name: "About Us", img: aboutImg, link: "/learn/about-us" },
+    { name: "Our Process", img: processImg, link: "/learn/our-process" },
+    { name: "Sustainability", img: sustainImg, link: "/learn/sustainability" },
   ];
 
   const blogItems = [
-    { name: "Recipes", img: recipesImg },
-    { name: "Lifestyle", img: lifestyleImg },
+    { name: "Recipes", img: recipesImg, link: "/blog/recipes" },
+    { name: "Lifestyle", img: lifestyleImg, link: "/blog/lifestyle" },
   ];
 
   useEffect(() => {
@@ -128,11 +98,8 @@ const Navbar = () => {
     if (savedLocation) setLocation(savedLocation);
 
     const handleScroll = () => {
-      if (window.scrollY > 150) {
-        setIsSticky(true);
-      } else {
-        setIsSticky(false);
-      }
+      if (window.scrollY > 150) setIsSticky(true);
+      else setIsSticky(false);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -151,38 +118,34 @@ const Navbar = () => {
   };
 
   const ChevronIcon = ({ isOpen }) => (
-    <svg
-      className={`arrow-icon ${isOpen ? "open" : ""}`}
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
+    <svg className={`arrow-icon ${isOpen ? "open" : ""}`} width="20" height="20" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="6 9 12 15 18 9" />
     </svg>
   );
 
   return (
     <>
-      {/* === Top Navbar === */}
-      <nav
-        ref={navRef}
-        className={`navbar ${isSticky ? "sticky" : ""}`}
-      >
+      <nav ref={navRef} className={`navbar ${isSticky ? "sticky" : ""}`}>
+
+        {/* LEFT SIDE */}
         <div className="navbar-left">
-          <img src={logo} alt="Pride of Cows" className="logo" />
+
+          {/* ✅ CLICKABLE LOGO -> HOME */}
+          <Link to="/">
+            <img src={logo} alt="Pride of Cows" className="logo" />
+          </Link>
+
           <button className="pincode-btn" onClick={() => setModalOpen(true)}>
-            <img src={locationIcon} alt="Location" className="location-icon" />
+            <img src={locationIcon} className="location-icon" alt="loc" />
             {location}
           </button>
         </div>
 
+        {/* CENTER MENU */}
         <div className="navbar-center">
           <ul className="menu">
+
             {/* SHOP */}
             <li
               className={`dropdown ${openDropdown === "shop" ? "open" : ""}`}
@@ -190,6 +153,7 @@ const Navbar = () => {
               onMouseLeave={() => setOpenDropdown(null)}
             >
               Shop <ChevronIcon isOpen={openDropdown === "shop"} />
+
               <div className="dropdown-menu">
                 <div className="dropdown-content">
                   <ul className="shop-list no-border">
@@ -199,15 +163,15 @@ const Navbar = () => {
                         onMouseEnter={() => setHoveredProduct(item.name)}
                         className={hoveredProduct === item.name ? "active" : ""}
                       >
-                        <span>{item.name}</span>
+                        <Link to={item.link} style={{ textDecoration: "none", color: "inherit" }}>
+                          <span>{item.name}</span>
+                        </Link>
                       </li>
                     ))}
                   </ul>
+
                   <div className="shop-preview square">
-                    <img
-                      src={shopItems.find((p) => p.name === hoveredProduct)?.img}
-                      alt={hoveredProduct}
-                    />
+                    <img src={shopItems.find((p) => p.name === hoveredProduct)?.img} alt={hoveredProduct} />
                   </div>
                 </div>
               </div>
@@ -220,8 +184,10 @@ const Navbar = () => {
               onMouseLeave={() => setOpenDropdown(null)}
             >
               Learn <ChevronIcon isOpen={openDropdown === "learn"} />
+
               <div className="dropdown-menu">
                 <div className="dropdown-content">
+
                   <ul className="shop-list no-border">
                     {learnItems.map((item) => (
                       <li
@@ -229,16 +195,17 @@ const Navbar = () => {
                         onMouseEnter={() => setHoveredLearn(item.name)}
                         className={hoveredLearn === item.name ? "active" : ""}
                       >
-                        <span>{item.name}</span>
+                        <Link to={item.link} style={{ textDecoration: "none", color: "inherit" }}>
+                          <span>{item.name}</span>
+                        </Link>
                       </li>
                     ))}
                   </ul>
+
                   <div className="shop-preview square">
-                    <img
-                      src={learnItems.find((p) => p.name === hoveredLearn)?.img}
-                      alt={hoveredLearn}
-                    />
+                    <img src={learnItems.find((p) => p.name === hoveredLearn)?.img} alt={hoveredLearn} />
                   </div>
+
                 </div>
               </div>
             </li>
@@ -250,8 +217,10 @@ const Navbar = () => {
               onMouseLeave={() => setOpenDropdown(null)}
             >
               Blog <ChevronIcon isOpen={openDropdown === "blog"} />
+
               <div className="dropdown-menu">
                 <div className="dropdown-content">
+
                   <ul className="shop-list no-border">
                     {blogItems.map((item) => (
                       <li
@@ -259,16 +228,17 @@ const Navbar = () => {
                         onMouseEnter={() => setHoveredBlog(item.name)}
                         className={hoveredBlog === item.name ? "active" : ""}
                       >
-                        <span>{item.name}</span>
+                        <Link to={item.link} style={{ textDecoration: "none", color: "inherit" }}>
+                          <span>{item.name}</span>
+                        </Link>
                       </li>
                     ))}
                   </ul>
+
                   <div className="shop-preview square">
-                    <img
-                      src={blogItems.find((p) => p.name === hoveredBlog)?.img}
-                      alt={hoveredBlog}
-                    />
+                    <img src={blogItems.find((p) => p.name === hoveredBlog)?.img} alt={hoveredBlog} />
                   </div>
+
                 </div>
               </div>
             </li>
@@ -276,28 +246,22 @@ const Navbar = () => {
             <li>Gift card</li>
           </ul>
 
-          {/* RIGHT SECTION */}
+          {/* RIGHT SIDE */}
           <div className="navbar-right">
             <div className="login" onClick={() => setLoginOpen(true)}>
-              <img src={loginIcon} alt="login" className="right-icon" />
+              <img src={loginIcon} className="right-icon" />
               <span className="login-text">LOGIN</span>
             </div>
 
             <div className="cart">
               <div className="cart-wrapper">
-                <img src={cartIcon} alt="cart" className="right-icon" />
+                <img src={cartIcon} className="right-icon" />
                 {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
               </div>
               <span className="cart-text">CART</span>
             </div>
 
-            <button
-              className="menu-toggle"
-              onClick={() => {
-                setMenuOpen(true);
-                setCartCount(2);
-              }}
-            >
+            <button className="menu-toggle" onClick={() => setMenuOpen(true)}>
               <CustomMenuIcon size={28} color="#001F3F" />
             </button>
           </div>
@@ -308,24 +272,10 @@ const Navbar = () => {
       {modalOpen && (
         <div className="modal-overlay">
           <div className="modal">
-            <button className="modal-close" onClick={() => setModalOpen(false)}>
-              ✕
-            </button>
-            <input
-              type="text"
-              placeholder="PINCODE"
-              value={pincode}
-              onChange={(e) => setPincode(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Search for a place"
-              value={place}
-              onChange={(e) => setPlace(e.target.value)}
-            />
-            <button className="continue-btn" onClick={handleSaveLocation}>
-              CONTINUE
-            </button>
+            <button className="modal-close" onClick={() => setModalOpen(false)}>✕</button>
+            <input type="text" placeholder="PINCODE" value={pincode} onChange={(e) => setPincode(e.target.value)} />
+            <input type="text" placeholder="Search for a place" value={place} onChange={(e) => setPlace(e.target.value)} />
+            <button className="continue-btn" onClick={handleSaveLocation}>CONTINUE</button>
           </div>
         </div>
       )}
@@ -333,17 +283,16 @@ const Navbar = () => {
       {/* LOGIN MODAL */}
       {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} />}
 
-      {/* MOBILE SIDE MENU */}
-      <div
-        className={`side-menu-overlay ${menuOpen ? "active" : ""}`}
-        onClick={() => setMenuOpen(false)}
-      ></div>
+      {/* SIDE MENU OVERLAY */}
+      <div className={`side-menu-overlay ${menuOpen ? "active" : ""}`} onClick={() => setMenuOpen(false)} />
 
+      {/* SIDE MENU */}
       <div className={`side-menu ${menuOpen ? "active" : ""}`}>
         <div className="side-menu-content">
+
           <div className="side-login">
             <div className="side-login-left" onClick={() => setLoginOpen(true)}>
-              <img src={loginIcon} alt="login" className="right-icon" />
+              <img src={loginIcon} className="right-icon" />
               <span className="login-text">Login</span>
             </div>
             <button className="close-btn" onClick={() => setMenuOpen(false)}>
@@ -351,14 +300,9 @@ const Navbar = () => {
             </button>
           </div>
 
+          {/* SHOP */}
           <div className="accordion">
-            <button
-              className="accordion-header"
-              onClick={() =>
-                setOpenDropdown(openDropdown === "shop" ? null : "shop")
-              }
-              aria-expanded={openDropdown === "shop"}
-            >
+            <button className="accordion-header" onClick={() => setOpenDropdown(openDropdown === "shop" ? null : "shop")}>
               <span>Shop</span>
               <ChevronIcon isOpen={openDropdown === "shop"} />
             </button>
@@ -367,46 +311,52 @@ const Navbar = () => {
               <ul className="accordion-list">
                 {shopItems.map((item) => (
                   <li key={item.name} onClick={() => setMenuOpen(false)}>
-                    {item.name}
+                    <Link to={item.link} style={{ textDecoration: "none", color: "inherit" }}>
+                      {item.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
             )}
           </div>
 
+          {/* SUPPORT */}
           <div className="side-section support">
             <h4>Support</h4>
             <ul>
-              <li><img src={enquiryIcon} alt="" /> Enquiry</li>
-              <li><img src={helpIcon} alt="" /> Help</li>
-              <li><img src={contactIcon} alt="" /> Contact</li>
-              <li><img src={faqIcon} alt="" /> FAQ</li>
+              <li><img src={enquiryIcon} /> Enquiry</li>
+              <li><img src={helpIcon} /> Help</li>
+              <li><img src={contactIcon} /> Contact</li>
+              <li><img src={faqIcon} /> FAQ</li>
             </ul>
           </div>
 
+          {/* LEARN MORE */}
           <div className="side-section learn-more">
             <h4>Learn More</h4>
             <ul>
-              <li><img src={aboutIcon} alt="" /> About Us</li>
-              <li><img src={lifestyleIcon} alt="" /> Lifestyle</li>
-              <li><img src={recipesIcon} alt="" /> Recipes</li>
+              <li><img src={aboutIcon} /> About Us</li>
+              <li><img src={lifestyleIcon} /> Lifestyle</li>
+              <li><img src={recipesIcon} /> Recipes</li>
             </ul>
           </div>
 
+          {/* FOOTER */}
           <div className="side-footer">
             <div className="app-links">
               <span>Get The App</span>
-              <img src={appstoreIcon} alt="App Store" />
-              <img src={playstoreIcon} alt="Play Store" />
+              <img src={appstoreIcon} />
+              <img src={playstoreIcon} />
             </div>
             <div className="social-links">
               <span>Follow Us</span>
-              <img src={instagramIcon} alt="Instagram" />
-              <img src={facebookIcon} alt="Facebook" />
-              <img src={twitterIcon} alt="Twitter" />
-              <img src={youtubeIcon} alt="YouTube" />
+              <img src={instagramIcon} />
+              <img src={facebookIcon} />
+              <img src={twitterIcon} />
+              <img src={youtubeIcon} />
             </div>
           </div>
+
         </div>
       </div>
     </>
