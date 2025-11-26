@@ -83,10 +83,32 @@
 }
 
 /* ========================================= */
-/* SPECIAL FIX — 1024px to 1199px            */
+/* FIX — 980px to 1099px (NO COLLAPSE)       */
 /* ========================================= */
 
-@media (min-width: 1024px) and (max-width: 1199px) {
+@media (min-width: 980px) and (max-width: 1099px) {
+
+  .testimonials-cards-wrapper {
+    padding-left: calc((100vw - (2 * 375px) - 24px) / 2);
+    padding-right: calc((100vw - (2 * 375px) - 24px) / 2);
+  }
+
+  .testimonials-cards-inner {
+    gap: 24px;
+  }
+
+  .testimonial-card {
+    flex: 0 0 375px !important;
+    max-width: 375px !important;
+    min-width: 375px !important;
+  }
+}
+
+/* ========================================= */
+/* SPECIAL FIX — 1100px to 1199px            */
+/* ========================================= */
+
+@media (min-width: 1100px) and (max-width: 1199px) {
 
   .testimonials-cards-wrapper {
     padding-left: calc((100vw - (2 * 380px) - 24px) / 2);
@@ -230,11 +252,9 @@
   background: #ccc;
   max-width: 850px;
   width: 100%;
-  flex-grow: 0;  /* stop stretching */
+  flex-grow: 0;
 }
 
-
-/* SAME EXACT ARROW STYLE */
 .arrow-button {
   background: #ffffff;
   border: none;
@@ -254,8 +274,6 @@
   background: #f7f7f7;
 }
 
-
-
 /* ========================================= */
 /* INSTAGRAM SECTION                          */
 /* ========================================= */
@@ -267,44 +285,37 @@
   font-family: "Suranna", serif;
 }
 
-/* Title: Connect With Us On */
 .insta-title {
   font-size: 58px;
-  margin: 0 0 0px 0;
+  margin: 0;
   color: #2b2b2b;
   font-weight: 400;
 }
 
-/* Heading: Instagram */
 .insta-heading {
   font-size: 58px;
-  margin: -55px 0 0px 0; /* reduced negative margin */
+  margin: -55px 0 0 0;
   color: #2b2b2b;
   font-weight: 400;
 }
 
-/* Handle: @prideofcowsindia */
 .insta-handle {
   font-size: 30px;
   font-family: Suranna, serif;
   color: #2b2b2b;
-  margin: -40px 0 10px 0; /* better spacing */
+  margin: -40px 0 10px 0;
 }
 
-/* Instagram Grid */
 .insta-grid {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  gap: 25px;                /* consistent gap */
-  flex-wrap: wrap;          /* FIX → prevents scrolling */
-  overflow: hidden;         /* FIX → removes scrollbar */
-
+  gap: 25px;
+  flex-wrap: wrap;
+  overflow: hidden;
   padding: 0 20px;
 }
 
-/* Instagram Images */
 .insta-grid img {
   width: 180px;
   height: 200px;
@@ -320,13 +331,14 @@
 
 /* Mobile */
 @media (max-width: 768px) {
+
   .insta-title {
     font-size: 32px;
   }
 
   .insta-heading {
     font-size: 40px;
-    margin-top:-30px;
+    margin-top: -30px;
   }
 
   .insta-handle {
@@ -344,5 +356,3 @@
     height: 180px;
   }
 }
-
-
