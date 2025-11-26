@@ -67,8 +67,6 @@ const products = [
     oldPrice: null,
     discount: null,
   },
-
-  // ⭐ New Product #7
   {
     id: 7,
     name: "HighProtein LowFat Paneer",
@@ -78,8 +76,6 @@ const products = [
     oldPrice: null,
     discount: null,
   },
-
-  // ⭐ New Product #8
   {
     id: 8,
     name: "Avvatar Protein Wafer Bar",
@@ -106,27 +102,41 @@ const AllProducts = () => {
         <div className="products-grid">
           {products.map((item) => (
             <div className="product-card" key={item.id}>
+              
+              {/* Image Box */}
               <div className="product-img-box">
                 <img src={item.image} alt={item.name} className="product-img" />
               </div>
 
+              {/* Product Details */}
               <div className="product-details">
-                <h3 className="product-name">{item.name}</h3>
 
-                <p className="product-price">
-                  MRP: <span>{item.mrp}</span>
-                </p>
+                {/* ⭐ NAME + SIZE IN SAME ROW */}
+                <div className="row-line">
+                  <h3 className="product-name">{item.name}</h3>
+                  <span className="product-size">{item.size}</span>
+                </div>
 
+                {/* ⭐ PRICE ROW */}
+                <div className="price-row">
+                  <span className="product-price-label">MRP:</span>
+                  <span className="product-price">{item.mrp}</span>
+                </div>
+
+                {/* ⭐ OLD PRICE + DISCOUNT */}
                 {item.oldPrice && (
                   <p className="product-oldprice">
-                    MRP: <span className="strike">{item.oldPrice}</span>{" "}
+                    <span className="strike">{item.oldPrice}</span>
                     <span className="discount">{item.discount}</span>
                   </p>
                 )}
 
-                <p className="product-size">{item.size}</p>
+                {/* ⭐ TAX INFO */}
+                <p className="tax-text">(Price inclusive of all taxes)</p>
 
+                {/* ⭐ BUTTON */}
                 <button className="buy-btn">Buy now</button>
+
               </div>
             </div>
           ))}

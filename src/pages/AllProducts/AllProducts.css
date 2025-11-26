@@ -1,30 +1,30 @@
+/* ============================================================= */
+/* BANNER SECTION */
+/* ============================================================= */
+
 .ap-image-wrapper {
   width: 100%;
   display: flex;
   justify-content: center;
   overflow: hidden;
-  margin-top: -90px;   /* 🔥 move image UP */
+  margin-top: -90px;
 }
 
-/* Banner image */
 .ap-image {
   width: 100%;
   height: 768px;
-  display: block;
   object-fit: cover;
 }
 
-/* Optional: Add a max width if needed */
 @media (min-width: 1200px) {
   .ap-image {
     max-width: 1600px;
   }
 }
 
-
-/* =============================== */
-/* FULL SECTION */
-/* =============================== */
+/* ============================================================= */
+/* PRODUCTS SECTION */
+/* ============================================================= */
 
 .products-section {
   width: 100%;
@@ -34,125 +34,153 @@
   font-family: "Suranna", serif;
 }
 
-/* Section Title */
 .products-title {
   font-size: 40px;
   margin-bottom: 45px;
-  color: #1a1a1a;
+  color: #0C3B60;
+  font-weight: 400;
 }
 
-/* =============================== */
-/* GRID LAYOUT – EXACT SPACING */
-/* =============================== */
+/* ============================================================= */
+/* GRID – PERFECT ALIGNMENT */
+/* ============================================================= */
 
 .products-grid {
   width: 90%;
   margin: auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 50px 35px; /* vertical | horizontal EXACT */
+  gap: 55px 35px;
 }
 
-/* =============================== */
-/* PRODUCT CARD – EXACT REPLICA */
-/* =============================== */
+/* ============================================================= */
+/* PRODUCT CARD – EXACT MATCH */
+/* ============================================================= */
 
 .product-card {
-  background: #ffffff;
-  border-radius: 20px; /* matches screenshot */
-  padding: 22px 20px 35px;
-  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.07);
+  background: #f4f4f4;
+  padding: 25px 22px 28px;
+  height: 480px;              /* perfect equal size */
+  display: flex;
+  flex-direction: column;
   text-align: left;
-  transition: 0.3s ease-out;
-  cursor: pointer;
+  transition: 0.25s ease-out;
 }
 
 .product-card:hover {
   transform: translateY(-4px);
 }
 
-/* =============================== */
-/* IMAGE BOX — EXACT HEIGHT */
-/* =============================== */
+/* ============================================================= */
+/* IMAGE BOX – EXACT SIZE */
+/* ============================================================= */
 
 .product-img-box {
-  width: 100%;
-  height: 260px; /* EXACT height from screenshot */
-  background: #efefef;
+  width: 100%;                 /* FIXED from 60% */
+  height: 260px;               /* perfect height */
+  background: #edecea;
   border-radius: 18px;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
 }
 
 .product-img {
-  width: 75%;
+  width: 70%;
   height: auto;
   object-fit: contain;
 }
 
-/* =============================== */
-/* TEXT CONTENT */
-/* =============================== */
+/* ============================================================= */
+/* TEXT CONTENT – EXACT SPACING */
+/* ============================================================= */
 
-.product-name {
-  margin-top: 18px;
-  font-size: 19px;
-  color: #1a1a1a;
+/* Name + size in same line */
+.name-row,
+.row-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
 }
 
-.product-price {
-  margin-top: 5px;
+.product-name {
+  font-size: 20px;
+  color: #1a1a1a;
+  font-weight: 400;
+}
+
+.product-size {
+  font-size: 17px;
+  color: #1a1a1a;
+  white-space: nowrap;
+}
+
+/* PRICE ROW */
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
+.product-price-label {
   font-size: 17px;
   color: #1a1a1a;
 }
 
+.product-price {
+  font-size: 17px;
+  color: #1a1a1a;
+}
+
+/* OLD PRICE + DISCOUNT */
 .product-oldprice {
-  margin-top: 2px;
+  margin-top: 6px;
   font-size: 16px;
 }
 
 .strike {
   text-decoration: line-through;
   color: #6b6b6b;
+  margin-right: 5px;
 }
 
 .discount {
   color: #d10000;
-  font-weight: bold;
-  margin-left: 4px;
+  font-weight: 600;
 }
 
-.product-size {
-  margin-top: 5px;
-  font-size: 16px;
-  color: #1a1a1a;
+/* TAX TEXT */
+.tax-text {
+  font-size: 14px;
+  color: #555;
+  margin: 8px 0 18px 0;
 }
 
-/* =============================== */
-/* BUTTON — EXACT SIZE & COLOR */
-/* =============================== */
+/* ============================================================= */
+/* BUTTON */
+/* ============================================================= */
 
 .buy-btn {
-  margin-top: 18px;
-  background: #0f3a62; /* exact dark blue */
+  margin-top: auto;
+  background: #0f3a62;
   color: white;
-  width: 150px;
+  width: 160px;
   padding: 12px 0;
   border-radius: 30px;
   border: none;
   font-size: 15px;
   cursor: pointer;
+  align-self: center;     /* centered button */
 }
 
 .buy-btn:hover {
   background: #0c3050;
 }
 
-/* =============================== */
-/* RESPONSIVE (TABLET & MOBILE) */
-/* =============================== */
+/* ============================================================= */
+/* RESPONSIVE */
+/* ============================================================= */
 
 @media (max-width: 1024px) {
   .products-grid {
@@ -167,7 +195,7 @@
 
 @media (max-width: 600px) {
   .products-grid {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: 1fr;
   }
 
   .product-img-box {
