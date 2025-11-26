@@ -1,8 +1,5 @@
-// ================= FULL NAVBAR WITH ROUTING (NO STYLE CHANGES) ==================
-
 import React, { useState, useEffect, useRef } from "react";
 import { FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom";      // ✅ Routing added
 import "./Navbar.css";
 
 // === Icons & Images ===
@@ -44,7 +41,7 @@ import lifestyleImg from "./images/lifestyle.jpg";
 
 import LoginModal from "./LoginModal";
 
-// ---------------- Custom Menu Icon ----------------
+// === Custom Hamburger Icon ===
 const CustomMenuIcon = ({
   size = 28,
   color = "#193B61",
@@ -59,9 +56,30 @@ const CustomMenuIcon = ({
 
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <rect x="6" y={topY} width="12" height={topThickness} rx={topThickness / 2} fill={color} />
-      <rect x="6" y={middleY} width="20" height={middleThickness} rx={middleThickness / 2} fill={color} />
-      <rect x="6" y={bottomY} width="12" height={bottomThickness} rx={bottomThickness / 2} fill={color} />
+      <rect
+        x="6"
+        y={topY}
+        width="12"
+        height={topThickness}
+        rx={topThickness / 2}
+        fill={color}
+      />
+      <rect
+        x="6"
+        y={middleY}
+        width="20"
+        height={middleThickness}
+        rx={middleThickness / 2}
+        fill={color}
+      />
+      <rect
+        x="6"
+        y={bottomY}
+        width="12"
+        height={bottomThickness}
+        rx={bottomThickness / 2}
+        fill={color}
+      />
     </svg>
   );
 };
@@ -70,7 +88,6 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
-
   const [location, setLocation] = useState("ENTER A PINCODE");
   const [pincode, setPincode] = useState("");
   const [place, setPlace] = useState("");
@@ -79,62 +96,47 @@ const Navbar = () => {
   const [hoveredProduct, setHoveredProduct] = useState("All");
   const [hoveredLearn, setHoveredLearn] = useState("About Us");
   const [hoveredBlog, setHoveredBlog] = useState("Recipes");
-
   const [openDropdown, setOpenDropdown] = useState(null);
 
   const navRef = useRef(null);
-  const navOffsetTop = useRef(0);
   const [isSticky, setIsSticky] = useState(false);
-  const [navHeight, setNavHeight] = useState(0);
 
   const shopItems = [
-    { name: "All", img: allImg, link: "/shop/all" },
-    { name: "Milk", img: milkImg, link: "/shop/milk" },
-    { name: "Ghee", img: gheeImg, link: "/shop/ghee" },
-    { name: "Curd", img: curdImg, link: "/shop/curd" },
-    { name: "Paneer", img: paneerImg, link: "/shop/paneer" },
-    { name: "Whole Milk Powder", img: powderImg, link: "/shop/whole-milk-powder" },
-    { name: "Yogurt", img: yogurtImg, link: "/shop/yogurt" },
-    { name: "Protein Bar", img: proteinImg, link: "/shop/protein-bar" },
+    { name: "All", img: allImg },
+    { name: "Milk", img: milkImg },
+    { name: "Ghee", img: gheeImg },
+    { name: "Curd", img: curdImg },
+    { name: "Paneer", img: paneerImg },
+    { name: "Whole Milk Powder", img: powderImg },
+    { name: "Yogurt", img: yogurtImg },
+    { name: "Protein Bar", img: proteinImg },
   ];
 
   const learnItems = [
-    { name: "About Us", img: aboutImg, link: "/learn/about-us" },
-    { name: "Our Process", img: processImg, link: "/learn/our-process" },
-    { name: "Sustainability", img: sustainImg, link: "/learn/sustainability" },
+    { name: "About Us", img: aboutImg },
+    { name: "Our Process", img: processImg },
+    { name: "Sustainability", img: sustainImg },
   ];
 
   const blogItems = [
-    { name: "Recipes", img: recipesImg, link: "/blog/recipes" },
-    { name: "Lifestyle", img: lifestyleImg, link: "/blog/lifestyle" },
+    { name: "Recipes", img: recipesImg },
+    { name: "Lifestyle", img: lifestyleImg },
   ];
 
-  // Sticky Navbar Logic
   useEffect(() => {
     const savedLocation = localStorage.getItem("userLocation");
     if (savedLocation) setLocation(savedLocation);
 
-    const setMeasurements = () => {
-      if (navRef.current) {
-        const rect = navRef.current.getBoundingClientRect();
-        navOffsetTop.current = rect.top + window.pageYOffset;
-        setNavHeight(Math.round(rect.height));
+    const handleScroll = () => {
+      if (window.scrollY > 150) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
       }
     };
 
-    setMeasurements();
-
-    const handleScroll = () => {
-      if (window.pageYOffset > navOffsetTop.current) setIsSticky(true);
-      else setIsSticky(false);
-    };
-
     window.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", setMeasurements);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleSaveLocation = () => {
@@ -151,68 +153,56 @@ const Navbar = () => {
   const ChevronIcon = ({ isOpen }) => (
     <svg
       className={`arrow-icon ${isOpen ? "open" : ""}`}
-      width="20" height="20"
+      width="20"
+      height="20"
       viewBox="0 0 24 24"
-      fill="none" stroke="currentColor"
-      strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
       <polyline points="6 9 12 15 18 9" />
     </svg>
   );
 
-  const fixedStyle = isSticky
-    ? { position: "fixed", top: 0, left: 0, right: 0, zIndex: 2000 }
-    : undefined;
-
   return (
     <>
-      {isSticky && <div style={{ height: navHeight }} />}
-
-      <nav ref={navRef} className={`navbar ${isSticky ? "sticky" : ""}`} style={fixedStyle}>
-        
-        {/* LEFT */}
+      {/* === Top Navbar === */}
+      <nav
+        ref={navRef}
+        className={`navbar ${isSticky ? "sticky" : ""}`}
+      >
         <div className="navbar-left">
           <img src={logo} alt="Pride of Cows" className="logo" />
           <button className="pincode-btn" onClick={() => setModalOpen(true)}>
-            <img src={locationIcon} className="location-icon" alt="Location" />
+            <img src={locationIcon} alt="Location" className="location-icon" />
             {location}
           </button>
         </div>
 
-        {/* CENTER */}
         <div className="navbar-center">
           <ul className="menu">
-
-            {/* ================= SHOP ================= */}
+            {/* SHOP */}
             <li
               className={`dropdown ${openDropdown === "shop" ? "open" : ""}`}
               onMouseEnter={() => setOpenDropdown("shop")}
               onMouseLeave={() => setOpenDropdown(null)}
             >
               Shop <ChevronIcon isOpen={openDropdown === "shop"} />
-
               <div className="dropdown-menu">
                 <div className="dropdown-content">
-
                   <ul className="shop-list no-border">
-
                     {shopItems.map((item) => (
                       <li
                         key={item.name}
                         onMouseEnter={() => setHoveredProduct(item.name)}
                         className={hoveredProduct === item.name ? "active" : ""}
                       >
-                        <Link
-                          to={item.link}
-                          style={{ textDecoration: "none", color: "inherit" }}
-                        >
-                          <span>{item.name}</span>
-                        </Link>
+                        <span>{item.name}</span>
                       </li>
                     ))}
-
                   </ul>
-
                   <div className="shop-preview square">
                     <img
                       src={shopItems.find((p) => p.name === hoveredProduct)?.img}
@@ -223,84 +213,62 @@ const Navbar = () => {
               </div>
             </li>
 
-            {/* ================= LEARN ================= */}
+            {/* LEARN */}
             <li
               className={`dropdown ${openDropdown === "learn" ? "open" : ""}`}
               onMouseEnter={() => setOpenDropdown("learn")}
               onMouseLeave={() => setOpenDropdown(null)}
             >
               Learn <ChevronIcon isOpen={openDropdown === "learn"} />
-
               <div className="dropdown-menu">
                 <div className="dropdown-content">
-
                   <ul className="shop-list no-border">
-
                     {learnItems.map((item) => (
                       <li
                         key={item.name}
                         onMouseEnter={() => setHoveredLearn(item.name)}
                         className={hoveredLearn === item.name ? "active" : ""}
                       >
-                        <Link
-                          to={item.link}
-                          style={{ textDecoration: "none", color: "inherit" }}
-                        >
-                          <span>{item.name}</span>
-                        </Link>
+                        <span>{item.name}</span>
                       </li>
                     ))}
-
                   </ul>
-
                   <div className="shop-preview square">
                     <img
                       src={learnItems.find((p) => p.name === hoveredLearn)?.img}
                       alt={hoveredLearn}
                     />
                   </div>
-
                 </div>
               </div>
             </li>
 
-            {/* ================= BLOG ================= */}
+            {/* BLOG */}
             <li
               className={`dropdown ${openDropdown === "blog" ? "open" : ""}`}
               onMouseEnter={() => setOpenDropdown("blog")}
               onMouseLeave={() => setOpenDropdown(null)}
             >
               Blog <ChevronIcon isOpen={openDropdown === "blog"} />
-
               <div className="dropdown-menu">
                 <div className="dropdown-content">
-
                   <ul className="shop-list no-border">
-
                     {blogItems.map((item) => (
                       <li
                         key={item.name}
                         onMouseEnter={() => setHoveredBlog(item.name)}
                         className={hoveredBlog === item.name ? "active" : ""}
                       >
-                        <Link
-                          to={item.link}
-                          style={{ textDecoration: "none", color: "inherit" }}
-                        >
-                          <span>{item.name}</span>
-                        </Link>
+                        <span>{item.name}</span>
                       </li>
                     ))}
-
                   </ul>
-
                   <div className="shop-preview square">
                     <img
                       src={blogItems.find((p) => p.name === hoveredBlog)?.img}
                       alt={hoveredBlog}
                     />
                   </div>
-
                 </div>
               </div>
             </li>
@@ -308,24 +276,28 @@ const Navbar = () => {
             <li>Gift card</li>
           </ul>
 
-          {/* ================= RIGHT SIDE ================= */}
+          {/* RIGHT SECTION */}
           <div className="navbar-right">
             <div className="login" onClick={() => setLoginOpen(true)}>
-              <img src={loginIcon} className="right-icon" alt="login" />
+              <img src={loginIcon} alt="login" className="right-icon" />
               <span className="login-text">LOGIN</span>
             </div>
 
             <div className="cart">
               <div className="cart-wrapper">
-                <img src={cartIcon} className="right-icon" alt="cart" />
-                {cartCount > 0 && (
-                  <span className="cart-count">{cartCount}</span>
-                )}
+                <img src={cartIcon} alt="cart" className="right-icon" />
+                {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
               </div>
               <span className="cart-text">CART</span>
             </div>
 
-            <button className="menu-toggle" onClick={() => setMenuOpen(true)}>
+            <button
+              className="menu-toggle"
+              onClick={() => {
+                setMenuOpen(true);
+                setCartCount(2);
+              }}
+            >
               <CustomMenuIcon size={28} color="#001F3F" />
             </button>
           </div>
@@ -336,22 +308,21 @@ const Navbar = () => {
       {modalOpen && (
         <div className="modal-overlay">
           <div className="modal">
-            <button className="modal-close" onClick={() => setModalOpen(false)}>✕</button>
-
+            <button className="modal-close" onClick={() => setModalOpen(false)}>
+              ✕
+            </button>
             <input
               type="text"
               placeholder="PINCODE"
               value={pincode}
               onChange={(e) => setPincode(e.target.value)}
             />
-
             <input
               type="text"
               placeholder="Search for a place"
               value={place}
               onChange={(e) => setPlace(e.target.value)}
             />
-
             <button className="continue-btn" onClick={handleSaveLocation}>
               CONTINUE
             </button>
@@ -359,23 +330,22 @@ const Navbar = () => {
         </div>
       )}
 
+      {/* LOGIN MODAL */}
       {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} />}
 
-      {/* ----------- MOBILE SIDE MENU ----------- */}
+      {/* MOBILE SIDE MENU */}
       <div
         className={`side-menu-overlay ${menuOpen ? "active" : ""}`}
         onClick={() => setMenuOpen(false)}
-      />
+      ></div>
 
       <div className={`side-menu ${menuOpen ? "active" : ""}`}>
         <div className="side-menu-content">
-
           <div className="side-login">
             <div className="side-login-left" onClick={() => setLoginOpen(true)}>
               <img src={loginIcon} alt="login" className="right-icon" />
               <span className="login-text">Login</span>
             </div>
-
             <button className="close-btn" onClick={() => setMenuOpen(false)}>
               <FaTimes />
             </button>
@@ -387,6 +357,7 @@ const Navbar = () => {
               onClick={() =>
                 setOpenDropdown(openDropdown === "shop" ? null : "shop")
               }
+              aria-expanded={openDropdown === "shop"}
             >
               <span>Shop</span>
               <ChevronIcon isOpen={openDropdown === "shop"} />
@@ -395,14 +366,8 @@ const Navbar = () => {
             {openDropdown === "shop" && (
               <ul className="accordion-list">
                 {shopItems.map((item) => (
-                  <li key={item.name}>
-                    <Link
-                      to={item.link}
-                      onClick={() => setMenuOpen(false)}
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      {item.name}
-                    </Link>
+                  <li key={item.name} onClick={() => setMenuOpen(false)}>
+                    {item.name}
                   </li>
                 ))}
               </ul>
@@ -442,7 +407,6 @@ const Navbar = () => {
               <img src={youtubeIcon} alt="YouTube" />
             </div>
           </div>
-
         </div>
       </div>
     </>
