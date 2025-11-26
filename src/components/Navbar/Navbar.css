@@ -684,7 +684,7 @@
   }
 
   .logo {
-    height: 55px; /* optimized for mobile */
+    height: 55px;
   }
 
   .pincode-btn {
@@ -698,16 +698,14 @@
   .navbar-right {
     display: flex;
     align-items: center;
-    gap: 8px; /* perfect spacing for small screens */
+    gap: 8px;
   }
 
   .login,
   .cart {
-    display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2px;
-    padding-bottom: 0;
   }
 
   .login-text,
@@ -722,8 +720,8 @@
   }
 }
 
-/* ====== Tablet View (767px - 1023px) ====== */
-@media (min-width: 767px) and (max-width: 1023px) {
+/* ====== Tablet View (768px - 1020px) ====== */
+@media (min-width: 768px) and (max-width: 1020px) {
   .navbar {
     padding: 10px 20px;
     align-items: center;
@@ -737,7 +735,7 @@
   }
 
   .logo {
-    height: 65px; /* bigger logo for tablet */
+    height: 65px;
   }
 
   .pincode-btn {
@@ -756,17 +754,14 @@
 
   .login,
   .cart {
-    display: flex;
     flex-direction: column;
     align-items: center;
     gap: 4px;
-    padding-bottom: 0;
   }
 
   .login-text,
   .cart-text {
     font-size: 12px;
-    text-align: center;
   }
 
   .menu-toggle {
@@ -775,8 +770,8 @@
   }
 }
 
-/* ====== Small Desktop (1024px - 1439px) ====== */
-@media (min-width: 1024px) and (max-width: 1439px) {
+/* ====== Small Desktop (1021px - 1439px) ====== */
+@media (min-width: 1021px) and (max-width: 1439px) {
   .navbar {
     padding: 10px 80px;
   }
@@ -787,10 +782,19 @@
 
   .menu {
     gap: 25px;
+    display: flex;
   }
 
   .menu > li {
     font-size: 14px;
+  }
+
+  .pincode-btn {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: none;
   }
 }
 
