@@ -168,7 +168,52 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
-/* RESPONSIVE TABLET */
+/* ============================================= */
+/* RESPONSIVE DESKTOP MID RANGE (1025px–1270px) */
+/* ============================================= */
+@media (min-width: 1025px) and (max-width: 1270px) {
+  .care-tabs {
+    gap: 220px; /* reduce spacing so YOU / COWS / NATURE fits */
+  }
+
+  .care-tab {
+    font-size: 34px; /* slightly smaller so they stay inside */
+  }
+
+  .tab-underline {
+    width: 680px; /* bring underline under text */
+    bottom: -10px;
+  }
+
+  .care-content {
+    gap: 30px;
+  }
+
+  .care-images {
+    width: 450px;
+    height: 450px;
+  }
+
+  .care-img.top {
+    width: 220px;
+    height: 160px;
+    top: -10px;
+    left: -30px;
+  }
+
+  .care-img.bottom {
+    width: 350px;
+    height: 350px;
+    right: -20px;
+    bottom: 40px;
+  }
+}
+
+
+
+/* ================================= */
+/* RESPONSIVE TABLET (max 1024px)    */
+/* ================================= */
 @media (max-width: 1024px) {
   .care-tabs {
     gap: 80px;
@@ -203,13 +248,17 @@
   }
 }
 
-/* RESPONSIVE MOBILE (768px) */
+
+
+/* ================================= */
+/* RESPONSIVE MOBILE (max 768px)     */
+/* ================================= */
 @media (max-width: 768px) {
   .care-title {
     font-size: 44px;
   }
   .care-subtitle {
-    text-align: center; /* 🔹 for mobile, center it again for better look */
+    text-align: center;
   }
   .care-tab {
     font-size: 28px;
@@ -257,7 +306,11 @@
   }
 }
 
-/* RESPONSIVE MOBILE SMALL (480px) */
+
+
+/* ================================= */
+/* RESPONSIVE SMALL MOBILE (max 480px) */
+/* ================================= */
 @media (max-width: 480px) {
   .care-outer {
     padding: 20px 0;
@@ -266,7 +319,7 @@
     font-size: 18px;
     letter-spacing: 3px;
     margin-bottom: -1px;
-    text-align: center; /* ensure centered on smallest screens */
+    text-align: center;
   }
   .care-title {
     font-size: 30px;
@@ -309,6 +362,7 @@
     font-size: 16px;
     line-height: 1.5;
   }
+
   /* Images */
   .care-images {
     width: 100%;
@@ -337,3 +391,4 @@
     height: 200px;
   }
 }
+
