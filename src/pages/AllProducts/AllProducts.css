@@ -1,7 +1,6 @@
 /* ============================================================= */
 /* BANNER SECTION */
 /* ============================================================= */
-
 .ap-image-wrapper {
   width: 100%;
   display: flex;
@@ -25,46 +24,41 @@
 /* ============================================================= */
 /* PRODUCTS SECTION */
 /* ============================================================= */
-
 .products-section {
-  width: 100%;
   background: #f4f4f4;
-  padding: 40px 0 80px;
-  text-align: center;
+  padding: 60px 80px 80px;
   font-family: "Suranna", serif;
 }
 
 .products-title {
   font-size: 40px;
-  margin-bottom: 45px;
   color: #0C3B60;
-  font-weight: 400;
+  text-align: center;
+  margin-bottom: 40px;
+  font-weight: 300;
 }
 
 /* ============================================================= */
-/* GRID – PERFECT ALIGNMENT */
+/* GRID - MATCH PRIDE OF COWS */
 /* ============================================================= */
-
 .products-grid {
-  width: 90%;
-  margin: auto;
+  max-width: 1050px;     /* smaller container */
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 55px 35px;
+  grid-template-columns: repeat(4, 260px);  /* FIXED CARD WIDTH */
+  justify-content: space-between;
+  gap: 40px 0px;         /* vertical spacing only */
 }
 
 /* ============================================================= */
-/* PRODUCT CARD – EXACT MATCH */
+/* PRODUCT CARD - COMPACT */
 /* ============================================================= */
-
 .product-card {
+  width: 260px;          /* EXACT WIDTH */
   background: #f4f4f4;
-  padding: 25px 22px 28px;
-  height: 480px;              /* perfect equal size */
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  transition: 0.25s ease-out;
+  border-radius: 26px;
+  transition: 0.3s ease;
+  padding-bottom: 20px;
 }
 
 .product-card:hover {
@@ -72,137 +66,135 @@
 }
 
 /* ============================================================= */
-/* IMAGE BOX – EXACT SIZE */
+/* IMAGE BOX - EXACT MATCH */
 /* ============================================================= */
-
 .product-img-box {
-  width: 100%;                 /* FIXED from 60% */
-  height: 260px;               /* perfect height */
-  background: #edecea;
-  border-radius: 18px;
+  width: 210px;          /* FROM YOUR SCREENSHOT */
+  height: 240px;         /* FROM YOUR SCREENSHOT */
+  background: #e7e6e5d7;
+  margin: 0 auto;
+  margin-bottom: -10px;   /* reduced spacing */
+  border-radius: 15px;
+
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .product-img {
-  width: 70%;
-  height: auto;
-  object-fit: contain;
+  width: 220px;            /* perfect image size */
+  height:auto;
 }
 
 /* ============================================================= */
-/* TEXT CONTENT – EXACT SPACING */
+/* DETAILS AREA - COMPACT */
 /* ============================================================= */
+.product-details {
+  padding: 0 40px;        /* narrow */
+  text-align: left;
+}
 
-/* Name + size in same line */
-.name-row,
+/* NAME + SIZE */
 .row-line {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 14px;
+  margin-bottom:-38px;
 }
 
 .product-name {
-  font-size: 20px;
-  color: #1a1a1a;
-  font-weight: 400;
+  font-size: 18px;
+  font-weight: 300;
+  color: #0C3B60;
 }
 
 .product-size {
-  font-size: 17px;
-  color: #1a1a1a;
-  white-space: nowrap;
-}
-
-/* PRICE ROW */
-.price-row {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 6px;
-}
-
-.product-price-label {
-  font-size: 17px;
-  color: #1a1a1a;
-}
-
-.product-price {
-  font-size: 17px;
-  color: #1a1a1a;
-}
-
-/* OLD PRICE + DISCOUNT */
-.product-oldprice {
-  margin-top: 6px;
   font-size: 16px;
+  font-weight: 300;
+  color: #0C3B60;
+}
+
+/* ============================================================= */
+/* MRP */
+/* ============================================================= */
+
+.product-price,
+.main-mrp {
+  font-size: 17px;
+  font-weight: 300;
+  margin: 0 0 -25px;
+  color: #0C3B60;
+}
+
+.old-price-row {
+  margin: 0 0 4px;
 }
 
 .strike {
+  font-size: 16px;
   text-decoration: line-through;
-  color: #6b6b6b;
-  margin-right: 5px;
+  color: #888;
 }
 
 .discount {
+  font-size: 16px;
+  font-weight: bold;
   color: #d10000;
-  font-weight: 600;
 }
 
-/* TAX TEXT */
+/* Tax text */
 .tax-text {
-  font-size: 14px;
-  color: #555;
-  margin: 8px 0 18px 0;
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 14px; /* smaller */
 }
 
 /* ============================================================= */
-/* BUTTON */
+/* BUY BUTTON - SMALLER */
 /* ============================================================= */
-
 .buy-btn {
-  margin-top: auto;
-  background: #0f3a62;
-  color: white;
-  width: 160px;
-  padding: 12px 0;
-  border-radius: 30px;
-  border: none;
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px 0;
+  border-radius: 26px;
+  background: #0C3B60;
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 15px;
+  font-weight: 300;
+  color: #fff;
+  border: 2px solid #0c3050;
   cursor: pointer;
-  align-self: center;     /* centered button */
+  transition: all 0.35s ease;   /* Smooth animation */
 }
 
 .buy-btn:hover {
-  background: #0c3050;
+  background: #ffffff;          /* White background */
+  color: #0C3B60;           /* Blue text */
+  border-color: #0C3B60;     /* Blue outline */
 }
+
 
 /* ============================================================= */
 /* RESPONSIVE */
 /* ============================================================= */
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .products-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
+    grid-template-columns: repeat(3, 260px);
+    justify-content: center;
   }
+}
 
-  .product-img-box {
-    height: 240px;
+@media (max-width: 900px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 260px);
+    justify-content: center;
   }
 }
 
 @media (max-width: 600px) {
   .products-grid {
     grid-template-columns: 1fr;
-  }
-
-  .product-img-box {
-    height: 220px;
-  }
-
-  .products-title {
-    font-size: 28px;
+    justify-items: center;
   }
 }

@@ -37,8 +37,8 @@ const products = [
     mrp: "₹1890",
     size: "1L",
     image: ghee,
-    oldPrice: "₹2200",
-    discount: "14.09% off",
+    // oldPrice: "₹2200",
+    // discount: "14.09% off",
   },
   {
     id: 4,
@@ -69,7 +69,7 @@ const products = [
   },
   {
     id: 7,
-    name: "HighProtein LowFat Paneer",
+    name: "LowFat Paneer",
     mrp: "₹235",
     size: "200gm",
     image: highproteinpaneer,
@@ -78,7 +78,7 @@ const products = [
   },
   {
     id: 8,
-    name: "Avvatar Protein Wafer Bar",
+    name: "Wafer Bar",
     mrp: "₹80",
     size: "40gm",
     image: waferbar,
@@ -90,51 +90,54 @@ const products = [
 const AllProducts = () => {
   return (
     <>
-      {/* Banner Section */}
+      {/* Banner */}
       <div className="ap-image-wrapper">
-        <img src={bannerImg} alt="All Products" className="ap-image" />
+        <img src={bannerImg} alt="All Products Banner" className="ap-image" />
       </div>
 
-      {/* Products Section */}
+      {/* Product Section */}
       <section className="products-section">
         <h2 className="products-title">Pick Your Perfect Pack</h2>
 
         <div className="products-grid">
           {products.map((item) => (
             <div className="product-card" key={item.id}>
-              
+
               {/* Image Box */}
               <div className="product-img-box">
                 <img src={item.image} alt={item.name} className="product-img" />
               </div>
 
-              {/* Product Details */}
+              {/* Details */}
               <div className="product-details">
 
-                {/* ⭐ NAME + SIZE IN SAME ROW */}
+                {/* NAME + SIZE ROW */}
                 <div className="row-line">
                   <h3 className="product-name">{item.name}</h3>
                   <span className="product-size">{item.size}</span>
                 </div>
 
-                {/* ⭐ PRICE ROW */}
-                <div className="price-row">
-                  <span className="product-price-label">MRP:</span>
-                  <span className="product-price">{item.mrp}</span>
-                </div>
-
-                {/* ⭐ OLD PRICE + DISCOUNT */}
-                {item.oldPrice && (
-                  <p className="product-oldprice">
-                    <span className="strike">{item.oldPrice}</span>
-                    <span className="discount">{item.discount}</span>
-                  </p>
+                {/* PRICE — REGULAR */}
+                {!item.oldPrice && (
+                  <p className="product-price">MRP: {item.mrp}</p>
                 )}
 
-                {/* ⭐ TAX INFO */}
+                {/* PRICE — DISCOUNTED */}
+                {item.oldPrice && (
+                  <>
+                    <p className="main-mrp">MRP: {item.mrp}</p>
+
+                    <p className="old-price-row">
+                      <span className="strike">{item.oldPrice}</span>
+                      <span className="discount">{item.discount}</span>
+                    </p>
+                  </>
+                )}
+
+                {/* Tax Info */}
                 <p className="tax-text">(Price inclusive of all taxes)</p>
 
-                {/* ⭐ BUTTON */}
+                {/* Button */}
                 <button className="buy-btn">Buy now</button>
 
               </div>
