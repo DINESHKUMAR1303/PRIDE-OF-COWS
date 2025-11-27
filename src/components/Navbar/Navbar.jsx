@@ -3,6 +3,9 @@ import { FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 
+// === IMPORT GLOBAL CART CONTEXT ===
+import { useCart } from "../../context/CartContext";
+
 // === Icons & Images ===
 import logo from "../../images/icons/logo.png";
 import loginIcon from "../../images/icons/user.svg";
@@ -55,13 +58,15 @@ const CustomMenuIcon = ({ size = 28, color = "#193B61", topThickness = 1.5, midd
 };
 
 const Navbar = () => {
+  // === GET GLOBAL CART COUNT ===
+  const { cartCount } = useCart();
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const [location, setLocation] = useState("ENTER A PINCODE");
   const [pincode, setPincode] = useState("");
   const [place, setPlace] = useState("");
-  const [cartCount, setCartCount] = useState(0);
 
   const [hoveredProduct, setHoveredProduct] = useState("All");
   const [hoveredLearn, setHoveredLearn] = useState("About Us");
@@ -130,8 +135,6 @@ const Navbar = () => {
 
         {/* LEFT SIDE */}
         <div className="navbar-left">
-
-          {/* ✅ CLICKABLE LOGO -> HOME */}
           <Link to="/">
             <img src={logo} alt="Pride of Cows" className="logo" />
           </Link>
@@ -248,22 +251,27 @@ const Navbar = () => {
 
           {/* RIGHT SIDE */}
           <div className="navbar-right">
+
+            {/* LOGIN */}
             <div className="login" onClick={() => setLoginOpen(true)}>
               <img src={loginIcon} className="right-icon" />
               <span className="login-text">LOGIN</span>
             </div>
 
-            <div className="cart">
+            {/* CART LINK */}
+            <Link to="/cart" className="cart" style={{ textDecoration: "none", color: "inherit" }}>
               <div className="cart-wrapper">
                 <img src={cartIcon} className="right-icon" />
                 {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
               </div>
               <span className="cart-text">CART</span>
-            </div>
+            </Link>
 
+            {/* MENU BUTTON */}
             <button className="menu-toggle" onClick={() => setMenuOpen(true)}>
               <CustomMenuIcon size={28} color="#001F3F" />
             </button>
+
           </div>
         </div>
       </nav>
@@ -300,7 +308,7 @@ const Navbar = () => {
             </button>
           </div>
 
-          {/* SHOP */}
+          {/* SHOP ACCORDION */}
           <div className="accordion">
             <button className="accordion-header" onClick={() => setOpenDropdown(openDropdown === "shop" ? null : "shop")}>
               <span>Shop</span>
@@ -331,7 +339,7 @@ const Navbar = () => {
             </ul>
           </div>
 
-          {/* LEARN MORE */}
+          {/* LEARN */}
           <div className="side-section learn-more">
             <h4>Learn More</h4>
             <ul>

@@ -572,7 +572,7 @@
 
 .product-cta {
   background: #0a2e5d;
-  color: #fff;
+  color: #f4f4f4;
   border: none;
   padding: 14px 20px;
   border-radius: 30px;
@@ -583,9 +583,39 @@
 }
 
 .product-cta:hover {
-  background: #ffffff; /* White background on hover */
+  background: #f4f4f4; /* White background on hover */
   color: #0a2e5d; /* Blue text on hover */
 }
+
+.qty-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: #f4f4f4;
+  padding: 10px 15px;
+  border-radius: 30px;
+  color:  #0a2e5d;
+}
+
+.qty-btn {
+  background:#f4f4f4;
+  color:  #0a2e5d;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.qty-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: #0a2e5d;
+}
+
 
 /* ============================= */
 /* === CONTROLS === */

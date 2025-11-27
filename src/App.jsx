@@ -3,30 +3,35 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
 import AllProducts from "./pages/AllProducts/AllProducts";
+import Cart from "./pages/Cart/Cart";   // Cart Page Import
+
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import NotificationBar from "./components/NotificationBar/NotificationBar";
+
+// ⭐ IMPORTANT: CartProvider import
+import { CartProvider } from "./context/CartContext";
 
 import "./App.css";
 
 const App = () => {
   return (
     <BrowserRouter>
+      {/* ⭐ Wrap EVERYTHING with CartProvider */}
+      <CartProvider>
+        <NotificationBar />
+        <Navbar />
 
-      {/* 🔔 Notification bar shows on all pages */}
-      <NotificationBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/shop/all" element={<AllProducts />} />
 
-      {/* 🟦 Global Navbar */}
-      <Navbar />
+          {/* 🛒 Cart Route */}
+          <Route path="/cart" element={<Cart />} />
+        </Routes>
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/shop/all" element={<AllProducts />} />
-      </Routes>
-
-      {/* 🟩 Global Footer */}
-      <Footer />
-
+        <Footer />
+      </CartProvider>
     </BrowserRouter>
   );
 };

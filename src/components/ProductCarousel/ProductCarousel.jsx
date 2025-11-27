@@ -2,6 +2,9 @@ import React, { useState, useRef, useEffect, useMemo } from "react";
 import { useSwipeable } from "react-swipeable";
 import "./ProductCarousel.css";
 
+// === IMPORT GLOBAL CART CONTEXT ===
+import { useCart } from "../../context/CartContext";
+
 // === SINGLE ORIGIN IMAGES ===
 import logo from "./images/singleoriginlogo.png";
 import unmatched from "./images/unmatched.png";
@@ -27,7 +30,7 @@ const products = [
   { id: 6, img: prod6, title: "Protein Box Pack", price: "₹475", weight: "320g" },
 ];
 
-// === FEATURE DATA (Joined lines) ===
+// === FEATURE DATA ===
 const features = [
   { icon: unmatched, text: "Unmatched Premium Single Origin Milk", alt: "Premium milk" },
   { icon: sourced, text: "Sourced from picturesque Bhagyalaxmi Dairy Farm", alt: "Farm sourcing" },
@@ -36,6 +39,10 @@ const features = [
 ];
 
 const ProductCarousel = () => {
+
+  // ✅ GLOBAL CART CONTEXT
+  const { cartItems, increaseItem, decreaseItem } = useCart();
+
   // === RESPONSIVE CAROUSEL SETTINGS ===
   const getItemsToShow = () => {
     const w = window.innerWidth;
@@ -97,7 +104,7 @@ const ProductCarousel = () => {
           and creamy within 24 hours of milking.
         </p>
 
-        <div className="product-carousel-wrapper" {...handlers} role="region" aria-label="Product carousel">
+        <div className="product-carousel-wrapper" {...handlers}>
           <div
             className="product-carousel-inner"
             style={{
@@ -105,42 +112,67 @@ const ProductCarousel = () => {
               transition: transitionRef.current ? "transform 0.5s ease-in-out" : "none",
             }}
           >
-            {extendedProducts.map((prod) => (
-              <div key={`${prod.id}-${prod.title}`} className="product-carousel-item">
-                <div className="product-card-inner">
-                  <div className="product-image-wrap">
-                    <img src={prod.img} alt={prod.title} loading="lazy" />
+            {extendedProducts.map((prod, index) => {
+              const qty = cartItems[prod.id] || 0;
+
+              return (
+                <div key={`${prod.id}-${index}`} className="product-carousel-item">
+                  <div className="product-card-inner">
+                    <div className="product-image-wrap">
+                      <img src={prod.img} alt={prod.title} loading="lazy" />
+                    </div>
+
+                    <div className="product-meta">
+                      <span className="product-weight">{prod.weight}</span>
+                      <span className="product-price">
+                        {prod.price}{" "}
+                        {prod.oldPrice && <span className="old-price">{prod.oldPrice}</span>}
+                      </span>
+                    </div>
+
+                    <p className="product-title">{prod.title}</p>
+
+                    {/* ===== GLOBAL CART BUTTON / COUNTER ===== */}
+                    {qty === 0 ? (
+                      <button
+                        className="product-cta"
+                        onClick={() => increaseItem(prod.id)}
+                      >
+                        Add to Cart
+                      </button>
+                    ) : (
+                      <div className="qty-box">
+                        <button className="qty-btn" onClick={() => decreaseItem(prod.id)}>
+                          –
+                        </button>
+                        <span className="qty-value">{qty}</span>
+                        <button className="qty-btn" onClick={() => increaseItem(prod.id)}>
+                          +
+                        </button>
+                      </div>
+                    )}
+
                   </div>
-                  <div className="product-meta">
-                    <span className="product-weight">{prod.weight}</span>
-                    <span className="product-price">
-                      {prod.price} {prod.oldPrice && <span className="old-price">{prod.oldPrice}</span>}
-                    </span>
-                  </div>
-                  <p className="product-title">{prod.title}</p>
-                  <button className="product-cta" onClick={() => console.log(`Shop ${prod.title}`)}>
-                    Shop Now
-                  </button>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
         <div className="carousel-controls">
-          <button className="arrow-button" onClick={prevSlide} aria-label="Previous slide">
-            <svg width="27" height="13" viewBox="0 0 27 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 1L1 6.5L6 12" stroke="#193B61" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
-              <line x1="1" y1="6.5" x2="26" y2="6.5" stroke="#193B61" strokeWidth="1" strokeLinecap="round" />
+          <button className="arrow-button" onClick={prevSlide}>
+            <svg width="27" height="13" viewBox="0 0 27 13" fill="none">
+              <path d="M6 1L1 6.5L6 12" stroke="#193B61" />
+              <line x1="1" y1="6.5" x2="26" y2="6.5" stroke="#193B61" />
             </svg>
           </button>
 
           <div className="line"></div>
 
-          <button className="arrow-button" onClick={nextSlide} aria-label="Next slide">
-            <svg width="27" height="13" viewBox="0 0 27 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M21 1L26 6.5L21 12" stroke="#193B61" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
-              <line x1="1" y1="6.5" x2="26" y2="6.5" stroke="#193B61" strokeWidth="1" strokeLinecap="round" />
+          <button className="arrow-button" onClick={nextSlide}>
+            <svg width="27" height="13" viewBox="0 0 27 13" fill="none">
+              <path d="M21 1L26 6.5L21 12" stroke="#193B61" />
+              <line x1="1" y1="6.5" x2="26" y2="6.5" stroke="#193B61" />
             </svg>
           </button>
         </div>
@@ -149,17 +181,11 @@ const ProductCarousel = () => {
       {/* ================= SINGLE ORIGIN SECTION ================= */}
       <section className="single-origin-section" aria-labelledby="origin-heading">
         <div className="logo-wrapper">
-          <img
-            src={logo}
-            alt="Single Origin Farm to Home logo - Established 2011"
-            className="origin-logo"
-          />
+          <img src={logo} alt="Single Origin Farm to Home logo" className="origin-logo" />
         </div>
 
         <h2 className="origin-title">Be A Part Of Our</h2>
-        <h1 id="origin-heading" className="origin-heading">
-          Single Origin Milk Story
-        </h1>
+        <h1 id="origin-heading" className="origin-heading">Single Origin Milk Story</h1>
 
         <div className="origin-features">
           {features.map((f, i) => (
@@ -170,9 +196,7 @@ const ProductCarousel = () => {
           ))}
         </div>
 
-        <button className="know-more-btn" type="button">
-          KNOW MORE
-        </button>
+        <button className="know-more-btn">KNOW MORE</button>
       </section>
     </>
   );
