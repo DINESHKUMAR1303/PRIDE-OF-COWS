@@ -613,10 +613,15 @@
 /* RESPONSIVE CHECKOUT */
 /* =========================== */
 
+/* =========================== */
+/* BETTER RESPONSIVE CHECKOUT */
+/* =========================== */
+
 @media (max-width: 900px) {
+
   .checkout-wrapper {
     flex-direction: column;
-    padding: 20px;
+    padding: 15px;
   }
 
   .checkout-left,
@@ -624,27 +629,42 @@
     width: 100%;
   }
 
+  /* PRODUCT BOX FIXED FOR MOBILE */
   .checkout-product-box {
     flex-direction: column;
+    align-items: center;
     text-align: center;
+    padding: 20px;
   }
 
   .checkout-product-img {
-    width: 160px;
-    margin: 0 auto;
+    width: 150px;
+    margin-bottom: 15px;
   }
 
-  .qty-box-right {
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 10px;
+  .checkout-product-info {
+    width: 100%;
+  }
+
+  .p-title {
+    font-size: 18px;
   }
 
   .delivery-box {
     justify-content: center;
+  
   }
 
-  .date-modal {
-    width: 95%;
+  /* Quantity controls under info */
+  .qty-box-right {
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 15px;
+    width: 100%;
+    gap: 15px;
+  }
+
+  .change-date-btn {
+    margin-left: 10px;
   }
 }
