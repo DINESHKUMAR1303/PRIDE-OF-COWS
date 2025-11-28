@@ -98,7 +98,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 
 .address-section h2 {
@@ -121,8 +121,48 @@
   background: #e2ecf9;
 }
 
+/* ADDRESS CARD */
+
+.address-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  background: #fffdf5;
+}
+
+.address-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.address-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #ffe3ba;
+  color: #8c5b00;
+  font-weight: 600;
+}
+
+.address-name {
+  margin: 0;
+  font-weight: 600;
+  color: #193B61;
+}
+
+.address-line {
+  margin: 0;
+  font-size: 13px;
+  color: #555;
+}
+
 .section-title {
-  margin-bottom: 15px;
+  margin: 20px 0 15px 0;
   font-size: 18px;
   color: #193B61;
 }
@@ -203,10 +243,38 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
-/* Reusing qty-btn + qty-value */
+.qty-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* we reuse .qty-btn and .qty-value style from here as well */
+
+.qty-btn {
+  background: #193B61;
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.qty-btn:hover {
+  background-color: #10273f;
+}
+
+.qty-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: #193B61;
+}
 
 .change-date-btn {
   background: none;
@@ -215,7 +283,7 @@
   font-size: 12px;
   cursor: pointer;
   text-decoration: underline;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 .change-date-btn:hover {
@@ -262,6 +330,12 @@
 .order-summary h3 {
   margin-bottom: 15px;
   color: #193B61;
+}
+
+.order-items-count {
+  font-size: 14px;
+  color: #777;
+  font-weight: 400;
 }
 
 .order-row {
@@ -315,6 +389,227 @@
 }
 
 /* =========================== */
+/* ADDRESS MODAL */
+/* =========================== */
+
+.modal-overlay-cart {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2500;
+}
+
+.address-modal {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px 22px;
+  width: 380px;
+  max-width: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #193B61;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.address-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.address-form input,
+.address-form select {
+  border-radius: 6px;
+  border: 1px solid #d3d3d3;
+  padding: 8px 10px;
+  font-size: 14px;
+}
+
+.save-address-btn {
+  margin-top: 8px;
+  border: none;
+  background: #193B61;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.save-address-btn:hover {
+  background: #10273f;
+}
+
+/* =========================== */
+/* DATE PICKER MODAL */
+/* =========================== */
+
+.date-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2600;
+}
+
+.date-modal {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 18px 22px 16px;
+  width: 540px;
+  max-width: 95%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Header */
+
+.date-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.month-year {
+  text-align: center;
+}
+
+.month-name {
+  display: block;
+  font-size: 20px;
+  font-weight: 600;
+  color: #193B61;
+}
+
+.year-name {
+  display: block;
+  font-size: 14px;
+  color: #777;
+}
+
+.nav-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #d4d4d4;
+  background: #ffffff;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Weekdays */
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+/* Grid */
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.day-cell {
+  border-radius: 10px;
+  border: 1px solid #e3e3e3;
+  background: #ffffff;
+  height: 54px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: 0.2s ease;
+}
+
+.day-cell.empty {
+  border: none;
+  background: transparent;
+  cursor: default;
+}
+
+.day-cell:hover:not(.disabled):not(.selected) {
+  background: #f2f6ff;
+}
+
+.day-cell.disabled {
+  opacity: 0.4;
+  cursor: default;
+  background: #fafafa;
+}
+
+.day-cell.selected {
+  background: #193B61;
+  color: #ffffff;
+  border-color: #193B61;
+}
+
+.day-cell.today:not(.selected) {
+  border-color: #193B61;
+}
+
+.day-number {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.day-tag {
+  font-size: 10px;
+  margin-top: 2px;
+}
+
+/* Footer */
+
+.date-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.close-date-btn {
+  border: none;
+  background: #e5e5e5;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* =========================== */
 /* RESPONSIVE CHECKOUT */
 /* =========================== */
 
@@ -347,5 +642,9 @@
 
   .delivery-box {
     justify-content: center;
+  }
+
+  .date-modal {
+    width: 95%;
   }
 }
