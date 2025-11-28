@@ -1,0 +1,80 @@
+.terms-wrapper {
+  width: 100%;
+  padding: 0px 0;
+  background: #f5f5f5;
+  font-family: "Suranna", serif;
+  color: #2c2c2c;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  max-width: 1050px;
+  margin:  auto 30px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: #6a6a6a;
+}
+
+.breadcrumb a {
+  text-decoration: none;
+  color: #6a6a6a;
+}
+
+.breadcrumb span {
+  color: #0c3b60;
+  font-weight: 300;
+}
+
+/* Container */
+.terms-container {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.terms-title {
+  font-size: 46px;
+  margin-bottom: 20px;
+  font-weight: 300;
+  color: #0c3b60;
+}
+
+.terms-desc {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 35px;
+}
+
+.section-heading {
+  margin-top: 35px;
+  margin-bottom: 15px;
+  font-size: 32px;
+  font-weight: 500;
+  color: #0c3b60;
+}
+
+/* Arrow lines */
+.arrow-line {
+  font-size: 18px;
+  line-height: 1.7;
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 20px;
+}
+
+.arrow-line::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #0c3b60;
+  font-size: 20px;
+}
+
+/* Bullet list */
+.bullet-list {
+  padding-left: 35px;
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+}

@@ -168,6 +168,18 @@
   color: #616161;
 }
 
+.footer-bottom a,
+.footer-bottom-link {
+  color: #0C3B60;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.footer-bottom-link:hover {
+  text-decoration: underline;
+}
+
+
 
 /* ======================= RESPONSIVE ======================= */
 

@@ -1,5 +1,6 @@
 import React from "react";
 import "./Footer.css";
+import { Link } from "react-router-dom";   // ⭐ Added for routing
 
 /* ========== ICON + LOGO IMPORTS ========== */
 import singleOrigin from "../Footer/images/singleoriginlogo.png";
@@ -107,9 +108,21 @@ const Footer = () => {
 
       {/* ======================= FOOTER BOTTOM ======================= */}
       <div className="footer-bottom">
-        <p>Privacy Policy</p>
-        <p>Terms & Conditions</p>
-        <p>Made with Love by pride of cows</p>
+
+        {/* ⭐ Routing Links Added */}
+        <p>
+          <Link to="/privacy-policy" className="footer-bottom-link">
+            Privacy Policy
+          </Link>
+        </p>
+
+        <p>
+          <Link to="/terms-and-conditions" className="footer-bottom-link">
+            Terms & Conditions
+          </Link>
+        </p>
+
+        <p>Made with Love by Pride of Cows</p>
       </div>
     </>
   );
