@@ -1,4 +1,6 @@
 import React from "react";
+import { useCart } from "../../context/CartContext"; // ⭐ GLOBAL CART CONTEXT
+
 import bannerImg from "./images/allwebbanner.png";
 
 import milk from "./images/milk.png";
@@ -19,8 +21,6 @@ const products = [
     mrp: "₹120",
     size: "1L",
     image: milk,
-    oldPrice: null,
-    discount: null,
   },
   {
     id: 2,
@@ -28,8 +28,6 @@ const products = [
     mrp: "₹130",
     size: "1L",
     image: fatfree,
-    oldPrice: null,
-    discount: null,
   },
   {
     id: 3,
@@ -37,8 +35,6 @@ const products = [
     mrp: "₹1890",
     size: "1L",
     image: ghee,
-    // oldPrice: "₹2200",
-    // discount: "14.09% off",
   },
   {
     id: 4,
@@ -46,8 +42,6 @@ const products = [
     mrp: "₹80",
     size: "500g",
     image: curd,
-    oldPrice: null,
-    discount: null,
   },
   {
     id: 5,
@@ -55,8 +49,6 @@ const products = [
     mrp: "₹160",
     size: "200g",
     image: paneer,
-    oldPrice: null,
-    discount: null,
   },
   {
     id: 6,
@@ -64,8 +56,6 @@ const products = [
     mrp: "₹350",
     size: "500g",
     image: milkpowder,
-    oldPrice: null,
-    discount: null,
   },
   {
     id: 7,
@@ -73,8 +63,6 @@ const products = [
     mrp: "₹235",
     size: "200gm",
     image: highproteinpaneer,
-    oldPrice: null,
-    discount: null,
   },
   {
     id: 8,
@@ -82,12 +70,12 @@ const products = [
     mrp: "₹80",
     size: "40gm",
     image: waferbar,
-    oldPrice: null,
-    discount: null,
   },
 ];
 
 const AllProducts = () => {
+  const { cartItems, increaseItem, decreaseItem } = useCart(); // ⭐ GLOBAL CART
+
   return (
     <>
       {/* Banner */}
@@ -100,49 +88,49 @@ const AllProducts = () => {
         <h2 className="products-title">Pick Your Perfect Pack</h2>
 
         <div className="products-grid">
-          {products.map((item) => (
-            <div className="product-card" key={item.id}>
+          {products.map((item) => {
+            const qty = cartItems[item.id] || 0;
 
-              {/* Image Box */}
-              <div className="product-img-box">
-                <img src={item.image} alt={item.name} className="product-img" />
-              </div>
-
-              {/* Details */}
-              <div className="product-details">
-
-                {/* NAME + SIZE ROW */}
-                <div className="row-line">
-                  <h3 className="product-name">{item.name}</h3>
-                  <span className="product-size">{item.size}</span>
+            return (
+              <div className="product-card" key={item.id}>
+                
+                {/* Image Box */}
+                <div className="product-img-box">
+                  <img src={item.image} alt={item.name} className="product-img" />
                 </div>
 
-                {/* PRICE — REGULAR */}
-                {!item.oldPrice && (
+                {/* Details */}
+                <div className="product-details">
+
+                  {/* NAME + SIZE ROW */}
+                  <div className="row-line">
+                    <h3 className="product-name">{item.name}</h3>
+                    <span className="product-size">{item.size}</span>
+                  </div>
+
+                  {/* PRICE */}
                   <p className="product-price">MRP: {item.mrp}</p>
-                )}
 
-                {/* PRICE — DISCOUNTED */}
-                {item.oldPrice && (
-                  <>
-                    <p className="main-mrp">MRP: {item.mrp}</p>
+                  {/* Tax Info */}
+                  <p className="tax-text">(Price inclusive of all taxes)</p>
 
-                    <p className="old-price-row">
-                      <span className="strike">{item.oldPrice}</span>
-                      <span className="discount">{item.discount}</span>
-                    </p>
-                  </>
-                )}
+                  {/* ⭐ GLOBAL CART BUTTON / COUNTER ⭐ */}
+                  {qty === 0 ? (
+                    <button className="buy-btn" onClick={() => increaseItem(item.id)}>
+                      Add to Cart
+                    </button>
+                  ) : (
+                    <div className="counter-box">
+                      <button className="minus" onClick={() => decreaseItem(item.id)}>-</button>
+                      <span className="count">{qty}</span>
+                      <button className="plus" onClick={() => increaseItem(item.id)}>+</button>
+                    </div>
+                  )}
 
-                {/* Tax Info */}
-                <p className="tax-text">(Price inclusive of all taxes)</p>
-
-                {/* Button */}
-                <button className="buy-btn">Buy now</button>
-
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
     </>

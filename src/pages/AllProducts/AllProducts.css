@@ -7,20 +7,20 @@
   display: flex;
   justify-content: center;
   overflow: hidden;
-  margin-top: -50px; /* reduced so banner doesn't hide */
+  margin-top: -50px;
 }
 
 .ap-image {
   width: 100%;
-  height: auto;        /* responsive height */
-  object-fit: contain; /* no cropping */
+  height: auto;
+  object-fit: contain;
   max-height: 680px;
 }
 
 /* Tablet */
 @media (max-width: 1024px) {
   .ap-image-wrapper {
-    margin-top: -20px; /* show full image */
+    margin-top: -20px;
   }
   .ap-image {
     max-height: 450px;
@@ -30,20 +30,18 @@
 /* Mobile */
 @media (max-width: 600px) {
   .ap-image-wrapper {
-    margin-top: 0px; /* remove negative margin for mobile */
+    margin-top: 0px;
   }
   .ap-image {
     max-height: 300px;
   }
 }
 
-/* Very Small Mobiles */
 @media (max-width: 380px) {
   .ap-image {
     max-height: 260px;
   }
 }
-
 
 /* ============================================================= */
 /* PRODUCTS SECTION */
@@ -51,7 +49,7 @@
 
 .products-section {
   background: #f4f4f4;
-  padding: 0px 0px 0px;
+  padding: 20px 0 60px;
   font-family: "Suranna", serif;
 }
 
@@ -64,7 +62,7 @@
 }
 
 /* ============================================================= */
-/* GRID - MATCH PRIDE OF COWS */
+/* GRID */
 /* ============================================================= */
 
 .products-grid {
@@ -202,6 +200,45 @@
 }
 
 /* ============================================================= */
+/* COUNTER BOX (PLUS-MINUS STYLE) */
+/* ============================================================= */
+
+.counter-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  background: #ffffff;
+  padding: 10px 16px;
+  border-radius: 30px;
+  border: 1px solid #d5d5d5;
+
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.counter-box button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  background: #0C3B60;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.counter-box .count {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0C3B60;
+}
+
+/* ============================================================= */
 /* RESPONSIVE */
 /* ============================================================= */
 
@@ -223,5 +260,17 @@
   .products-grid {
     grid-template-columns: 1fr;
     justify-items: center;
+  }
+
+  .product-card {
+    width: 90%;
+  }
+
+  .product-img-box {
+    width: 80%;
+  }
+
+  .product-details {
+    padding: 0 20px;
   }
 }
