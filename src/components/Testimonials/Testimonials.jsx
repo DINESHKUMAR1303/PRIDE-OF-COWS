@@ -3,7 +3,7 @@ import { useSwipeable } from "react-swipeable";
 import "./Testimonials.css";
 
 // === AVATARS ===
-import avatar1 from "./images/kareena.jpg";
+import avatar1 from "./images/Kareena.jpg";   
 import avatar2 from "./images/sachinanand.jpg";
 import avatar3 from "./images/aishwarya.jpg";
 import avatar4 from "./images/malvikaraaj.jpg";
@@ -16,6 +16,7 @@ import insta3 from "./images/image3.jpg";
 import insta4 from "./images/image4.jpg";
 import insta5 from "./images/image5.jpg";
 import insta6 from "./images/image6.png";
+
 // === TESTIMONIAL DATA ===
 const testimonials = [
   {
