@@ -3,20 +3,19 @@ import { useSwipeable } from "react-swipeable";
 import "./Testimonials.css";
 
 // === AVATARS ===
-import avatar1 from "../Testimonials/images/kareena.jpg";
-import avatar2 from "../Testimonials/images/sachinanand.jpg";
-import avatar3 from "../Testimonials/images/aishwarya.jpg";
-import avatar4 from "../Testimonials/images/malvikaraaj.jpg";
-import avatar5 from "../Testimonials/images/lata.jpg";
+import avatar1 from "./images/kareena.jpg";
+import avatar2 from "./images/sachinanand.jpg";
+import avatar3 from "./images/aishwarya.jpg";
+import avatar4 from "./images/malvikaraaj.jpg";
+import avatar5 from "./images/lata.jpg";
 
 // === INSTAGRAM IMAGES ===
-import insta1 from "../Testimonials/images/image1.png";
-import insta2 from "../Testimonials/images/image2.jpg";
-import insta3 from "../Testimonials/images/image3.jpg";
-import insta4 from "../Testimonials/images/image4.jpg";
-import insta5 from "../Testimonials/images/image5.jpg";
-import insta6 from "../Testimonials/images/image6.png"; // ★ added 6th image
-
+import insta1 from "./images/image1.png";
+import insta2 from "./images/image2.jpg";
+import insta3 from "./images/image3.jpg";
+import insta4 from "./images/image4.jpg";
+import insta5 from "./images/image5.jpg";
+import insta6 from "./images/image6.png";
 // === TESTIMONIAL DATA ===
 const testimonials = [
   {
