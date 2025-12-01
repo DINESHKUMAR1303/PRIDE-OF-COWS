@@ -14,7 +14,9 @@
   align-items: center;
   z-index: 5000;
   animation: fadeIn 0.2s ease-out;
-  padding: 20px; /* allows space on small screens */
+
+  /* Equal left/right spacing on all screens */
+  padding: 20px;
   box-sizing: border-box;
 }
 
@@ -23,14 +25,18 @@
 =========================== */
 .datepicker-container {
   width: 650px;
+  max-width: 100%;
   background: #ffffff;
   border-radius: 18px;
   padding: 30px 35px;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
   animation: scaleFade 0.25s ease-out;
   border: 1px solid #e7e7e7;
+
+  /* prevent clipping */
   max-height: 90vh;
-  overflow-y: auto; /* prevents layout breaking on small screens */
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 /* ===========================
@@ -183,21 +189,15 @@
 }
 
 @keyframes scaleFade {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 /* ===========================
    RESPONSIVE FIXES
 =========================== */
 
-/* ---------- Tablets (<= 1024px) ---------- */
+/* Tablets */
 @media (max-width: 1024px) {
   .datepicker-container {
     width: 520px;
@@ -208,17 +208,15 @@
   .dp-arrow { width: 40px; height: 40px; font-size: 20px; }
 }
 
-/* ---------- Large Phones (<= 768px) ---------- */
+/* Large Phones */
 @media (max-width: 768px) {
   .datepicker-container {
     width: 90%;
-    padding: 24px 26px;
+    max-width: 90%;
+    padding: 24px 22px;
   }
 
-  .dp-grid {
-    gap: 10px;
-  }
-
+  .dp-grid { gap: 10px; }
   .dp-day {
     padding: 14px 0;
     font-size: 15px;
@@ -227,21 +225,17 @@
   .dp-month { font-size: 22px; }
 }
 
-/* ---------- Mobile (<= 480px) ---------- */
+/* Mobile */
 @media (max-width: 480px) {
   .datepicker-container {
     width: 100%;
+    max-width: 92%;   /* Equal space left-right */
     padding: 20px 18px;
     border-radius: 14px;
   }
 
-  .dp-header {
-    gap: 10px;
-  }
-
-  .dp-month {
-    font-size: 20px;
-  }
+  .dp-header { gap: 10px; }
+  .dp-month { font-size: 20px; }
 
   .dp-arrow {
     width: 34px;
@@ -249,18 +243,14 @@
     font-size: 18px;
   }
 
-  .dp-grid {
-    gap: 8px;
-  }
+  .dp-grid { gap: 8px; }
 
   .dp-day {
     padding: 12px 0;
     font-size: 14px;
   }
 
-  .dp-weekdays {
-    font-size: 11px;
-  }
+  .dp-weekdays { font-size: 11px; }
 
   .dp-close {
     padding: 12px;
@@ -268,16 +258,19 @@
   }
 }
 
-/* ---------- Extra Small Phones (<= 360px) ---------- */
+/* Extra Small Phones */
 @media (max-width: 360px) {
+  .datepicker-container {
+    max-width: 90%;
+    padding: 18px 14px;
+  }
+
   .dp-day {
     padding: 10px 0;
     font-size: 13px;
   }
 
-  .dp-grid {
-    gap: 6px;
-  }
+  .dp-grid { gap: 6px; }
 
   .dp-arrow {
     width: 30px;
