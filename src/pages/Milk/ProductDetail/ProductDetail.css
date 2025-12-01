@@ -1,287 +1,271 @@
 /* =======================================
-   MAIN WRAPPER
+   MAIN WRAPPER – FIXED (no more hiding on mobile)
 ======================================= */
 .pd-wrapper {
   width: 100%;
-  max-width: 1300px;
-  padding: 0px 20px;     /* fixed negative padding */
-  background-color: #f4f4f4;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
+  background: #f4f4f4;
+  padding: 20px 16px;
+  box-sizing: border-box;
+  overflow-x: hidden; /* kept only on x-axis */
 }
 
-.pd-container {
+/* Critical fix: allow vertical scroll if needed */
+html, body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.pd-main-box {
+  width: 95%;
+  max-width: 1400px;
   display: flex;
-  gap: 50px;
-  width: 100%;
-  flex-wrap: wrap;
+  gap: 100px;
+  background: #f4f4f4;
+  border-radius: 20px;
+  padding-bottom: 40px;
+  box-sizing: border-box;
 }
 
-
-/* =======================================
-   LEFT SIDE
-======================================= */
+/* ===================================== LEFT SIDE – UNCHANGED ==================================== */
 .pd-left {
   display: flex;
-  gap: 20px;
+  gap: 25px;
+  flex-shrink: 0;
 }
 
-/******** THUMBNAILS ********/
 .pd-thumbnails {
   display: flex;
   flex-direction: column;
-  padding-top: 40px;
-  gap: 18px;
+  gap: 20px;
+  padding-top: 20px;
 }
 
 .pd-thumbnail {
-  width: 110px;
-  height: 110px;
+  width: 90px;
+  height: 98px;
   background: #f4f4f4;
   border-radius: 14px;
   border: 2px solid #e6e6e6;
   padding: 8px;
   object-fit: contain;
   cursor: pointer;
-  transition: 0.2s ease-in-out;
+  transition: 0.25s;
 }
 
-.pd-thumbnail:hover {
-  border-color: #f4f4f4;
-}
+.pd-thumbnail:hover { border-color: #bdbdbd; }
+.active-thumb { border-color: #0b2f4e !important; }
 
-.active-thumb {
-  border-color: #0b2f4e !important;
-}
-
-
-/******** MAIN IMAGE BOX (NEW) ********/
 .pd-main-image-box {
-  width: 580px;
-  max-width: 100%;
-  max-height: 600px;
+  width: 560px;
+  height: 580px;
   background: #f4f4f4;
-  border-radius: 20px;
-  border-radius: 0cap ;
-  border: 1px solid #f4f4f4;
- 
+  border-radius: 10px;
+  border: 1px solid #ddd;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .pd-main-img {
-  width: 553px;
-  height: 550px;
+  width: 530px;
+  height: auto;
   object-fit: contain;
 }
 
-
-/* =======================================
-   RIGHT PANEL
-======================================= */
+/* ===================================== RIGHT SIDE – UNCHANGED ==================================== */
 .pd-right {
   flex: 1;
-  min-width: 300px;
+  min-width: 0;
 }
 
-.pd-title {
-  font-size: 40px;
-  font-family: suranna,serif;
-  font-weight: 300;
-  margin-bottom: 10px;
-}
+.pd-title { font-size: 42px; font-family: suranna, serif; font-weight: 400; margin: -10px 0 -32px; }
+.pd-subtitle { font-size: 22px; font-family: suranna, serif; font-weight: 600; margin-top: 10px; }
+.pd-desc { margin-top: -20px; line-height: 1.7; width: 90%; color: #333; }
+.pd-price { margin: -15px 0 -20px; font-size: 24px; font-family: suranna, serif; }
+.pd-price-note { color: #666; margin-bottom: 10px; }
+.pd-crown { display: flex; align-items: center; gap: 10px; color: #c7a045; font-weight: 600; margin-top: 10px; }
+.pd-crown-icon { width: 22px; }
 
-.pd-subtitle {
-  font-size: 20px;
-  margin-bottom: -10px;
-  margin-top: -20px;
-  font-family: suranna,serif;
-  font-weight: 600;
-}
-
-.pd-desc {
-  margin-top: 12px;
-  width: 90%;
-  line-height: 1.7;
-  color: #444;
-}
-
-
-
-/******** PRICE ********/
-.pd-price {
-  margin-top: -10px;
-  margin-bottom: -20px;
-  font-size: 22px;
-  font-family: suranna,serif;
-}
-
-.pd-price-note {
-  color: #666;
-}
-
-
-/******** CROWN REWARD ********/
-.pd-crown {
-  margin-top: 15px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #c6a045;
-  font-weight: 600;
-}
-
-.pd-crown-icon {
-  width: 22px;
-}
-
-
-/* =======================================
-   QUANTITY
-======================================= */
-.pd-qty-box {
-  width: 260px;
-  background: #f3f3f3;
-  padding: 12px 20px;
+/* ===================================== QUANTITY BOX ==================================== */
+.pd-qty-container {
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  min-height: 56px;
+  background: #f5f1f8;
+  border: 1px solid #e3e0e8;
   border-radius: 14px;
+  padding: 18px 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 18px;
+  margin: 25px 0 0;
+  box-sizing: border-box;
 }
 
-.pd-qty-box button {
-  font-size: 24px;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
+.qty-left-text { font-size: 20px; color: #0C3B60; font-weight: 600; }
+.qty-controls { display: flex; align-items: center; gap: 30px; }
+.qty-controls button { font-size: 26px; background: none; border: none; cursor: pointer; font-weight: bold; color: #0C3B60; }
+.qty-controls span { font-size: 22px; color: #0C3B60; }
 
-
-/* =======================================
-   BUTTONS
-======================================= */
+/* ===================================== BUTTONS ==================================== */
 .pd-buttons {
-  margin-top: 25px;
+  margin-top: 30px;
   display: flex;
   gap: 20px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
-.pd-buy-now {
-  background: #0b2f4e;
-  color: white;
-  border: none;
-  padding: 15px 45px;
-  border-radius: 14px;
-  font-size: 18px;
-  cursor: pointer;
-}
-
+.pd-buy-now,
 .pd-subscribe {
-  background: #c7a045;
-  color: white;
-  border: none;
-  padding: 15px 45px;
+  min-width: 240px;
+  width: 256px;
+  height: 47px;
+  padding: 16px 0;
   border-radius: 14px;
   font-size: 18px;
+  font-weight: 500;
+  border: none;
   cursor: pointer;
+  text-align: center;
 }
 
+.pd-buy-now { background: #0C3B60; color: white; }
+.pd-subscribe { background: #c7a045; color: white; }
 
-/* =======================================
-   DELIVERY BOX
-======================================= */
+/* ===================================== DELIVERY BOX ==================================== */
 .pd-delivery-box {
-  margin-top: 30px;
+  margin-top: 35px;
   border: 1px solid #ddd;
-  padding: 20px 25px;
+  padding: 18px 20px;
   border-radius: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 100%;     /* prevents overflow */
+  gap: 25px;
+  flex-wrap: wrap;
 }
 
-.pd-delivery-left {
-  display: flex;
-  flex-direction: column;
-}
-
-.pd-icon {
-  width: 26px;
-  margin-right: 8px;
-}
-
-.pd-delivery-title {
-  font-size: 18px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.pd-delivery-date {
-  margin-top: 6px;
-  color: #444;
-}
-
+.pd-delivery-title { display: flex; align-items: center; gap: 12px; font-weight: 600; color: #0C3B60; }
+.pd-icon { width: 28px; }
+.pd-delivery-date { margin-top: 6px; font-size: 16px; color: #444; }
 .pd-change-date-btn {
-  padding: 12px 20px;
-  border-radius: 12px;
+  padding: 10px 20px;
   border: 1px solid #aaa;
+  border-radius: 12px;
   background: white;
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-weight: 500;
+  gap: 10px;
   cursor: pointer;
+  font-size: 16px;
+  white-space: nowrap;
 }
+.pd-change-date-btn img { width: 20px; }
 
-.pd-change-date-btn img {
-  width: 20px;
-}
-
-
-
-/* =======================================
-   RESPONSIVE
-======================================= */
-@media (max-width: 1100px) {
-  .pd-container {
-    flex-direction: column;
-    align-items: center;
+/* =====================================
+   RESPONSIVE – CENTERED BELOW 1440px (NO HIDING)
+======================================== */
+@media (max-width: 1439px) {
+  .pd-qty-container,
+  .pd-buttons,
+  .pd-delivery-box {
+    width: 100%;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  .pd-main-image-box {
-    width: 90%;
+  .pd-buttons,
+  .pd-delivery-box {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 1024px) {
+  .pd-main-box {
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+    padding: 40px 20px;
+  }
+
+  .pd-left { justify-content: center; }
+  .pd-right { text-align: center; align-items: center; }
+  .pd-desc { width: 100%; text-align: center; }
+
+  .pd-buttons {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .pd-buy-now,
+  .pd-subscribe {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .pd-delivery-box {
+    width: 80%;
+    flex-direction: column;
+    text-align: center;
+    gap: 18px;
     padding: 20px;
   }
 
-  .pd-main-img {
-    max-width: 90%;
+  .pd-change-date-btn {
+    width: 100%;
+    max-width: 380px;
+    justify-content: center;
+    margin: 0 auto;
   }
 }
 
 @media (max-width: 768px) {
   .pd-wrapper {
-    padding: 20px;
+    padding: 16px 12px;
   }
 
-  .pd-thumbnail {
-    width: 80px;
-    height: 80px;
-  }
-
-  .pd-buttons {
+  .pd-left {
     flex-direction: column;
+    align-items: center;
+    gap: 20px;
   }
 
-  .pd-qty-box {
-    width: 200px;
+  .pd-thumbnails {
+    order: 2;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    padding-top: 0;
   }
 
   .pd-main-image-box {
-    min-height: 350px;
+    width: 100%;
+    max-width: 440px;
+    height: 480px;
   }
+
+  .pd-main-img { width: 94%; }
+
+  .pd-title { font-size: 36px; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .pd-main-image-box { max-width: 340px; height: 380px; }
+  .pd-main-img { width: 92%; }
+  .pd-thumbnail { width: 75px; height: 82px; }
+  .pd-title { font-size: 30px; }
+}
+
+@media (max-width: 360px) {
+  .pd-main-image-box { max-width: 300px; height: 340px; }
+  .pd-thumbnail { width: 68px; height: 74px; }
+  .pd-title { font-size: 28px; }
 }

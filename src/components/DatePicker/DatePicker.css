@@ -1,131 +1,287 @@
-/* Overlay */
+/* ===========================
+   OVERLAY (Glass Effect)
+=========================== */
 .datepicker-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.25);
+  width: 100%;
+  background: rgba(15, 23, 42, 0.35);
+  backdrop-filter: blur(6px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 5000;
+  animation: fadeIn 0.2s ease-out;
+  padding: 20px; /* allows space on small screens */
+  box-sizing: border-box;
 }
 
-/* Main Container */
+/* ===========================
+   MAIN CONTAINER
+=========================== */
 .datepicker-container {
   width: 650px;
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-  animation: fadeIn 0.2s ease-in-out;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 30px 35px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  animation: scaleFade 0.25s ease-out;
+  border: 1px solid #e7e7e7;
+  max-height: 90vh;
+  overflow-y: auto; /* prevents layout breaking on small screens */
 }
 
-/* Header */
+/* ===========================
+   HEADER
+=========================== */
 .dp-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 .dp-month {
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 700;
-  color: #1a1a1a;
+  color: #0b2f4e;
+  letter-spacing: 0.5px;
 }
 
 .dp-month span {
-  font-weight: 500;
+  font-weight: 600;
+  margin-left: 6px;
   color: #444;
 }
 
 .dp-arrow {
-  font-size: 20px;
   border: none;
-  background: #f4f4f4;
-  padding: 8px 12px;
+  width: 44px;
+  height: 44px;
+  background: #f5f7fa;
   border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.25s ease;
+  box-shadow: inset 0 0 0 1px #e5e7eb;
 }
 
 .dp-arrow:hover {
-  background: #e9e9e9;
+  background: #e3e8ef;
+  transform: scale(1.08);
 }
 
-/* Weekdays */
+/* ===========================
+   WEEKDAYS
+=========================== */
 .dp-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   text-align: center;
-  font-weight: 600;
-  color: #777;
+  font-size: 13px;
+  font-weight: 700;
+  color: #6b7280;
   margin-bottom: 15px;
+  letter-spacing: 0.5px;
 }
 
-/* Days Grid */
+/* ===========================
+   DAYS GRID
+=========================== */
 .dp-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 12px;
+  gap: 14px;
 }
 
 .dp-day {
-  padding: 14px 0;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 15px;
+  padding: 16px 0;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #374151;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.25s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .dp-day:hover {
-  background: #193B61;
-  color: white;
-  border-color: #193B61;
-}
-
-.dp-day.empty {
-  background: transparent !important;
-  border: none !important;
-  cursor: default;
+  background: #0b2f4e;
+  color: #fff;
+  border-color: #0b2f4e;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 14px rgba(11, 47, 78, 0.15);
 }
 
 .dp-day.selected {
-  background: #193B61;
-  color: white;
-  border-color: #193B61;
-  font-weight: bold;
+  background: #0b2f4e;
+  border-color: #0b2f4e;
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 10px 18px rgba(11, 47, 78, 0.25);
 }
 
-/* Close Button */
+/* Empty fillers */
+.dp-day.empty {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  cursor: default !important;
+}
+
+/* Disabled days */
+.dp-day.disabled {
+  background: #f4f4f5 !important;
+  border: 1px solid #e5e7eb !important;
+  color: #b9bcc2 !important;
+  cursor: not-allowed !important;
+  opacity: 0.6;
+  box-shadow: none !important;
+}
+
+.dp-day.disabled:hover {
+  background: #f4f4f5 !important;
+  color: #b9bcc2 !important;
+  transform: none !important;
+}
+
+/* ===========================
+   CLOSE BUTTON
+=========================== */
 .dp-close {
-  margin-top: 20px;
+  margin-top: 28px;
   width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  background: #193B61;
+  padding: 14px;
+  font-size: 17px;
+  background: #0b2f4e;
+  border-radius: 14px;
   color: white;
   cursor: pointer;
-  font-size: 16px;
+  border: none;
+  transition: 0.25s;
+  font-weight: 600;
 }
 
 .dp-close:hover {
-  background: #10273f;
+  background: #08253e;
+  transform: translateY(-2px);
 }
 
-/* Animations */
+/* ===========================
+   ANIMATIONS
+=========================== */
 @keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleFade {
   from {
     opacity: 0;
-    transform: scale(0.92);
+    transform: scale(0.95);
   }
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+/* ===========================
+   RESPONSIVE FIXES
+=========================== */
+
+/* ---------- Tablets (<= 1024px) ---------- */
+@media (max-width: 1024px) {
+  .datepicker-container {
+    width: 520px;
+    padding: 26px 30px;
+  }
+
+  .dp-month { font-size: 24px; }
+  .dp-arrow { width: 40px; height: 40px; font-size: 20px; }
+}
+
+/* ---------- Large Phones (<= 768px) ---------- */
+@media (max-width: 768px) {
+  .datepicker-container {
+    width: 90%;
+    padding: 24px 26px;
+  }
+
+  .dp-grid {
+    gap: 10px;
+  }
+
+  .dp-day {
+    padding: 14px 0;
+    font-size: 15px;
+  }
+
+  .dp-month { font-size: 22px; }
+}
+
+/* ---------- Mobile (<= 480px) ---------- */
+@media (max-width: 480px) {
+  .datepicker-container {
+    width: 100%;
+    padding: 20px 18px;
+    border-radius: 14px;
+  }
+
+  .dp-header {
+    gap: 10px;
+  }
+
+  .dp-month {
+    font-size: 20px;
+  }
+
+  .dp-arrow {
+    width: 34px;
+    height: 34px;
+    font-size: 18px;
+  }
+
+  .dp-grid {
+    gap: 8px;
+  }
+
+  .dp-day {
+    padding: 12px 0;
+    font-size: 14px;
+  }
+
+  .dp-weekdays {
+    font-size: 11px;
+  }
+
+  .dp-close {
+    padding: 12px;
+    font-size: 15px;
+  }
+}
+
+/* ---------- Extra Small Phones (<= 360px) ---------- */
+@media (max-width: 360px) {
+  .dp-day {
+    padding: 10px 0;
+    font-size: 13px;
+  }
+
+  .dp-grid {
+    gap: 6px;
+  }
+
+  .dp-arrow {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
   }
 }

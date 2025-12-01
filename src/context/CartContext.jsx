@@ -3,36 +3,48 @@ import { createContext, useContext, useState } from "react";
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cartCount, setCartCount] = useState(0);
   const [cartItems, setCartItems] = useState({});
 
+  // ➤ INCREASE ITEM
   const increaseItem = (id) => {
-    setCartItems((prev) => {
-      const updated = { ...prev, [id]: (prev[id] || 0) + 1 };
-      setCartCount(Object.values(updated).reduce((a, b) => a + b, 0));
-      return updated;
-    });
+    setCartItems((prev) => ({
+      ...prev,
+      [id]: (prev[id] || 0) + 1,
+    }));
   };
 
+  // ➤ DECREASE ITEM
   const decreaseItem = (id) => {
     setCartItems((prev) => {
-      const newQty = (prev[id] || 0) - 1;
-      let updated;
+      if (!prev[id]) return prev;
+
+      const newQty = prev[id] - 1;
 
       if (newQty <= 0) {
-        const { [id]: _, ...rest } = prev;
-        updated = rest;
-      } else {
-        updated = { ...prev, [id]: newQty };
+        const updated = { ...prev };
+        delete updated[id];
+        return updated;
       }
 
-      setCartCount(Object.values(updated).reduce((a, b) => a + b, 0));
-      return updated;
+      return {
+        ...prev,
+        [id]: newQty,
+      };
     });
   };
 
+  // ➤ AUTO CALCULATED CART COUNT (NO STATE NEEDED)
+  const cartCount = Object.values(cartItems).reduce((sum, qty) => sum + qty, 0);
+
   return (
-    <CartContext.Provider value={{ cartCount, cartItems, increaseItem, decreaseItem }}>
+    <CartContext.Provider
+      value={{
+        cartItems,
+        increaseItem,
+        decreaseItem,
+        cartCount,   // Navbar uses this
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

@@ -1,72 +1,117 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import "./DatePicker.css";
 
 const DatePicker = ({ onClose, onSelect }) => {
-  const [currentDate, setCurrentDate] = useState(new Date(2025, 11, 1)); // December 2025
-  const [selectedDay, setSelectedDay] = useState(null);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const [currentDate, setCurrentDate] = useState(new Date(today));
 
   const monthName = currentDate.toLocaleString("en-US", { month: "long" });
   const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
 
-  const firstDay = new Date(year, currentDate.getMonth(), 1).getDay();
-  const daysInMonth = new Date(year, currentDate.getMonth() + 1, 0).getDate();
+  /* =============================
+     MEMOIZED DAY GRID (NO LAG)
+  ============================== */
+  const daysArray = useMemo(() => {
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year + (month === 11 ? 1 : 0), (month + 1) % 12, 0).getDate();
 
-  const daysArray = [];
-  for (let i = 0; i < firstDay; i++) daysArray.push(null);
-  for (let i = 1; i <= daysInMonth; i++) daysArray.push(i);
+    const arr = [];
+    for (let i = 0; i < firstDay; i++) arr.push(null);
+    for (let i = 1; i <= daysInMonth; i++) arr.push(i);
 
-  const goToNextMonth = () => {
-    setCurrentDate(new Date(year, currentDate.getMonth() + 1, 1));
+    return arr;
+  }, [year, month]);
+
+  /* =============================
+      NEXT / PREV MONTH (OPTIMIZED)
+  ============================== */
+  const goToNextMonth = useCallback(() => {
+    setCurrentDate(new Date(year, month + 1, 1));
+  }, [year, month]);
+
+  const goToPrevMonth = useCallback(() => {
+    setCurrentDate(new Date(year, month - 1, 1));
+  }, [year, month]);
+
+  /* =============================
+     DISABLE PAST DAYS
+  ============================== */
+  const isPastDay = (day) => {
+    if (!day) return false;
+    const checkDate = new Date(year, month, day);
+    checkDate.setHours(0, 0, 0, 0);
+
+    return checkDate <= today;
   };
 
-  const goToPrevMonth = () => {
-    setCurrentDate(new Date(year, currentDate.getMonth() - 1, 1));
-  };
-
+  /* =============================
+      SELECT DATE
+  ============================== */
   const handleDateSelect = (day) => {
-    setSelectedDay(day);
-    onSelect(`${day} ${monthName} ${year}`);
+    const selected = new Date(year, month, day);
+
+    const formatted =
+      selected.getDate() +
+      " " +
+      selected.toLocaleString("en-US", { month: "long" }) +
+      " " +
+      selected.getFullYear();
+
+    onSelect(formatted);
     onClose();
   };
 
+  /* =============================
+       CLOSE WHEN CLICK OUTSIDE
+  ============================== */
+  const handleOverlayClick = (e) => {
+    if (e.target.classList.contains("datepicker-overlay")) {
+      onClose();
+    }
+  };
+
   return (
-    <div className="datepicker-overlay">
+    <div className="datepicker-overlay" onClick={handleOverlayClick}>
       <div className="datepicker-container">
+
         {/* Header */}
         <div className="dp-header">
           <button className="dp-arrow" onClick={goToPrevMonth}>←</button>
-          <h2 className="dp-month">{monthName} <span>{year}</span></h2>
+
+          <h2 className="dp-month">
+            {monthName} <span>{year}</span>
+          </h2>
+
           <button className="dp-arrow" onClick={goToNextMonth}>→</button>
         </div>
 
         {/* Weekdays */}
         <div className="dp-weekdays">
-          <span>SUN</span>
-          <span>MON</span>
-          <span>TUE</span>
-          <span>WED</span>
-          <span>THU</span>
-          <span>FRI</span>
-          <span>SAT</span>
+          <span>SUN</span><span>MON</span><span>TUE</span>
+          <span>WED</span><span>THU</span><span>FRI</span><span>SAT</span>
         </div>
 
-        {/* Days Grid */}
+        {/* Calendar Grid */}
         <div className="dp-grid">
-          {daysArray.map((day, index) => (
-            <button
-              key={index}
-              className={`dp-day ${day === selectedDay ? "selected" : ""} ${
-                day === null ? "empty" : ""
-              }`}
-              disabled={day === null}
-              onClick={() => day && handleDateSelect(day)}
-            >
-              {day}
-            </button>
-          ))}
+          {daysArray.map((day, index) => {
+            const disabled = isPastDay(day);
+
+            return (
+              <button
+                key={index}
+                className={`dp-day ${day === null ? "empty" : ""} ${disabled ? "disabled" : ""}`}
+                disabled={disabled || day === null}
+                onClick={() => !disabled && handleDateSelect(day)}
+              >
+                {day}
+              </button>
+            );
+          })}
         </div>
 
-        {/* Close Button */}
         <button className="dp-close" onClick={onClose}>Close</button>
       </div>
     </div>
