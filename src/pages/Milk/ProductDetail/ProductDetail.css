@@ -180,31 +180,44 @@ html, body {
 .pd-change-date-btn img { width: 20px; }
 
 /* =====================================================================
-     ⭐ POPUP — PERFECT CART ALIGNMENT
+     ⭐ POPUP — PERFECT CART ALIGNMENT (FINAL FIX)
 ===================================================================== */
 .added-popup {
   position: fixed;
-  top: 78px;
-  right: 54px;
-  background: #0C3B60;
-  color: white;
-  padding: 14px 22px;
-  border-radius: 14px;
-  z-index: 9999;
+
+  /* PERFECT under cart icon */
+  top: 120px;
+  right: 95px;  /* ← aligned to icon (adjust if needed) */
+
+  background: #f3f5f7;
+  color: #07253D;
+
+  padding: 14px 28px;
+  border-radius: 20px;
+  border: 2px solid #07253D;
+
+  z-index: 99999;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+
   font-weight: 600;
-  font-size: 16px;
-  animation: slideDown 0.35s ease-out;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  font-size: 15px;
+
+  box-shadow: 0px 12px 35px rgba(0,0,0,0.28);
+  animation: popupFadeDown 0.35s ease-out;
+
+  max-width: 260px;
 }
 
+/* Arrow perfectly under the cart icon */
 .popup-arrow {
   position: absolute;
-  top: -12px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: -14px;
+
+  /* Arrow centered to icon – calculated */
+  left: 55%;
+
   width: 0;
   height: 0;
   border-left: 12px solid transparent;
@@ -212,10 +225,57 @@ html, body {
   border-bottom: 12px solid #0C3B60;
 }
 
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-5px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* Truck image */
+.popup-cart-img {
+  width: 34px;
+  padding-right: 20px;
+  height:auto;
+  opacity: 0.95;
 }
+
+/* Truck animation */
+.run-slide {
+  animation: truckSlide 0.8s ease-out forwards;
+}
+
+@keyframes truckSlide {
+  0%   { transform: translateX(-22px); opacity: 0; }
+  40%  { transform: translateX(6px); opacity: 1; }
+  100% { transform: translateX(0); }
+}
+
+/* Popup fade + drop */
+@keyframes popupFadeDown {
+  0% { opacity: 0; transform: translateY(-12px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ================== RESPONSIVE POPUP ================== */
+
+@media (max-width: 1024px) {
+  .added-popup {
+    right: 50px;
+    top: 72px;
+  }
+  .popup-arrow {
+    left: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .added-popup {
+    right: 20px;
+    top: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  .added-popup {
+    right: 10px;
+    padding: 12px 18px;
+  }
+}
+
 
 /* =====================================
    ⭐ BUTTON CENTER BELOW 1440PX
