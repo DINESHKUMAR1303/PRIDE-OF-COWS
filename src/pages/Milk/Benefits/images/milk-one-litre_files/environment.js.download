@@ -1,0 +1,11 @@
+var originurl = window.location.origin;
+var baseUrl = originurl + "/prideofcows/api/customer/";
+var url = originurl + '/poc/customer/';
+var baseCarturl = originurl + "/prideofcows/api/";
+var baseurl = originurl + "/prideofcows/api/customer/";
+var mainUrl = originurl + "/prideofcows/";
+var weburl = originurl + "/poc/";
+var paymentUrl = "https://ms.prideofcows.com/prod/api/v1/payments";
+var walletReachargeUrl = paymentUrl + "/initiate-wr-wv";
+var orderPlaceUrl = paymentUrl + "/initiate-webview-nw";
+var razorpayKey = 'rzp_live_LkoVM4R9Z8YKfy';

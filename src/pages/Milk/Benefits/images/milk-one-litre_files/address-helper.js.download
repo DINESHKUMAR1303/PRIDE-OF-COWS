@@ -1,0 +1,910 @@
+// --- Address Management Helper Class (replaces all address functions after line 10378) ---
+
+class AddressHelper {
+ static viewAddress() {
+  $("#preloader").show();
+  try {
+   const userdata = localStorage.getItem("userdata");
+  if (!userdata) {
+    return;
+  }
+  // const parsedUser = JSON.parse(userdata);
+  // if (!parsedUser.FirstName || parsedUser.FirstName.trim() === "") {
+  //   $('#detect_Location_Popup').addClass("show-topmodal");
+  //   $("#main_addAddress1").append(`
+  //     <div class="address-btn">
+  //     <button class="add-address-btn" onclick="AddressHelper.addNewAddress()">
+  //     Add New Address
+  //     </button>
+  //     </div>
+  //   `);
+  //   return;
+  // }
+   const newdata = JSON.parse(userdata);
+   if (!newdata.token) throw new Error("Authentication token not found");
+   const settings = {
+    url: baseUrl + "get-user-addresses",
+    method: "POST",
+    timeout: 30000,
+    headers: {
+     "Content-Type": "application/json",
+     Authorization: "Bearer " + newdata.token,
+    },
+    data: JSON.stringify({}),
+   };
+   $.ajax(settings)
+    .done((response) => {
+     const addressCount = response.addresses.length;
+     const selectedAddressId = localStorage.getItem("selectedAddressId");
+    if (selectedAddressId) {
+        const addresses = response.addresses;
+        const matchedAddress = addresses.find(addr => addr.id === selectedAddressId);
+        if (matchedAddress) {
+            $(".order-label").html(matchedAddress.address_type);
+        }
+    }
+     if(addressCount <= 1) {
+      $(".order-card-desktop, .order-card-mobile").hide();
+     }
+     $("#preloader").hide();
+     AddressHelper.handleAddressViewResponse(response);
+    })
+    .fail((jqXHR, textStatus, errorThrown) => {
+     $("#preloader").hide();
+     console.error("AJAX Error:", textStatus, errorThrown);
+     AddressHelper.showErrorMessage(
+      "Failed to load addresses. Please try again."
+     );
+    });
+  } catch (error) {
+   $("#preloader").hide();
+   console.error("Error in viewAddress:", error);
+   AddressHelper.showErrorMessage("Error loading addresses: " + error.message);
+  }
+ }
+
+ static deleteAddress(id) {
+  if (!id || isNaN(parseInt(id))) {
+   AddressHelper.showErrorMessage("Invalid address ID");
+   return;
+  }
+  Swal.fire({
+   title: "Are you sure?",
+   text: "This address will be permanently deleted!",
+   icon: "warning",
+   showCancelButton: true,
+   cancelButtonText: "Cancel",
+   confirmButtonText: "Delete",
+   reverseButtons: true,
+   customClass: {
+    popup: "custom-swal-popup",
+    title: "swal-title custom-gold-title",
+    htmlContainer: "swal-text-container mt-0",
+    image: "swal-image",
+    confirmButton: "swal-button w-50 addressdeletebtns",
+    cancelButton: "btn btn-transparent cancel-btn addressdeletebtns",
+    actions: "swal-actions-row",
+   },
+   // <-- missing closing brace here
+  }).then((result) => {
+   if (result.isConfirmed) {
+    AddressHelper.performAddressDeletion(id);
+   }
+  });
+ }
+
+ static async saveAddress() {
+  try {
+   const userdata = AddressHelper.validateUserData();
+   if (!userdata) return false;
+  const formData = AddressHelper.validateAddressForm();
+  if (!formData) return false;
+   const pincodeValid = await AddressHelper.validatePincode(formData.pincode);
+   if (!pincodeValid) return false;
+   await AddressHelper.performAddressSave(userdata, formData);
+   $(".poc_form-input").removeClass("input-error");
+   $(".field-error-msg").remove();
+  } catch (error) {
+   console.error("Error in saveAddress:", error);
+   AddressHelper.showErrorMessage("Error saving address: " + error.message);
+  }
+ }
+
+ static editAddress(encodedData) {
+  localStorage.setItem("addAddress", false);
+  checkAddAddressFlag();
+  const address = JSON.parse(decodeURIComponent(encodedData));
+  if (!address || !address.id) {
+   AddressHelper.showErrorMessage("Invalid address data.");
+   return;
+  }
+  $("#addressPopup").show();
+  clearErrors();
+  if (address) {
+   const nameParts = address.full_name.split(" ");
+   const firstname = nameParts[0];
+   const lastname = nameParts.slice(1).join(" ");
+
+   $("#reg3fname").val(firstname);
+   $("#reg3fname").val(firstname).attr("disabled", true);
+   $("#reg3lname").val(lastname)
+   $("#reg3lname").val(lastname).attr("disabled", true);
+   $(".emailField").remove();
+   $("#genderField").remove();
+   $("#selectLocSec").remove();
+   $("#addressTypeField").remove();
+   $("#reg3flatn").val(address.flat_plot_no) || "";
+   $("#reg3regadd1").val(address.building_name);
+   $("#reg3mobile").val(address.mobile_number) || "";
+   $("#reg3mobile").val(address.mobile_number).attr("disabled", true);
+   $("#reg3regadd2").val(address.street_road);
+   $("#reg3reglocality").val(address.landmark);
+   $("#reg3pincode").val(address.pincode);
+   $("#reg3state_name").val(address.state);
+   $("#reg3city_name").val(address.city);
+  //  $(
+  //   'input[name="poc_addressType"][value="' + address.address_type + '"]'
+  //  ).prop("checked", true);
+   $("#addressPopup").data("edit-id", address.id);
+
+   $("#poc_saveAddressBtn, #poc_mobileSaveBtn").text("Update Address");
+   $("#poc_saveAddressBtn, #poc_mobileSaveBtn").removeAttr("onclick");
+   $("#poc_saveAddressBtn, #poc_mobileSaveBtn")
+    .off("click")
+    .on("click", function () {
+     AddressHelper.updateAddress();
+    });
+    $(".from-location").removeAttr("id");
+    $(".poc_modal").removeAttr("id");
+    $(".poc_modal").addClass("handlwWidth");
+    $(".poc_map-section").addClass("notactive");
+  }
+ }
+
+ static async updateAddress() {
+  var userdata = localStorage.getItem("userdata", userdata);
+  if (userdata) {
+   const newdata = JSON.parse(userdata);
+   var token = newdata.token;
+   var mobile = newdata.MobileNo;
+   const formData = AddressHelper.validateAddressForm();
+   if (!formData) return;
+
+   const isValid = await AddressHelper.validatePincode(formData.pincode);
+   if (!isValid) return;
+
+   const addressId = $("#addressPopup").data("edit-id");
+   console.log("Address ID: " + addressId);
+   $(".poc_form-input").removeClass("input-error");
+   $(".field-error-msg").remove();
+   if (!addressId) {
+    AddressHelper.showErrorMessage("Address ID missing.");
+    return;
+   }
+
+   var settings = {
+    url: baseUrl + "edit-user-address",
+    method: "POST",
+    timeout: 0,
+    headers: {
+     "Content-Type": "application/json",
+     Authorization: "Bearer " + token,
+    },
+    data: JSON.stringify({
+     flat_plot_no: formData.house,
+     building_name: formData.tower,
+     street_road: formData.roadname,
+     landmark: formData.landmark,
+     pincode: formData.pincode,
+     state: formData.state,
+     city: formData.city,
+    //  address_type: formData.addressType,
+     id: addressId,
+     mobile_no:mobile,
+    }),
+   };
+   $.ajax(settings)
+    .done(function (response) {
+     if (response.status == 1 && response.data) {
+      Swal.fire({
+       position: "top-end",
+       icon: "success",
+       title: "Address updated successfully",
+       showConfirmButton: true,
+      }).then((result) => {
+       if (result.isConfirmed) {
+        location.reload();
+       }
+      });
+      AddressHelper.viewAddress();
+     } else {
+      Swal.fire({
+       position: "top-end",
+       icon: "success",
+       title: response.message,
+       showConfirmButton: true,
+      }).then((result) => {
+       if (result.isConfirmed) {
+        location.reload();
+       }
+      });
+     }
+    })
+    .fail((textStatus, errorThrown) => {
+     console.error("AJAX Error:", textStatus, errorThrown);
+     AddressHelper.showErrorMessage("Failed to update address.");
+    });
+  } else {
+  }
+ }
+
+ // --- Helper methods ---
+ static handleAddressViewResponse(response) {
+  if (
+   response.status === 1 &&
+   response.addresses &&
+   response.addresses.length > 0
+  ) {
+   $("#main_addAddress").empty();
+   $("#main_addAddress1").empty();
+   //  If only one address, set it as selected by default
+    if (response.addresses.length === 1) {
+      const singleAddress = response.addresses[0];
+      localStorage.setItem("selectedAddressId", String(singleAddress.id));
+      $("#changeAddCheckout").hide();
+      $(".Address_flex-container").addClass("addressFlex");
+      $(".topFetchLocation").removeAttr("onclick");
+      $(".order-label").html(singleAddress.address_type);
+      $('.close-buttonn').show();
+    }
+    const noOfResp = localStorage.getItem("profileResp")
+    if (response.addresses.length >= noOfResp) {
+      $("#addaddressBtn").hide();
+    } else {
+      $("#addaddressBtn").show();
+    }
+    const selectedId = localStorage.getItem("selectedAddressId");
+    let selectedAddressObj = null;
+   // Show selected address at top in main_addAddress1
+   // Find selected address
+   const addresses = response.addresses;
+   let selectedAddress = null;
+   let otherAddresses = [];
+   addresses.forEach((address) => {
+     if (String(address.id) === String(selectedId)) {
+       selectedAddress = address;
+     } else {
+       otherAddresses.push(address);
+     }
+   });
+   // Render all addresses in main_addAddress as before
+   addresses.forEach((address) => {
+     const addressHtml = AddressHelper.createAddressCard(address);
+     $("#main_addAddress").append(addressHtml);
+   });
+   // Render selected address first in main_addAddress1
+   if (selectedAddress) {
+     const addressHtml1 = AddressHelper.createAddressCard1(selectedAddress);
+     $("#main_addAddress1").append(addressHtml1);
+     selectedAddressObj = selectedAddress;
+   }
+   // Then render other addresses
+   otherAddresses.forEach((address) => {
+     const addressHtml1 = AddressHelper.createAddressCard1(address);
+     $("#main_addAddress1").append(addressHtml1);
+   });
+   if (selectedAddressObj) {
+      $("#selectedAddressBox ").html(`
+        <p class="selected-address delivery_address_content">
+          ${selectedAddressObj.flat_plot_no}, 
+          ${selectedAddressObj.building_name}, 
+          ${selectedAddressObj.street_road}, 
+          ${selectedAddressObj.landmark}, 
+          ${selectedAddressObj.city}, 
+          ${selectedAddressObj.state}, 
+          ${selectedAddressObj.pincode}
+        </p>
+      `);
+      $("#checkout_username").text(selectedAddressObj.full_name || "");
+      $("#Checkout_addType").text(selectedAddressObj.address_type || "");
+    }
+   if (window.location.pathname.indexOf("checkout") !== -1) {
+    if (response.addresses.length > 1) {
+      $("#chooseaddressSec").css("display", "flex");
+    } else {
+      $("#chooseaddressSec").css("display", "none");
+    }
+  }
+  $(".pay-amount-div").css({
+        "opacity": 1,
+        "pointer-events": "auto",
+        "cursor": "pointer"
+  });
+  } else {
+   const message = response.message || "No addresses found";
+   $("#main_addAddress, #main_addAddress1").html(`
+        <div class="noAddressMsg">
+          <p class="no-address-msg">${message}</p>
+        </div>
+    `);
+    $("#main_addAddressbtn").html(`
+        <button class="add-address-btn mt-10" onclick="AddressHelper.addNewAddress()">Add New Address</button>
+    `);
+    // $("#checkoutPageSec").html(`
+    //     <div class="d-flex noAddressscene">
+    //     <p class="no-address-msg">${message}</p>
+    //     <p class="no-address-msg mb-20">Add your Address</p>
+    //     <button class="add-address-btn" id="checkout_add_address" href="../customer/addressbook">Add New Address</button>
+    //     </div
+    // `);
+    $("#selectedAddressBox").html(`
+        <p class="selected-address delivery_address_content fs-16">
+          please add complete address to continue.
+        </p>
+      `);
+      $(".pay-amount-div , .pay-via-wallet").css({
+              "opacity": 0.5,
+              "pointer-events": "none",
+              "cursor": "not-allowed"
+      });
+      $("#Checkout_addType").hide();
+    $("#changeAddCheckout, .proceed-container")
+        .text("Add Address")
+        .off("click") // remove old onClick
+        .on("click", function() {
+          AddressHelper.addNewAddress(); // call your other function
+        });
+
+    setTimeout(function() {
+      $(".pay-amount-div").removeAttr("onclick").css({
+      "opacity": 1,
+      "pointer-events": "auto",
+      "cursor": "pointer"
+      });
+    }, 3000);
+    var userdata = localStorage.getItem("userdata", userdata);
+    var data = JSON.parse(userdata);
+    if(data?.FirstName){
+      $("#addSubAddress").show();
+      $(".subscribeNow, .modifySubscription").show();
+      $(".subscribeNow, .modifySubscription").removeAttr("onclick").text("Recharge Wallet");
+    }
+    $("#addSubAddress").show();
+    $("#addSubAddressLogin").hide();
+  }
+ }
+
+ static createAddressCard(address) {
+  const sanitizeHtml = (str) => {
+   if (typeof str !== "string") return str;
+   return str.replace(/[&<>"']/g, (match) => {
+    const escape = {
+     "&": "&amp;",
+     "<": "&lt;",
+     ">": "&gt;",
+     '"': "&quot;",
+     "'": "&#39;",
+    };
+    return escape[match];
+   });
+  };
+  const fullName = sanitizeHtml(address.full_name || "");
+  const addressType = sanitizeHtml(address.address_type || "");
+  const flatPlotNo = sanitizeHtml(address.flat_plot_no || "");
+  const buildingName = sanitizeHtml(address.building_name || "");
+  const streetRoad = sanitizeHtml(address.street_road || "");
+  const landmark = sanitizeHtml(address.landmark || "");
+  const city = sanitizeHtml(address.city || "");
+  const state = sanitizeHtml(address.state || "");
+  const pincode = sanitizeHtml(address.pincode || 0);
+  const addressId = parseInt(address.id) || 0;
+  const addressJson = encodeURIComponent(
+   JSON.stringify(address).replace(/'/g, "\\'")
+  );
+
+  const flags = localStorage.getItem("featureFlags");
+  const featureFlags= JSON.parse(flags);
+  // make as default code
+  // <div class="defaultAddress d-flex align-center">
+          // <label for="default">Make as Default</label>
+          // <input type="radio" id="defaultAdd" name="defaultAdd" value="default">
+  // </div>
+  return `
+      <div class="address-card relative">
+        <div class="address-header mb-10 ">
+        ${address.address_change_request_status == 0 ? `<div class="pendingTag cursor-none">
+              Pending</div>`: ``}
+          <div class="d-flex align-center">
+            <span class="user-name">${fullName}</span>
+            <span class="tag ml-10">${addressType}</span>
+          </div>
+        </div>
+        <p class="address-text">
+          ${flatPlotNo} ${buildingName} ${streetRoad} ${landmark} ${city} ${state} - ${pincode}
+        </p>
+        
+          <div class="address-actions mt-10">
+          ${address.address_change_request_status == 0 ? `` : ` 
+            ${featureFlags.multi_address_edit === true ? `
+              <button class="action-btn edit-btn"  onclick="AddressHelper.editAddress('${addressJson}')">
+                <img src="${weburl}/images/multiaddress/edit-1.png" class="act-images" alt="editimg"> Edit
+              </button>
+               `: ``}
+             ${featureFlags.multi_address_delete === true ? `
+               <button class="action-btn delete-btn" onclick="AddressHelper.deleteAddress(${addressId})">
+                <img src="${weburl}/images/multiaddress/delete.png" class="act-images" alt="deleteimg"> Delete
+              </button>` :``}
+              `}
+          </div>
+      </div>
+    `;
+ }
+
+ 
+
+ static createAddressCard1(address) {
+  const sanitizeHtml = (str) => {
+   if (typeof str !== "string") return str;
+   return str.replace(/[&<>"']/g, (match) => {
+    const escape = {
+     "&": "&amp;",
+     "<": "&lt;",
+     ">": "&gt;",
+     '"': "&quot;",
+     "'": "&#39;",
+    };
+    return escape[match];
+   });
+  };
+  const fullName = sanitizeHtml(address.full_name || "");
+  const addressType = sanitizeHtml(address.address_type || "");
+  const flatPlotNo = sanitizeHtml(address.flat_plot_no || "");
+  const buildingName = sanitizeHtml(address.building_name || "");
+  const streetRoad = sanitizeHtml(address.street_road || "");
+  const landmark = sanitizeHtml(address.landmark || "");
+  const city = sanitizeHtml(address.city || "");
+  const state = sanitizeHtml(address.state || "");
+  const pincode = sanitizeHtml(address.pincode || 0);
+  const addressId = parseInt(address.id) || 0;
+  const addressJson = encodeURIComponent(
+   JSON.stringify(address).replace(/'/g, "\\'")
+  );
+  // Get selected address id from localStorage
+  const selectedId = localStorage.getItem('selectedAddressId');
+  const isSelected = String(addressId) === String(selectedId);
+  const flags = localStorage.getItem("featureFlags");
+  const featureFlags= JSON.parse(flags);
+  return `
+    <div class="address-card relative">
+      <div class="address-header mb-10">
+       ${address.address_change_request_status == 0 ? `<div class="pendingTag cursor-none">
+              Pending</div>`: ``}
+        <div class="d-flex align-center">
+          <span class="user-name">${fullName}</span>
+          <span class="tag ml-10">${addressType}</span>
+        </div>
+       </div>
+      <p class="address-text">
+        ${flatPlotNo} ${buildingName} ${streetRoad} ${landmark} ${city} ${state} - ${pincode}
+      </p>
+      <div class="address-actions mt-10">
+        ${address.address_change_request_status == 0 ? `` : `
+        <button class="here-btn ${isSelected ? "not-clickable selectedAddBtn" : ""}" id="deliverHere-btn-${addressId}"
+        ${address.address_change_request_status == 0 ? "disabled" : ""}
+         onclick="selectAddOrder(${addressId});updateSelectedAddressBtn(${addressId})">
+        ${isSelected ? 'Selected Address' : 'Select'}
+        </button>`}
+        ${address.address_change_request_status == 0 || isSelected ? ``:`<div class="three-btn relative">
+          <img src="${weburl}images/multiaddress/threedots.png" alt="threedots" class="threedots" onclick="toggleBtns(this)" />
+            <div class="address-actions-btns absolute">
+               <button class="action-btn edit-btn mb-10" onclick="AddressHelper.editAddress('${addressJson}')">
+                <img src="${weburl}images/multiaddress/edit-1.png" class="act-images" alt="editimg"> Edit
+              </button>
+              ${featureFlags.multi_address_delete === true ? `
+              <button class="action-btn delete-btn" onclick="AddressHelper.deleteAddress(${addressId})">
+                <img src="${weburl}images/multiaddress/delete.png" class="act-images" alt="deleteimg"> Delete
+              </button>` :``}
+            </div>
+        </div>`}
+      </div> 
+    </div>
+  `;
+}
+
+// Helper to update button text after selection
+static updateSelectedAddressBtn(addressId) {
+  localStorage.setItem('selectedAddressId', String(addressId));
+  // Update all buttons
+  $(".here-btn").each(function() {
+    if (this.id === `deliverHere-btn-${addressId}`) {
+      $(this).text('Selected Address');
+    } else {
+      $(this).text('Select');
+    }
+  });
+}
+//  }
+
+ static performAddressDeletion(id) {
+  try {
+   const userdata = localStorage.getItem("userdata");
+   if (!userdata) throw new Error("User data not found");
+   const newdata = JSON.parse(userdata);
+   if (!newdata.token) throw new Error("Authentication token not found");
+   const settings = {
+    url: baseUrl + "delete-user-address",
+    method: "POST",
+    timeout: 30000,
+    headers: {
+     "Content-Type": "application/json",
+     Authorization: "Bearer " + newdata.token,
+    },
+    data: JSON.stringify({ id: parseInt(id) }),
+   };
+   $.ajax(settings)
+    .done((response) => {
+     AddressHelper.handleDeleteResponse(response);
+    })
+    .fail((jqXHR, textStatus, errorThrown) => {
+     console.error("AJAX Error:", textStatus, errorThrown);
+     AddressHelper.showErrorMessage(
+      "Failed to delete address. Please try again."
+     );
+    });
+  } catch (error) {
+   console.error("Error in deleteAddress:", error);
+   AddressHelper.showErrorMessage("Error deleting address: " + error.message);
+  }
+ }
+
+ static handleDeleteResponse(response) {
+  if (response.status === 1) {
+   Swal.fire({
+    icon: "success",
+    title: "Deleted!",
+    text: response.message || "Address deleted successfully",
+    timer: 2000,
+    showConfirmButton: false,
+   });
+   location.reload();
+   AddressHelper.viewAddress();
+  } else if (response.status === 0) {
+   Swal.fire({
+    icon: "error",
+    title: "Not Found!",
+    text: response.message || "Address not found",
+    timer: 2000,
+    showConfirmButton: false,
+   });
+  } else if (response.status === 2) {
+   Swal.fire({
+    icon: "error",
+    title: "Cannot Delete",
+    text: response.message || "Address was already deleted",
+    timer: 2500,
+    showConfirmButton: false,
+   });
+  } else {
+   AddressHelper.showErrorMessage(response.message || "Unknown error occurred");
+  }
+ }
+
+ static validateUserData() {
+  const userdata = localStorage.getItem("userdata");
+  if (!userdata) {
+   AddressHelper.showErrorMessage(
+    "User session not found. Please login again."
+   );
+   return null;
+  }
+  try {
+   const parsedData = JSON.parse(userdata);
+   if (!parsedData.token) {
+    AddressHelper.showErrorMessage(
+     "Authentication token not found. Please login again."
+    );
+    return null;
+   }
+   return parsedData;
+  } catch (error) {
+   AddressHelper.showErrorMessage("Invalid user data. Please login again.");
+   return null;
+  }
+ }
+
+ static validateAddressForm() {
+  // Clear existing errors
+  $(".poc_form-input").removeClass("input-error");
+  $(".field-error-msg").remove();
+
+  // Helper for showing inline errors
+  function showFieldError(id, message) {
+   const field = $("#" + id);
+   field.addClass("input-error");
+   if (field.next(".field-error-msg").length === 0) {
+    field.after(
+     `<span class="field-error-msg" style="color:red;font-size:12px;">${message}</span>`
+    );
+   }
+  }
+  let isValid = true;
+
+  // Collect form data
+  const formData = {
+   pincode: $("#reg3pincode").val().trim(),
+   city: $("#reg3city_name").val().trim(),
+   firstname: $("#reg3fname").val().trim(),
+   lastname: $("#reg3lname").val().trim(),
+   phoneNo: $("#reg3mobile").val().trim(),
+  //  gender: $("#reg3gender").val().trim(),
+   // email: $("#reg3email").val().trim(),
+   tower: $("#reg3regadd1").val().trim(),
+   house: $("#reg3flatn").val().trim(),
+   state: $("#reg3state_name").val().trim(),
+   roadname: $("#reg3regadd2").val().trim(),
+   landmark: $("#reg3reglocality").val().trim(),
+  //  deliveryInstruct : delivery_instruction_type || "",
+  //  deliveryInstruct : $('input[name="delivery_instruction"]:checked').val(),
+};
+
+  // let addressType = $('input[name="poc_addressType"]:checked').val();
+  // if (addressType === "other") {
+  //   addressType = $("#poc_otherInput").val().trim();
+  // }
+  // formData.addressType = addressType;
+  // let isValid = false;
+
+  // Field-level validations with inline errors
+  if (formData.firstname === "") {
+   showFieldError("reg3fname", "Please enter first name");
+   isValid = false;
+  }
+  if (formData.lastname === "") {
+   showFieldError("reg3lname", "Please enter last name");
+   isValid = false;
+  }
+  if (formData.phoneNo === "") {
+   showFieldError("reg3mobile", "Please enter phone number");
+   isValid = false;
+  }
+  if (formData.house === "") {
+   showFieldError("reg3flatn", "Please enter flat number");
+   isValid = false;
+  }
+  if (formData.tower === "") {
+   showFieldError("reg3regadd1", "Please enter building name");
+   isValid = false;
+  }
+  if (formData.landmark === "") {
+   showFieldError("reg3reglocality", "Please enter landmark");
+   isValid = false;
+  }
+  if (formData.roadname === "") {
+   showFieldError("reg3regadd2", "Please enter Street name");
+   isValid = false;
+  }
+  if (formData.pincode === "") {
+   showFieldError("reg3pincode", "Please enter pincode");
+   isValid = false;
+  } else if (formData.pincode.length !== 6) {
+   showFieldError("reg3pincode", "Pincode must be 6 digits");
+   isValid = false;
+  }
+  if (formData.city === "") {
+   showFieldError("reg3city_name", "Please select a city");
+   isValid = false;
+  }
+  if (formData.state === "") {
+   showFieldError("reg3state_name", "Please select a state");
+   isValid = false;
+  }
+
+  // Keep your existing popup-style validations if needed
+  if (!isValid) return null;
+  // const validations = [
+  //  { field: "house", name: "flat no", value: formData.house },
+  //  { field: "tower", name: "building", value: formData.tower },
+  //  { field: "roadname", name: "road name", value: formData.roadname },
+  //  { field: "pincode", name: "pincode", value: formData.pincode },
+  //  { field: "firstname", name: "firstname", value: formData.firstname },
+  //  { field: "lastname", name: "lastname", value: formData.lastname },
+  //  { field: "city", name: "city", value: formData.city },
+  //  { field: "state", name: "state", value: formData.state },
+  // ];
+
+  // for (const validation of validations) {
+  //  if (!validation.value) {
+  //   AddressHelper.showErrorMessage(`Please fill ${validation.name}`);
+  //   return null;
+  //  }
+  // }
+
+  // if (formData.pincode.length !== 6) {
+  //  AddressHelper.showErrorMessage("Please enter a 6-digit pincode");
+  //  return null;
+  // }
+
+  // Stop submission if any inline validation failed
+  // if (!isValid) return null;
+
+  return formData;
+ }
+
+ static validatePincode(pincode) {
+  return new Promise((resolve) => {
+   const settings = {
+    url: baseUrl + "allstatecity",
+    method: "POST",
+    timeout: 10000,
+    headers: {
+     "Content-Type": "application/json",
+    },
+    data: JSON.stringify({ pincode: pincode }),
+   };
+   $.ajax(settings)
+    .done((response) => {
+     if (response && response.status === 0) {
+      AddressHelper.showErrorMessage("Not a valid pincode");
+      $("#reg3pincode").val("");
+      resolve(false);
+     } else {
+      resolve(true);
+     }
+    })
+    .fail(() => {
+     AddressHelper.showErrorMessage(
+      "Failed to validate pincode. Please try again."
+     );
+     resolve(false);
+    });
+  });
+ }
+
+ static async performAddressSave(userdata, formData) {
+  // const location = await getLocationAsync();
+  // var long = location.longitude;
+  // var latt = location.latitude;
+
+  const addressData = {
+   name: formData.firstname + " " + formData.lastname,
+   mobile_number: formData.phoneNo,
+   alter_mobile_number: formData.phoneNo,
+   flat_plot_no: formData.house,
+   building_name: formData.tower,
+   street_road: formData.roadname,
+   landmark: formData.landmark,
+   pincode: formData.pincode,
+   city: formData.city,
+   state: formData.state,
+   addressType: formData.addressType,
+   default_address_status: 0,
+   latitude: localStorage.getItem("lat"), 
+   longitude: localStorage.getItem("lng"),
+   delivery_option: formData.deliveryInstruct,
+  };
+  const settings = {
+   url: baseUrl + "add-user-address",
+   method: "POST",
+   timeout: 30000,
+   headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + userdata.token,
+   },
+   data: JSON.stringify(addressData),
+  };
+  return new Promise((resolve, reject) => {
+   $.ajax(settings)
+    .done((response) => {
+     if (response.status === 1) {
+      Swal.fire({
+       position: "top-end",
+       icon: "success",
+       title: "Address created successfully",
+       showConfirmButton: true,
+      }).then((result) => {
+      window.location.reload();
+      resolve(true);
+  });
+     } else {
+      AddressHelper.showErrorMessage(
+       response.message || "Failed to save address"
+      );
+      resolve(false);
+     }
+    })
+    .fail((jqXHR, textStatus, errorThrown) => {
+     console.error("AJAX Error:", textStatus, errorThrown);
+     AddressHelper.showErrorMessage(
+      "Failed to save address. Please try again."
+     );
+     reject(new Error("AJAX request failed"));
+    });
+  });
+ }
+
+ static showErrorMessage(message) {
+  Swal.fire({
+   position: "top-end",
+   icon: "error",
+   title: message,
+   showConfirmButton: false,
+   timer: 2500,
+  });
+ }
+
+ static addNewAddress() {
+  localStorage.setItem("addAddress", true);
+  checkAddAddressFlag();
+  deliveryInstruction();
+  $("#addressPopup").show();
+  $("#selectLocSec").show();
+  try {
+   const userdata = localStorage.getItem("userdata");
+   if (!userdata) throw new Error("User data not found");
+   const newdata = JSON.parse(userdata);
+   const token = newdata.token
+   if (!newdata.token) throw new Error("Authentication token not found");
+   const settings = {
+    url: baseUrl + "get-user-addresses",
+    method: "POST",
+    timeout: 30000,
+    headers: {
+     "Content-Type": "application/json",
+     Authorization: "Bearer " + token,
+    },
+    data: JSON.stringify({}),
+   };
+   $.ajax(settings)
+    .done((response) => {
+      if(response.status == 0){
+        $("#poc_saveAddressBtn, #poc_mobileSaveBtn").attr("onclick", "reregister()");
+        const pindata = localStorage.getItem("userdata")
+        const user_data = JSON.parse(pindata)
+        // $("#reg3state_name").removeAttr("disabled");
+        // $("#reg3city_name").removeAttr("disabled");
+        $(".EditAddrestext").css("display","none");
+        $(".poc_search-box.editFlow").css("display","none");
+        $("#reg3pincode").removeAttr("disabled");
+        document.getElementById("phoneLabel").textContent = "Mobile No *";
+        $("#reg3mobile").val(user_data.MobileNo).attr("disabled", true);
+
+      }else{
+        $("#poc_saveAddressBtn, #poc_mobileSaveBtn").text("Save Address");
+        document.getElementById("phoneLabel").textContent = "Receiver Number*";
+        // $("#reg3state_name").removeAttr("disabled");
+        // $("#reg3city_name").removeAttr("disabled");
+        $(".EditAddrestext").css("display","none");
+        $("#reg3pincode").removeAttr("disabled");
+        $("#reg3mobile").removeAttr("disabled");
+        $("#reg3state_name").val("");
+        $("#reg3city_name").val("");
+        $("#reg3pincode").val("");
+        $("#reg3mobile").val("");
+        $("#reg3fname").val("");
+        $("#reg3fname").val("").removeAttr("disabled");
+        $("#reg3lname").val("");
+        $("#reg3lname").val("").removeAttr("disabled");
+        $(".emailField").remove();
+        $("#genderField").remove();
+        $("#reg3regadd1").val("");
+        $("#reg3regadd2").val("");
+        $("#reg3reglocality").val("");
+        $("#reg3flatn").val("");
+      }
+    })
+    .fail((jqXHR, textStatus, errorThrown) => {
+     $("#preloader").hide();
+     console.error("AJAX Error:", textStatus, errorThrown);
+     AddressHelper.showErrorMessage(
+      "Failed to load addresses. Please try again."
+     );
+    });
+  } catch (error) {
+   $("#preloader").hide();
+   console.error("Error in viewAddress:", error);
+   AddressHelper.showErrorMessage("Error loading addresses: " + error.message);
+  }
+ }
+}
+
+// Usage: AddressHelper.viewAddress(), AddressHelper.deleteAddress(id), AddressHelper.saveAddress()

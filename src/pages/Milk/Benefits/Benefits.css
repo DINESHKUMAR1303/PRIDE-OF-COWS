@@ -1,0 +1,78 @@
+.benefits-wrapper {
+  width: 100%;
+  padding: 0px 20px;
+  background: #f4f4f4;
+  box-sizing: border-box;
+}
+
+.benefits-title {
+  font-size: 22px;
+  letter-spacing: 3px;
+  font-family: suranna,serif;
+  color: #616161;
+  margin-bottom: 40px;
+  margin-left: 200px;
+  font-weight: 400;
+}
+
+/* Grid layout */
+.benefits-grid {
+  max-width: 1050px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 60px;
+  justify-items: center;
+  align-items: center;
+}
+
+/* Each benefit block */
+.benefits-item {
+  text-align: center;
+  width: 100%;
+  max-width: 260px;
+}
+
+.benefits-icon {
+  width: 105px;
+  height: 105px;
+  object-fit: contain;
+  margin-bottom: 15px;
+
+  /* ❌ Removed gold color filter – now original colors will show */
+}
+
+.benefits-text {
+  font-size: 16px;
+  line-height: 1.4;
+  color: #333;
+  font-weight: 400;
+}
+
+/* Responsive Fixes */
+@media (max-width: 1024px) {
+  .benefits-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .benefits-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .benefits-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  .benefits-text {
+    font-size: 14px;
+  }
+}
