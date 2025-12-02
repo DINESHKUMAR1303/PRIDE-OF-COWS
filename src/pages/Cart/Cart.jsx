@@ -12,6 +12,9 @@ import prod4 from "../../components/ProductCarousel/images/panner.png";
 import prod5 from "../../components/ProductCarousel/images/proteinbar.png";
 import prod6 from "../../components/ProductCarousel/images/proteinbarpack.png";
 
+// ⭐ DELIVERY ICON (ADD YOUR NEW ICON HERE)
+import deliveryIcon from "./images/deliveryboy.svg";
+
 // === EMPTY CART IMAGE ===
 import emptyCartImg from "./images/emptycart.svg";
 
@@ -61,7 +64,8 @@ const Cart = () => {
 
   const handleSaveAddress = (e) => {
     e.preventDefault();
-    if (!addressForm.name || !addressForm.line1 || !addressForm.city || !addressForm.pincode) return;
+    if (!addressForm.name || !addressForm.line1 || !addressForm.city || !addressForm.pincode)
+      return;
 
     setAddress({ ...addressForm });
     setIsAddressModalOpen(false);
@@ -118,11 +122,11 @@ const Cart = () => {
 
           {/* Address Section */}
           <div className="address-section">
-            <h2>Delivery Address</h2>
+            <h2>Delivery Address:</h2>
 
             {!address ? (
               <button className="add-address-btn" onClick={() => setIsAddressModalOpen(true)}>
-                + Add Address
+                Add Address
               </button>
             ) : (
               <button className="add-address-btn" onClick={handleEditAddress}>
@@ -147,42 +151,51 @@ const Cart = () => {
             </div>
           )}
 
-          {/* Product List */}
+          {/* Product List Title */}
           <h3 className="section-title">Products</h3>
 
+          {/* PRODUCT ROWS */}
           {cartList.map((id) => {
             const item = cartProducts.find((p) => p.id === Number(id));
             const qty = cartItems[id];
 
             return (
-              <div key={id} className="checkout-product-box">
-                <img src={item.img} alt={item.title} className="checkout-product-img" />
+              <div key={id} className="checkout-product-row">
 
-                <div className="checkout-product-info">
-                  <p className="p-title">{item.title}</p>
-                  <p className="p-qty">{item.weight}</p>
-                  <p className="p-price">₹{item.price}</p>
+                {/* Product Image */}
+                <div className="cp-img-box">
+                  <img src={item.img} alt={item.title} className="cp-img" />
+                </div>
 
-                  <div className="delivery-box">
-                    <span className="delivery-icon">🛵</span>
+                {/* Middle Info Section */}
+                <div className="cp-info">
+                  <p className="cp-title">{item.title}</p>
+                  <p className="cp-size">{item.weight}</p>
+                  <p className="cp-price">₹{item.price}</p>
+
+                  {/* Delivery Box EXACT LIKE DESIGN */}
+                  <div className="cp-delivery-box">
+                    <img src={deliveryIcon} alt="delivery" className="cp-delivery-icon" />
                     <div>
-                      <p className="d-text">Expected Delivery Date:</p>
-                      <p className="d-date">{deliveryDateLabel}</p>
+                      <p className="cp-delivery-text">Expected Delivery Date:</p>
+                      <p className="cp-delivery-date">{deliveryDateLabel}</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="qty-box-right">
-                  <div className="qty-inline">
-                    <button className="qty-btn" onClick={() => decreaseItem(item.id)}>–</button>
-                    <span className="qty-value">{qty}</span>
-                    <button className="qty-btn" onClick={() => increaseItem(item.id)}>+</button>
+                {/* RIGHT QTY + CHANGE DATE */}
+                <div className="cp-qty-section">
+                  <div className="cp-qty-box">
+                    <button className="cp-qty-btn" onClick={() => decreaseItem(item.id)}>–</button>
+                    <span className="cp-qty-value">{qty}</span>
+                    <button className="cp-qty-btn" onClick={() => increaseItem(item.id)}>+</button>
                   </div>
 
-                  <button className="change-date-btn" onClick={() => setIsDateModalOpen(true)}>
+                  <button className="cp-change-btn" onClick={() => setIsDateModalOpen(true)}>
                     Change Date
                   </button>
                 </div>
+
               </div>
             );
           })}
@@ -207,11 +220,7 @@ const Cart = () => {
               </span>
             </h3>
 
-            <div className="order-row">
-              <span>Item Total</span>
-              <span>₹{itemTotal}</span>
-            </div>
-
+            <div className="order-row"><span>Item Total</span><span>₹{itemTotal}</span></div>
             <div className="order-row"><span>Tax Included</span><span>₹0</span></div>
             <div className="order-row"><span>Handling Fee</span><span>₹0</span></div>
 
@@ -228,7 +237,7 @@ const Cart = () => {
               <h2>₹{itemTotal}</h2>
             </div>
 
-            <button className="pay-btn">Proceed to Pay</button>
+            <button className="pay-btn">Proceed To Pay</button>
           </div>
 
         </div>
@@ -380,9 +389,7 @@ const DatePickerModal = ({ selectedDate, onClose, onSelectDate }) => {
             return (
               <button
                 key={idx}
-                className={`day-cell ${isPast ? "disabled" : ""} ${
-                  isSelected ? "selected" : ""
-                } ${isToday ? "today" : ""}`}
+                className={`day-cell ${isPast ? "disabled" : ""} ${isSelected ? "selected" : ""} ${isToday ? "today" : ""}`}
                 onClick={() => !isPast && onSelectDate(thisDate)}
                 disabled={isPast}
               >
