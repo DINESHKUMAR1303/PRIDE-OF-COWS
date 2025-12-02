@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import { useSwipeable } from "react-swipeable";
+import { useNavigate } from "react-router-dom"; // ⭐ ADDED
 import "./ProductCarousel.css";
 
 // === IMPORT GLOBAL CART CONTEXT ===
@@ -22,12 +23,12 @@ import prod6 from "./images/proteinbarpack.png";
 
 // === PRODUCT DATA ===
 const products = [
-  { id: 1, img: prod1, title: "Milk", price: "₹120", weight: "1L" },
-  { id: 2, img: prod2, title: "Curd", price: "₹95", weight: "320g" },
-  { id: 3, img: prod3, title: "Ghee", price: "₹495", weight: "200ml", oldPrice: "₹550" },
-  { id: 4, img: prod4, title: "Paneer", price: "₹195", weight: "200g" },
-  { id: 5, img: prod5, title: "Protein Wafer Bar", price: "₹60", weight: "40g" },
-  { id: 6, img: prod6, title: "Protein Box Pack", price: "₹475", weight: "320g" },
+  { id: 1, img: prod1, title: "Milk", price: "₹120", weight: "1L", path: "/shop/milk" },
+  { id: 2, img: prod2, title: "Curd", price: "₹95", weight: "320g", path: "/shop/curd" },
+  { id: 3, img: prod3, title: "Ghee", price: "₹495", weight: "200ml", oldPrice: "₹550", path: "/shop/ghee" },
+  { id: 4, img: prod4, title: "Paneer", price: "₹195", weight: "200g", path: "/shop/paneer" },
+  { id: 5, img: prod5, title: "Protein Wafer Bar", price: "₹60", weight: "40g", path: "/shop/protein-wafer-bar" },
+  { id: 6, img: prod6, title: "Protein Box Pack", price: "₹475", weight: "320g", path: "/shop/protein-box" },
 ];
 
 // === FEATURE DATA ===
@@ -39,11 +40,12 @@ const features = [
 ];
 
 const ProductCarousel = () => {
+  
+  const navigate = useNavigate(); // ⭐ NEW
 
-  // ✅ GLOBAL CART CONTEXT
+  // GLOBAL CART
   const { cartItems, increaseItem, decreaseItem } = useCart();
 
-  // === RESPONSIVE CAROUSEL SETTINGS ===
   const getItemsToShow = () => {
     const w = window.innerWidth;
     if (w < 768) return 1;
@@ -65,23 +67,6 @@ const ProductCarousel = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    if (!transitionRef.current) return;
-    if (current >= total * 2) {
-      transitionRef.current = false;
-      setTimeout(() => {
-        setCurrent(total);
-        transitionRef.current = true;
-      }, 500);
-    } else if (current < total) {
-      transitionRef.current = false;
-      setTimeout(() => {
-        setCurrent(total * 2 - 1);
-        transitionRef.current = true;
-      }, 500);
-    }
-  }, [current, total]);
-
   const nextSlide = () => setCurrent((prev) => prev + 1);
   const prevSlide = () => setCurrent((prev) => prev - 1);
 
@@ -99,9 +84,7 @@ const ProductCarousel = () => {
         <p className="product-subtitle">FARM TO TABLE</p>
         <h2 className="product-heading">From Our Pride Of Cows Family To Yours</h2>
         <p className="product-sub">
-          Our Promise - Holistic cow care with a round-the-clock system maintenance,
-          our Single Origin pure milk is delivered fresh, nutritious,
-          and creamy within 24 hours of milking.
+          Our Promise — Holistic cow care and fresh delivery within 24 hours of milking.
         </p>
 
         <div className="product-carousel-wrapper" {...handlers}>
@@ -117,7 +100,13 @@ const ProductCarousel = () => {
 
               return (
                 <div key={`${prod.id}-${index}`} className="product-carousel-item">
-                  <div className="product-card-inner">
+
+                  {/* ⭐ CARD CLICK = GO TO PAGE ⭐ */}
+                  <div
+                    className="product-card-inner"
+                    onClick={() => navigate(prod.path)}
+                    style={{ cursor: "pointer" }}
+                  >
                     <div className="product-image-wrap">
                       <img src={prod.img} alt={prod.title} loading="lazy" />
                     </div>
@@ -132,27 +121,29 @@ const ProductCarousel = () => {
 
                     <p className="product-title">{prod.title}</p>
 
-                    {/* ===== GLOBAL CART BUTTON / COUNTER ===== */}
+                    {/* ⭐ buttons should NOT trigger routing */}
                     {qty === 0 ? (
                       <button
                         className="product-cta"
-                        onClick={() => increaseItem(prod.id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          increaseItem(prod.id);
+                        }}
                       >
                         Add to Cart
                       </button>
                     ) : (
-                      <div className="qty-box">
-                        <button className="qty-btn" onClick={() => decreaseItem(prod.id)}>
-                          –
-                        </button>
+                      <div
+                        className="qty-box"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <button className="qty-btn" onClick={() => decreaseItem(prod.id)}>–</button>
                         <span className="qty-value">{qty}</span>
-                        <button className="qty-btn" onClick={() => increaseItem(prod.id)}>
-                          +
-                        </button>
+                        <button className="qty-btn" onClick={() => increaseItem(prod.id)}>+</button>
                       </div>
                     )}
-
                   </div>
+
                 </div>
               );
             })}
