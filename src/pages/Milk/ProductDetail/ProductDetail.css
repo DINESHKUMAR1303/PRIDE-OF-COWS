@@ -1,23 +1,23 @@
 /* =======================================
-   MAIN WRAPPER – FIXED (no more hiding on mobile)
+   MAIN WRAPPER – FIXED 
 ======================================= */
 .pd-wrapper {
   width: 100%;
-  min-height: 100vh;
+  min-height: auto !important;
   display: flex;
   justify-content: center;
   background: #f4f4f4;
   padding: 20px 16px;
   box-sizing: border-box;
-  overflow-x: hidden; /* kept only on x-axis */
+  overflow-x: hidden;
 }
 
-/* Critical fix: allow vertical scroll if needed */
 html, body {
   overflow-x: hidden;
   overflow-y: auto;
 }
 
+/* MAIN CONTENT BOX */
 .pd-main-box {
   width: 95%;
   max-width: 1400px;
@@ -29,7 +29,7 @@ html, body {
   box-sizing: border-box;
 }
 
-/* ===================================== LEFT SIDE – UNCHANGED ==================================== */
+/* ===================================== LEFT SIDE ==================================== */
 .pd-left {
   display: flex;
   gap: 25px;
@@ -76,7 +76,7 @@ html, body {
   object-fit: contain;
 }
 
-/* ===================================== RIGHT SIDE – UNCHANGED ==================================== */
+/* ===================================== RIGHT SIDE ==================================== */
 .pd-right {
   flex: 1;
   min-width: 0;
@@ -87,14 +87,23 @@ html, body {
 .pd-desc { margin-top: -20px; line-height: 1.7; width: 90%; color: #333; }
 .pd-price { margin: -15px 0 -20px; font-size: 24px; font-family: suranna, serif; }
 .pd-price-note { color: #666; margin-bottom: 10px; }
-.pd-crown { display: flex; align-items: center; gap: 10px; color: #c7a045; font-weight: 600; margin-top: 10px; }
+
+/* ⭐ NEW → Center Crown Text on small screens */
+.pd-crown {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #c7a045;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
 .pd-crown-icon { width: 22px; }
 
 /* ===================================== QUANTITY BOX ==================================== */
 .pd-qty-container {
   width: 100%;
   max-width: 480px;
-  height: auto;
   min-height: 56px;
   background: #f5f1f8;
   border: 1px solid #e3e0e8;
@@ -121,10 +130,11 @@ html, body {
   flex-wrap: wrap;
 }
 
+/* ⭐ Improved Responsive Buttons */
 .pd-buy-now,
 .pd-subscribe {
-  min-width: 240px;
-  width: 256px;
+  width: 260px;
+  max-width: 100%;
   height: 47px;
   padding: 16px 0;
   border-radius: 14px;
@@ -133,6 +143,7 @@ html, body {
   border: none;
   cursor: pointer;
   text-align: center;
+  transition: 0.25s ease-in-out;
 }
 
 .pd-buy-now { background: #0C3B60; color: white; }
@@ -168,25 +179,60 @@ html, body {
 }
 .pd-change-date-btn img { width: 20px; }
 
+/* =====================================================================
+     ⭐ POPUP — PERFECT CART ALIGNMENT
+===================================================================== */
+.added-popup {
+  position: fixed;
+  top: 78px;
+  right: 54px;
+  background: #0C3B60;
+  color: white;
+  padding: 14px 22px;
+  border-radius: 14px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  animation: slideDown 0.35s ease-out;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.popup-arrow {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 12px solid #0C3B60;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 /* =====================================
-   RESPONSIVE – CENTERED BELOW 1440px (NO HIDING)
+   ⭐ BUTTON CENTER BELOW 1440PX
 ======================================== */
 @media (max-width: 1439px) {
+  .pd-buttons {
+    justify-content: center !important;
+  }
+
   .pd-qty-container,
-  .pd-buttons,
   .pd-delivery-box {
-    width: 100%;
-    max-width: 520px;
     margin-left: auto;
     margin-right: auto;
   }
-
-  .pd-buttons,
-  .pd-delivery-box {
-    justify-content: center;
-  }
 }
 
+/* ===================================== 1024px ==================================== */
 @media (max-width: 1024px) {
   .pd-main-box {
     flex-direction: column;
@@ -196,45 +242,40 @@ html, body {
   }
 
   .pd-left { justify-content: center; }
-  .pd-right { text-align: center; align-items: center; }
+  .pd-right { text-align: center; }
   .pd-desc { width: 100%; text-align: center; }
 
+  /* ⭐ NEW — center crown */
+  .pd-crown {
+    justify-content: center;
+  }
+
+  /* ⭐ MORE RESPONSIVE BUTTONS */
   .pd-buttons {
-    flex-direction: column;
-    gap: 16px;
+    width: 100%;
+    justify-content: center !important;
   }
 
   .pd-buy-now,
   .pd-subscribe {
-    width: 100%;
-    min-width: unset;
+    width: 90%;
+    max-width: 420px;
   }
 
   .pd-delivery-box {
     width: 80%;
     flex-direction: column;
     text-align: center;
-    gap: 18px;
-    padding: 20px;
-  }
-
-  .pd-change-date-btn {
-    width: 100%;
-    max-width: 380px;
-    justify-content: center;
-    margin: 0 auto;
   }
 }
 
+/* ===================================== 768px ==================================== */
 @media (max-width: 768px) {
-  .pd-wrapper {
-    padding: 16px 12px;
-  }
+  .pd-wrapper { padding: 16px 12px; }
 
   .pd-left {
     flex-direction: column;
     align-items: center;
-    gap: 20px;
   }
 
   .pd-thumbnails {
@@ -242,8 +283,6 @@ html, body {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 12px;
-    padding-top: 0;
   }
 
   .pd-main-image-box {
@@ -252,20 +291,74 @@ html, body {
     height: 480px;
   }
 
-  .pd-main-img { width: 94%; }
+  .pd-title { font-size: 36px; }
 
-  .pd-title { font-size: 36px; text-align: center; }
+  /* ⭐ center crown on small screens */
+  .pd-crown {
+    justify-content: center;
+  }
+
+  /* ⭐ buttons full-width */
+  .pd-buy-now,
+  .pd-subscribe {
+    width: 100%;
+    max-width: 380px;
+  }
+
+  .added-popup {
+    right: 12px;
+    top: 70px;
+  }
 }
 
+/* ===================================== 480px ==================================== */
 @media (max-width: 480px) {
   .pd-main-image-box { max-width: 340px; height: 380px; }
-  .pd-main-img { width: 92%; }
   .pd-thumbnail { width: 75px; height: 82px; }
   .pd-title { font-size: 30px; }
+
+  /* ⭐ center crown */
+  .pd-crown {
+    justify-content: center;
+  }
+
+  /* ⭐ buttons width */
+  .pd-buy-now,
+  .pd-subscribe {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .added-popup {
+    top: 65px;
+    right: 10px;
+    padding: 12px 18px;
+  }
+
+  .pd-main-img { width: 100%; }
 }
 
+/* ===================================== 360px ==================================== */
 @media (max-width: 360px) {
   .pd-main-image-box { max-width: 300px; height: 340px; }
   .pd-thumbnail { width: 68px; height: 74px; }
   .pd-title { font-size: 28px; }
+
+  /* ⭐ center crown */
+  .pd-crown {
+    justify-content: center;
+  }
+
+  .pd-buy-now,
+  .pd-subscribe {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .added-popup {
+    right: 8px;
+    padding: 10px 16px;
+  }
+
+  .pd-main-img { width: 100%; }
 }
