@@ -1,24 +1,39 @@
 @import url('https://fonts.googleapis.com/css2?family=Suranna&display=swap');
 
+/* ===== STICKY FIX — REQUIRED ===== */
+html, body {
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+}
+
+* {
+  overscroll-behavior: auto !important;
+}
+
+
+
 /* ============================= */
 /* === Base Navbar (Desktop) === */
 /* ============================= */
 .navbar {
   display: flex;
   justify-content: space-between;
-  align-items: center; /* ✅ fix: center vertically so login/cart fully visible */
-  padding: 16px 150px; /* ✅ slight more padding for breathing room */
+  align-items: center;
+  padding: 16px 150px;
   background: #f4f4f4;
   border-bottom: 1px solid #eee;
   box-shadow: 0 6px 20px -5px rgba(163, 163, 163, 0.1882352941);
   color: #193b61;
 
-  /* ✅ Sticky Fix */
+  /* Sticky */
   position: sticky;
   top: 0;
   z-index: 1100;
   box-sizing: border-box;
 }
+
+/* ... (YOUR ENTIRE CSS REMAINS EXACTLY THE SAME, NO CHANGES) ... */
+
 
 /* ✅ Optional subtle shadow when sticky (you can keep or remove) */
 .navbar.sticky {

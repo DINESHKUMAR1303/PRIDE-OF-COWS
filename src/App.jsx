@@ -1,27 +1,25 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-// ⭐ PAGES
+// Pages
 import Home from "./pages/Home";
 import AllProducts from "./pages/AllProducts/AllProducts";
 import Cart from "./pages/Cart/Cart";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions/TermsConditions";
 
-// ⭐ CATEGORY PAGES (YOU WILL ADD COMPONENTS LATER)
-import Milk from "./pages/Milk/Milk";      // <-- NEW
-// import Ghee from "./pages/Ghee/Ghee";   // (optional future)
-// import Curd from "./pages/Curd/Curd";   // (optional future)
+// Category Pages
+import Milk from "./pages/Milk/Milk";
 
-// ⭐ COMPONENTS
+// Components
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import NotificationBar from "./components/NotificationBar/NotificationBar";
 
-// ⭐ CONTEXT
+// Context
 import { CartProvider } from "./context/CartContext";
 
-// ⭐ SCROLL TOP FIX
+// Scroll Reset
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 import "./App.css";
@@ -31,39 +29,37 @@ const App = () => {
     <BrowserRouter>
       <CartProvider>
 
-        {/* Always scroll to top */}
+        {/* Fix scroll to top on route change */}
         <ScrollToTop />
 
-        {/* Top layout elements */}
+        {/* --- ALWAYS AT TOP --- */}
         <NotificationBar />
         <Navbar />
 
-        <Routes>
+        {/* --- PAGE WRAPPER (IMPORTANT FIX) --- */}
+        <div className="page-wrapper">
+          <Routes>
 
-          {/* HOME */}
-          <Route path="/" element={<Home />} />
+            {/* Home */}
+            <Route path="/" element={<Home />} />
 
-          {/* SHOP - ALL PRODUCTS */}
-          <Route path="/shop/all" element={<AllProducts />} />
+            {/* All Products */}
+            <Route path="/shop/all" element={<AllProducts />} />
 
-          {/* ⭐ CATEGORY ROUTES (CUSTOM PAGES) */}
-          <Route path="/shop/milk" element={<Milk />} />     {/* NEW */}
-          {/* <Route path="/shop/ghee" element={<Ghee />} /> */}
-          {/* <Route path="/shop/curd" element={<Curd />} /> */}
-          {/* Add more when needed */}
+            {/* Milk */}
+            <Route path="/shop/milk" element={<Milk />} />
 
-          {/* CART */}
-          <Route path="/cart" element={<Cart />} />
+            {/* Cart */}
+            <Route path="/cart" element={<Cart />} />
 
-          {/* PRIVACY POLICY */}
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            {/* Policy Pages */}
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-and-conditions" element={<TermsConditions />} />
 
-          {/* TERMS & CONDITIONS */}
-          <Route path="/terms-and-conditions" element={<TermsConditions />} />
+          </Routes>
+        </div>
 
-        </Routes>
-
-        {/* Footer should always be at bottom */}
+        {/* Footer Always at Bottom */}
         <Footer />
 
       </CartProvider>
