@@ -1,0 +1,222 @@
+/* ========================================= */
+/* LIFESTYLE SECTION                         */
+/* ========================================= */
+
+.lifestyle-outer {
+  background-color: #f4f4f4;
+  text-align: center;
+  padding: 0px 0 80px;
+  font-family: "Suranna", serif;
+  color: #1a1a1a;
+  overflow: hidden;
+}
+
+.lifestyle-title {
+  font-size: 58px;
+  font-weight: 400;
+  margin-bottom: 60px;
+  line-height: 1.2;
+  color: #2b2b2b;
+}
+
+/* ========================================= */
+/* CAROUSEL WRAPPER                          */
+/* ========================================= */
+
+.lifestyle-cards-wrapper {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+  padding: 0;
+}
+
+.lifestyle-cards-inner {
+  display: flex;
+  will-change: transform;
+  gap: 20px;
+}
+
+/* ========================================= */
+/* CARD — BASE                               */
+/* ========================================= */
+
+.lifestyle-card {
+  background: #f4f4f4;
+  width: 300px;
+  min-width: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  cursor: grab;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.lifestyle-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.lifestyle-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: contain;
+  background: #f4f4f4;
+  padding: 10px 0;
+}
+
+.lifestyle-card p {
+  font-size: 20px;
+  line-height: 1.5;
+  padding: 20px;
+  color: #333;
+  text-align: center;
+  min-height: 80px;
+}
+
+/* ========================================= */
+/* MOBILE — EXACT 320PX CENTERED             */
+/* ========================================= */
+
+@media (max-width: 767px) {
+  .lifestyle-cards-wrapper {
+    padding-left: calc((100vw - 320px) / 2);
+    padding-right: calc((100vw - 320px) / 2);
+  }
+
+  .lifestyle-cards-inner {
+    gap: 20px;
+  }
+
+  .lifestyle-card {
+    width: 320px !important;
+    min-width: 320px !important;
+  }
+
+  .lifestyle-title {
+    font-size: 34px;
+    margin-bottom: 30px;
+  }
+}
+
+/* ========================================= */
+/* TABLET — EXACT 2 FULL CARDS CENTERED      */
+/* ========================================= */
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .lifestyle-cards-wrapper {
+    padding-left: calc((100vw - (2 * 360px) - 20px) / 2);
+    padding-right: calc((100vw - (2 * 360px) - 20px) / 2);
+  }
+
+  .lifestyle-card {
+    flex: 0 0 360px !important;
+    max-width: 360px !important;
+    min-width: 360px !important;
+  }
+}
+
+/* ========================================= */
+/* SPECIAL FIX — 1024px to 1199px            */
+/* ========================================= */
+
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .lifestyle-cards-wrapper {
+    padding-left: calc((100vw - (2 * 380px) - 24px) / 2);
+    padding-right: calc((100vw - (2 * 380px) - 24px) / 2);
+  }
+
+  .lifestyle-cards-inner {
+    gap: 24px;
+  }
+
+  .lifestyle-card {
+    flex: 0 0 380px !important;
+    max-width: 380px !important;
+    min-width: 380px !important;
+  }
+}
+
+/* ========================================= */
+/* LAPTOP — 3 CARDS                          */
+/* ========================================= */
+
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .lifestyle-card {
+    flex: 0 0 33.333%;
+  }
+}
+
+/* ========================================= */
+/* DESKTOP — 1440px: 3 CARDS + CUT EFFECT    */
+/* ========================================= */
+
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .lifestyle-card {
+    flex: 0 0 360px !important;
+    max-width: 360px !important;
+    min-width: 360px !important;
+  }
+
+  .lifestyle-cards-wrapper {
+    padding-left: calc((100vw - (3 * 360px) - (2 * 20px)) / 2);
+    padding-right: calc((100vw - (3 * 360px) - (2 * 20px)) / 2);
+  }
+
+  .lifestyle-cards-inner {
+    gap: 20px;
+  }
+}
+
+/* ========================================= */
+/* LARGE DESKTOP — 5 CARDS                   */
+/* ========================================= */
+
+@media (min-width: 1920px) {
+  .lifestyle-card {
+    flex: 0 0 20%;
+  }
+}
+
+/* ========================================= */
+/* BUTTON                                    */
+/* ========================================= */
+
+.view-all {
+  margin-top: 40px;
+  background-color: #ae8a49;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 14px 50px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.view-all:hover {
+  background: #fff;
+  color: #b38a3b;
+  transform: scale(1.05);
+}
+
+/* ========================================= */
+/* CONTROLS                                  */
+/* ========================================= */
+
+.carousel-controls {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.carousel-controls .line {
+  flex-grow: 1;
+  height: 1px;
+  background: #ccc;
+}
