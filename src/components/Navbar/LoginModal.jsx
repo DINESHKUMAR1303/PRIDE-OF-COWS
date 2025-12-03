@@ -3,51 +3,49 @@ import "./LoginModal.css";
 
 import logo from "./images/logo.png";
 import sideImage from "./images/milk.webp";
+import { registerUser, loginUser } from "../../api/auth"; // ⭐ API IMPORT
 
 const LoginModal = ({ onClose }) => {
   const [closing, setClosing] = useState(false);
   const [activeTab, setActiveTab] = useState("login");
-  
-  // Form states
-  const [loginData, setLoginData] = useState({ identifier: "", password: "" });
+
+  // ========================
+  // LOGIN STATES
+  // ========================
+  const [loginData, setLoginData] = useState({
+    login: "",
+    password: "",
+  });
+
+  // ========================
+  // REGISTER STATES
+  // ========================
   const [registerData, setRegisterData] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    phone: "",
+    telephone: "",
     password: "",
     confirmPassword: "",
     address: "",
     city: "",
-    country: "India", // Default to India for the brand context
-    state: ""
+    country: "India",
+    state: "",
   });
 
   const [errors, setErrors] = useState({});
+  const [apiError, setApiError] = useState("");
 
+  // Lock scroll when modal opens
   useEffect(() => {
     document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "auto";
-    };
+    return () => (document.body.style.overflow = "auto");
   }, []);
 
-  const handleClose = (e) => {
-    e?.preventDefault();
+  const handleClose = () => {
     setClosing(true);
-    setTimeout(() => {
-      onClose();
-    }, 400);
+    setTimeout(() => onClose(), 400);
   };
-
-  // Close on Escape key
-  useEffect(() => {
-    const handleEsc = (e) => {
-      if (e.key === "Escape") handleClose();
-    };
-    window.addEventListener("keydown", handleEsc);
-    return () => window.removeEventListener("keydown", handleEsc);
-  }, []);
 
   const handleLoginChange = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
@@ -57,32 +55,60 @@ const LoginModal = ({ onClose }) => {
     setRegisterData({ ...registerData, [e.target.name]: e.target.value });
   };
 
-  const handleLoginSubmit = (e) => {
+  // ========================
+  // LOGIN SUBMIT
+  // ========================
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    // Add your login logic here (e.g., API call)
-    console.log("Login:", loginData);
+    setApiError("");
+
+    try {
+      const res = await loginUser({
+        login: loginData.login,
+        password: loginData.password,
+      });
+
+      // Save JWT token
+      localStorage.setItem("poc_token", res.token);
+
+      alert("Login successful!");
+      handleClose();
+    } catch (err) {
+      setApiError(err.message || "Login failed");
+    }
   };
 
-  const handleRegisterSubmit = (e) => {
+  // ========================
+  // REGISTER SUBMIT
+  // ========================
+  const handleRegisterSubmit = async (e) => {
     e.preventDefault();
-    // Basic validation example
+    setApiError("");
+
     const newErrors = {};
+
     if (registerData.password !== registerData.confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match";
     }
     if (!registerData.email.includes("@")) {
-      newErrors.email = "Invalid email";
+      newErrors.email = "Invalid email address";
     }
-    // Add more validations as needed
+
     setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0) {
-      // Add your register logic here (e.g., API call)
-      console.log("Register:", registerData);
+    if (Object.keys(newErrors).length > 0) return;
+
+    try {
+      const res = await registerUser(registerData);
+
+      alert("Registration successful!");
+      handleClose();
+    } catch (err) {
+      setApiError(err.message || "Registration failed");
     }
   };
 
-  // Sample country options (premium: sorted, common ones)
+  // Dropdown data
   const countries = [
     "India",
     "United States",
@@ -90,43 +116,24 @@ const LoginModal = ({ onClose }) => {
     "Canada",
     "Australia",
     "Germany",
-    "France",
-    
   ];
 
-  // Sample state options (focusing on India for brand, with US as fallback; in production, make dynamic)
   const indianStates = [
     "Andhra Pradesh",
-    "Arunachal Pradesh",
-    "Assam",
     "Bihar",
-    "Chhattisgarh",
-    "Goa",
+    "Delhi",
     "Gujarat",
     "Haryana",
-    "Himachal Pradesh",
-    "Jharkhand",
     "Karnataka",
     "Kerala",
-    "Madhya Pradesh",
     "Maharashtra",
-    "Manipur",
-    "Meghalaya",
-    "Mizoram",
-    "Nagaland",
-    "Odisha",
     "Punjab",
     "Rajasthan",
-    "Sikkim",
     "Tamil Nadu",
     "Telangana",
-    "Tripura",
     "Uttar Pradesh",
-    "Uttarakhand",
-    "West Bengal"
+    "West Bengal",
   ];
-
-  // For simplicity, using Indian states; enhance with conditional logic based on country in production
 
   return (
     <div className="login-modal-overlay" onClick={handleClose}>
@@ -137,49 +144,58 @@ const LoginModal = ({ onClose }) => {
         {/* Close Button */}
         <button className="modal-close-btn" onClick={handleClose}>✕</button>
 
-        {/* LEFT IMAGE PANEL */}
+        {/* LEFT IMAGE SECTION */}
         <div className="login-left">
-          <img src={sideImage} className="left-image" alt="Premium Milk" />
-          <img src={logo} className="left-logo" alt="Pride of Cows" />
+          <img src={sideImage} className="left-image" alt="Milk" />
+          <img src={logo} className="left-logo" alt="Brand Logo" />
         </div>
 
-        {/* RIGHT PANEL */}
+        {/* RIGHT FORM SECTION */}
         <div className="login-right">
-          {/* TAB BUTTONS */}
+
+          {/* TAB SWITCHER */}
           <div className="tabs">
             <button
               className={`tab-btn ${activeTab === "login" ? "active" : ""}`}
-              onClick={() => setActiveTab("login")}
+              onClick={() => {
+                setApiError("");
+                setActiveTab("login");
+              }}
             >
               Login
             </button>
+
             <button
               className={`tab-btn ${activeTab === "register" ? "active" : ""}`}
-              onClick={() => setActiveTab("register")}
+              onClick={() => {
+                setApiError("");
+                setActiveTab("register");
+              }}
             >
               Register
             </button>
           </div>
 
+          {/* ERROR MESSAGE */}
+          {apiError && <p className="api-error">{apiError}</p>}
+
           {/* LOGIN FORM */}
           {activeTab === "login" && (
             <form className="login-form" onSubmit={handleLoginSubmit}>
-              <h2 className="title">Welcome to Pride of Cows Family</h2>
+              <h2 className="title">Welcome Back</h2>
 
-              <label htmlFor="identifier">Email or Phone Number</label>
+              <label>Email or Phone Number</label>
               <input
-                id="identifier"
-                name="identifier"
+                name="login"
                 type="text"
-                placeholder="Enter your phone or email"
-                value={loginData.identifier}
+                placeholder="Enter email or phone"
+                value={loginData.login}
                 onChange={handleLoginChange}
                 required
               />
 
-              <label htmlFor="password">Password</label>
+              <label>Password</label>
               <input
-                id="password"
                 name="password"
                 type="password"
                 placeholder="Enter your password"
@@ -188,7 +204,9 @@ const LoginModal = ({ onClose }) => {
                 required
               />
 
-              <button type="submit" className="primary-btn">Login</button>
+              <button type="submit" className="primary-btn">
+                Login
+              </button>
 
               <p className="small-text">
                 By logging in, you agree to our <a href="#">Terms</a>.
@@ -199,28 +217,25 @@ const LoginModal = ({ onClose }) => {
           {/* REGISTER FORM */}
           {activeTab === "register" && (
             <form className="register-form" onSubmit={handleRegisterSubmit}>
-              <h2 className="title">Create Premium Account</h2>
+              <h2 className="title">Create Your Account</h2>
 
               <div className="two-inputs">
                 <div>
-                  <label htmlFor="firstName">First Name</label>
+                  <label>First Name</label>
                   <input
-                    id="firstName"
                     name="firstName"
                     type="text"
-                    placeholder="First Name"
                     value={registerData.firstName}
                     onChange={handleRegisterChange}
                     required
                   />
                 </div>
+
                 <div>
-                  <label htmlFor="lastName">Last Name</label>
+                  <label>Last Name</label>
                   <input
-                    id="lastName"
                     name="lastName"
                     type="text"
-                    placeholder="Last Name"
                     value={registerData.lastName}
                     onChange={handleRegisterChange}
                     required
@@ -228,69 +243,59 @@ const LoginModal = ({ onClose }) => {
                 </div>
               </div>
 
-              <label htmlFor="email">E-Mail</label>
+              <label>E-Mail</label>
               <input
-                id="email"
                 name="email"
                 type="email"
-                placeholder="Email"
                 value={registerData.email}
                 onChange={handleRegisterChange}
                 required
               />
               {errors.email && <p className="error-text">{errors.email}</p>}
 
-              <label htmlFor="phone">Telephone</label>
+              <label>Telephone</label>
               <input
-                id="phone"
-                name="phone"
-                type="tel"
-                placeholder="Phone Number"
-                value={registerData.phone}
+                name="telephone"
+                type="text"
+                value={registerData.telephone}
                 onChange={handleRegisterChange}
                 required
               />
 
-              <label htmlFor="password">Password</label>
+              <label>Password</label>
               <input
-                id="password"
                 name="password"
                 type="password"
-                placeholder="Password"
                 value={registerData.password}
                 onChange={handleRegisterChange}
                 required
               />
 
-              <label htmlFor="confirmPassword">Confirm Password</label>
+              <label>Confirm Password</label>
               <input
-                id="confirmPassword"
                 name="confirmPassword"
                 type="password"
-                placeholder="Re-enter Password"
                 value={registerData.confirmPassword}
                 onChange={handleRegisterChange}
                 required
               />
-              {errors.confirmPassword && <p className="error-text">{errors.confirmPassword}</p>}
+              {errors.confirmPassword && (
+                <p className="error-text">{errors.confirmPassword}</p>
+              )}
 
-              <label htmlFor="address">Address</label>
+              <label>Address</label>
               <input
-                id="address"
                 name="address"
                 type="text"
-                placeholder="Address Line"
                 value={registerData.address}
                 onChange={handleRegisterChange}
                 required
               />
 
-              <label htmlFor="city">City</label>
+              <label>City</label>
               <input
-                id="city"
                 name="city"
                 type="text"
-                placeholder="City"
                 value={registerData.city}
                 onChange={handleRegisterChange}
                 required
@@ -298,41 +303,42 @@ const LoginModal = ({ onClose }) => {
 
               <div className="two-inputs">
                 <div>
-                  <label htmlFor="country">Country</label>
+                  <label>Country</label>
                   <select
-                    id="country"
                     name="country"
                     value={registerData.country}
                     onChange={handleRegisterChange}
                     required
                   >
-                    {countries.map((country) => (
-                      <option key={country} value={country}>
-                        {country}
+                    {countries.map((c) => (
+                      <option key={c} value={c}>
+                        {c}
                       </option>
                     ))}
                   </select>
                 </div>
+
                 <div>
-                  <label htmlFor="state">Region / State</label>
+                  <label>State / Region</label>
                   <select
-                    id="state"
                     name="state"
                     value={registerData.state}
                     onChange={handleRegisterChange}
                     required
                   >
                     <option value="">Select State</option>
-                    {indianStates.map((state) => (
-                      <option key={state} value={state}>
-                        {state}
+                    {indianStates.map((s) => (
+                      <option key={s} value={s}>
+                        {s}
                       </option>
                     ))}
                   </select>
                 </div>
               </div>
 
-              <button type="submit" className="primary-btn">Register</button>
+              <button type="submit" className="primary-btn">
+                Register
+              </button>
 
               <p className="small-text">
                 By creating an account, you accept our <a href="#">Terms</a>.
