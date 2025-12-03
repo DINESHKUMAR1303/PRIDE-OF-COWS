@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 
+// ✅ IMPORT GLOBAL LOGIN CONTEXT
+import { useLogin } from "../../context/LoginContext/LoginContext";
+
 import "./Cart.css";
 
 // === PRODUCT IMAGES ===
@@ -12,7 +15,7 @@ import prod4 from "../../components/ProductCarousel/images/panner.png";
 import prod5 from "../../components/ProductCarousel/images/proteinbar.png";
 import prod6 from "../../components/ProductCarousel/images/proteinbarpack.png";
 
-// ⭐ DELIVERY ICON (ADD YOUR NEW ICON HERE)
+// ⭐ DELIVERY ICON
 import deliveryIcon from "./images/deliveryboy.svg";
 
 // === EMPTY CART IMAGE ===
@@ -30,6 +33,10 @@ const cartProducts = [
 
 const Cart = () => {
   const { cartItems, increaseItem, decreaseItem } = useCart();
+
+  // ✅ USE LOGIN CONTEXT
+  const { setLoginOpen } = useLogin();
+
   const cartList = Object.keys(cartItems).filter(
     (id) => cartProducts.find((p) => p.id === Number(id))
   );
@@ -86,8 +93,8 @@ const Cart = () => {
     return (
       <div className="empty-cart-container">
         <p className="empty-breadcrumb">
-          <Link to="/" className="crumb-link">Home</Link> / 
-          <Link to="/shop/all" className="crumb-link"> Shop</Link> / 
+          <Link to="/" className="crumb-link">Home</Link> /
+          <Link to="/shop/all" className="crumb-link"> Shop</Link> /
           <strong className="crumb-active"> Checkout</strong>
         </p>
 
@@ -115,8 +122,8 @@ const Cart = () => {
 
           {/* Breadcrumb */}
           <p className="checkout-breadcrumb">
-            <Link to="/" className="crumb-link">Home</Link> / 
-            <Link to="/shop/all" className="crumb-link"> Shop</Link> / 
+            <Link to="/" className="crumb-link">Home</Link> /
+            <Link to="/shop/all" className="crumb-link"> Shop</Link> /
             <strong className="crumb-active"> Checkout</strong>
           </p>
 
@@ -173,7 +180,7 @@ const Cart = () => {
                   <p className="cp-size">{item.weight}</p>
                   <p className="cp-price">₹{item.price}</p>
 
-                  {/* Delivery Box EXACT LIKE DESIGN */}
+                  {/* Delivery Box */}
                   <div className="cp-delivery-box">
                     <img src={deliveryIcon} alt="delivery" className="cp-delivery-icon" />
                     <div>
@@ -214,7 +221,7 @@ const Cart = () => {
           {/* Summary */}
           <div className="order-summary">
             <h3>
-              Order Details 
+              Order Details
               <span className="order-items-count">
                 ({itemCount} item{itemCount > 1 ? "s" : ""})
               </span>
@@ -237,7 +244,11 @@ const Cart = () => {
               <h2>₹{itemTotal}</h2>
             </div>
 
-            <button className="pay-btn">Proceed To Pay</button>
+            {/* ✅ OPEN LOGIN SLIDE HERE */}
+            <button className="pay-btn" onClick={() => setLoginOpen(true)}>
+              Proceed To Pay
+            </button>
+
           </div>
 
         </div>
@@ -255,36 +266,27 @@ const Cart = () => {
             </div>
 
             <form onSubmit={handleSaveAddress} className="address-form">
-              <input
-                type="text"
-                placeholder="Full Name"
+              <input type="text" placeholder="Full Name"
                 value={addressForm.name}
                 onChange={(e) => setAddressForm({ ...addressForm, name: e.target.value })}
               />
-              <input
-                type="text"
-                placeholder="House / Flat / Building"
+              <input type="text" placeholder="House / Flat / Building"
                 value={addressForm.line1}
                 onChange={(e) => setAddressForm({ ...addressForm, line1: e.target.value })}
               />
-              <input
-                type="text"
-                placeholder="Street / Area (optional)"
+              <input type="text" placeholder="Street / Area (optional)"
                 value={addressForm.line2}
                 onChange={(e) => setAddressForm({ ...addressForm, line2: e.target.value })}
               />
-              <input
-                type="text"
-                placeholder="City"
+              <input type="text" placeholder="City"
                 value={addressForm.city}
                 onChange={(e) => setAddressForm({ ...addressForm, city: e.target.value })}
               />
-              <input
-                type="text"
-                placeholder="Pincode"
+              <input type="text" placeholder="Pincode"
                 value={addressForm.pincode}
                 onChange={(e) => setAddressForm({ ...addressForm, pincode: e.target.value })}
               />
+
               <select
                 value={addressForm.label}
                 onChange={(e) => setAddressForm({ ...addressForm, label: e.target.value })}
@@ -363,12 +365,10 @@ const DatePickerModal = ({ selectedDate, onClose, onSelectDate }) => {
 
         <div className="date-modal-header">
           <button className="nav-circle" onClick={goPrevMonth}>‹</button>
-
           <div className="month-year">
             <span className="month-name">{monthLabel}</span>
             <span className="year-name">{viewYear}</span>
           </div>
-
           <button className="nav-circle" onClick={goNextMonth}>›</button>
         </div>
 

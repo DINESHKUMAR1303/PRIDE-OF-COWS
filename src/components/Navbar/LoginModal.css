@@ -1,11 +1,13 @@
-/* ===== Overlay ===== */
+/* ============================================
+   OVERLAY
+============================================ */
 .login-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.45);
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -13,21 +15,22 @@
   overflow: hidden;
 }
 
-/* ===== Modal Box ===== */
+/* ============================================
+   MODAL CONTAINER
+============================================ */
 .login-modal {
-  background:  #f4f4f4;
-  width: 540px;
+  width: 900px;
+  max-width: 95%;
   height: 100vh;
-  box-shadow: -4px 0 25px rgba(0, 0, 0, 0.15);
-  overflow-y: auto;
-  position: relative;
+  background: #ffffff;
   display: flex;
-  flex-direction: column;
+  box-shadow: -4px 0 25px rgba(0, 0, 0, 0.18);
+  position: relative;
+  overflow: hidden;
   border-radius: 0;
-  font-family: "Inter", sans-serif;
 }
 
-/* ===== Animations ===== */
+/* Slide-in Animations */
 @keyframes slideInRight {
   from {
     transform: translateX(100%);
@@ -38,7 +41,6 @@
     opacity: 1;
   }
 }
-
 @keyframes slideOutRight {
   from {
     transform: translateX(0);
@@ -49,160 +51,211 @@
     opacity: 0;
   }
 }
-
 .slide-in {
   animation: slideInRight 0.4s ease forwards;
 }
-
 .slide-out {
   animation: slideOutRight 0.4s ease forwards;
 }
 
-/* ===== Close Button ===== */
-.register__close {
+/* ============================================
+   CLOSE BUTTON
+============================================ */
+.modal-close-btn {
   position: absolute;
-  top: 26px;
-  right: 26px;
+  top: 20px;
+  right: 22px;
+  background: #f2f2f2;
+  border: 1px solid #a8a8a8;
   width: 32px;
   height: 32px;
+  border-radius: 50%;
+  font-size: 18px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
+  z-index: 20;
 }
 
-.register__close svg {
-  width: 26px;
-  height: 26px;
-}
-
-.register__close circle {
-  fill: #f2f2f2;
-  stroke: #b1b1b1;
-}
-
-.register__close path {
-  stroke: #919191;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-}
-
-/* ===== Image + Logo ===== */
-.image-container {
+/* ============================================
+   LEFT IMAGE PANEL
+============================================ */
+/* LEFT IMAGE PANEL */
+.login-left {
+  width: 40%;
+  height: 100vh;
   position: relative;
-  width: 100%;
-  height: 260px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
   overflow: hidden;
+  border-right: 1px solid #eee;
 }
 
-.background-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.left-image {
+  width: auto;
+  height: 85%;
+  object-fit: contain;
+  display: block;
 }
 
-.overlay-logo {
+.left-logo {
   position: absolute;
-  top: 26px;
-  left: 32px;
-  width: 140px;
-  z-index: 2;
+  top: 20px;
+  left: 20px;
+  width: 130px;
 }
 
-/* ===== Modal Body ===== */
-.login-modal-body {
-  padding: 36px 40px;
-  padding-top: 20px;
+/* ============================================
+   RIGHT PANEL
+============================================ */
+.login-right {
+  width: 58%;
+  background: #ffffff;
+  padding: 40px 50px;
+  overflow-y: auto;
+  position: relative;
 }
 
-.login-modal-body h2 {
-  font-family: "Suranna", serif;
+/* Remove scrollbar */
+.login-right::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* ============================================
+   TABS (Login | Register)
+============================================ */
+.tabs {
+  display: flex;
+  gap: 0px;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #eee;
+}
+
+.tab-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  font-size: 18px;
+  padding: 15px 0;
+  cursor: pointer;
+  font-weight: 600;
+  color: #666;
+  transition: 0.3s ease;
+}
+
+.tab-btn.active {
+  color: #002147;
+  border-bottom: 3px solid #c29d5f;
+}
+
+/* ============================================
+   TITLES
+============================================ */
+.title {
   font-size: 28px;
+  font-family: "Suranna", serif;
   color: #1a1a1a;
-  font-weight: 500;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 10px;
-  margin-bottom: 30px;
-  line-height: 1.4;
+  font-weight: 300;
+  margin-bottom: 20px;
 }
 
-/* ===== Input & Label ===== */
-.label {
-  display: block;
-  text-align: left;
-  font-size: 15px;
-  color: #555;
+/* ============================================
+   LABELS & INPUTS
+============================================ */
+label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
   margin-bottom: 6px;
-  font-weight: 500;
+  display: block;
 }
 
-
-.login-input {
-  display: block;
+input {
   width: 100%;
-  padding: 14px 18px;
+  padding: 13px 16px;
   border-radius: 28px;
   border: 1px solid #ccc;
   outline: none;
+  margin-bottom: 18px;
   font-size: 15px;
-  color: #333;
-  margin-bottom: 22px;
-  transition: all 0.3s ease;
-  box-sizing: border-box;
+  transition: 0.3s ease;
 }
 
-.login-input:focus {
-  border-color: #002856;
-  box-shadow: 0 0 4px rgba(0, 40, 86, 0.25);
+input:focus {
+  border-color: #002147;
+  box-shadow: 0px 0px 4px rgba(0, 33, 71, 0.3);
 }
 
-/* ===== Button ===== */
-.send-otp-btn {
-  display: block;
+/* Two-column input groups */
+.two-inputs {
+  display: flex;
+  gap: 15px;
+}
+
+/* ============================================
+   BUTTONS
+============================================ */
+.primary-btn {
   width: 100%;
-  background: #002856;
-  color: #fff;
+  background: #002147;
+  color: white;
   border: none;
   padding: 14px;
-  border-radius: 28px;
-  font-weight: 700;
+  border-radius: 30px;
   font-size: 16px;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.3s ease;
-  margin-top: 4px;
-  box-sizing: border-box;
+  transition: 0.3s;
+  margin-top: 10px;
 }
 
-.send-otp-btn:hover {
-  background: #001a40;
+.primary-btn:hover {
+  background: #00142d;
 }
 
-/* ===== Terms ===== */
-.terms {
-  font-size: 14px;
+/* ============================================
+   SMALL TEXT
+============================================ */
+.small-text {
+  font-size: 13px;
   color: #555;
-  text-align: left;
-  margin-top: 24px;
-  line-height: 1.6;
-  display: flex;
-  align-items: center;
+  margin-top: 10px;
 }
 
-.terms input {
-  margin-right: 8px;
-}
-
-.terms a {
-  color: #002856;
+.small-text a {
+  color: #002147;
   text-decoration: underline;
 }
 
-/* ===== Scrollbar ===== */
-.login-modal::-webkit-scrollbar {
-  width: 6px;
+/* ============================================
+   RESPONSIVE DESIGN (Mobile & Tablet)
+============================================ */
+
+@media (max-width: 900px) {
+  .login-modal {
+    width: 100%;
+  }
 }
 
-.login-modal::-webkit-scrollbar-thumb {
-  background: transparent;
+@media (max-width: 768px) {
+  .login-left {
+    display: none;
+  }
+  .login-right {
+    width: 100%;
+    padding: 30px 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tab-btn {
+    font-size: 16px;
+  }
+  .title {
+    font-size: 22px;
+  }
+  input {
+    font-size: 14px;
+  }
 }

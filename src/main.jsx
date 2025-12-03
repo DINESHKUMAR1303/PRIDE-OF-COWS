@@ -6,11 +6,16 @@ import "./index.css";
 // ✅ Import CartProvider
 import { CartProvider } from "./context/CartContext";
 
+// ✅ Import LoginProvider (NEW)
+import { LoginProvider } from "./context/LoginContext/LoginContext";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {/* ✅ Wrap your entire app here */}
-    <CartProvider>
-      <App />
-    </CartProvider>
+    {/* Wrap ENTIRE APP inside BOTH providers */}
+    <LoginProvider>
+      <CartProvider>
+        <App />
+      </CartProvider>
+    </LoginProvider>
   </React.StrictMode>
 );

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./LoginModal.css";
+
 import logo from "./images/logo.png";
-import milkPour from "./images/registerimage.jpg";
+import sideImage from "./images/milk.webp";
 
 const LoginModal = ({ onClose }) => {
   const [closing, setClosing] = useState(false);
+  const [activeTab, setActiveTab] = useState("login"); // "login" | "register"
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -24,47 +26,107 @@ const LoginModal = ({ onClose }) => {
         className={`login-modal ${closing ? "slide-out" : "slide-in"}`}
         onClick={(e) => e.stopPropagation()}
       >
+
         {/* Close Button */}
-        <div className="register__close" onClick={handleClose}>
-          <svg
-            width="22"
-            height="22"
-            viewBox="0 0 22 22"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle cx="11" cy="11" r="10" fill="#F2F2F2" stroke="#919191" />
-            <path
-              d="M14.3327 14.3332L7.66602 7.6665M14.3327 7.6665L7.66602 14.3332"
-              stroke="#919191"
-              strokeLinecap="round"
-            />
-          </svg>
+        <button className="modal-close-btn" onClick={handleClose}>✕</button>
+
+        {/* LEFT IMAGE PANEL */}
+        <div className="login-left">
+          <img src={sideImage} className="left-image" alt="Milk" />
+          <img src={logo} className="left-logo" alt="Brand" />
         </div>
 
-        {/* Image Section */}
-        <div className="image-container">
-          <img src={milkPour} alt="Pouring milk" className="background-image" />
-          <img src={logo} alt="Pride of Cows Logo" className="overlay-logo" />
-        </div>
+        {/* RIGHT PANEL */}
+        <div className="login-right">
 
-        {/* Body */}
-        <div className="login-modal-body">
-          <h2>Welcome to the Pride of Cows Family.</h2>
+          {/* TAB BUTTONS */}
+          <div className="tabs">
+            <button
+              className={`tab-btn ${activeTab === "login" ? "active" : ""}`}
+              onClick={() => setActiveTab("login")}
+            >
+              Login
+            </button>
 
-          <label className="label">Phone number</label>
-          <input
-            type="text"
-            placeholder="Enter valid 10-digit phone number"
-            className="login-input"
-          />
+            <button
+              className={`tab-btn ${activeTab === "register" ? "active" : ""}`}
+              onClick={() => setActiveTab("register")}
+            >
+              Register
+            </button>
+          </div>
 
-          <button className="send-otp-btn">Send OTP</button>
+          {/* LOGIN FORM */}
+          {activeTab === "login" && (
+            <div className="login-form">
+              <h2 className="title">Welcome to Pride of Cows Family</h2>
 
-          <p className="terms">
-            <input type="checkbox" /> By signing in you agree to our{" "}
-            <a href="#">Terms & Conditions</a>
-          </p>
+              <label> Email or Phone Number </label>
+              <input type="text" placeholder="Enter your phone or email" />
+
+              <label>Password</label>
+              <input type="password" placeholder="Enter your password" />
+
+              <button className="primary-btn">Login</button>
+
+              <p className="small-text">
+                By logging in, you agree to our <a href="#">Terms</a>.
+              </p>
+            </div>
+          )}
+
+          {/* REGISTER FORM */}
+          {activeTab === "register" && (
+            <div className="register-form">
+              <h2 className="title">Create Account</h2>
+
+              <div className="two-inputs">
+                <div>
+                  <label>First Name</label>
+                  <input type="text" placeholder="First Name" />
+                </div>
+                <div>
+                  <label>Last Name</label>
+                  <input type="text" placeholder="Last Name" />
+                </div>
+              </div>
+
+              <label>E-Mail</label>
+              <input type="email" placeholder="Email" />
+
+              <label>Telephone</label>
+              <input type="text" placeholder="Phone Number" />
+
+              <label>Password</label>
+              <input type="password" placeholder="Password" />
+
+              <label>Confirm Password</label>
+              <input type="password" placeholder="Re-enter Password" />
+
+              <label>Address</label>
+              <input type="text" placeholder="Address Line" />
+
+              <label>City</label>
+              <input type="text" placeholder="City" />
+
+              <div className="two-inputs">
+                <div>
+                  <label>Country</label>
+                  <input type="text" placeholder="Country" />
+                </div>
+                <div>
+                  <label>Region / State</label>
+                  <input type="text" placeholder="State" />
+                </div>
+              </div>
+
+              <button className="primary-btn">Register</button>
+
+              <p className="small-text">
+                By creating an account, you accept our <a href="#">Terms</a>.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

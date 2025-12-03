@@ -6,6 +6,9 @@ import "./Navbar.css";
 // === IMPORT GLOBAL CART CONTEXT ===
 import { useCart } from "../../context/CartContext";
 
+// ✅ IMPORT GLOBAL LOGIN CONTEXT
+import { useLogin } from "../../context/LoginContext/LoginContext";
+
 // === Icons & Images ===
 import logo from "../../images/icons/logo.png";
 import loginIcon from "../../images/icons/user.svg";
@@ -61,9 +64,12 @@ const Navbar = () => {
   // === GET GLOBAL CART COUNT ===
   const { cartCount } = useCart();
 
+  // ✅ USE GLOBAL LOGIN CONTEXT
+  const { loginOpen, setLoginOpen } = useLogin();
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false);
+
   const [location, setLocation] = useState("ENTER A PINCODE");
   const [pincode, setPincode] = useState("");
   const [place, setPlace] = useState("");
@@ -103,8 +109,7 @@ const Navbar = () => {
     if (savedLocation) setLocation(savedLocation);
 
     const handleScroll = () => {
-      if (window.scrollY > 150) setIsSticky(true);
-      else setIsSticky(false);
+      setIsSticky(window.scrollY > 150);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -132,7 +137,7 @@ const Navbar = () => {
   return (
     <>
       <nav ref={navRef} className={`navbar ${isSticky ? "sticky" : ""}`}>
-
+        
         {/* LEFT SIDE */}
         <div className="navbar-left">
           <Link to="/">
@@ -149,7 +154,7 @@ const Navbar = () => {
         <div className="navbar-center">
           <ul className="menu">
 
-            {/* SHOP */}
+            {/* SHOP DROPDOWN */}
             <li
               className={`dropdown ${openDropdown === "shop" ? "open" : ""}`}
               onMouseEnter={() => setOpenDropdown("shop")}
