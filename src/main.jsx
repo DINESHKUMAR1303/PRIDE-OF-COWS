@@ -3,19 +3,26 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
 
-// ✅ Import CartProvider
-import { CartProvider } from "./context/CartContext";
+import { BrowserRouter } from "react-router-dom";
 
-// ✅ Import LoginProvider (NEW)
+// ⭐ AuthProvider — manages login & global user
+import { AuthProvider } from "./context/AuthContext";
+
+// Existing Providers
+import { CartProvider } from "./context/CartContext";
 import { LoginProvider } from "./context/LoginContext/LoginContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {/* Wrap ENTIRE APP inside BOTH providers */}
-    <LoginProvider>
-      <CartProvider>
-        <App />
-      </CartProvider>
-    </LoginProvider>
+    <AuthProvider>
+      <LoginProvider>
+        <CartProvider>
+          {/* ⭐ THE ONLY BrowserRouter IN YOUR ENTIRE PROJECT */}
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </CartProvider>
+      </LoginProvider>
+    </AuthProvider>
   </React.StrictMode>
 );

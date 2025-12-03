@@ -3,11 +3,17 @@ import "./LoginModal.css";
 
 import logo from "./images/logo.png";
 import sideImage from "./images/milk.webp";
-import { registerUser, loginUser } from "../../api/auth"; // ⭐ API IMPORT
+import { registerUser, loginUser } from "../../api/auth";
+
+// ⭐ NEW: Auth Context
+import { useAuth } from "../../context/AuthContext";
 
 const LoginModal = ({ onClose }) => {
   const [closing, setClosing] = useState(false);
   const [activeTab, setActiveTab] = useState("login");
+
+  // ⭐ GET setUser from AuthContext
+  const { setUser } = useAuth();
 
   // ========================
   // LOGIN STATES
@@ -56,7 +62,7 @@ const LoginModal = ({ onClose }) => {
   };
 
   // ========================
-  // LOGIN SUBMIT
+  // LOGIN SUBMIT (UPDATED)
   // ========================
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
@@ -68,11 +74,18 @@ const LoginModal = ({ onClose }) => {
         password: loginData.password,
       });
 
-      // Save JWT token
+      // ⭐ Save JWT token + user info
       localStorage.setItem("poc_token", res.token);
+      localStorage.setItem("poc_user", JSON.stringify(res.user));
+
+      // ⭐ Update global auth state
+      setUser(res.user);
 
       alert("Login successful!");
       handleClose();
+
+      // ⭐ Refresh UI so navbar updates
+      window.location.reload();
     } catch (err) {
       setApiError(err.message || "Login failed");
     }

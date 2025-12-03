@@ -5,6 +5,7 @@ import "./Navbar.css";
 
 // === IMPORT GLOBAL CART CONTEXT ===
 import { useCart } from "../../context/CartContext";
+import { useAuth } from "../../context/AuthContext";
 
 // ✅ IMPORT GLOBAL LOGIN CONTEXT
 import { useLogin } from "../../context/LoginContext/LoginContext";
@@ -63,6 +64,9 @@ const CustomMenuIcon = ({ size = 28, color = "#193B61", topThickness = 1.5, midd
 const Navbar = () => {
   // === GET GLOBAL CART COUNT ===
   const { cartCount } = useCart();
+
+  // ⭐️ FIX ADDED HERE
+  const { user, setUser } = useAuth();
 
   // ✅ USE GLOBAL LOGIN CONTEXT
   const { loginOpen, setLoginOpen } = useLogin();
@@ -257,11 +261,31 @@ const Navbar = () => {
           {/* RIGHT SIDE */}
           <div className="navbar-right">
 
-            {/* LOGIN */}
-            <div className="login" onClick={() => setLoginOpen(true)}>
-              <img src={loginIcon} className="right-icon" />
-              <span className="login-text">LOGIN</span>
-            </div>
+            {/* LOGIN / USER DISPLAY */}
+{user ? (
+  <div className="navbar-user">
+    <img src={loginIcon} className="right-icon" />
+    <span className="user-text">Hi, {user.name}</span>
+
+    <button
+      className="logout-btn"
+      onClick={() => {
+        localStorage.removeItem("poc_token");
+        localStorage.removeItem("poc_user");
+        setUser(null); 
+        window.location.reload();
+      }}
+    >
+      Logout
+    </button>
+  </div>
+) : (
+  <div className="login" onClick={() => setLoginOpen(true)}>
+    <img src={loginIcon} className="right-icon" />
+    <span className="login-text">LOGIN</span>
+  </div>
+)}
+
 
             {/* CART LINK */}
             <Link to="/cart" className="cart" style={{ textDecoration: "none", color: "inherit" }}>

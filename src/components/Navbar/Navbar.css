@@ -32,6 +32,22 @@ html, body {
   box-sizing: border-box;
 }
 
+
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  color: #d9534f;
+  font-size: 14px;
+  cursor: pointer;
+}
+
 /* ... (YOUR ENTIRE CSS REMAINS EXACTLY THE SAME, NO CHANGES) ... */
 
 

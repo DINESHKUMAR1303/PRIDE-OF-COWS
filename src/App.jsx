@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 // Pages
 import Home from "./pages/Home";
@@ -16,9 +16,6 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import NotificationBar from "./components/NotificationBar/NotificationBar";
 
-// Context
-import { CartProvider } from "./context/CartContext";
-
 // Scroll Reset
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
@@ -26,44 +23,38 @@ import "./App.css";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <CartProvider>
+    <>
+      {/* Fix scroll to top on route change */}
+      <ScrollToTop />
 
-        {/* Fix scroll to top on route change */}
-        <ScrollToTop />
+      {/* --- ALWAYS AT TOP --- */}
+      <NotificationBar />
+      <Navbar />
 
-        {/* --- ALWAYS AT TOP --- */}
-        <NotificationBar />
-        <Navbar />
+      {/* --- PAGE WRAPPER --- */}
+      <div className="page-wrapper">
+        <Routes>
+          {/* Home */}
+          <Route path="/" element={<Home />} />
 
-        {/* --- PAGE WRAPPER (IMPORTANT FIX) --- */}
-        <div className="page-wrapper">
-          <Routes>
+          {/* All Products */}
+          <Route path="/shop/all" element={<AllProducts />} />
 
-            {/* Home */}
-            <Route path="/" element={<Home />} />
+          {/* Milk */}
+          <Route path="/shop/milk" element={<Milk />} />
 
-            {/* All Products */}
-            <Route path="/shop/all" element={<AllProducts />} />
+          {/* Cart */}
+          <Route path="/cart" element={<Cart />} />
 
-            {/* Milk */}
-            <Route path="/shop/milk" element={<Milk />} />
+          {/* Policy Pages */}
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-and-conditions" element={<TermsConditions />} />
+        </Routes>
+      </div>
 
-            {/* Cart */}
-            <Route path="/cart" element={<Cart />} />
-
-            {/* Policy Pages */}
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/terms-and-conditions" element={<TermsConditions />} />
-
-          </Routes>
-        </div>
-
-        {/* Footer Always at Bottom */}
-        <Footer />
-
-      </CartProvider>
-    </BrowserRouter>
+      {/* Footer ALWAYS at bottom */}
+      <Footer />
+    </>
   );
 };
 
