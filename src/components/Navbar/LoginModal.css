@@ -1,36 +1,56 @@
 /* ============================================
+   ROOT VARIABLES (for easy theming and premium feel)
+============================================ */
+:root {
+  --primary: #002147; /* Deep navy for premium elegance */
+  --accent: #c29d5f; /* Gold for luxury highlights */
+  --bg: #f9f9f9; /* Softer off-white for premium background */
+  --text: #1a1a1a; /* Dark text for readability */
+  --text-light: #555; /* Lighter text for subtlety */
+  --border: #ddd; /* Soft borders */
+  --shadow: 0 15px 40px rgba(0, 0, 0, 0.12); /* Deeper, softer shadows */
+  --gradient: linear-gradient(135deg, var(--primary) 0%, #00142d 100%); /* Premium gradient */
+  --font-serif: 'Suranna', serif; /* Elegant serif font */
+  --font-sans: 'Montserrat', sans-serif; /* Modern sans-serif fallback */
+}
+
+/* Global Styles for Premium Look */
+body {
+  font-family: var(--font-sans);
+}
+
+/* ============================================
    OVERLAY
 ============================================ */
 .login-modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.45);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6); /* Darker overlay for focus */
   display: flex;
   justify-content: flex-end;
   align-items: center;
   z-index: 9999;
-  overflow: hidden;
+  backdrop-filter: blur(5px); /* Enhanced blur for premium depth */
+  -webkit-backdrop-filter: blur(5px);
 }
 
 /* ============================================
    MODAL CONTAINER
 ============================================ */
 .login-modal {
-  width: 900px;
-  max-width: 95%;
+  width: 950px; /* Slightly wider for premium spacing */
+  max-width: 95vw;
   height: 100vh;
-  background: #ffffff;
+  height: 100dvh;
+  background: var(--bg);
   display: flex;
-  box-shadow: -4px 0 25px rgba(0, 0, 0, 0.18);
+  box-shadow: var(--shadow);
   position: relative;
   overflow: hidden;
-  border-radius: 0;
+  border-radius: 12px 0 0 12px; /* Subtle rounding for elegance */
 }
 
-/* Slide-in Animations */
+/* Animations - Smoother for premium feel */
 @keyframes slideInRight {
   from {
     transform: translateX(100%);
@@ -41,6 +61,7 @@
     opacity: 1;
   }
 }
+
 @keyframes slideOutRight {
   from {
     transform: translateX(0);
@@ -51,190 +72,252 @@
     opacity: 0;
   }
 }
-.slide-in {
-  animation: slideInRight 0.4s ease forwards;
-}
-.slide-out {
-  animation: slideOutRight 0.4s ease forwards;
-}
+
+.slide-in { animation: slideInRight 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.slide-out { animation: slideOutRight 0.45s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards; }
 
 /* ============================================
-   CLOSE BUTTON
+   CLOSE BUTTON - More elegant
 ============================================ */
 .modal-close-btn {
   position: absolute;
-  top: 20px;
-  right: 22px;
-  background: #f2f2f2;
-  border: 1px solid #a8a8a8;
-  width: 32px;
-  height: 32px;
+  top: 25px;
+  right: 25px;
+  background: transparent;
+  border: 1px solid var(--accent);
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  font-size: 18px;
+  font-size: 20px;
+  color: var(--primary);
   cursor: pointer;
   z-index: 20;
+  transition: all 0.3s ease;
+}
+
+.modal-close-btn:hover {
+  background: var(--accent);
+  color: white;
+  transform: rotate(90deg);
 }
 
 /* ============================================
-   LEFT IMAGE PANEL
+   LEFT IMAGE PANEL - Premium enhancements
 ============================================ */
-/* LEFT IMAGE PANEL */
 .login-left {
   width: 40%;
-  height: 100vh;
+  height: 100%;
   position: relative;
-  background: #fff;
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), var(--bg); /* Subtle overlay */
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 30px;
   overflow: hidden;
-  border-right: 1px solid #eee;
 }
 
 .left-image {
   width: auto;
-  height: 85%;
+  height: 80%;
   object-fit: contain;
-  display: block;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15)); /* Premium shadow */
+  transition: transform 0.3s ease;
+  padding-top: 100px;
+}
+
+.left-image:hover {
+  transform: scale(1.05); /* Subtle hover for engagement */
 }
 
 .left-logo {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  width: 130px;
+  top: 30px;
+  left: 30px;
+  width: 150px;
+  filter: brightness(1.1); /* Brighter for premium pop */
 }
 
 /* ============================================
    RIGHT PANEL
 ============================================ */
 .login-right {
-  width: 58%;
-  background: #ffffff;
-  padding: 40px 50px;
+  width: 60%; /* Adjusted for better balance */
+  background: var(--bg);
+  padding: 50px 60px;
   overflow-y: auto;
   position: relative;
 }
 
-/* Remove scrollbar */
+/* Remove scrollbar - Premium clean look */
 .login-right::-webkit-scrollbar {
-  width: 0px;
+  width: 0;
 }
 
 /* ============================================
-   TABS (Login | Register)
+   TABS (Login | Register) - Premium tabs
 ============================================ */
 .tabs {
   display: flex;
-  gap: 0px;
-  margin-bottom: 25px;
-  border-bottom: 2px solid #eee;
+  gap: 0;
+  margin-bottom: 30px;
+  border-bottom: 2px solid var(--border);
 }
 
 .tab-btn {
   flex: 1;
   background: none;
   border: none;
-  font-size: 18px;
+  font-size: 20px;
   padding: 15px 0;
   cursor: pointer;
-  font-weight: 600;
-  color: #666;
-  transition: 0.3s ease;
+  font-weight: 700;
+  color: var(--text-light);
+  transition: all 0.3s ease;
+  position: relative;
 }
 
 .tab-btn.active {
-  color: #002147;
-  border-bottom: 3px solid #c29d5f;
+  color: var(--primary);
+  border-bottom: 4px solid var(--accent); /* Thicker gold for luxury */
+}
+
+.tab-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.tab-btn:hover::after {
+  transform: scaleX(1);
+}
+
+.tab-btn.active::after {
+  transform: scaleX(1);
 }
 
 /* ============================================
-   TITLES
+   TITLES - More elegant typography
 ============================================ */
 .title {
-  font-size: 28px;
-  font-family: "Suranna", serif;
-  color: #1a1a1a;
-  font-weight: 300;
-  margin-bottom: 20px;
+  font-size: 32px;
+  font-family: var(--font-serif);
+  color: var(--text);
+  font-weight: 400;
+  margin-bottom: 25px;
+  letter-spacing: 0.5px;
 }
 
 /* ============================================
-   LABELS & INPUTS
+   LABELS & INPUTS - Premium styling
 ============================================ */
 label {
   font-size: 14px;
-  font-weight: 500;
-  color: #333;
-  margin-bottom: 6px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
   display: block;
 }
 
-input {
+input, select {
   width: 100%;
-  padding: 13px 16px;
-  border-radius: 28px;
-  border: 1px solid #ccc;
+  padding: 14px 18px;
+  border-radius: 30px; /* Softer rounds */
+  border: 1px solid var(--border);
   outline: none;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   font-size: 15px;
-  transition: 0.3s ease;
+  transition: all 0.3s ease;
+  background: white; /* Clean white for inputs */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle inset for depth */
 }
 
-input:focus {
-  border-color: #002147;
-  box-shadow: 0px 0px 4px rgba(0, 33, 71, 0.3);
+input:focus, select:focus {
+  border-color: var(--accent); /* Gold focus for premium */
+  box-shadow: 0 0 8px rgba(194, 157, 95, 0.4); /* Gold glow */
+}
+
+select {
+  appearance: none; /* Remove default arrow */
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIHdpZHRoPSIxMnB4IiBoZWlnaHQ9IjZweCIgdmlld0JveD0iMCAwIDEyIDYiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWRhc2hhcnJheT0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBmaWxsPSJub25lIj48cG9seWxpbmUgcG9pbnRzPSI2IDMgMCA5IDAgMCAxMiAwIDEyIDkgNiAzIiAvPjwvZz48L3N2Zz4='); /* Custom gold arrow */
+  background-position: right 15px center;
+  background-repeat: no-repeat;
+  background-size: 12px;
 }
 
 /* Two-column input groups */
 .two-inputs {
   display: flex;
-  gap: 15px;
+  gap: 20px;
+}
+
+.two-inputs > div {
+  flex: 1;
 }
 
 /* ============================================
-   BUTTONS
+   BUTTONS - Premium gradient
 ============================================ */
 .primary-btn {
   width: 100%;
-  background: #002147;
+  background: var(--gradient); /* Premium gradient */
   color: white;
   border: none;
-  padding: 14px;
+  padding: 16px;
   border-radius: 30px;
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
-  transition: 0.3s;
-  margin-top: 10px;
+  transition: all 0.3s ease;
+  margin-top: 15px;
+  box-shadow: 0 4px 12px rgba(0, 33, 71, 0.2); /* Lifted shadow */
 }
 
 .primary-btn:hover {
-  background: #00142d;
+  transform: translateY(-2px); /* Subtle lift */
+  box-shadow: 0 6px 16px rgba(0, 33, 71, 0.3);
 }
 
 /* ============================================
-   SMALL TEXT
+   SMALL TEXT & ERROR TEXT
 ============================================ */
 .small-text {
   font-size: 13px;
-  color: #555;
-  margin-top: 10px;
+  color: var(--text-light);
+  margin-top: 15px;
+  text-align: center;
 }
 
 .small-text a {
-  color: #002147;
-  text-decoration: underline;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.small-text a:hover {
+  color: var(--accent);
+}
+
+.error-text {
+  font-size: 12px;
+  color: #d32f2f; /* Red for errors */
+  margin: -15px 0 15px 0;
+  padding-left: 18px;
 }
 
 /* ============================================
-   RESPONSIVE DESIGN (Mobile & Tablet)
+   RESPONSIVE DESIGN (Mobile & Tablet) - Enhanced
 ============================================ */
-
 @media (max-width: 900px) {
   .login-modal {
     width: 100%;
+    border-radius: 0;
   }
 }
 
@@ -244,18 +327,25 @@ input:focus {
   }
   .login-right {
     width: 100%;
-    padding: 30px 25px;
+    padding: 40px 30px;
+  }
+  .two-inputs {
+    flex-direction: column;
+    gap: 0;
   }
 }
 
 @media (max-width: 480px) {
   .tab-btn {
-    font-size: 16px;
+    font-size: 18px;
   }
   .title {
-    font-size: 22px;
+    font-size: 26px;
   }
-  input {
+  input, select {
     font-size: 14px;
+  }
+  .primary-btn {
+    padding: 14px;
   }
 }
