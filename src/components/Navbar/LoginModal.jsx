@@ -91,7 +91,7 @@ const LoginModal = ({ onClose }) => {
     "Australia",
     "Germany",
     "France",
-    "Other"
+    
   ];
 
   // Sample state options (focusing on India for brand, with US as fallback; in production, make dynamic)

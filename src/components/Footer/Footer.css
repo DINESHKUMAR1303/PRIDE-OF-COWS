@@ -15,30 +15,49 @@
   margin: 0;
 }
 
+/* Clean underline input – NO outline, NO border box */
 .newsletter-input-wrapper {
   width: 47%;
-  margin: auto;
+  margin: 30px auto 0;
   border-bottom: 1px solid #b1b1b1;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 6px 0;
+  background: transparent;
 }
 
 .newsletter-input {
   width: 100%;
-  border: none;
-  outline: none;
-  background: transparent;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
   font-family: "Suranna", serif;
   font-size: 24px;
   color: #333;
+  padding: 0;
+  margin: 0;
+}
+
+.newsletter-input:focus {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .newsletter-arrow {
-  font-size: 34px;
+  font-size: 32px;
   cursor: pointer;
   color: #474747;
+  user-select: none;
+  transition: 0.3s ease;
 }
+
+.newsletter-arrow:hover {
+  transform: translateX(5px);
+}
+
 
 
 /* ======================= FLOATING LOGO ======================= */
@@ -56,6 +75,7 @@
   height: auto;
   filter: drop-shadow(0px 3px 5px rgba(0,0,0,0.15));
 }
+
 
 
 /* ======================= MAIN FOOTER ======================= */
@@ -96,6 +116,7 @@
 }
 
 
+
 /* ======================= CONTACT COLUMN ======================= */
 
 .email-row {
@@ -110,7 +131,8 @@
 }
 
 
-/* ======================= SOCIAL ICONS — FIXED ALIGNMENT ======================= */
+
+/* ======================= SOCIAL ICONS ======================= */
 
 .footer-social {
   margin-top: 0px;
@@ -130,7 +152,8 @@
 }
 
 
-/* ======================= APP ICONS — FIXED ALIGNMENT ======================= */
+
+/* ======================= APP ICONS ======================= */
 
 .footer-apps {
   margin-top: 0px;
@@ -148,6 +171,7 @@
   width: 25px;
   cursor: pointer;
 }
+
 
 
 /* ======================= BOTTOM BAR ======================= */
