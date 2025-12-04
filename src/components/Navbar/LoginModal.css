@@ -1,20 +1,22 @@
 /* ============================================
-   ROOT VARIABLES (for easy theming and premium feel)
+   ROOT VARIABLES (Premium theme)
 ============================================ */
 :root {
-  --primary: #002147; /* Deep navy for premium elegance */
-  --accent: #c29d5f; /* Gold for luxury highlights */
-  --bg: #f9f9f9; /* Softer off-white for premium background */
-  --text: #1a1a1a; /* Dark text for readability */
-  --text-light: #555; /* Lighter text for subtlety */
-  --border: #ddd; /* Soft borders */
-  --shadow: 0 15px 40px rgba(0, 0, 0, 0.12); /* Deeper, softer shadows */
-  --gradient: linear-gradient(135deg, var(--primary) 0%, #00142d 100%); /* Premium gradient */
-  --font-serif: 'Suranna', serif; /* Elegant serif font */
-  --font-sans: 'Montserrat', sans-serif; /* Modern sans-serif fallback */
+  --primary: #002147;
+  --accent: #c29d5f;
+  --bg: #f9f9f9;
+  --text: #1a1a1a;
+  --text-light: #555;
+  --border: #ddd;
+  --shadow: 0 20px 45px rgba(0,0,0,0.18);
+  --gradient: linear-gradient(135deg, var(--primary), #00142d);
+  --font-serif: 'Suranna', serif;
+  --font-sans: 'Montserrat', sans-serif;
+  --error: #d32f2f;
+  --success: #2e7d32;
 }
 
-/* Global Styles for Premium Look */
+/* Global Font */
 body {
   font-family: var(--font-sans);
 }
@@ -25,76 +27,84 @@ body {
 .login-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6); /* Darker overlay for focus */
+  background: rgba(0, 0, 0, 0.65);
   display: flex;
   justify-content: flex-end;
   align-items: center;
   z-index: 9999;
-  backdrop-filter: blur(5px); /* Enhanced blur for premium depth */
-  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 /* ============================================
-   MODAL CONTAINER
+   MODAL PANEL
 ============================================ */
 .login-modal {
-  width: 950px; /* Slightly wider for premium spacing */
+  width: 950px;
   max-width: 95vw;
-  height: 100vh;
   height: 100dvh;
   background: var(--bg);
   display: flex;
-  box-shadow: var(--shadow);
-  position: relative;
+  border-radius: 12px 0 0 12px;
   overflow: hidden;
-  border-radius: 12px 0 0 12px; /* Subtle rounding for elegance */
+  position: relative;
+  box-shadow: var(--shadow);
 }
 
-/* Animations - Smoother for premium feel */
+/* Slide Animations */
 @keyframes slideInRight {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }
-
 @keyframes slideOutRight {
-  from {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateX(100%);
-    opacity: 0;
-  }
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
 }
-
-.slide-in { animation: slideInRight 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-.slide-out { animation: slideOutRight 0.45s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards; }
+.slide-in { animation: slideInRight .5s cubic-bezier(.22,1,.36,1) forwards; }
+.slide-out { animation: slideOutRight .45s cubic-bezier(.55,.085,.68,.53) forwards; }
 
 /* ============================================
-   CLOSE BUTTON - More elegant
+   SHAKE ERROR ANIMATION
+============================================ */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
+.input-error {
+  border-color: var(--error) !important;
+  box-shadow: 0 0 10px rgba(211,47,47,0.45) !important;
+  animation: shake .35s ease;
+}
+
+/* Optional: Success field */
+.input-success {
+  border-color: var(--success) !important;
+  box-shadow: 0 0 8px rgba(46,125,50,0.35) !important;
+}
+
+/* ============================================
+   CLOSE BTN
 ============================================ */
 .modal-close-btn {
   position: absolute;
-  top: 25px;
-  right: 25px;
+  top: 22px;
+  right: 22px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
   background: transparent;
   border: 1px solid var(--accent);
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  font-size: 20px;
   color: var(--primary);
   cursor: pointer;
-  z-index: 20;
-  transition: all 0.3s ease;
+  font-size: 20px;
+  transition: 0.3s ease;
+  z-index: 50;
 }
-
 .modal-close-btn:hover {
   background: var(--accent);
   color: white;
@@ -102,31 +112,27 @@ body {
 }
 
 /* ============================================
-   LEFT IMAGE PANEL - Premium enhancements
+   LEFT IMAGE SECTION
 ============================================ */
 .login-left {
   width: 40%;
-  height: 100%;
-  position: relative;
-  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), var(--bg); /* Subtle overlay */
+  background: linear-gradient(rgba(0,0,0,.15), rgba(0,0,0,.3)), var(--bg);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 30px;
-  overflow: hidden;
+  padding: 35px;
+  position: relative;
 }
 
 .left-image {
-  width: auto;
-  height: 80%;
+  height: 82%;
   object-fit: contain;
-  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15)); /* Premium shadow */
-  transition: transform 0.3s ease;
+  filter: drop-shadow(0 12px 24px rgba(0,0,0,0.18));
   padding-top: 100px;
+  transition: 0.3s ease;
 }
-
 .left-image:hover {
-  transform: scale(1.05); /* Subtle hover for engagement */
+  transform: scale(1.05);
 }
 
 .left-logo {
@@ -134,185 +140,184 @@ body {
   top: 30px;
   left: 30px;
   width: 150px;
-  filter: brightness(1.1); /* Brighter for premium pop */
+  filter: brightness(1.15);
 }
 
 /* ============================================
    RIGHT PANEL
 ============================================ */
 .login-right {
-  width: 60%; /* Adjusted for better balance */
-  background: var(--bg);
+  width: 60%;
   padding: 50px 60px;
   overflow-y: auto;
-  position: relative;
 }
-
-/* Remove scrollbar - Premium clean look */
 .login-right::-webkit-scrollbar {
   width: 0;
 }
 
 /* ============================================
-   TABS (Login | Register) - Premium tabs
+   TABS
 ============================================ */
 .tabs {
   display: flex;
-  gap: 0;
-  margin-bottom: 30px;
   border-bottom: 2px solid var(--border);
+  margin-bottom: 30px;
 }
 
 .tab-btn {
   flex: 1;
+  padding: 15px 0;
   background: none;
   border: none;
   font-size: 20px;
-  padding: 15px 0;
-  cursor: pointer;
   font-weight: 700;
   color: var(--text-light);
-  transition: all 0.3s ease;
+  cursor: pointer;
+  transition: 0.3s ease;
   position: relative;
 }
 
 .tab-btn.active {
   color: var(--primary);
-  border-bottom: 4px solid var(--accent); /* Thicker gold for luxury */
+  border-bottom: 4px solid var(--accent);
 }
 
 .tab-btn::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
+  content: "";
   width: 100%;
   height: 4px;
   background: var(--accent);
+  position: absolute;
+  bottom: -4px;
+  left: 0;
   transform: scaleX(0);
-  transition: transform 0.3s ease;
+  transition: 0.3s ease;
 }
 
-.tab-btn:hover::after {
-  transform: scaleX(1);
-}
-
+.tab-btn:hover::after,
 .tab-btn.active::after {
   transform: scaleX(1);
 }
 
 /* ============================================
-   TITLES - More elegant typography
+   ERROR POPUP
+============================================ */
+.popup-error {
+  background: var(--error);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 18px;
+  animation: fadeInPopup .35s ease forwards;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+@keyframes fadeInPopup {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   TITLES
 ============================================ */
 .title {
   font-size: 32px;
   font-family: var(--font-serif);
-  color: var(--text);
-  font-weight: 400;
   margin-bottom: 25px;
+  color: var(--text);
   letter-spacing: 0.5px;
+  font-weight: 300;
 }
 
 /* ============================================
-   LABELS & INPUTS - Premium styling
+   INPUTS + SELECTS
 ============================================ */
 label {
   font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 8px;
+  font-weight: 300;
+  margin-bottom: 6px;
   display: block;
+  color: var(--primary);
 }
 
-input, select {
+input,
+select {
   width: 100%;
   padding: 14px 18px;
-  border-radius: 30px; /* Softer rounds */
+  border-radius: 30px;
   border: 1px solid var(--border);
-  outline: none;
-  margin-bottom: 20px;
+  background: #fff;
   font-size: 15px;
-  transition: all 0.3s ease;
-  background: white; /* Clean white for inputs */
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle inset for depth */
+  margin-bottom: 20px;
+  transition: 0.3s ease;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
 }
 
-input:focus, select:focus {
-  border-color: var(--accent); /* Gold focus for premium */
-  box-shadow: 0 0 8px rgba(194, 157, 95, 0.4); /* Gold glow */
+input:focus,
+select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(194,157,95,0.4);
 }
 
+/* Custom Select Arrow */
 select {
-  appearance: none; /* Remove default arrow */
-  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIHdpZHRoPSIxMnB4IiBoZWlnaHQ9IjZweCIgdmlld0JveD0iMCAwIDEyIDYiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWRhc2hhcnJheT0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBmaWxsPSJub25lIj48cG9seWxpbmUgcG9pbnRzPSI2IDMgMCA5IDAgMCAxMiAwIDEyIDkgNiAzIiAvPjwvZz48L3N2Zz4='); /* Custom gold arrow */
-  background-position: right 15px center;
+  appearance: none;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjEwIiB2aWV3Qm94PSIwIDAgMTAgNiIgd2lkdGg9IjE2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwb2x5bGluZSBwb2ludHM9IjAgMCA1IDYgMTAgMCIgc3Ryb2tlPSIjYzI5ZDVmIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=");
+  background-position: right 18px center;
   background-repeat: no-repeat;
-  background-size: 12px;
 }
 
-/* Two-column input groups */
+/* Two-Column Fields */
 .two-inputs {
   display: flex;
   gap: 20px;
 }
-
 .two-inputs > div {
   flex: 1;
 }
 
 /* ============================================
-   BUTTONS - Premium gradient
+   BUTTONS
 ============================================ */
 .primary-btn {
   width: 100%;
-  background: var(--gradient); /* Premium gradient */
-  color: white;
-  border: none;
   padding: 16px;
-  border-radius: 30px;
+  background: var(--gradient);
+  color: white;
   font-size: 16px;
   font-weight: 700;
+  border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 15px;
-  box-shadow: 0 4px 12px rgba(0, 33, 71, 0.2); /* Lifted shadow */
+  border-radius: 30px;
+  margin-top: 10px;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 14px rgba(0,33,71,0.25);
 }
-
 .primary-btn:hover {
-  transform: translateY(-2px); /* Subtle lift */
-  box-shadow: 0 6px 16px rgba(0, 33, 71, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 7px 18px rgba(0,33,71,0.35);
 }
 
 /* ============================================
-   SMALL TEXT & ERROR TEXT
+   ERROR TEXT (Animated)
 ============================================ */
-.small-text {
-  font-size: 13px;
-  color: var(--text-light);
-  margin-top: 15px;
-  text-align: center;
-}
-
-.small-text a {
-  color: var(--primary);
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.3s;
-}
-
-.small-text a:hover {
-  color: var(--accent);
-}
-
 .error-text {
-  font-size: 12px;
-  color: #d32f2f; /* Red for errors */
-  margin: -15px 0 15px 0;
-  padding-left: 18px;
+  font-size: 13px;
+  color: var(--error);
+  margin-top: -14px;
+  margin-bottom: 15px;
+  padding-left: 5px;
+  animation: fadeInError .3s ease forwards;
+}
+
+@keyframes fadeInError {
+  from { opacity: 0; transform: translateY(-3px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ============================================
-   RESPONSIVE DESIGN (Mobile & Tablet) - Enhanced
+   RESPONSIVE
 ============================================ */
 @media (max-width: 900px) {
   .login-modal {
@@ -331,7 +336,7 @@ select {
   }
   .two-inputs {
     flex-direction: column;
-    gap: 0;
+    gap: 5px;
   }
 }
 
