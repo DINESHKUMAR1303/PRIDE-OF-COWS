@@ -62,6 +62,7 @@ const CustomMenuIcon = ({ size = 28, color = "#193B61", topThickness = 1.5, midd
 };
 
 const Navbar = () => {
+
   // === GET GLOBAL CART COUNT ===
   const { cartCount } = useCart();
 
@@ -108,9 +109,22 @@ const Navbar = () => {
     { name: "Lifestyle", img: lifestyleImg, link: "/blog/lifestyle" },
   ];
 
+  // ⭐ FIX → Show CITY if logged in, else show saved pincode
   useEffect(() => {
-    const savedLocation = localStorage.getItem("userLocation");
-    if (savedLocation) setLocation(savedLocation);
+    const storedUser = localStorage.getItem("poc_user");
+
+    if (storedUser) {
+      const parsed = JSON.parse(storedUser);
+
+      if (parsed.city) {
+        setLocation(parsed.city.toUpperCase());
+      }
+    } else {
+      const savedLocation = localStorage.getItem("userLocation");
+      if (savedLocation) {
+        setLocation(savedLocation.toUpperCase());
+      }
+    }
 
     const handleScroll = () => {
       setIsSticky(window.scrollY > 150);
@@ -123,8 +137,8 @@ const Navbar = () => {
   const handleSaveLocation = () => {
     const selected = place || pincode;
     if (selected) {
-      setLocation(selected);
-      localStorage.setItem("userLocation", selected);
+      setLocation(selected.toUpperCase());
+      localStorage.setItem("userLocation", selected.toUpperCase());
       setModalOpen(false);
       setPincode("");
       setPlace("");
@@ -141,7 +155,7 @@ const Navbar = () => {
   return (
     <>
       <nav ref={navRef} className={`navbar ${isSticky ? "sticky" : ""}`}>
-        
+
         {/* LEFT SIDE */}
         <div className="navbar-left">
           <Link to="/">
@@ -262,30 +276,31 @@ const Navbar = () => {
           <div className="navbar-right">
 
             {/* LOGIN / USER DISPLAY */}
-{user ? (
-  <div className="navbar-user">
-    <img src={loginIcon} className="right-icon" />
-    <span className="user-text">Hi, {user.name}</span>
+            {user ? (
+              <div className="navbar-user">
+                <img src={loginIcon} className="right-icon" />
+                
+                {/* ⭐ FIX → Show FIRST NAME */}
+                <span className="user-text">Hi, {user.firstName?.toUpperCase()}</span>
 
-    <button
-      className="logout-btn"
-      onClick={() => {
-        localStorage.removeItem("poc_token");
-        localStorage.removeItem("poc_user");
-        setUser(null); 
-        window.location.reload();
-      }}
-    >
-      Logout
-    </button>
-  </div>
-) : (
-  <div className="login" onClick={() => setLoginOpen(true)}>
-    <img src={loginIcon} className="right-icon" />
-    <span className="login-text">LOGIN</span>
-  </div>
-)}
-
+                <button
+                  className="logout-btn"
+                  onClick={() => {
+                    localStorage.removeItem("poc_token");
+                    localStorage.removeItem("poc_user");
+                    setUser(null);
+                    window.location.reload();
+                  }}
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <div className="login" onClick={() => setLoginOpen(true)}>
+                <img src={loginIcon} className="right-icon" />
+                <span className="login-text">LOGIN</span>
+              </div>
+            )}
 
             {/* CART LINK */}
             <Link to="/cart" className="cart" style={{ textDecoration: "none", color: "inherit" }}>

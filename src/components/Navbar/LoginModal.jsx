@@ -92,7 +92,7 @@ const LoginModal = ({ onClose }) => {
   };
 
   // ========================
-  // REGISTER SUBMIT
+  // REGISTER SUBMIT (AUTO LOGIN ADDED)
   // ========================
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
@@ -108,14 +108,32 @@ const LoginModal = ({ onClose }) => {
     }
 
     setErrors(newErrors);
-
     if (Object.keys(newErrors).length > 0) return;
 
     try {
-      const res = await registerUser(registerData);
+      // 1️⃣ Register user
+      await registerUser(registerData);
 
-      alert("Registration successful!");
+      // 2️⃣ Auto login the user
+      const loginRes = await loginUser({
+        login: registerData.email || registerData.telephone,
+        password: registerData.password,
+      });
+
+      // 3️⃣ Save token + user info
+      localStorage.setItem("poc_token", loginRes.token);
+      localStorage.setItem("poc_user", JSON.stringify(loginRes.user));
+
+      // 4️⃣ Update global auth state
+      setUser(loginRes.user);
+
+      alert("Registration successful! You are now logged in.");
+
+      // 5️⃣ Close modal
       handleClose();
+
+      // 6️⃣ Refresh UI
+      window.location.reload();
     } catch (err) {
       setApiError(err.message || "Registration failed");
     }
