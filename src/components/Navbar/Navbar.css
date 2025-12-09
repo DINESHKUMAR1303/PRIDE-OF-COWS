@@ -131,7 +131,7 @@ html, body {
   align-items: center;
   gap: 4px;
   cursor: pointer;
-  padding-bottom: 8px;      /* matches LOGIN spacing */
+  padding-bottom: 10px;      /* matches LOGIN spacing */
   min-width: 60px;
 }
 
