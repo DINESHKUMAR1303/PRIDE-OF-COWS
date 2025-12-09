@@ -15,35 +15,45 @@
   margin: 0;
 }
 
-/* Clean underline input – NO outline, NO border box */
+/* CLEAN UNDERLINE INPUT */
 .newsletter-input-wrapper {
   width: 47%;
-  margin: 30px auto 0;
+  margin: 0px auto 0;
   border-bottom: 1px solid #b1b1b1;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 6px 0;
   background: transparent;
+  position: relative;
 }
 
+/* FIX – INPUT TEXT NOT VISIBLE */
 .newsletter-input {
   width: 100%;
   border: none !important;
   outline: none !important;
   background: transparent !important;
   box-shadow: none !important;
+
   font-family: "Suranna", serif;
   font-size: 24px;
-  color: #333;
+  color: #222 !important;
+
+  min-height: 32px;            /* ⭐ FIX HEIGHT COLLAPSE */
+  line-height: 28px;           /* ⭐ FIX BASELINE ISSUE */
+  display: flex;               /* ⭐ Fix vertical placement */
+  align-items: center;
+
+  position: relative;
+  z-index: 5;
   padding: 0;
   margin: 0;
 }
 
-.newsletter-input:focus {
-  outline: none !important;
-  border: none !important;
-  box-shadow: none !important;
+.newsletter-input::placeholder {
+  color: #777 !important;      /* Ensure placeholder visible */
+  opacity: 1;
 }
 
 .newsletter-arrow {
@@ -52,6 +62,7 @@
   color: #474747;
   user-select: none;
   transition: 0.3s ease;
+  z-index: 5;
 }
 
 .newsletter-arrow:hover {
