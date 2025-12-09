@@ -1,16 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FaTimes } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom"; // ✅ ADDED useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
-// === IMPORT GLOBAL CART CONTEXT ===
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
-
-// ✅ IMPORT GLOBAL LOGIN CONTEXT
 import { useLogin } from "../../context/LoginContext/LoginContext";
 
-// === Icons & Images ===
+// === Icons ===
 import logo from "../../images/icons/logo.png";
 import loginIcon from "../../images/icons/user.svg";
 import cartIcon from "../../images/icons/cart.svg";
@@ -47,23 +44,24 @@ import sustainImg from "./images/sustainability.jpg";
 import recipesImg from "./images/recipe.jpg";
 import lifestyleImg from "./images/lifestyle.jpg";
 
+import logoutIcon from "./images/logout.svg";
 import LoginModal from "./LoginModal";
 
-
-// === Custom Hamburger Icon ===
+// === Custom Hamburger ===
 const CustomMenuIcon = ({
   size = 28,
   color = "#193B61",
   topThickness = 1.5,
   middleThickness = 2,
-  bottomThickness = 1.5
+  bottomThickness = 1.5,
 }) => {
   const gap = size * 0.2;
+
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <rect x="6" y="4" width="12" height={topThickness} rx={1} fill={color} />
-      <rect x="6" y={4 + gap} width="20" height={middleThickness} rx={1} fill={color} />
-      <rect x="6" y={4 + gap * 2} width="12" height={bottomThickness} rx={1} fill={color} />
+    <svg width={size} height={size} viewBox="0 0 24 24">
+      <rect x="6" y="4" width="12" height={topThickness} fill={color} rx={1} />
+      <rect x="6" y={4 + gap} width="20" height={middleThickness} fill={color} rx={1} />
+      <rect x="6" y={4 + gap * 2} width="12" height={bottomThickness} fill={color} rx={1} />
     </svg>
   );
 };
@@ -89,7 +87,9 @@ const Navbar = () => {
   const navRef = useRef(null);
   const [isSticky, setIsSticky] = useState(false);
 
-
+  // =======================
+  // DROPDOWN ITEMS
+  // =======================
   const shopItems = [
     { name: "All", img: allImg, link: "/shop/all" },
     { name: "Milk", img: milkImg, link: "/shop/milk" },
@@ -112,30 +112,31 @@ const Navbar = () => {
     { name: "Lifestyle", img: lifestyleImg, link: "/blog/lifestyle" },
   ];
 
-  // ⭐ FIX → Show CITY from logged-in user
+  // =======================
+  // LOCATION & STICKY
+  // =======================
   useEffect(() => {
-    if (user && user.city && user.pincode) {
+    if (user?.city && user?.pincode) {
       setLocation(`${user.city.toUpperCase()} (${user.pincode})`);
     } else {
-      const savedLocation = localStorage.getItem("userLocation");
-      if (savedLocation) setLocation(savedLocation);
+      const saved = localStorage.getItem("userLocation");
+      if (saved) setLocation(saved);
     }
 
-    const handleScroll = () => setIsSticky(window.scrollY > 150);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const scrollHandler = () => setIsSticky(window.scrollY > 150);
+    window.addEventListener("scroll", scrollHandler);
+    return () => window.removeEventListener("scroll", scrollHandler);
   }, [user]);
-
 
   const handleSaveLocation = () => {
     const selected = place || pincode;
-    if (selected) {
-      setLocation(selected.toUpperCase());
-      localStorage.setItem("userLocation", selected.toUpperCase());
-      setModalOpen(false);
-      setPincode("");
-      setPlace("");
-    }
+    if (!selected) return;
+
+    setLocation(selected.toUpperCase());
+    localStorage.setItem("userLocation", selected.toUpperCase());
+    setModalOpen(false);
+    setPincode("");
+    setPlace("");
   };
 
   const ChevronIcon = ({ isOpen }) => (
@@ -144,25 +145,24 @@ const Navbar = () => {
       width="20"
       height="20"
       viewBox="0 0 24 24"
-      fill="none"
       stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
     >
       <polyline points="6 9 12 15 18 9" />
     </svg>
   );
 
-
+  // =======================
+  // JSX RETURN
+  // =======================
   return (
     <>
+      {/* NAVBAR */}
       <nav ref={navRef} className={`navbar ${isSticky ? "sticky" : ""}`}>
 
-        {/* LEFT SIDE */}
+        {/* LEFT SECTION */}
         <div className="navbar-left">
           <Link to="/">
-            <img src={logo} alt="Pride of Cows" className="logo" />
+            <img src={logo} className="logo" alt="Pride of Cows" />
           </Link>
 
           <button className="pincode-btn" onClick={() => setModalOpen(true)}>
@@ -173,8 +173,8 @@ const Navbar = () => {
 
         {/* CENTER MENU */}
         <div className="navbar-center">
-          <ul className="menu">
 
+          <ul className="menu">
             {/* SHOP */}
             <li
               className={`dropdown ${openDropdown === "shop" ? "open" : ""}`}
@@ -182,24 +182,24 @@ const Navbar = () => {
               onMouseLeave={() => setOpenDropdown(null)}
             >
               Shop <ChevronIcon isOpen={openDropdown === "shop"} />
+
               <div className="dropdown-menu">
                 <div className="dropdown-content">
+
                   <ul className="shop-list no-border">
                     {shopItems.map((item) => (
                       <li
                         key={item.name}
-                        onMouseEnter={() => setHoveredProduct(item.name)}
                         className={hoveredProduct === item.name ? "active" : ""}
+                        onMouseEnter={() => setHoveredProduct(item.name)}
                       >
-                        <Link to={item.link} style={{ textDecoration: "none", color: "inherit" }}>
-                          <span>{item.name}</span>
-                        </Link>
+                        <Link to={item.link}>{item.name}</Link>
                       </li>
                     ))}
                   </ul>
 
                   <div className="shop-preview square">
-                    <img src={shopItems.find((p) => p.name === hoveredProduct)?.img} alt={hoveredProduct} />
+                    <img src={shopItems.find((p) => p.name === hoveredProduct)?.img} />
                   </div>
                 </div>
               </div>
@@ -212,24 +212,24 @@ const Navbar = () => {
               onMouseLeave={() => setOpenDropdown(null)}
             >
               Learn <ChevronIcon isOpen={openDropdown === "learn"} />
+
               <div className="dropdown-menu">
                 <div className="dropdown-content">
+
                   <ul className="shop-list no-border">
                     {learnItems.map((item) => (
                       <li
                         key={item.name}
-                        onMouseEnter={() => setHoveredLearn(item.name)}
                         className={hoveredLearn === item.name ? "active" : ""}
+                        onMouseEnter={() => setHoveredLearn(item.name)}
                       >
-                        <Link to={item.link} style={{ textDecoration: "none", color: "inherit" }}>
-                          <span>{item.name}</span>
-                        </Link>
+                        <Link to={item.link}>{item.name}</Link>
                       </li>
                     ))}
                   </ul>
 
                   <div className="shop-preview square">
-                    <img src={learnItems.find((p) => p.name === hoveredLearn)?.img} alt={hoveredLearn} />
+                    <img src={learnItems.find((p) => p.name === hoveredLearn)?.img} />
                   </div>
                 </div>
               </div>
@@ -242,24 +242,24 @@ const Navbar = () => {
               onMouseLeave={() => setOpenDropdown(null)}
             >
               Blog <ChevronIcon isOpen={openDropdown === "blog"} />
+
               <div className="dropdown-menu">
                 <div className="dropdown-content">
+
                   <ul className="shop-list no-border">
                     {blogItems.map((item) => (
                       <li
                         key={item.name}
-                        onMouseEnter={() => setHoveredBlog(item.name)}
                         className={hoveredBlog === item.name ? "active" : ""}
+                        onMouseEnter={() => setHoveredBlog(item.name)}
                       >
-                        <Link to={item.link} style={{ textDecoration: "none", color: "inherit" }}>
-                          <span>{item.name}</span>
-                        </Link>
+                        <Link to={item.link}>{item.name}</Link>
                       </li>
                     ))}
                   </ul>
 
                   <div className="shop-preview square">
-                    <img src={blogItems.find((p) => p.name === hoveredBlog)?.img} alt={hoveredBlog} />
+                    <img src={blogItems.find((p) => p.name === hoveredBlog)?.img} />
                   </div>
                 </div>
               </div>
@@ -271,22 +271,19 @@ const Navbar = () => {
           {/* RIGHT SIDE */}
           <div className="navbar-right">
 
-            {/* LOGIN / USER SECTION */}
+            {/* LOGIN STATUS */}
             {user ? (
-              <div className="navbar-user">
-                <img src={loginIcon} className="right-icon" />
+             <div
+  className="navbar-user"
+  onClick={() => navigate("/my-account")}   // ⭐ CLICK ANYWHERE
+  style={{ cursor: "pointer" }}
+>
+  <img src={loginIcon} className="right-icon" />
+  <span className="user-text">
+    {user.firstName?.toUpperCase()}
+  </span>
+</div>
 
-                {/* ⭐ USERNAME → GO TO ACCOUNT PAGE */}
-                <span
-                  className="user-text"
-                  onClick={() => navigate("/my-account")}
-                  style={{ cursor: "pointer" }}
-                >
-                  {user.firstName ? user.firstName.toUpperCase() : "USER"}
-                </span>
-
-                {/* ❌ LOGOUT REMOVED FROM NAVBAR */}
-              </div>
             ) : (
               <div className="login" onClick={() => setLoginOpen(true)}>
                 <img src={loginIcon} className="right-icon" />
@@ -295,7 +292,7 @@ const Navbar = () => {
             )}
 
             {/* CART */}
-            <Link to="/cart" className="cart" style={{ textDecoration: "none", color: "inherit" }}>
+            <Link to="/cart" className="cart">
               <div className="cart-wrapper">
                 <img src={cartIcon} className="right-icon" />
                 {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
@@ -305,75 +302,98 @@ const Navbar = () => {
 
             {/* HAMBURGER */}
             <button className="menu-toggle" onClick={() => setMenuOpen(true)}>
-              <CustomMenuIcon size={28} color="#001F3F" />
+              <CustomMenuIcon />
             </button>
           </div>
         </div>
       </nav>
 
-{/* LOCATION MODAL */}
-{modalOpen && (
-  <div className="modal-overlay">
-    <div className="modal">
+      {/* ================================= */}
+      {/*    LOCATION MODAL                */}
+      {/* ================================= */}
+      {modalOpen && (
+        <div className="modal-overlay">
+          <div className="modal">
 
-      {/* CLOSE BUTTON */}
-      <button className="modal-close" onClick={() => setModalOpen(false)}>✕</button>
+            <button className="modal-close" onClick={() => setModalOpen(false)}>✕</button>
 
-      {/* PREMIUM HEADER */}
-      <h2 className="modal-title">Enter Delivery Pincode</h2>
-      <p className="modal-subtext">Check availability and delivery options for your location</p>
+            <h2 className="modal-title">Enter Delivery Pincode</h2>
+            <p className="modal-subtext">Check availability and delivery options</p>
 
-      {/* INPUT GROUP */}
-      <div className="modal-input-group">
-        <input
-          type="text"
-          placeholder="Enter Pincode"
-          value={pincode}
-          onChange={(e) => setPincode(e.target.value)}
-          className="modal-input"
-        />
+            <div className="modal-input-group">
 
-        <input
-          type="text"
-          placeholder="Search for a Place"
-          value={place}
-          onChange={(e) => setPlace(e.target.value)}
-          className="modal-input"
-        />
-      </div>
+              <input
+                type="text"
+                placeholder="Enter Pincode"
+                value={pincode}
+                onChange={(e) => setPincode(e.target.value)}
+                className="modal-input"
+              />
 
-      {/* ACTION BUTTON */}
-      <button className="continue-btn" onClick={handleSaveLocation}>
-        CONTINUE
-      </button>
+              <input
+                type="text"
+                placeholder="Search for a Place"
+                value={place}
+                onChange={(e) => setPlace(e.target.value)}
+                className="modal-input"
+              />
 
-    </div>
-  </div>
-)}
+            </div>
 
+            <button className="continue-btn" onClick={handleSaveLocation}>CONTINUE</button>
+
+          </div>
+        </div>
+      )}
 
       {/* LOGIN MODAL */}
       {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} />}
 
+      {/* ================================= */}
       {/* SIDE MENU OVERLAY */}
+      {/* ================================= */}
       <div className={`side-menu-overlay ${menuOpen ? "active" : ""}`} onClick={() => setMenuOpen(false)} />
 
-      {/* SIDE MENU */}
+      {/* ================================= */}
+      {/*          SIDE MENU PANEL         */}
+      {/* ================================= */}
       <div className={`side-menu ${menuOpen ? "active" : ""}`}>
         <div className="side-menu-content">
 
+          {/* ========================= */}
+          {/*   TOP USER / LOGIN ROW    */}
+          {/* ========================= */}
           <div className="side-login">
-            <div className="side-login-left" onClick={() => setLoginOpen(true)}>
-              <img src={loginIcon} className="right-icon" />
-              <span className="login-text">Login</span>
-            </div>
+
+           {user ? (
+  <div className="side-user-box" onClick={() => navigate("/my-account")}>
+    
+    {/* LEFT ICON */}
+    <img src={loginIcon} className="side-user-icon" />
+
+    {/* CENTER TEXT */}
+    <div className="side-user-details">
+      <h3>{user.firstName?.toUpperCase()} {user.lastName?.toUpperCase()}</h3>
+      <p>{user.phone}</p>
+     
+    </div>
+
+    
+  </div>
+) : (
+  <div className="side-login-left" onClick={() => setLoginOpen(true)}>
+    <img src={loginIcon} className="right-icon" />
+    <span className="login-text">Login</span>
+  </div>
+)}
+
 
             <button className="close-btn" onClick={() => setMenuOpen(false)}>
               <FaTimes />
             </button>
           </div>
 
-          {/* SHOP ACCORDION */}
+          {/* SHOP */}
           <div className="accordion">
             <button
               className="accordion-header"
@@ -387,9 +407,7 @@ const Navbar = () => {
               <ul className="accordion-list">
                 {shopItems.map((item) => (
                   <li key={item.name} onClick={() => setMenuOpen(false)}>
-                    <Link to={item.link} style={{ textDecoration: "none", color: "inherit" }}>
-                      {item.name}
-                    </Link>
+                    <Link to={item.link}>{item.name}</Link>
                   </li>
                 ))}
               </ul>
@@ -417,8 +435,33 @@ const Navbar = () => {
             </ul>
           </div>
 
-          {/* FOOTER */}
+          {/* =============================== */}
+          {/* LOGOUT SECTION (ONLY WHEN LOGGED IN) */}
+          {/* =============================== */}
+          {user && (
+            <div className="side-section other">
+              <h4>Other</h4>
+              <ul>
+                <li
+                  onClick={() => {
+                    setUser(null);
+                    localStorage.removeItem("token");
+                    navigate("/");
+                  }}
+                  style={{ color: "#d9534f", fontWeight: "bold", cursor: "pointer" }}
+                >
+                  <img src={logoutIcon} className="logout-icon" />
+                  Log Out
+                </li>
+              </ul>
+            </div>
+          )}
+
+          {/* =============================== */}
+          {/*          FOOTER              */}
+          {/* =============================== */}
           <div className="side-footer">
+
             <div className="app-links">
               <span>Get The App</span>
               <img src={appstoreIcon} />
@@ -432,6 +475,7 @@ const Navbar = () => {
               <img src={twitterIcon} />
               <img src={youtubeIcon} />
             </div>
+
           </div>
 
         </div>

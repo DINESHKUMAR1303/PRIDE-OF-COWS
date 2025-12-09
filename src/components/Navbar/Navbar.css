@@ -11,6 +11,84 @@ html, body {
 }
 
 
+    /* ----- CART----- */
+/* FORCE remove underline from CART link and text */
+.cart,
+.cart * {
+  text-decoration: none !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.cart:visited,
+.cart:active,
+.cart:hover {
+  text-decoration: none !important;
+}
+
+/* ============================= */
+/* PERFECT PROFILE CARD (MATCHES YOUR IMAGE EXACTLY) */
+/* ============================= */
+
+.side-user-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 18px 22px;
+  margin: 18px 0 20px;
+  width: 100%;
+
+  box-shadow: 0px 3px 12px rgba(0,0,0,0.08);
+  cursor: pointer;
+  gap: 16px; /* spacing between icon & details */
+}
+
+/* Left Icon */
+.side-user-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+}
+
+/* Center Details */
+.side-user-details {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.side-user-details h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+  color: #193B61;
+  letter-spacing: 0.3px;
+}
+
+.side-user-details p {
+  margin: 3px 0 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #000;
+}
+
+.view-profile {
+  font-size: 13px;
+  font-weight: 600;
+  color: #193B61;
+  margin-top: 2px;
+  display: block;
+}
+
+/* RIGHT ARROW — HIDDEN (BECAUSE YOUR TARGET UI HAS NO ARROW) */
+.side-user-arrow {
+  display: none !important;
+}
+
 
 /* ============================= */
 /* === Base Navbar (Desktop) === */
@@ -263,45 +341,91 @@ html, body {
   min-width: 180px;
 }
 
+/* Each item */
 .shop-list li {
   padding: 8px 0;
   font-size: 15px;
   font-weight: 400;
   cursor: pointer;
-  color: rgba(0, 0, 0, 0.85);
   transition: color 0.3s ease;
   position: relative;
+  color: rgba(0,0,0,0.85); /* default black */
 }
 
-.shop-list li span {
+/* Text wrapper (for underline animation) */
+.shop-list li span,
+.shop-list li a {
   position: relative;
   display: inline-block;
 }
 
-.shop-list li span::after {
+/* GOLD underline animation */
+.shop-list li span::after,
+.shop-list li a::after {
   content: "";
   position: absolute;
   bottom: -5px;
-  right: 0;
+  left: 0;
   width: 0;
-  height: 1px;
-  background-color: #c29d5f;
-  transition: width 0.3s ease-in-out;
+  height: 1.5px;
+  background-color: #c29d5f; /* gold */
+  transition: width 0.3s ease;
 }
 
-.shop-list li:hover {
-  color: #c29d5f;
+/* Fix React Router link colors */
+.shop-list li a,
+.shop-list li a:visited,
+.shop-list li a:active {
+  color: rgba(0,0,0,0.85) !important;
+  text-decoration: none !important;
 }
 
-.shop-list li:hover span::after,
+/* ⭐ HOVER — Change text to GOLD + underline */
+.shop-list li:hover a,
+.shop-list li:hover span {
+  color: #c29d5f !important;  /* gold text */
+}
+
+.shop-list li:hover a::after,
+.shop-list li:hover span::after {
+  width: 100%; /* gold underline */
+}
+
+/* ⭐ ACTIVE ITEM — stays GOLD */
+.shop-list li.active a,
+.shop-list li.active span {
+  color: #c29d5f !important;
+  font-weight: 600;
+}
+
+.shop-list li.active a::after,
 .shop-list li.active span::after {
   width: 100%;
 }
 
-.shop-list li.active {
-  color: #c29d5f;
-  font-weight: 600;
+/* ================= Right: Preview image ================= */
+.shop-preview {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 280px;
 }
+
+.shop-preview img {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease-in-out;
+}
+
+.shop-preview img:hover {
+  transform: scale(1.05);
+}
+
+
 
 /* ================= Right: product image preview ================= */
 .shop-preview {
@@ -481,7 +605,7 @@ html, body {
   justify-content: space-between;
   align-items: center;
   margin-top: 10px;
-  padding: 18px 20px;
+  padding: 0px 0px;
   border-bottom: 1px solid var(--line);
   background: var(--white);
 }
@@ -524,20 +648,24 @@ html, body {
   font-size: 14px;
   color: var(--navy);
 }
+
 .arrow-icon {
   width: 18px;
   height: 18px;
   opacity: 0.7;
   transition: transform 0.2s;
 }
+
 .arrow-icon.open {
   transform: rotate(180deg);
 }
+
 .accordion-list {
   list-style: none;
   margin: 0;
   padding: 0;
 }
+
 .accordion-list li {
   padding: 14px 20px 14px 40px;
   border-bottom: 1px solid var(--line);
@@ -545,9 +673,24 @@ html, body {
   color: var(--navy);
   cursor: pointer;
 }
+
 .accordion-list li:hover {
   background: #f9fbfd;
 }
+
+/* ⭐ FIX PURPLE + UNDERLINE + WRONG COLORS */
+.accordion-list li a {
+  text-decoration: none !important;
+  color: var(--navy) !important;        /* Navy */
+  font-weight: 600;
+  display: block;
+  width: 100%;
+}
+
+.accordion-list li a:hover {
+  color: #c29d5f !important;            /* Gold hover */
+}
+
 
 /* ===== Section blocks ===== */
 .side-section {
@@ -588,19 +731,22 @@ html, body {
   color: var(--navy);
   cursor: pointer;
 }
+
 .side-section li img {
   width: 24px;
   height: 22px;
   flex: 0 0 22px;
 }
+
 .side-section li:hover {
   background: #f9fbfd;
 }
 
-/* ✅ Remove bottom border from last item in each section */
+/* Remove bottom border from last item */
 .side-section ul li:last-child {
   border-bottom: none;
 }
+
 
 /* ============================= */
 /* === Footer Section (Side Menu) === */
