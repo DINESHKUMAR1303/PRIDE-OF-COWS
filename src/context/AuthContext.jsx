@@ -1,18 +1,20 @@
+// ======================================================
+// AUTH CONTEXT — GLOBAL USER + LOGIN MODAL + LOGOUT
+// ======================================================
+
 import { createContext, useContext, useState, useEffect } from "react";
 
-// ======================================================
-// AUTH CONTEXT
-// Handles: saving logged-in user globally across the app
-// ======================================================
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  
+  // ⭐ Stores logged-in user data
   const [user, setUser] = useState(null);
 
-  // ⭐ NEW — controls login modal open/close
+  // ⭐ Controls login modal visibility globally (NO LoginContext needed)
   const [loginOpen, setLoginOpen] = useState(false);
 
-  // ⭐ NEW — Boolean state for easy login check
+  // ⭐ Simple boolean — easily check login state
   const isLoggedIn = !!user;
 
   // ======================================================
@@ -20,30 +22,57 @@ export const AuthProvider = ({ children }) => {
   // ======================================================
   useEffect(() => {
     const token = localStorage.getItem("poc_token");
-    const userData = localStorage.getItem("poc_user");
+    const storedUser = localStorage.getItem("poc_user");
 
-    if (token && userData) {
+    if (token && storedUser) {
       try {
-        setUser(JSON.parse(userData));
+        const parsedUser = JSON.parse(storedUser);
+
+        // ⭐ Restore complete user data safely
+        setUser({
+          name: parsedUser.name || "",
+          phone: parsedUser.phone || "",
+          email: parsedUser.email || "",
+          city: parsedUser.city || "",
+          pincode: parsedUser.pincode || "",
+          firstName: parsedUser.firstName || "",
+          lastName: parsedUser.lastName || "",
+          address: parsedUser.address || "",
+          state: parsedUser.state || "",
+          country: parsedUser.country || "",
+        });
       } catch (err) {
-        console.error("Error parsing stored user:", err);
+        console.error("❌ Error parsing stored user:", err);
         localStorage.removeItem("poc_user");
       }
     }
   }, []);
 
+  // ======================================================
+  // GLOBAL LOGOUT FUNCTION
+  // ======================================================
+  const logout = () => {
+    localStorage.removeItem("poc_token");
+    localStorage.removeItem("poc_user");
+
+    setUser(null); // removes user globally
+  };
+
+  // ======================================================
+  // PROVIDE CONTEXT VALUES
+  // ======================================================
   return (
     <AuthContext.Provider
       value={{
         user,
         setUser,
 
-        // ⭐ ADDED — for Cart.jsx login checking
         isLoggedIn,
 
-        // ⭐ ADDED — for global login modal control
         loginOpen,
         setLoginOpen,
+
+        logout, // global logout
       }}
     >
       {children}
@@ -52,6 +81,6 @@ export const AuthProvider = ({ children }) => {
 };
 
 // ======================================================
-// HOOK FOR EASY ACCESS
+// HOOK FOR EASY ACCESS OUTSIDE
 // ======================================================
 export const useAuth = () => useContext(AuthContext);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // ✅ ADDED useNavigate
 import "./Navbar.css";
 
 // === IMPORT GLOBAL CART CONTEXT ===
@@ -49,8 +49,15 @@ import lifestyleImg from "./images/lifestyle.jpg";
 
 import LoginModal from "./LoginModal";
 
+
 // === Custom Hamburger Icon ===
-const CustomMenuIcon = ({ size = 28, color = "#193B61", topThickness = 1.5, middleThickness = 2, bottomThickness = 1.5 }) => {
+const CustomMenuIcon = ({
+  size = 28,
+  color = "#193B61",
+  topThickness = 1.5,
+  middleThickness = 2,
+  bottomThickness = 1.5
+}) => {
   const gap = size * 0.2;
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
@@ -62,15 +69,10 @@ const CustomMenuIcon = ({ size = 28, color = "#193B61", topThickness = 1.5, midd
 };
 
 const Navbar = () => {
-
-  // === GET GLOBAL CART COUNT ===
   const { cartCount } = useCart();
-
-  // ⭐️ FIX ADDED HERE
   const { user, setUser } = useAuth();
-
-  // ✅ USE GLOBAL LOGIN CONTEXT
   const { loginOpen, setLoginOpen } = useLogin();
+  const navigate = useNavigate();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -86,6 +88,7 @@ const Navbar = () => {
 
   const navRef = useRef(null);
   const [isSticky, setIsSticky] = useState(false);
+
 
   const shopItems = [
     { name: "All", img: allImg, link: "/shop/all" },
@@ -109,30 +112,20 @@ const Navbar = () => {
     { name: "Lifestyle", img: lifestyleImg, link: "/blog/lifestyle" },
   ];
 
-  // ⭐ FIX → Show CITY if logged in, else show saved pincode
+  // ⭐ FIX → Show CITY from logged-in user
   useEffect(() => {
-    const storedUser = localStorage.getItem("poc_user");
-
-    if (storedUser) {
-      const parsed = JSON.parse(storedUser);
-
-      if (parsed.city) {
-        setLocation(parsed.city.toUpperCase());
-      }
+    if (user && user.city && user.pincode) {
+      setLocation(`${user.city.toUpperCase()} (${user.pincode})`);
     } else {
       const savedLocation = localStorage.getItem("userLocation");
-      if (savedLocation) {
-        setLocation(savedLocation.toUpperCase());
-      }
+      if (savedLocation) setLocation(savedLocation);
     }
 
-    const handleScroll = () => {
-      setIsSticky(window.scrollY > 150);
-    };
-
+    const handleScroll = () => setIsSticky(window.scrollY > 150);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [user]);
+
 
   const handleSaveLocation = () => {
     const selected = place || pincode;
@@ -146,11 +139,21 @@ const Navbar = () => {
   };
 
   const ChevronIcon = ({ isOpen }) => (
-    <svg className={`arrow-icon ${isOpen ? "open" : ""}`} width="20" height="20" viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      className={`arrow-icon ${isOpen ? "open" : ""}`}
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <polyline points="6 9 12 15 18 9" />
     </svg>
   );
+
 
   return (
     <>
@@ -172,14 +175,13 @@ const Navbar = () => {
         <div className="navbar-center">
           <ul className="menu">
 
-            {/* SHOP DROPDOWN */}
+            {/* SHOP */}
             <li
               className={`dropdown ${openDropdown === "shop" ? "open" : ""}`}
               onMouseEnter={() => setOpenDropdown("shop")}
               onMouseLeave={() => setOpenDropdown(null)}
             >
               Shop <ChevronIcon isOpen={openDropdown === "shop"} />
-
               <div className="dropdown-menu">
                 <div className="dropdown-content">
                   <ul className="shop-list no-border">
@@ -210,10 +212,8 @@ const Navbar = () => {
               onMouseLeave={() => setOpenDropdown(null)}
             >
               Learn <ChevronIcon isOpen={openDropdown === "learn"} />
-
               <div className="dropdown-menu">
                 <div className="dropdown-content">
-
                   <ul className="shop-list no-border">
                     {learnItems.map((item) => (
                       <li
@@ -231,7 +231,6 @@ const Navbar = () => {
                   <div className="shop-preview square">
                     <img src={learnItems.find((p) => p.name === hoveredLearn)?.img} alt={hoveredLearn} />
                   </div>
-
                 </div>
               </div>
             </li>
@@ -243,10 +242,8 @@ const Navbar = () => {
               onMouseLeave={() => setOpenDropdown(null)}
             >
               Blog <ChevronIcon isOpen={openDropdown === "blog"} />
-
               <div className="dropdown-menu">
                 <div className="dropdown-content">
-
                   <ul className="shop-list no-border">
                     {blogItems.map((item) => (
                       <li
@@ -264,7 +261,6 @@ const Navbar = () => {
                   <div className="shop-preview square">
                     <img src={blogItems.find((p) => p.name === hoveredBlog)?.img} alt={hoveredBlog} />
                   </div>
-
                 </div>
               </div>
             </li>
@@ -275,25 +271,21 @@ const Navbar = () => {
           {/* RIGHT SIDE */}
           <div className="navbar-right">
 
-            {/* LOGIN / USER DISPLAY */}
+            {/* LOGIN / USER SECTION */}
             {user ? (
               <div className="navbar-user">
                 <img src={loginIcon} className="right-icon" />
-                
-                {/* ⭐ FIX → Show FIRST NAME */}
-                <span className="user-text">Hi, {user.firstName?.toUpperCase()}</span>
 
-                <button
-                  className="logout-btn"
-                  onClick={() => {
-                    localStorage.removeItem("poc_token");
-                    localStorage.removeItem("poc_user");
-                    setUser(null);
-                    window.location.reload();
-                  }}
+                {/* ⭐ USERNAME → GO TO ACCOUNT PAGE */}
+                <span
+                  className="user-text"
+                  onClick={() => navigate("/my-account")}
+                  style={{ cursor: "pointer" }}
                 >
-                  Logout
-                </button>
+                  {user.firstName ? user.firstName.toUpperCase() : "USER"}
+                </span>
+
+                {/* ❌ LOGOUT REMOVED FROM NAVBAR */}
               </div>
             ) : (
               <div className="login" onClick={() => setLoginOpen(true)}>
@@ -302,7 +294,7 @@ const Navbar = () => {
               </div>
             )}
 
-            {/* CART LINK */}
+            {/* CART */}
             <Link to="/cart" className="cart" style={{ textDecoration: "none", color: "inherit" }}>
               <div className="cart-wrapper">
                 <img src={cartIcon} className="right-icon" />
@@ -311,26 +303,54 @@ const Navbar = () => {
               <span className="cart-text">CART</span>
             </Link>
 
-            {/* MENU BUTTON */}
+            {/* HAMBURGER */}
             <button className="menu-toggle" onClick={() => setMenuOpen(true)}>
               <CustomMenuIcon size={28} color="#001F3F" />
             </button>
-
           </div>
         </div>
       </nav>
 
-      {/* LOCATION MODAL */}
-      {modalOpen && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <button className="modal-close" onClick={() => setModalOpen(false)}>✕</button>
-            <input type="text" placeholder="PINCODE" value={pincode} onChange={(e) => setPincode(e.target.value)} />
-            <input type="text" placeholder="Search for a place" value={place} onChange={(e) => setPlace(e.target.value)} />
-            <button className="continue-btn" onClick={handleSaveLocation}>CONTINUE</button>
-          </div>
-        </div>
-      )}
+{/* LOCATION MODAL */}
+{modalOpen && (
+  <div className="modal-overlay">
+    <div className="modal">
+
+      {/* CLOSE BUTTON */}
+      <button className="modal-close" onClick={() => setModalOpen(false)}>✕</button>
+
+      {/* PREMIUM HEADER */}
+      <h2 className="modal-title">Enter Delivery Pincode</h2>
+      <p className="modal-subtext">Check availability and delivery options for your location</p>
+
+      {/* INPUT GROUP */}
+      <div className="modal-input-group">
+        <input
+          type="text"
+          placeholder="Enter Pincode"
+          value={pincode}
+          onChange={(e) => setPincode(e.target.value)}
+          className="modal-input"
+        />
+
+        <input
+          type="text"
+          placeholder="Search for a Place"
+          value={place}
+          onChange={(e) => setPlace(e.target.value)}
+          className="modal-input"
+        />
+      </div>
+
+      {/* ACTION BUTTON */}
+      <button className="continue-btn" onClick={handleSaveLocation}>
+        CONTINUE
+      </button>
+
+    </div>
+  </div>
+)}
+
 
       {/* LOGIN MODAL */}
       {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} />}
@@ -347,6 +367,7 @@ const Navbar = () => {
               <img src={loginIcon} className="right-icon" />
               <span className="login-text">Login</span>
             </div>
+
             <button className="close-btn" onClick={() => setMenuOpen(false)}>
               <FaTimes />
             </button>
@@ -354,7 +375,10 @@ const Navbar = () => {
 
           {/* SHOP ACCORDION */}
           <div className="accordion">
-            <button className="accordion-header" onClick={() => setOpenDropdown(openDropdown === "shop" ? null : "shop")}>
+            <button
+              className="accordion-header"
+              onClick={() => setOpenDropdown(openDropdown === "shop" ? null : "shop")}
+            >
               <span>Shop</span>
               <ChevronIcon isOpen={openDropdown === "shop"} />
             </button>
@@ -383,7 +407,7 @@ const Navbar = () => {
             </ul>
           </div>
 
-          {/* LEARN */}
+          {/* LEARN MORE */}
           <div className="side-section learn-more">
             <h4>Learn More</h4>
             <ul>
@@ -400,6 +424,7 @@ const Navbar = () => {
               <img src={appstoreIcon} />
               <img src={playstoreIcon} />
             </div>
+
             <div className="social-links">
               <span>Follow Us</span>
               <img src={instagramIcon} />

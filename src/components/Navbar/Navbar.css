@@ -120,6 +120,37 @@ html, body {
   height: 26px;
 }
 
+
+/* ============================= */
+/* === USERNAME (LOGGED-IN) === */
+/* ============================= */
+
+.navbar-user {
+  display: flex;
+  flex-direction: column;   /* icon top, username below */
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  padding-bottom: 8px;      /* matches LOGIN spacing */
+  min-width: 60px;
+}
+
+.navbar-user .right-icon {
+  width: 25px;
+  height: 25px;
+}
+
+.navbar-user .user-text {
+  font-size: 12px;
+  font-weight: bold;
+  color: #c29d5f;           /* GOLD LIKE LOGIN */
+  text-align: center;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-top: 2px;
+}
+
+
 /* ================= Center Menu ================= */
 .navbar-center {
   display: flex;
@@ -627,74 +658,127 @@ html, body {
 }
 
 
-
-
 /* ============================= */
-/* === Location Modal === */
+/* === Location Modal (Premium) === */
 /* ============================= */
+
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 3000;
+  z-index: 5000;
+  backdrop-filter: blur(3px); /* ⭐ Premium blur effect */
 }
 
 .modal {
-  background: #fff;
-  padding: 30px;
-  border-radius: 10px;
-  width: 400px;
-  max-width: 90%;
-  box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+  background: #ffffff;
+  padding: 40px 35px;
+  border-radius: 18px;
+  width: 420px;
+  max-width: 92%;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
+  animation: popIn 0.25s ease-out;
 }
 
-.modal input {
-  padding: 12px 15px;
-  border: 1px solid #ccc;
+/* POP-IN ANIMATION */
+@keyframes popIn {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ⭐ Title */
+.modal-title {
+  font-family: 'Suranna', serif;
+  font-size: 24px;
+  color: #193b61;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.modal-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.modal-input-group input {
+  height: 48px;
   border-radius: 30px;
+  border: 1.5px solid #d6d6d6;
   font-size: 14px;
-  outline: none;
+  transition: all 0.25s ease;
+  background: #fafafa;
+  color: #193b61;
+
+  text-align: center;         /* center text */
+  padding: 0 25px;            /* ⭐ give left/right space so text never touches edges */
+  box-sizing: border-box;     /* ⭐ ensures width stays inside modal */
 }
 
+/* placeholder centering */
+.modal-input-group input::placeholder {
+  text-align: center;
+  color: #777 !important;
+  opacity: 1 !important;
+}
+
+/* Focus Effect */
+.modal-input-group input:focus {
+  border-color: #193b61;
+  background: #ffffff;
+  box-shadow: 0 0 6px rgba(25, 59, 97, 0.25);
+}
+
+/* Close Button */
 .modal-close {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  background: #002147;
+  top: 14px;
+  right: 14px;
+  background: #193b61;
   color: white;
   border: none;
-  font-size: 18px;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
+  font-size: 17px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s ease;
 }
 
+.modal-close:hover {
+  background: #0f2742;
+}
+
+/* Continue Button */
 .continue-btn {
   background: #002147;
   color: white;
-  padding: 12px;
+  padding: 14px 0;
   border-radius: 30px;
   font-weight: bold;
-  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.5px;
   border: none;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.25s ease;
 }
 
 .continue-btn:hover {
   background: #013366;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 33, 71, 0.25);
 }
+
 
 /* ============================= */
 /* === Responsive Rules === */

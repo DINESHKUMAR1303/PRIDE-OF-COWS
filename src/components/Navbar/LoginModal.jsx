@@ -27,7 +27,7 @@ const LoginModal = ({ onClose }) => {
 
   // ========================
   // REGISTER STATES
-  // ⭐ Added "pincode"
+  // ⭐ Includes pincode
   // ========================
   const [registerData, setRegisterData] = useState({
     firstName: "",
@@ -38,7 +38,7 @@ const LoginModal = ({ onClose }) => {
     confirmPassword: "",
     address: "",
     city: "",
-    pincode: "",        // ⭐ NEW FIELD
+    pincode: "",
     country: "India",
     state: "",
   });
@@ -46,7 +46,6 @@ const LoginModal = ({ onClose }) => {
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState("");
 
-  // Disable background scroll
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => (document.body.style.overflow = "auto");
@@ -57,33 +56,21 @@ const LoginModal = ({ onClose }) => {
     setTimeout(() => onClose(), 400);
   };
 
-  // ============================
-  // HANDLE INPUT CHANGES
-  // ============================
   const handleLoginChange = (e) =>
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
 
   const handleRegisterChange = (e) =>
     setRegisterData({ ...registerData, [e.target.name]: e.target.value });
 
-  // ============================
   // LOGIN VALIDATION
-  // ============================
   const validateLogin = () => {
     let newErrors = {};
-
-    if (!loginData.login.trim())
-      newErrors.login = "Enter email or phone";
-
-    if (!loginData.password.trim())
-      newErrors.password = "Enter your password";
-
+    if (!loginData.login.trim()) newErrors.login = "Enter email or phone";
+    if (!loginData.password.trim()) newErrors.password = "Enter password";
     return newErrors;
   };
 
-  // ========================
   // LOGIN SUBMIT
-  // ========================
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setApiError("");
@@ -97,43 +84,49 @@ const LoginModal = ({ onClose }) => {
     try {
       const res = await loginUser(loginData);
 
-      localStorage.setItem("poc_token", res.token);
-      localStorage.setItem("poc_user", JSON.stringify(res.user));
-      setUser(res.user);
+      const formattedUser = {
+        name: `${res.user.firstName} ${res.user.lastName}`,
+        firstName: res.user.firstName,
+        lastName: res.user.lastName,
+        email: res.user.email,
+        phone: res.user.telephone,
+        city: res.user.city,
+        pincode: res.user.pincode,
+        address: res.user.address,
+        state: res.user.state,
+        country: res.user.country,
+      };
 
+      localStorage.setItem("poc_token", res.token);
+      localStorage.setItem("poc_user", JSON.stringify(formattedUser));
+
+      setUser(formattedUser);
       handleClose();
-      window.location.reload();
     } catch (err) {
       const msg = err.message || "Login failed";
 
-      if (msg.includes("Email") || msg.includes("Phone")) {
-        setLoginErrors({ login: "Invalid email or phone" });
-        return;
-      }
-      if (msg.includes("Password")) {
-        setLoginErrors({ password: "Incorrect password" });
-        return;
-      }
+      if (msg.includes("Email") || msg.includes("Phone"))
+        return setLoginErrors({ login: "Invalid email or phone" });
+
+      if (msg.includes("Password"))
+        return setLoginErrors({ password: "Incorrect password" });
 
       setApiError(msg);
     }
   };
 
-  // ============================
   // REGISTER VALIDATION
-  // ⭐ Added pincode validation
-  // ============================
   const validateRegister = () => {
     let newErrors = {};
 
     if (!registerData.firstName.trim())
-      newErrors.firstName = "First name is required";
+      newErrors.firstName = "First name required";
 
     if (!registerData.lastName.trim())
-      newErrors.lastName = "Last name is required";
+      newErrors.lastName = "Last name required";
 
     if (!/^\S+@\S+\.\S+$/.test(registerData.email))
-      newErrors.email = "Enter a valid email";
+      newErrors.email = "Enter valid email";
 
     if (!/^\d{10}$/.test(registerData.telephone))
       newErrors.telephone = "Enter valid 10-digit number";
@@ -150,7 +143,6 @@ const LoginModal = ({ onClose }) => {
     if (!registerData.city.trim())
       newErrors.city = "City required";
 
-    // ⭐ PINCODE VALIDATION
     if (!/^\d{6}$/.test(registerData.pincode))
       newErrors.pincode = "Enter valid 6-digit pincode";
 
@@ -160,18 +152,19 @@ const LoginModal = ({ onClose }) => {
     return newErrors;
   };
 
-  // ========================
   // REGISTER SUBMIT
-  // ========================
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
-    setApiError("");
     setErrors({});
+    setApiError("");
 
     const validationErrors = validateRegister();
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) return;
+
+    // ⭐ DEBUG PRINT — this confirms all fields exist
+    console.log("REGISTER DATA SENT:", registerData);
 
     try {
       await registerUser(registerData);
@@ -180,32 +173,43 @@ const LoginModal = ({ onClose }) => {
 
       if (msg.includes("Email"))
         return setErrors({ email: "Email already registered" });
-
       if (msg.includes("Phone"))
         return setErrors({ telephone: "Phone already registered" });
 
       return setApiError(msg);
     }
 
-    // Auto-login
     try {
       const loginRes = await loginUser({
         login: registerData.email,
         password: registerData.password,
       });
 
-      localStorage.setItem("poc_token", loginRes.token);
-      localStorage.setItem("poc_user", JSON.stringify(loginRes.user));
-      setUser(loginRes.user);
+      const formattedUser = {
+        name: `${loginRes.user.firstName} ${loginRes.user.lastName}`,
+        firstName: loginRes.user.firstName,
+        lastName: loginRes.user.lastName,
+        email: loginRes.user.email,
+        phone: loginRes.user.telephone,
+        city: loginRes.user.city,
+        pincode: loginRes.user.pincode,
+        address: loginRes.user.address,
+        state: loginRes.user.state,
+        country: loginRes.user.country,
+      };
 
+      localStorage.setItem("poc_token", loginRes.token);
+      localStorage.setItem("poc_user", JSON.stringify(formattedUser));
+
+      setUser(formattedUser);
       handleClose();
-      window.location.reload();
     } catch (err) {
       setApiError(err.message || "Login failed after registration");
     }
   };
 
   const countries = ["India", "United States", "United Kingdom", "Canada"];
+
   const indianStates = [
     "Andhra Pradesh",
     "Bihar",
@@ -232,16 +236,13 @@ const LoginModal = ({ onClose }) => {
         {/* CLOSE BUTTON */}
         <button className="modal-close-btn" onClick={handleClose}>✕</button>
 
-        {/* LEFT IMAGE */}
         <div className="login-left">
           <img src={sideImage} className="left-image" alt="Milk" />
           <img src={logo} className="left-logo" alt="Brand" />
         </div>
 
-        {/* RIGHT PANEL */}
         <div className="login-right">
 
-          {/* TABS */}
           <div className="tabs">
             <button
               className={`tab-btn ${activeTab === "login" ? "active" : ""}`}
@@ -266,13 +267,12 @@ const LoginModal = ({ onClose }) => {
             </button>
           </div>
 
-          {/* POPUP ERROR */}
           {apiError && <div className="popup-error">{apiError}</div>}
 
           {/* LOGIN FORM */}
           {activeTab === "login" && (
             <form className="login-form" onSubmit={handleLoginSubmit}>
-              <h2 className="title">Welcome to Pride of Cows </h2>
+              <h2 className="title">Welcome to Pride of Cows</h2>
 
               <label>Email or Phone</label>
               <input
@@ -297,9 +297,7 @@ const LoginModal = ({ onClose }) => {
                 <p className="error-text">{loginErrors.password}</p>
               )}
 
-              <button className="primary-btn" type="submit">
-                Login
-              </button>
+              <button className="primary-btn" type="submit">Login</button>
             </form>
           )}
 
@@ -364,9 +362,7 @@ const LoginModal = ({ onClose }) => {
                 onChange={handleRegisterChange}
                 className={errors.password ? "input-error shake" : ""}
               />
-              {errors.password && (
-                <p className="error-text">{errors.password}</p>
-              )}
+              {errors.password && <p className="error-text">{errors.password}</p>}
 
               <label>Confirm Password</label>
               <input
@@ -387,9 +383,7 @@ const LoginModal = ({ onClose }) => {
                 onChange={handleRegisterChange}
                 className={errors.address ? "input-error shake" : ""}
               />
-              {errors.address && (
-                <p className="error-text">{errors.address}</p>
-              )}
+              {errors.address && <p className="error-text">{errors.address}</p>}
 
               <label>City</label>
               <input
@@ -400,7 +394,6 @@ const LoginModal = ({ onClose }) => {
               />
               {errors.city && <p className="error-text">{errors.city}</p>}
 
-              {/* ⭐ NEW PINCODE FIELD */}
               <label>Pincode</label>
               <input
                 name="pincode"

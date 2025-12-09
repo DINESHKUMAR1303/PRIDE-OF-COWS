@@ -86,7 +86,7 @@
   gap: 40px;
   padding: 20px 10%;
   margin-top: 20px;
-  overflow-x: hidden; /* FIX */
+  overflow-x: hidden;
 }
 
 .checkout-left {
@@ -173,7 +173,7 @@
 }
 
 /* ===========================
-   PRODUCT ROW (POC STYLE)
+   PRODUCT ROW
 =========================== */
 
 .checkout-product-row {
@@ -185,10 +185,8 @@
   background: white;
   margin-bottom: 18px;
   gap: 22px;
-  box-sizing: border-box; /* FIX */
+  box-sizing: border-box;
 }
-
-/* LEFT IMAGE */
 
 .cp-img-box {
   width: 120px;
@@ -204,8 +202,6 @@
   height: auto;
   object-fit: contain;
 }
-
-/* MIDDLE INFO */
 
 .cp-info {
   flex: 1;
@@ -231,8 +227,6 @@
   color: #333;
 }
 
-/* DELIVERY BOX */
-
 .cp-delivery-box {
   background: #fff6e9;
   border: 1px solid #f3d9a5;
@@ -242,7 +236,7 @@
   align-items: center;
   gap: 12px;
   margin-top: 12px;
-  max-width: 260px; /* FIX */
+  max-width: 260px;
 }
 
 .cp-delivery-icon {
@@ -263,7 +257,7 @@
 }
 
 /* ===========================
-   RIGHT COLUMN ACTIONS
+   RIGHT COLUMN
 =========================== */
 
 .cp-qty-section {
@@ -316,10 +310,6 @@
   color: #10273f;
 }
 
-/* ===========================
-   SUMMARY BOXES
-=========================== */
-
 .offer-box,
 .order-summary,
 .pay-box {
@@ -359,8 +349,6 @@
   font-weight: bold;
   color: #193B61;
 }
-
-/* PAYMENT BUTTON */
 
 .amount-to-pay {
   display: flex;
@@ -421,7 +409,6 @@
   }
 }
 
-/* EXTRA MOBILE FIXES */
 @media (max-width: 480px) {
   .cp-delivery-box {
     max-width: 90%;
@@ -442,7 +429,7 @@
 }
 
 /* ===========================
-   ADDRESS MODAL FIXES ⭐
+   PREMIUM ADDRESS MODAL
 =========================== */
 
 .modal-overlay-cart {
@@ -457,7 +444,6 @@
   animation: fadeIn 0.25s ease;
 }
 
-/* PREMIUM MODAL BOX */
 .address-modal {
   width: 480px;
   max-width: 92%;
@@ -469,7 +455,6 @@
   position: relative;
 }
 
-/* HEADER */
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -484,7 +469,6 @@
   margin: 0;
 }
 
-/* FIX — premium close button */
 .modal-close-btn {
   position: absolute;
   top: 18px;
@@ -507,11 +491,6 @@
   background: #e1e1e1;
 }
 
-/* ===========================
-   FIX FLOATING LABEL ISSUE ❗
-=========================== */
-
-/* remove any floating label behavior */
 .address-form label {
   position: static !important;
   display: block !important;
@@ -521,14 +500,12 @@
   color: #193B61;
 }
 
-/* form structure */
 .address-form {
   display: flex;
   flex-direction: column;
-  gap: 18px; /* nice spacing between fields */
+  gap: 18px;
 }
 
-/* group wrapper */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -536,7 +513,6 @@
   gap: 6px;
 }
 
-/* Two columns layout */
 .form-row-2 {
   display: flex;
   gap: 20px;
@@ -546,7 +522,6 @@
   flex: 1;
 }
 
-/* INPUTS */
 .address-form input,
 .address-form select {
   width: 100%;
@@ -565,7 +540,6 @@
   box-shadow: 0 0 0 2px rgba(25, 59, 97, 0.15);
 }
 
-/* Save Button */
 .save-address-btn {
   width: 100%;
   background: #193B61;
@@ -584,23 +558,6 @@
   background: #10273f;
 }
 
-/* ===========================
-   ANIMATIONS
-=========================== */
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.92); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-/* ===========================
-   MOBILE FIXES
-=========================== */
 @media (max-width: 540px) {
   .address-modal {
     padding: 26px;
@@ -615,4 +572,50 @@
     top: 14px;
     right: 14px;
   }
+}
+
+/* ===========================
+   ORDER SUCCESS POPUP ⭐ NEW
+=========================== */
+
+.order-success-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9000;
+  animation: fadeIn 0.3s ease;
+}
+
+.order-success-box {
+  width: 420px;
+  max-width: 90%;
+  background: white;
+  padding: 40px 30px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+  animation: scaleIn 0.3s ease;
+}
+
+.success-circle {
+  width: 85px;
+  height: 85px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  border: 3px solid #bfe9c2;
+  color: #3cb371;
+  font-size: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.success-text {
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  margin-top: 10px;
 }

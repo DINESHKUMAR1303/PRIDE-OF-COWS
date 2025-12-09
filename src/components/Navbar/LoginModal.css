@@ -51,6 +51,8 @@ body {
   box-shadow: var(--shadow);
 }
 
+
+
 /* Slide Animations */
 @keyframes slideInRight {
   from { transform: translateX(100%); opacity: 0; }

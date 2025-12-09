@@ -62,6 +62,25 @@ const Cart = () => {
     label: "Home",
   });
 
+  /* ⭐ NEW: ORDER SUCCESS POPUP */
+  const [orderSuccess, setOrderSuccess] = useState(false);
+
+  /* ⭐ HANDLE PROCEED TO PAY */
+  const handleProceedToPay = () => {
+    if (!isLoggedIn) {
+      setLoginOpen(true);
+      return;
+    }
+
+    // User is logged in → Show success popup
+    setOrderSuccess(true);
+
+    // Auto hide after 2.5 sec
+    setTimeout(() => {
+      setOrderSuccess(false);
+    }, 2500);
+  };
+
   const handleAddAddressClick = () => {
     if (!isLoggedIn) {
       setLoginOpen(true);
@@ -226,7 +245,8 @@ const Cart = () => {
               <h2>₹{itemTotal}</h2>
             </div>
 
-            <button className="pay-btn" onClick={() => setLoginOpen(true)}>
+            {/* ⭐ UPDATED BUTTON LOGIC */}
+            <button className="pay-btn" onClick={handleProceedToPay}>
               Proceed To Pay
             </button>
           </div>
@@ -234,9 +254,21 @@ const Cart = () => {
         </div>
       </div>
 
-      {/* ================================
-          PREMIUM ADDRESS MODAL (NEW DESIGN)
-      ================================ */}
+      {/* ============================
+          ORDER SUCCESS POPUP ⭐ NEW
+      ============================ */}
+      {orderSuccess && (
+        <div className="order-success-overlay">
+          <div className="order-success-box">
+            <div className="success-circle">
+              ✓
+            </div>
+            <p className="success-text">Order Placed Successfully</p>
+          </div>
+        </div>
+      )}
+
+      {/* ADDRESS MODAL */}
       {isAddressModalOpen && (
         <div className="modal-overlay-cart">
           <div className="address-modal premium-address-modal">
@@ -250,7 +282,6 @@ const Cart = () => {
 
             <form onSubmit={handleSaveAddress} className="address-form premium-form">
 
-              {/* NAME */}
               <div className="form-group">
                 <label>Full Name</label>
                 <input
@@ -261,7 +292,6 @@ const Cart = () => {
                 />
               </div>
 
-              {/* LINE 1 */}
               <div className="form-group">
                 <label>House / Flat / Building</label>
                 <input
@@ -272,7 +302,6 @@ const Cart = () => {
                 />
               </div>
 
-              {/* LINE 2 */}
               <div className="form-group">
                 <label>Street / Area (optional)</label>
                 <input
@@ -282,7 +311,6 @@ const Cart = () => {
                 />
               </div>
 
-              {/* CITY + PINCODE */}
               <div className="form-row-2">
                 <div className="form-group">
                   <label>City</label>
@@ -305,7 +333,6 @@ const Cart = () => {
                 </div>
               </div>
 
-              {/* LABEL */}
               <div className="form-group">
                 <label>Address Type</label>
                 <select
@@ -327,7 +354,6 @@ const Cart = () => {
         </div>
       )}
 
-      {/* DATE PICKER */}
       {isDateModalOpen && (
         <DatePicker
           onClose={() => setIsDateModalOpen(false)}

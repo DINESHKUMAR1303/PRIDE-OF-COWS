@@ -1,5 +1,3 @@
-// backend/controllers/authController.js
-
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
@@ -8,8 +6,27 @@ const User = require("../models/User");
 // REGISTER USER
 // ==============================
 exports.registerUser = async (req, res) => {
+  console.log("🔥 registerUser called");
+  console.log("🔥 BODY:", req.body);
+
   try {
+    // Give default empty string so `.trim()` is safe
     const {
+      firstName = "",
+      lastName = "",
+      email = "",
+      telephone = "",
+      password = "",
+      confirmPassword = "",
+      address = "",
+      city = "",
+      pincode = "",
+      country = "",
+      state = "",
+    } = req.body || {};
+
+    // ---- Check for missing fields (with trim) ----
+    const fields = {
       firstName,
       lastName,
       email,
@@ -18,62 +35,74 @@ exports.registerUser = async (req, res) => {
       confirmPassword,
       address,
       city,
+      pincode,
       country,
       state,
-    } = req.body;
+    };
 
-    // ---- Validation ----
-    if (
-      !firstName ||
-      !lastName ||
-      !email ||
-      !telephone ||
-      !password ||
-      !confirmPassword ||
-      !address ||
-      !city ||
-      !country ||
-      !state
-    ) {
-      return res.status(400).json({ message: "Please fill all fields" });
+    const missingFields = Object.entries(fields)
+      .filter(([key, value]) => {
+        if (typeof value === "string") {
+          return value.trim() === "";
+        }
+        return value === undefined || value === null;
+      })
+      .map(([key]) => key);
+
+    if (missingFields.length > 0) {
+      console.log("❌ Missing fields:", missingFields);
+      return res
+        .status(400)
+        .json({ message: "Please fill all fields", missingFields });
     }
 
+    // ---- Extra validation ----
     if (password !== confirmPassword) {
-      return res.status(400).json({ message: "Passwords do not match" });
+      return res
+        .status(400)
+        .json({ message: "Passwords do not match" });
     }
 
-    // Normalize email
     const cleanEmail = email.toLowerCase().trim();
 
-    // Check if user exists
     const existing = await User.findOne({ email: cleanEmail });
-
     if (existing) {
-      return res.status(400).json({ message: "Email already registered" });
+      return res
+        .status(400)
+        .json({ message: "Email already registered" });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new user
+    // Create user in MongoDB
     const user = await User.create({
-      firstName,
-      lastName,
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
       email: cleanEmail,
-      telephone,
+      telephone: telephone.trim(),
       password: hashedPassword,
-      address,
-      city,
-      country,
-      state,
+      address: address.trim(),
+      city: city.trim(),
+      pincode: pincode.trim(),
+      country: country.trim(),
+      state: state.trim(),
     });
+
+    console.log("✅ User created:", user._id);
 
     return res.status(201).json({
       message: "Registration successful",
       user: {
         id: user._id,
-        name: `${user.firstName} ${user.lastName}`,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
+        telephone: user.telephone,
+        city: user.city,
+        pincode: user.pincode,
+        address: user.address,
+        state: user.state,
+        country: user.country,
       },
     });
   } catch (err) {
@@ -87,17 +116,18 @@ exports.registerUser = async (req, res) => {
 // ==============================
 exports.loginUser = async (req, res) => {
   try {
-    const { login, password } = req.body; // login = email or phone number
+    const { login, password } = req.body;
 
     if (!login || !password) {
-      return res.status(400).json({ message: "Please enter login and password" });
+      return res
+        .status(400)
+        .json({ message: "Please enter login and password" });
     }
 
-    // Format the login field
-    const loginValue =
-      login.includes("@") ? login.toLowerCase().trim() : login.trim();
+    const loginValue = login.includes("@")
+      ? login.toLowerCase().trim()
+      : login.trim();
 
-    // Find user
     const user = await User.findOne({
       $or: [{ email: loginValue }, { telephone: loginValue }],
     });
@@ -106,14 +136,11 @@ exports.loginUser = async (req, res) => {
       return res.status(400).json({ message: "User not found" });
     }
 
-    // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
-
     if (!isMatch) {
       return res.status(400).json({ message: "Incorrect password" });
     }
 
-    // JWT Token
     const token = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET || "secretkey",
@@ -124,9 +151,15 @@ exports.loginUser = async (req, res) => {
       message: "Login successful",
       token,
       user: {
-        id: user._id,
-        name: `${user.firstName} ${user.lastName}`,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
+        telephone: user.telephone,
+        city: user.city,
+        pincode: user.pincode,
+        address: user.address,
+        state: user.state,
+        country: user.country,
       },
     });
   } catch (err) {

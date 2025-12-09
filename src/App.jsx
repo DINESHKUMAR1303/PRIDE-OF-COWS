@@ -11,6 +11,9 @@ import TermsConditions from "./pages/TermsConditions/TermsConditions";
 // Category Pages
 import Milk from "./pages/Milk/Milk";
 
+// ⭐ ADD THIS — ACCOUNT PAGE
+import MyAccount from "./pages/MyAccount/MyAccount";
+
 // Components
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
@@ -45,6 +48,9 @@ const App = () => {
 
           {/* Cart */}
           <Route path="/cart" element={<Cart />} />
+
+          {/* ⭐ MY ACCOUNT PAGE ROUTE */}
+          <Route path="/my-account" element={<MyAccount />} />
 
           {/* Policy Pages */}
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
