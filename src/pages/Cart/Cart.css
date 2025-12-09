@@ -1,6 +1,6 @@
-/* =========================== */
-/* GLOBAL BREADCRUMB */
-/* =========================== */
+/* ===========================
+   GLOBAL BREADCRUMB
+=========================== */
 
 .empty-breadcrumb,
 .checkout-breadcrumb {
@@ -27,9 +27,9 @@
   color: #193B61;
 }
 
-/* =========================== */
-/* EMPTY CART PAGE */
-/* =========================== */
+/* ===========================
+   EMPTY CART PAGE
+=========================== */
 
 .empty-cart-container {
   text-align: center;
@@ -76,9 +76,9 @@
   color: white;
 }
 
-/* =========================== */
-/* CHECKOUT LAYOUT */
-/* =========================== */
+/* ===========================
+   CHECKOUT LAYOUT
+=========================== */
 
 .checkout-wrapper {
   display: flex;
@@ -86,6 +86,7 @@
   gap: 40px;
   padding: 20px 10%;
   margin-top: 20px;
+  overflow-x: hidden; /* FIX */
 }
 
 .checkout-left {
@@ -171,9 +172,9 @@
   color: #193B61;
 }
 
-/* ========================================== */
-/* ⭐ NEW PRODUCT ROW (MATCHES PRIDE OF COWS) */
-/* ========================================== */
+/* ===========================
+   PRODUCT ROW (POC STYLE)
+=========================== */
 
 .checkout-product-row {
   display: flex;
@@ -184,6 +185,7 @@
   background: white;
   margin-bottom: 18px;
   gap: 22px;
+  box-sizing: border-box; /* FIX */
 }
 
 /* LEFT IMAGE */
@@ -229,7 +231,7 @@
   color: #333;
 }
 
-/* DELIVERY BOX (CREAM) */
+/* DELIVERY BOX */
 
 .cp-delivery-box {
   background: #fff6e9;
@@ -240,11 +242,11 @@
   align-items: center;
   gap: 12px;
   margin-top: 12px;
+  max-width: 260px; /* FIX */
 }
 
 .cp-delivery-icon {
   width: 40px;
-  height: auto;
 }
 
 .cp-delivery-text {
@@ -260,7 +262,9 @@
   font-size: 14px;
 }
 
-/* RIGHT SECTION */
+/* ===========================
+   RIGHT COLUMN ACTIONS
+=========================== */
 
 .cp-qty-section {
   display: flex;
@@ -269,8 +273,6 @@
   gap: 10px;
   padding-bottom: 30px;
 }
-
-/* QUANTITY BOX */
 
 .cp-qty-box {
   display: flex;
@@ -287,7 +289,7 @@
   border-radius: 6px;
   font-size: 18px;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: 0.2s;
 }
 
 .cp-qty-btn:hover {
@@ -300,8 +302,6 @@
   color: #193B61;
 }
 
-/* CHANGE DATE BUTTON */
-
 .cp-change-btn {
   background: none;
   border: none;
@@ -309,15 +309,16 @@
   text-decoration: underline;
   cursor: pointer;
   font-size: 12px;
+  white-space: nowrap;
 }
 
 .cp-change-btn:hover {
   color: #10273f;
 }
 
-/* =========================== */
-/* SUMMARY BOX */
-/* =========================== */
+/* ===========================
+   SUMMARY BOXES
+=========================== */
 
 .offer-box,
 .order-summary,
@@ -359,7 +360,7 @@
   color: #193B61;
 }
 
-/* PAYMENT */
+/* PAYMENT BUTTON */
 
 .amount-to-pay {
   display: flex;
@@ -382,14 +383,15 @@
   background: #10273f;
 }
 
-/* =========================== */
-/* RESPONSIVE */
-/* =========================== */
+/* ===========================
+   RESPONSIVE FIXES
+=========================== */
 
 @media (max-width: 900px) {
   .checkout-wrapper {
     flex-direction: column;
     padding: 10px;
+    gap: 20px;
   }
 
   .checkout-left,
@@ -401,19 +403,216 @@
     flex-direction: column;
     text-align: center;
     padding: 18px;
+    gap: 12px;
   }
 
   .cp-img-box {
     width: 150px;
-    height: auto;
   }
 
   .cp-qty-section {
     flex-direction: row;
     justify-content: center;
+    padding-bottom: 10px;
   }
 
   .cp-delivery-box {
     justify-content: center;
+  }
+}
+
+/* EXTRA MOBILE FIXES */
+@media (max-width: 480px) {
+  .cp-delivery-box {
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
+  .cp-title {
+    font-size: 16px;
+  }
+
+  .cp-price {
+    font-size: 15px;
+  }
+
+  .cp-qty-section {
+    gap: 6px;
+  }
+}
+
+/* ===========================
+   ADDRESS MODAL FIXES ⭐
+=========================== */
+
+.modal-overlay-cart {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6000;
+  animation: fadeIn 0.25s ease;
+}
+
+/* PREMIUM MODAL BOX */
+.address-modal {
+  width: 480px;
+  max-width: 92%;
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  animation: scaleIn 0.25s ease;
+  position: relative;
+}
+
+/* HEADER */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.modal-header h3 {
+  font-size: 20px;
+  color: #193B61;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* FIX — premium close button */
+.modal-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: #f3f3f3;
+  font-size: 20px;
+  color: #444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.modal-close-btn:hover {
+  background: #e1e1e1;
+}
+
+/* ===========================
+   FIX FLOATING LABEL ISSUE ❗
+=========================== */
+
+/* remove any floating label behavior */
+.address-form label {
+  position: static !important;
+  display: block !important;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #193B61;
+}
+
+/* form structure */
+.address-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px; /* nice spacing between fields */
+}
+
+/* group wrapper */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+  gap: 6px;
+}
+
+/* Two columns layout */
+.form-row-2 {
+  display: flex;
+  gap: 20px;
+}
+
+.form-row-2 .form-group {
+  flex: 1;
+}
+
+/* INPUTS */
+.address-form input,
+.address-form select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #cfcfcf;
+  border-radius: 10px;
+  background: #f6f8fc;
+  font-size: 14px;
+  transition: 0.25s ease;
+}
+
+.address-form input:focus,
+.address-form select:focus {
+  background: white;
+  border-color: #193B61;
+  box-shadow: 0 0 0 2px rgba(25, 59, 97, 0.15);
+}
+
+/* Save Button */
+.save-address-btn {
+  width: 100%;
+  background: #193B61;
+  color: white;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-size: 15px;
+  margin-top: 10px;
+  transition: 0.25s ease;
+}
+
+.save-address-btn:hover {
+  background: #10273f;
+}
+
+/* ===========================
+   ANIMATIONS
+=========================== */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ===========================
+   MOBILE FIXES
+=========================== */
+@media (max-width: 540px) {
+  .address-modal {
+    padding: 26px;
+  }
+
+  .form-row-2 {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .modal-close-btn {
+    top: 14px;
+    right: 14px;
   }
 }

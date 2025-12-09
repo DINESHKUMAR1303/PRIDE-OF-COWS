@@ -27,6 +27,7 @@ const LoginModal = ({ onClose }) => {
 
   // ========================
   // REGISTER STATES
+  // ⭐ Added "pincode"
   // ========================
   const [registerData, setRegisterData] = useState({
     firstName: "",
@@ -37,6 +38,7 @@ const LoginModal = ({ onClose }) => {
     confirmPassword: "",
     address: "",
     city: "",
+    pincode: "",        // ⭐ NEW FIELD
     country: "India",
     state: "",
   });
@@ -104,7 +106,6 @@ const LoginModal = ({ onClose }) => {
     } catch (err) {
       const msg = err.message || "Login failed";
 
-      // 🎯 Backend mapping
       if (msg.includes("Email") || msg.includes("Phone")) {
         setLoginErrors({ login: "Invalid email or phone" });
         return;
@@ -114,13 +115,13 @@ const LoginModal = ({ onClose }) => {
         return;
       }
 
-      // ❗ unknown → popup
       setApiError(msg);
     }
   };
 
   // ============================
   // REGISTER VALIDATION
+  // ⭐ Added pincode validation
   // ============================
   const validateRegister = () => {
     let newErrors = {};
@@ -148,6 +149,10 @@ const LoginModal = ({ onClose }) => {
 
     if (!registerData.city.trim())
       newErrors.city = "City required";
+
+    // ⭐ PINCODE VALIDATION
+    if (!/^\d{6}$/.test(registerData.pincode))
+      newErrors.pincode = "Enter valid 6-digit pincode";
 
     if (!registerData.state.trim())
       newErrors.state = "Select a state";
@@ -182,7 +187,7 @@ const LoginModal = ({ onClose }) => {
       return setApiError(msg);
     }
 
-    // auto login
+    // Auto-login
     try {
       const loginRes = await loginUser({
         login: registerData.email,
@@ -200,7 +205,6 @@ const LoginModal = ({ onClose }) => {
     }
   };
 
-  // Dropdowns
   const countries = ["India", "United States", "United Kingdom", "Canada"];
   const indianStates = [
     "Andhra Pradesh",
@@ -236,6 +240,7 @@ const LoginModal = ({ onClose }) => {
 
         {/* RIGHT PANEL */}
         <div className="login-right">
+
           {/* TABS */}
           <div className="tabs">
             <button
@@ -264,9 +269,7 @@ const LoginModal = ({ onClose }) => {
           {/* POPUP ERROR */}
           {apiError && <div className="popup-error">{apiError}</div>}
 
-          {/* ============================
-              LOGIN FORM
-          ============================ */}
+          {/* LOGIN FORM */}
           {activeTab === "login" && (
             <form className="login-form" onSubmit={handleLoginSubmit}>
               <h2 className="title">Welcome to Pride of Cows </h2>
@@ -300,15 +303,12 @@ const LoginModal = ({ onClose }) => {
             </form>
           )}
 
-          {/* ============================
-              REGISTER FORM
-          ============================ */}
+          {/* REGISTER FORM */}
           {activeTab === "register" && (
             <form className="register-form" onSubmit={handleRegisterSubmit}>
               <h2 className="title">Create Your Account</h2>
 
               <div className="two-inputs">
-                {/* FIRST NAME */}
                 <div>
                   <label>First Name</label>
                   <input
@@ -322,7 +322,6 @@ const LoginModal = ({ onClose }) => {
                   )}
                 </div>
 
-                {/* LAST NAME */}
                 <div>
                   <label>Last Name</label>
                   <input
@@ -337,7 +336,6 @@ const LoginModal = ({ onClose }) => {
                 </div>
               </div>
 
-              {/* EMAIL */}
               <label>Email</label>
               <input
                 name="email"
@@ -347,7 +345,6 @@ const LoginModal = ({ onClose }) => {
               />
               {errors.email && <p className="error-text">{errors.email}</p>}
 
-              {/* PHONE */}
               <label>Telephone</label>
               <input
                 name="telephone"
@@ -359,7 +356,6 @@ const LoginModal = ({ onClose }) => {
                 <p className="error-text">{errors.telephone}</p>
               )}
 
-              {/* PASSWORD */}
               <label>Password</label>
               <input
                 name="password"
@@ -372,7 +368,6 @@ const LoginModal = ({ onClose }) => {
                 <p className="error-text">{errors.password}</p>
               )}
 
-              {/* CONFIRM */}
               <label>Confirm Password</label>
               <input
                 name="confirmPassword"
@@ -385,7 +380,6 @@ const LoginModal = ({ onClose }) => {
                 <p className="error-text">{errors.confirmPassword}</p>
               )}
 
-              {/* ADDRESS */}
               <label>Address</label>
               <input
                 name="address"
@@ -397,7 +391,6 @@ const LoginModal = ({ onClose }) => {
                 <p className="error-text">{errors.address}</p>
               )}
 
-              {/* CITY */}
               <label>City</label>
               <input
                 name="city"
@@ -407,7 +400,18 @@ const LoginModal = ({ onClose }) => {
               />
               {errors.city && <p className="error-text">{errors.city}</p>}
 
-              {/* COUNTRY + STATE */}
+              {/* ⭐ NEW PINCODE FIELD */}
+              <label>Pincode</label>
+              <input
+                name="pincode"
+                value={registerData.pincode}
+                onChange={handleRegisterChange}
+                className={errors.pincode ? "input-error shake" : ""}
+              />
+              {errors.pincode && (
+                <p className="error-text">{errors.pincode}</p>
+              )}
+
               <div className="two-inputs">
                 <div>
                   <label>Country</label>

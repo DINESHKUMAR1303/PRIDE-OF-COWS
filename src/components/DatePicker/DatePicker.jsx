@@ -16,7 +16,9 @@ const DatePicker = ({ onClose, onSelect }) => {
   ============================== */
   const daysArray = useMemo(() => {
     const firstDay = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year + (month === 11 ? 1 : 0), (month + 1) % 12, 0).getDate();
+
+    // ⭐ FIXED MONTH LENGTH CALCULATION
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
 
     const arr = [];
     for (let i = 0; i < firstDay; i++) arr.push(null);
@@ -39,12 +41,14 @@ const DatePicker = ({ onClose, onSelect }) => {
   /* =============================
      DISABLE PAST DAYS
   ============================== */
+
+  // ⭐ FIXED: Allow today — disable only yesterday and before
   const isPastDay = (day) => {
     if (!day) return false;
     const checkDate = new Date(year, month, day);
     checkDate.setHours(0, 0, 0, 0);
 
-    return checkDate <= today;
+    return checkDate < today; // FIXED
   };
 
   /* =============================
@@ -53,14 +57,15 @@ const DatePicker = ({ onClose, onSelect }) => {
   const handleDateSelect = (day) => {
     const selected = new Date(year, month, day);
 
+    // ⭐ FIXED FORMAT OUTPUT TO MATCH CART NEEDS
     const formatted =
-      selected.getDate() +
-      " " +
-      selected.toLocaleString("en-US", { month: "long" }) +
-      " " +
-      selected.getFullYear();
+      selected.getFullYear() +
+      "-" +
+      String(selected.getMonth() + 1).padStart(2, "0") +
+      "-" +
+      String(selected.getDate()).padStart(2, "0");
 
-    onSelect(formatted);
+    onSelect(formatted); // your cart receives YYYY-MM-DD
     onClose();
   };
 

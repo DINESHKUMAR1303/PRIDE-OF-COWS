@@ -9,6 +9,12 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
+  // ⭐ NEW — controls login modal open/close
+  const [loginOpen, setLoginOpen] = useState(false);
+
+  // ⭐ NEW — Boolean state for easy login check
+  const isLoggedIn = !!user;
+
   // ======================================================
   // LOAD USER FROM LOCAL STORAGE (Auto Login)
   // ======================================================
@@ -27,7 +33,19 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser,
+
+        // ⭐ ADDED — for Cart.jsx login checking
+        isLoggedIn,
+
+        // ⭐ ADDED — for global login modal control
+        loginOpen,
+        setLoginOpen,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
