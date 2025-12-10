@@ -51,8 +51,6 @@ body {
   box-shadow: var(--shadow);
 }
 
-
-
 /* Slide Animations */
 @keyframes slideInRight {
   from { transform: translateX(100%); opacity: 0; }
@@ -83,7 +81,6 @@ body {
   animation: shake .35s ease;
 }
 
-/* Optional: Success field */
 .input-success {
   border-color: var(--success) !important;
   box-shadow: 0 0 8px rgba(46,125,50,0.35) !important;
@@ -319,8 +316,10 @@ select {
 }
 
 /* ============================================
-   RESPONSIVE
+   RESPONSIVE (FULLY FIXED)
 ============================================ */
+
+/* ---------- 900px ---------- */
 @media (max-width: 900px) {
   .login-modal {
     width: 100%;
@@ -328,20 +327,57 @@ select {
   }
 }
 
+/* ---------- 768px (BIG FIXES HERE) ---------- */
 @media (max-width: 768px) {
+
+  /* Center modal */
+  .login-modal-overlay {
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .login-modal {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100vh;
+    border-radius: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Fix close button */
+  .modal-close-btn {
+    top: 10px !important;
+    right: 10px !important;
+    transform: scale(0.85);
+  }
+
   .login-left {
-    display: none;
+    display: none !important;
   }
+
+  /* Fix overflowing inputs */
   .login-right {
-    width: 100%;
-    padding: 40px 30px;
+    width: 100% !important;
+    padding: 16px !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
   }
+
   .two-inputs {
-    flex-direction: column;
-    gap: 5px;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  input,
+  select {
+    width: 100% !important;
+    padding: 12px 14px !important;
+    border-radius: 20px !important;
+    box-sizing: border-box !important;
   }
 }
 
+/* ---------- 480px ---------- */
 @media (max-width: 480px) {
   .tab-btn {
     font-size: 18px;

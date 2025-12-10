@@ -34,14 +34,10 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-
-  background: #ffffff;
-  border-radius: 20px;
+  background: #f4f4f4;
   padding: 18px 22px;
   margin: 18px 0 20px;
   width: 100%;
-
-  box-shadow: 0px 3px 12px rgba(0,0,0,0.08);
   cursor: pointer;
   gap: 16px; /* spacing between icon & details */
 }
@@ -605,7 +601,7 @@ html, body {
   justify-content: space-between;
   align-items: center;
   margin-top: 10px;
-  padding: 0px 0px;
+  padding: 10px 0px;
   border-bottom: 1px solid var(--line);
   background: var(--white);
 }
