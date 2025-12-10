@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getUserAddress, updateAddress } from "../../api/user";
 
 const AddAddressForm = ({ onClose, onSaved }) => {
-  const user = JSON.parse(localStorage.getItem("poc_user"));
+  const localUser = JSON.parse(localStorage.getItem("poc_user"));
 
+  /* ============================================================
+     ⭐ INITIAL FORM DATA
+  ============================================================ */
   const [formData, setFormData] = useState({
-    name: user ? `${user.firstName} ${user.lastName}` : "",
+    name: localUser ? `${localUser.firstName} ${localUser.lastName}` : "",
     type: "Home",
     fullAddress: "",
     city: "",
@@ -16,78 +20,116 @@ const AddAddressForm = ({ onClose, onSaved }) => {
   const [saving, setSaving] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  // Input change handler
+  /* ============================================================
+     ⭐ FETCH EXISTING ADDRESS (EDIT MODE)
+  ============================================================ */
+  useEffect(() => {
+    const loadAddress = async () => {
+      try {
+        const data = await getUserAddress();
+        console.log("📥 Loaded Address:", data);
+
+        if (!data) return;
+
+        setFormData({
+          name: data.name || formData.name,
+          type: data.type || "Home",
+          fullAddress: data.fullAddress || "",
+          city: data.city || "",
+          state: data.state || "",
+          country: data.country || "",
+          pincode: data.pincode || "",
+        });
+      } catch (err) {
+        console.error("❌ Failed to load address:", err);
+      }
+    };
+
+    loadAddress();
+  }, []); // runs only once
+
+  /* ============================================================
+     ⭐ HANDLE INPUT CHANGE
+  ============================================================ */
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+    let { name, value } = e.target;
 
-  // Required field validation
-  const isFormValid = () => {
-    return (
-      formData.name.trim() &&
-      formData.fullAddress.trim() &&
-      formData.city.trim() &&
-      formData.state.trim() &&
-      formData.country.trim() &&
-      formData.pincode.trim()
-    );
-  };
-
-  // Submit form → Save address
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // ⭐ IMPORTANT: Stops page refresh
-
-    if (!isFormValid()) {
-      setErrorMsg("Please fill all fields.");
-      return;
+    if (name === "name") {
+      value = value.replace(/[0-9]/g, ""); // prevent numbers
     }
+
+    if (["city", "state", "country"].includes(name)) {
+      value = value.replace(/[^A-Za-z\s]/g, ""); // only letters
+    }
+
+    if (name === "pincode") {
+      value = value.replace(/\D/g, "").slice(0, 6); // numeric only + 6 char limit
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  /* ============================================================
+     ⭐ FORM VALIDATION
+  ============================================================ */
+  const isFormValid = () => {
+    if (
+      !formData.name.trim() ||
+      !formData.fullAddress.trim() ||
+      !formData.city.trim() ||
+      !formData.state.trim() ||
+      !formData.country.trim() ||
+      !formData.pincode.trim()
+    ) {
+      setErrorMsg("⚠️ Please fill all fields.");
+      return false;
+    }
+
+    if (formData.pincode.length !== 6) {
+      setErrorMsg("⚠️ Pincode must be exactly 6 digits.");
+      return false;
+    }
+
+    return true;
+  };
+
+  /* ============================================================
+     ⭐ SUBMIT → SAVE ADDRESS
+  ============================================================ */
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!isFormValid()) return;
 
     try {
       setSaving(true);
       setErrorMsg("");
 
-      const token = localStorage.getItem("poc_token");
+      const result = await updateAddress(formData);
+      console.log("✔ Address Saved:", result);
 
-      const res = await fetch("http://localhost:5000/api/user/address", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData), // ⭐ Send full form data
-      });
+      onSaved?.(); // refresh parent
+      onClose?.(); // close modal
 
-      const data = await res.json();
-      console.log("✔ Address Saved:", data);
-
-      if (res.ok) {
-        onSaved();   // Refresh address page
-        onClose();   // Close modal
-      } else {
-        setErrorMsg(data.message || "Failed to save address.");
-      }
-
-    } catch (error) {
-      console.error("❌ Error saving address:", error);
-      setErrorMsg("Something went wrong. Try again.");
+    } catch (err) {
+      console.error("❌ Error saving address:", err);
+      setErrorMsg(err.message || "Failed to save address.");
     } finally {
       setSaving(false);
     }
   };
 
+  /* ============================================================
+     ⭐ UI
+  ============================================================ */
   return (
     <div className="modal-overlay">
       <div className="modal-box">
-
         <h2>Add / Edit Address</h2>
 
         {errorMsg && <p className="error-text">{errorMsg}</p>}
 
         <form onSubmit={handleSubmit}>
-          {/* Full Name */}
           <input
             type="text"
             name="name"
@@ -96,25 +138,19 @@ const AddAddressForm = ({ onClose, onSaved }) => {
             onChange={handleChange}
           />
 
-          {/* Address Type */}
-          <select
-            name="type"
-            value={formData.type}
-            onChange={handleChange}
-          >
+          <select name="type" value={formData.type} onChange={handleChange}>
             <option value="Home">Home</option>
             <option value="Work">Work</option>
+            <option value="Other">Other</option>
           </select>
 
-          {/* Full Address */}
           <textarea
             name="fullAddress"
-            placeholder="Full Address (Street, Door No, Area)"
+            placeholder="Full Address (Street, Area)"
             value={formData.fullAddress}
             onChange={handleChange}
           />
 
-          {/* City */}
           <input
             type="text"
             name="city"
@@ -123,7 +159,6 @@ const AddAddressForm = ({ onClose, onSaved }) => {
             onChange={handleChange}
           />
 
-          {/* State */}
           <input
             type="text"
             name="state"
@@ -132,7 +167,6 @@ const AddAddressForm = ({ onClose, onSaved }) => {
             onChange={handleChange}
           />
 
-          {/* Country */}
           <input
             type="text"
             name="country"
@@ -141,7 +175,6 @@ const AddAddressForm = ({ onClose, onSaved }) => {
             onChange={handleChange}
           />
 
-          {/* Pincode */}
           <input
             type="text"
             name="pincode"
@@ -150,7 +183,6 @@ const AddAddressForm = ({ onClose, onSaved }) => {
             onChange={handleChange}
           />
 
-          {/* Buttons */}
           <div className="modal-actions">
             <button type="submit" className="save-btn" disabled={saving}>
               {saving ? "Saving..." : "Save Address"}
@@ -166,7 +198,6 @@ const AddAddressForm = ({ onClose, onSaved }) => {
             </button>
           </div>
         </form>
-
       </div>
     </div>
   );

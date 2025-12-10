@@ -1,6 +1,7 @@
-import React from "react";
-import { Outlet, NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { getUserProfile } from "../../api/user";
 
 import "./MyAccount.css";
 
@@ -18,14 +19,70 @@ import logoutIcon from "./images/logout.svg";
 
 const MyAccountLayout = () => {
   const { user, setUser } = useAuth();
+  const navigate = useNavigate();
 
-  // If user is not logged in
-  if (!user)
+  // For loading state (prevents showing "Please login first" early)
+  const [loading, setLoading] = useState(true);
+
+  /* ============================================================
+     ⭐ Load profile ONCE (only if localStorage has token)
+  ============================================================ */
+  useEffect(() => {
+    const token = localStorage.getItem("poc_token");
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+
+    const loadProfile = async () => {
+      try {
+        const profile = await getUserProfile();
+        setUser(profile); // store fresh backend profile
+      } catch (err) {
+        console.error("❌ Failed to load profile:", err);
+        localStorage.removeItem("poc_user");
+        localStorage.removeItem("poc_token");
+        navigate("/login");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProfile();
+    // eslint-disable-next-line
+  }, []); // ✔ Runs only once — never again, fixes double API calls
+
+  /* ============================================================
+     ⭐ While profile is loading
+  ============================================================ */
+  if (loading) {
+    return (
+      <h2 style={{ textAlign: "center", marginTop: 80 }}>
+        Loading your account...
+      </h2>
+    );
+  }
+
+  /* ============================================================
+     ⭐ Redirect if NOT logged in
+  ============================================================ */
+  if (!user) {
     return (
       <h2 style={{ textAlign: "center", marginTop: 80 }}>
         Please login first.
       </h2>
     );
+  }
+
+  /* ============================================================
+     ⭐ Logout Function
+  ============================================================ */
+  const handleLogout = () => {
+    localStorage.removeItem("poc_user");
+    localStorage.removeItem("poc_token");
+    setUser(null);
+    navigate("/login", { replace: true });
+  };
 
   return (
     <div className="account-wrapper">
@@ -51,7 +108,7 @@ const MyAccountLayout = () => {
               </NavLink>
             </div>
 
-            <p className="phone-number">{user.telephone}</p>
+            <p className="phone-number">{user.telephone || "—"}</p>
           </div>
         </div>
 
@@ -108,12 +165,8 @@ const MyAccountLayout = () => {
           <p className="section-title">Payment and Credits</p>
 
           <ul>
-            <li>
-              <img src={paymentIcon} alt="Payment History" /> Payment History
-            </li>
-            <li>
-              <img src={giftIcon} alt="Gift Card" /> Gift Card
-            </li>
+            <li><img src={paymentIcon} alt="Payment History" /> Payment History</li>
+            <li><img src={giftIcon} alt="Gift Card" /> Gift Card</li>
           </ul>
         </div>
 
@@ -122,15 +175,7 @@ const MyAccountLayout = () => {
           <p className="section-title">Other</p>
 
           <ul>
-            <li
-              className="logout-item"
-              onClick={() => {
-                localStorage.removeItem("poc_user");
-                localStorage.removeItem("poc_token");
-                setUser(null);
-                window.location.href = "/";
-              }}
-            >
+            <li className="logout-item" onClick={handleLogout}>
               <img src={logoutIcon} alt="Logout" /> Log Out
             </li>
           </ul>
@@ -138,7 +183,7 @@ const MyAccountLayout = () => {
 
       </aside>
 
-      {/* ---------------- RIGHT CONTENT AREA ---------------- */}
+      {/* ---------------- RIGHT CONTENT ---------------- */}
       <main className="account-content">
         <Outlet />
       </main>

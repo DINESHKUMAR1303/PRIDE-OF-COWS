@@ -1,3 +1,5 @@
+// backend/controllers/authController.js
+
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
@@ -17,61 +19,67 @@ exports.registerUser = async (req, res) => {
       telephone = "",
       password = "",
       confirmPassword = "",
-      address = "",
+
+      // Address fields
+      fullAddress = "",
       city = "",
-      pincode = "",
-      country = "",
       state = "",
+      country = "",
+      pincode = "",
     } = req.body || {};
 
-    // ---- Check for missing fields (with trim) ----
-    const fields = {
+    // -------------------------------
+    // Validate required fields
+  
+    const required = {
       firstName,
       lastName,
       email,
       telephone,
       password,
       confirmPassword,
-      address,
+      fullAddress,
       city,
-      pincode,
-      country,
       state,
+      country,
+      pincode,
     };
 
-    const missingFields = Object.entries(fields)
-      .filter(([key, value]) => {
-        if (typeof value === "string") {
-          return value.trim() === "";
-        }
-        return value === undefined || value === null;
-      })
-      .map(([key]) => key);
+    const missing = Object.entries(required)
+      .filter(([_, v]) => typeof v === "string" ? v.trim() === "" : !v)
+      .map(([k]) => k);
 
-    if (missingFields.length > 0) {
-      console.log("❌ Missing fields:", missingFields);
+    if (missing.length > 0) {
       return res
         .status(400)
-        .json({ message: "Please fill all fields", missingFields });
+        .json({ message: "Please fill all fields", missingFields: missing });
     }
 
-    // ---- Extra validation ----
+    // -------------------------------
+    // Check password match
+    // -------------------------------
     if (password !== confirmPassword) {
       return res.status(400).json({ message: "Passwords do not match" });
     }
 
+    // -------------------------------
+    // Check existing user
+    // -------------------------------
     const cleanEmail = email.toLowerCase().trim();
-
     const existing = await User.findOne({ email: cleanEmail });
+
     if (existing) {
-      return res
-        .status(400)
-        .json({ message: "Email already registered" });
+      return res.status(400).json({ message: "Email already registered" });
     }
 
+    // -------------------------------
+    // Hash password
+    // -------------------------------
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // ⭐ FIXED: Save address as nested object (required by your schema)
+    // -------------------------------
+    // Create user with nested address
+    // -------------------------------
     const user = await User.create({
       firstName: firstName.trim(),
       lastName: lastName.trim(),
@@ -79,11 +87,10 @@ exports.registerUser = async (req, res) => {
       telephone: telephone.trim(),
       password: hashedPassword,
 
-      // ⭐ Nested address format — REQUIRED for your MyAddress page to work
       address: {
         name: `${firstName.trim()} ${lastName.trim()}`,
         type: "Home",
-        fullAddress: address.trim(),
+        fullAddress: fullAddress.trim(),
         city: city.trim(),
         state: state.trim(),
         country: country.trim(),
@@ -101,14 +108,11 @@ exports.registerUser = async (req, res) => {
         lastName: user.lastName,
         email: user.email,
         telephone: user.telephone,
-
-        // ⭐ Return address object
         address: user.address,
       },
     });
-
   } catch (err) {
-    console.error("Register Error:", err);
+    console.error("❌ Register Error:", err);
     return res.status(500).json({ message: "Server error" });
   }
 };
@@ -121,9 +125,7 @@ exports.loginUser = async (req, res) => {
     const { login, password } = req.body;
 
     if (!login || !password) {
-      return res
-        .status(400)
-        .json({ message: "Please enter login and password" });
+      return res.status(400).json({ message: "Please enter login & password" });
     }
 
     const loginValue = login.includes("@")
@@ -138,8 +140,8 @@ exports.loginUser = async (req, res) => {
       return res.status(400).json({ message: "User not found" });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
       return res.status(400).json({ message: "Incorrect password" });
     }
 
@@ -153,17 +155,16 @@ exports.loginUser = async (req, res) => {
       message: "Login successful",
       token,
       user: {
+        id: user._id,
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
         telephone: user.telephone,
-
-        // ⭐ IMPORTANT: return nested address object
-        address: user.address,
+        address: user.address ?? null,
       },
     });
   } catch (err) {
-    console.error("Login Error:", err);
+    console.error("❌ Login Error:", err);
     return res.status(500).json({ message: "Server error" });
   }
 };

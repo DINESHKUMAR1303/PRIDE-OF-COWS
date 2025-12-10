@@ -1,33 +1,45 @@
-const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 
-const protect = (req, res, next) => {
-  let token = req.header("Authorization");
+// ⭐ Prevent OverwriteModelError during hot reload (safe fix)
+if (mongoose.models.User) {
+  delete mongoose.models.User;
+}
 
-  // No token provided
-  if (!token) {
-    return res.status(401).json({ message: "No token, unauthorized" });
-  }
+const userSchema = new mongoose.Schema(
+  {
+    firstName: { type: String, trim: true },
+    lastName: { type: String, trim: true },
 
-  try {
-    // Format is: "Bearer <token>"
-    if (token.startsWith("Bearer ")) {
-      token = token.split(" ")[1]; // Extract actual token
-    }
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
 
-    // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    telephone: { type: String, trim: true },
 
-    // Attach user ID to request
-    req.user = { id: decoded.id };
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+    },
 
-    // ⭐ Added logging to debug token issues (non-breaking)
-    // console.log("🔐 Authenticated user:", decoded.id);
+    /* ----------------------------------------------------
+       ⭐ Nested Address Object (Your structure preserved)
+       ---------------------------------------------------- */
+    address: {
+      name: { type: String },                 
+      type: { type: String, default: "Home" },
+      fullAddress: { type: String },
+      city: { type: String },
+      state: { type: String },
+      country: { type: String },
+      pincode: { type: String }
+    },
+  },
+  { timestamps: true }
+);
 
-    next();
-  } catch (error) {
-    console.error("❌ Token verification failed:", error.message);
-    return res.status(401).json({ message: "Invalid token" });
-  }
-};
-
-module.exports = protect;
+// ⭐ Always return the same compiled model
+module.exports = mongoose.model("User", userSchema);

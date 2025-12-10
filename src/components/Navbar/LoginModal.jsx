@@ -27,7 +27,7 @@ const LoginModal = ({ onClose }) => {
 
   // ========================
   // REGISTER STATES
-  // ⭐ Includes pincode
+  // ⭐ Includes postal fields
   // ========================
   const [registerData, setRegisterData] = useState({
     firstName: "",
@@ -84,17 +84,20 @@ const LoginModal = ({ onClose }) => {
     try {
       const res = await loginUser(loginData);
 
+      // ⭐ Correctly save nested address object
       const formattedUser = {
         name: `${res.user.firstName} ${res.user.lastName}`,
         firstName: res.user.firstName,
         lastName: res.user.lastName,
         email: res.user.email,
         phone: res.user.telephone,
-        city: res.user.city,
-        pincode: res.user.pincode,
-        address: res.user.address,
-        state: res.user.state,
-        country: res.user.country,
+
+        // ⭐ Save nested address properly
+        address: res.user.address || {},
+        city: res.user.address?.city || "",
+        pincode: res.user.address?.pincode || "",
+        state: res.user.address?.state || "",
+        country: res.user.address?.country || "",
       };
 
       localStorage.setItem("poc_token", res.token);
@@ -163,7 +166,6 @@ const LoginModal = ({ onClose }) => {
 
     if (Object.keys(validationErrors).length > 0) return;
 
-    // ⭐ DEBUG PRINT — this confirms all fields exist
     console.log("REGISTER DATA SENT:", registerData);
 
     try {
@@ -179,6 +181,7 @@ const LoginModal = ({ onClose }) => {
       return setApiError(msg);
     }
 
+    // AUTO LOGIN AFTER REGISTER
     try {
       const loginRes = await loginUser({
         login: registerData.email,
@@ -191,11 +194,13 @@ const LoginModal = ({ onClose }) => {
         lastName: loginRes.user.lastName,
         email: loginRes.user.email,
         phone: loginRes.user.telephone,
-        city: loginRes.user.city,
-        pincode: loginRes.user.pincode,
-        address: loginRes.user.address,
-        state: loginRes.user.state,
-        country: loginRes.user.country,
+
+        // ⭐ Fix incorrect address structure
+        address: loginRes.user.address || {},
+        city: loginRes.user.address?.city || "",
+        pincode: loginRes.user.address?.pincode || "",
+        state: loginRes.user.address?.state || "",
+        country: loginRes.user.address?.country || "",
       };
 
       localStorage.setItem("poc_token", loginRes.token);

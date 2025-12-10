@@ -1,14 +1,74 @@
+// backend/models/User.js
+
 const mongoose = require("mongoose");
 
-// ⭐ Prevent OverwriteModelError during hot reload (safe fix)
-if (mongoose.models.User) {
-  delete mongoose.models.User;
-}
+/* ============================================================
+   ⭐ NESTED ADDRESS SCHEMA (Clean, Stable, Future-Safe)
+============================================================ */
+const addressSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      trim: true,
+      default: "",
+    },
 
+    type: {
+      type: String,
+      trim: true,
+      default: "Home",
+      enum: ["Home", "Work", "Other"],
+    },
+
+    fullAddress: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+
+    city: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+
+    state: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+
+    country: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+
+    pincode: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+  },
+  { _id: false } // avoids creating nested _id for address object
+);
+
+/* ============================================================
+   ⭐ USER SCHEMA
+============================================================ */
 const userSchema = new mongoose.Schema(
   {
-    firstName: { type: String, trim: true },
-    lastName: { type: String, trim: true },
+    firstName: {
+      type: String,
+      trim: true,
+      required: [true, "First name is required"],
+    },
+
+    lastName: {
+      type: String,
+      trim: true,
+      required: [true, "Last name is required"],
+    },
 
     email: {
       type: String,
@@ -18,7 +78,11 @@ const userSchema = new mongoose.Schema(
       trim: true,
     },
 
-    telephone: { type: String, trim: true },
+    telephone: {
+      type: String,
+      trim: true,
+      default: "",
+    },
 
     password: {
       type: String,
@@ -26,20 +90,19 @@ const userSchema = new mongoose.Schema(
     },
 
     /* ----------------------------------------------------
-       ⭐ Nested Address Object (Your structure preserved)
-       ---------------------------------------------------- */
+       ⭐ NESTED ADDRESS OBJECT
+       Default ensures new users always start with empty address
+    ---------------------------------------------------- */
     address: {
-      name: { type: String },                 
-      type: { type: String, default: "Home" },
-      fullAddress: { type: String },
-      city: { type: String },
-      state: { type: String },
-      country: { type: String },
-      pincode: { type: String }
+      type: addressSchema,
+      default: () => ({}),
     },
   },
   { timestamps: true }
 );
 
-// ⭐ Always return the same compiled model
-module.exports = mongoose.model("User", userSchema);
+/* ============================================================
+   ⭐ SAFE EXPORT (Prevents OverwriteModelError)
+============================================================ */
+module.exports =
+  mongoose.models.User || mongoose.model("User", userSchema);

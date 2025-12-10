@@ -7,52 +7,74 @@ const connectDB = require("./config/db");
 
 // Route Imports
 const authRoutes = require("./routes/authRoutes");
-const userRoutes = require("./routes/userRoutes"); // ⭐ User profile + address routes
+const userRoutes = require("./routes/userRoutes");
 
 // Load environment variables
 dotenv.config();
 
-// Connect to MongoDB
+// Connect MongoDB
 connectDB();
 
 const app = express();
 
-// ----------------------
-// Middlewares
-// ----------------------
-app.use(cors());
+/* ============================================================
+   ⭐ GLOBAL MIDDLEWARES
+============================================================ */
+app.use(
+  cors({
+    origin: "*", // You can restrict later for production
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
+
 app.use(express.json());
 
-// ⭐ Log all incoming requests (helpful for debugging APIs)
+/* ============================================================
+   ⭐ REQUEST LOGGER (Helpful for debugging)
+============================================================ */
 app.use((req, res, next) => {
   console.log(`➡️  ${req.method} ${req.url}`);
   next();
 });
 
-// ----------------------
-// API Routes
-// ----------------------
+/* ============================================================
+   ⭐ API ROUTES
+============================================================ */
 
-// Auth: Register + Login
+// Auth: Register & Login
 app.use("/api/auth", authRoutes);
 
-// ⭐ User Routes: Profile, Address (Protected by authMiddleware)
-app.use("/api/user", userRoutes);
+// User: Profile + Address
+// Changed to plural "users" (follows REST standards)
+app.use("/api/users", userRoutes);
 
-// Default Route
+/* ============================================================
+   ⭐ ROOT ROUTE
+============================================================ */
 app.get("/", (req, res) => {
-  res.send("Pride of Cows API is running 🚀");
+  res.send("🚀 Pride of Cows API is running...");
 });
 
-// 404 Fallback Route (not removing your route)
+/* ============================================================
+   ⭐ 404 HANDLER
+============================================================ */
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
 
-// ----------------------
-// Start Server
-// ----------------------
+/* ============================================================
+   ⭐ GLOBAL ERROR HANDLER (Optional but recommended)
+============================================================ */
+app.use((err, req, res, next) => {
+  console.error("❌ SERVER ERROR:", err);
+  res.status(500).json({ message: "Internal Server Error" });
+});
+
+/* ============================================================
+   ⭐ START SERVER
+============================================================ */
 const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });

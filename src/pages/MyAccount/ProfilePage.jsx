@@ -1,28 +1,77 @@
-import React, { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { getUserProfile } from "../../api/user";
 
 const ProfilePage = () => {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
 
-  // Local editable state
+  /* ============================================================
+     ⭐ INITIAL FORM DATA
+  ============================================================ */
   const [formData, setFormData] = useState({
-    firstName: user.firstName || "",
-    lastName: user.lastName || "",
-    phone: user.phone || "",
-    email: user.email || "",
-    gender: "Male",
-    dob: ""
+    firstName: user?.firstName || "",
+    lastName: user?.lastName || "",
+    telephone: user?.telephone || "",
+    email: user?.email || "",
+    gender: user?.gender || "Male",
+    dob: user?.dob || "",
   });
 
   const [editMode, setEditMode] = useState(false);
 
-  // Input handler
+  /* ============================================================
+     ⭐ LOAD FRESH PROFILE — ONLY ONCE ON MOUNT
+  ============================================================ */
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        const profile = await getUserProfile();
+
+        // update context
+        setUser(profile);
+
+        // update form
+        setFormData({
+          firstName: profile.firstName || "",
+          lastName: profile.lastName || "",
+          telephone: profile.telephone || "",
+          email: profile.email || "",
+          gender: profile.gender || "Male",
+          dob: profile.dob || "",
+        });
+
+      } catch (err) {
+        console.error("❌ Failed to load profile:", err);
+      }
+    };
+
+    loadProfile();
+  }, []); // ← runs only once (fixed)
+
+  /* ============================================================
+     ⭐ INPUT HANDLER
+  ============================================================ */
   const handleChange = (e) => {
+    if (!editMode) return;
+
     const { name, value } = e.target;
-    if (editMode) {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  /* ============================================================
+     ⭐ SAVE HANDLER (API COMING SOON)
+  ============================================================ */
+  const handleSave = () => {
+    console.log("📤 Profile Save Triggered:", formData);
+
+    // TODO: API here → PUT /api/user/profile
+
+    setEditMode(false);
   };
 
   return (
@@ -34,13 +83,15 @@ const ProfilePage = () => {
         <span> PROFILE</span>
       </p>
 
-      {/* ---------------- Title + Edit Button ---------------- */}
+      {/* ---------------- Title + Edit/Save Button ---------------- */}
       <div className="title-row">
         <h1 className="page-title">My Account</h1>
 
         <button
           className="edit-btn"
-          onClick={() => setEditMode((prev) => !prev)}
+          onClick={() => {
+            editMode ? handleSave() : setEditMode(true);
+          }}
         >
           {editMode ? "Save" : "Edit"}
         </button>
@@ -80,8 +131,8 @@ const ProfilePage = () => {
             <label>Phone Number</label>
             <input
               type="text"
-              name="phone"
-              value={formData.phone}
+              name="telephone"
+              value={formData.telephone}
               readOnly={!editMode}
               onChange={handleChange}
             />
@@ -110,17 +161,15 @@ const ProfilePage = () => {
               type="text"
               name="email"
               value={formData.email}
-              readOnly={!editMode}
-              onChange={handleChange}
+              readOnly // email shouldn’t be editable
             />
           </div>
 
           <div className="input-group">
             <label>Date of Birth</label>
             <input
-              type="text"
+              type="date"
               name="dob"
-              placeholder="mm/dd/yyyy"
               value={formData.dob}
               readOnly={!editMode}
               onChange={handleChange}
