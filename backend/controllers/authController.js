@@ -10,7 +10,6 @@ exports.registerUser = async (req, res) => {
   console.log("🔥 BODY:", req.body);
 
   try {
-    // Give default empty string so `.trim()` is safe
     const {
       firstName = "",
       lastName = "",
@@ -58,9 +57,7 @@ exports.registerUser = async (req, res) => {
 
     // ---- Extra validation ----
     if (password !== confirmPassword) {
-      return res
-        .status(400)
-        .json({ message: "Passwords do not match" });
+      return res.status(400).json({ message: "Passwords do not match" });
     }
 
     const cleanEmail = email.toLowerCase().trim();
@@ -74,18 +71,24 @@ exports.registerUser = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user in MongoDB
+    // ⭐ FIXED: Save address as nested object (required by your schema)
     const user = await User.create({
       firstName: firstName.trim(),
       lastName: lastName.trim(),
       email: cleanEmail,
       telephone: telephone.trim(),
       password: hashedPassword,
-      address: address.trim(),
-      city: city.trim(),
-      pincode: pincode.trim(),
-      country: country.trim(),
-      state: state.trim(),
+
+      // ⭐ Nested address format — REQUIRED for your MyAddress page to work
+      address: {
+        name: `${firstName.trim()} ${lastName.trim()}`,
+        type: "Home",
+        fullAddress: address.trim(),
+        city: city.trim(),
+        state: state.trim(),
+        country: country.trim(),
+        pincode: pincode.trim(),
+      },
     });
 
     console.log("✅ User created:", user._id);
@@ -98,13 +101,12 @@ exports.registerUser = async (req, res) => {
         lastName: user.lastName,
         email: user.email,
         telephone: user.telephone,
-        city: user.city,
-        pincode: user.pincode,
+
+        // ⭐ Return address object
         address: user.address,
-        state: user.state,
-        country: user.country,
       },
     });
+
   } catch (err) {
     console.error("Register Error:", err);
     return res.status(500).json({ message: "Server error" });
@@ -155,11 +157,9 @@ exports.loginUser = async (req, res) => {
         lastName: user.lastName,
         email: user.email,
         telephone: user.telephone,
-        city: user.city,
-        pincode: user.pincode,
+
+        // ⭐ IMPORTANT: return nested address object
         address: user.address,
-        state: user.state,
-        country: user.country,
       },
     });
   } catch (err) {

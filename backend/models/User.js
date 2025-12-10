@@ -1,5 +1,10 @@
 const mongoose = require("mongoose");
 
+// ⭐ Prevent OverwriteModelError during hot reload (safe fix)
+if (mongoose.models.User) {
+  delete mongoose.models.User;
+}
+
 const userSchema = new mongoose.Schema(
   {
     firstName: { type: String, trim: true },
@@ -20,15 +25,21 @@ const userSchema = new mongoose.Schema(
       required: [true, "Password is required"],
     },
 
-    address: { type: String },   // ✅ NOT required now
-    city: { type: String },      // ✅ NOT required
-
-    pincode: { type: String },   // ✅ NOT required
-
-    country: { type: String },   // ✅ NOT required
-    state: { type: String },     // ✅ NOT required
+    /* ----------------------------------------------------
+       ⭐ Nested Address Object (Your structure preserved)
+       ---------------------------------------------------- */
+    address: {
+      name: { type: String },                 
+      type: { type: String, default: "Home" },
+      fullAddress: { type: String },
+      city: { type: String },
+      state: { type: String },
+      country: { type: String },
+      pincode: { type: String }
+    },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.models.User || mongoose.model("User", userSchema);
+// ⭐ Always return the same compiled model
+module.exports = mongoose.model("User", userSchema);
