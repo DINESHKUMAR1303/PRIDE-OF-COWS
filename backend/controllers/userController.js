@@ -3,15 +3,17 @@
 const User = require("../models/User");
 
 /* ============================================================
-   ⭐ FORMAT ADDRESS (Handles OLD & NEW users)
+   ⭐ FORMAT ADDRESS (Works for BOTH old & new users)
 ============================================================ */
 function formatAddress(user) {
-  // Case 1: OLD users → address was a plain string
-  if (typeof user.address === "string") {
+  const addr = user.address;
+
+  // OLD USERS → address was stored as a plain string
+  if (typeof addr === "string") {
     return {
       name: `${user.firstName} ${user.lastName}`,
       type: "Home",
-      fullAddress: user.address || "",
+      fullAddress: addr || "",
       city: user.city || "",
       state: user.state || "",
       country: user.country || "",
@@ -19,29 +21,34 @@ function formatAddress(user) {
     };
   }
 
-  // Case 2: NEW users → address is an object
-  const addr = user.address || {};
-
+  // NEW USERS → address is an object
   return {
-    name: addr.name || `${user.firstName} ${user.lastName}`,
-    type: addr.type || "Home",
-    fullAddress: addr.fullAddress || "",
-    city: addr.city || "",
-    state: addr.state || "",
-    country: addr.country || "",
-    pincode: addr.pincode || "",
+    name: addr?.name || `${user.firstName} ${user.lastName}`,
+    type: addr?.type || "Home",
+    fullAddress: addr?.fullAddress || "",
+    city: addr?.city || "",
+    state: addr?.state || "",
+    country: addr?.country || "",
+    pincode: addr?.pincode || "",
   };
 }
 
 /* ============================================================
-   ⭐ GET USER PROFILE
+   ⭐ GET FULL USER PROFILE
 ============================================================ */
 exports.getUserProfile = async (req, res) => {
   try {
-    const userId = req.user?.id || req.userId;
+    const userId = req.user?.id; // protect middleware sets req.user
+
+    if (!userId) {
+      return res.status(401).json({ message: "Not authorized" });
+    }
 
     const user = await User.findById(userId).select("-password");
-    if (!user) return res.status(404).json({ message: "User not found" });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
     return res.json({
       id: user._id,
@@ -63,10 +70,17 @@ exports.getUserProfile = async (req, res) => {
 ============================================================ */
 exports.getUserAddress = async (req, res) => {
   try {
-    const userId = req.user?.id || req.userId;
+    const userId = req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({ message: "Not authorized" });
+    }
 
     const user = await User.findById(userId);
-    if (!user) return res.status(404).json({ message: "User not found" });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
     return res.json(formatAddress(user));
 
@@ -77,18 +91,25 @@ exports.getUserAddress = async (req, res) => {
 };
 
 /* ============================================================
-   ⭐ UPDATE / CREATE USER ADDRESS
+   ⭐ UPDATE / SAVE USER ADDRESS
 ============================================================ */
 exports.updateUserAddress = async (req, res) => {
   try {
-    const userId = req.user?.id || req.userId;
+    const userId = req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({ message: "Not authorized" });
+    }
 
     const { name, type, fullAddress, city, state, country, pincode } = req.body;
 
     const user = await User.findById(userId);
-    if (!user) return res.status(404).json({ message: "User not found" });
 
-    // Always save NEW format consistently
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // ⭐ Always store in NEW OBJECT FORMAT
     user.address = {
       name: name || `${user.firstName} ${user.lastName}`,
       type: type || user.address?.type || "Home",

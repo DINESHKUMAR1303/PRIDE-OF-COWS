@@ -12,19 +12,19 @@ const {
 
 /* ============================================================
    ⭐ GET FULL USER PROFILE
-   GET /api/users/profile
+   GET /api/user/profile
 ============================================================ */
 router.get("/profile", protect, getUserProfile);
 
 /* ============================================================
    ⭐ GET ONLY USER ADDRESS
-   GET /api/users/address
+   GET /api/user/address
 ============================================================ */
 router.get("/address", protect, getUserAddress);
 
 /* ============================================================
    ⭐ UPDATE OR SAVE ADDRESS
-   PUT /api/users/address
+   PUT /api/user/address
 ============================================================ */
 router.put("/address", protect, updateUserAddress);
 

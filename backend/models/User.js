@@ -3,71 +3,71 @@
 const mongoose = require("mongoose");
 
 /* ============================================================
-   ⭐ NESTED ADDRESS SCHEMA (Clean, Stable, Future-Safe)
+   ⭐ ADDRESS SUB-SCHEMA (Clean, Stable & Future-Proof)
 ============================================================ */
 const addressSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      trim: true,
       default: "",
+      trim: true,
     },
 
     type: {
       type: String,
-      trim: true,
-      default: "Home",
       enum: ["Home", "Work", "Other"],
+      default: "Home",
+      trim: true,
     },
 
     fullAddress: {
       type: String,
-      trim: true,
       default: "",
+      trim: true,
     },
 
     city: {
       type: String,
-      trim: true,
       default: "",
+      trim: true,
     },
 
     state: {
       type: String,
-      trim: true,
       default: "",
+      trim: true,
     },
 
     country: {
       type: String,
-      trim: true,
       default: "",
+      trim: true,
     },
 
     pincode: {
       type: String,
-      trim: true,
       default: "",
+      trim: true,
     },
   },
-  { _id: false } // avoids creating nested _id for address object
+  { _id: false } // prevents nested _id from being created
 );
 
 /* ============================================================
-   ⭐ USER SCHEMA
+   ⭐ USER SCHEMA (Stable & Matches Your Controllers)
 ============================================================ */
 const userSchema = new mongoose.Schema(
   {
     firstName: {
       type: String,
-      trim: true,
       required: [true, "First name is required"],
+      trim: true,
     },
 
     lastName: {
       type: String,
-      trim: true,
       required: [true, "Last name is required"],
+      trim: true,
     },
 
     email: {
@@ -80,8 +80,8 @@ const userSchema = new mongoose.Schema(
 
     telephone: {
       type: String,
-      trim: true,
       default: "",
+      trim: true,
     },
 
     password: {
@@ -89,10 +89,10 @@ const userSchema = new mongoose.Schema(
       required: [true, "Password is required"],
     },
 
-    /* ----------------------------------------------------
-       ⭐ NESTED ADDRESS OBJECT
-       Default ensures new users always start with empty address
-    ---------------------------------------------------- */
+    /* --------------------------------------------------------
+       ⭐ CLEAN DEFAULT ADDRESS OBJECT
+       Ensures EVERY NEW user has structured address ready
+    -------------------------------------------------------- */
     address: {
       type: addressSchema,
       default: () => ({}),
@@ -102,7 +102,7 @@ const userSchema = new mongoose.Schema(
 );
 
 /* ============================================================
-   ⭐ SAFE EXPORT (Prevents OverwriteModelError)
+   ⭐ SAFE EXPORT (Avoids OverwriteModelError in dev / hot reload)
 ============================================================ */
 module.exports =
   mongoose.models.User || mongoose.model("User", userSchema);

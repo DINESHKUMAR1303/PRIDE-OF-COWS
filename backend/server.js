@@ -22,7 +22,7 @@ const app = express();
 ============================================================ */
 app.use(
   cors({
-    origin: "*", // You can restrict later for production
+    origin: "*", // Change in production
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
@@ -30,7 +30,7 @@ app.use(
 app.use(express.json());
 
 /* ============================================================
-   ⭐ REQUEST LOGGER (Helpful for debugging)
+   ⭐ REQUEST LOGGER
 ============================================================ */
 app.use((req, res, next) => {
   console.log(`➡️  ${req.method} ${req.url}`);
@@ -44,9 +44,8 @@ app.use((req, res, next) => {
 // Auth: Register & Login
 app.use("/api/auth", authRoutes);
 
-// User: Profile + Address
-// Changed to plural "users" (follows REST standards)
-app.use("/api/users", userRoutes);
+// USER routes — MUST be singular "user" for your frontend
+app.use("/api/user", userRoutes);
 
 /* ============================================================
    ⭐ ROOT ROUTE
@@ -63,7 +62,7 @@ app.use((req, res) => {
 });
 
 /* ============================================================
-   ⭐ GLOBAL ERROR HANDLER (Optional but recommended)
+   ⭐ GLOBAL ERROR HANDLER
 ============================================================ */
 app.use((err, req, res, next) => {
   console.error("❌ SERVER ERROR:", err);

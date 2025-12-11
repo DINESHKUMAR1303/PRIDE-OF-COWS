@@ -87,7 +87,8 @@
 
 /* FIXED: View Profile alignment */
 .view-profile {
-  margin-left: auto;
+  margin-left: 50px;
+  margin-bottom: -10px;
   font-size: 14px;
   font-weight: 600;
   color: #2b2b2b !important;

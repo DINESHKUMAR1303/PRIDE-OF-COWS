@@ -1,45 +1,37 @@
-const mongoose = require("mongoose");
+// backend/middleware/authMiddleware.js
 
-// ⭐ Prevent OverwriteModelError during hot reload (safe fix)
-if (mongoose.models.User) {
-  delete mongoose.models.User;
-}
+const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 
-const userSchema = new mongoose.Schema(
-  {
-    firstName: { type: String, trim: true },
-    lastName: { type: String, trim: true },
+module.exports = async function protect(req, res, next) {
+  try {
+    let token;
 
-    email: {
-      type: String,
-      required: [true, "Email is required"],
-      unique: true,
-      lowercase: true,
-      trim: true,
-    },
+    // Should be in: Authorization: Bearer xyz
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+    }
 
-    telephone: { type: String, trim: true },
+    if (!token) {
+      return res.status(401).json({ message: "Not authorized, no token" });
+    }
 
-    password: {
-      type: String,
-      required: [true, "Password is required"],
-    },
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    /* ----------------------------------------------------
-       ⭐ Nested Address Object (Your structure preserved)
-       ---------------------------------------------------- */
-    address: {
-      name: { type: String },                 
-      type: { type: String, default: "Home" },
-      fullAddress: { type: String },
-      city: { type: String },
-      state: { type: String },
-      country: { type: String },
-      pincode: { type: String }
-    },
-  },
-  { timestamps: true }
-);
+    // Attach user to request
+    req.user = await User.findById(decoded.id).select("-password");
 
-// ⭐ Always return the same compiled model
-module.exports = mongoose.model("User", userSchema);
+    if (!req.user) {
+      return res.status(401).json({ message: "User no longer exists" });
+    }
+
+    next();
+  } catch (err) {
+    console.error("❌ AUTH ERROR:", err);
+    return res.status(401).json({ message: "Not authorized" });
+  }
+};

@@ -60,6 +60,7 @@ html, body {
 .side-user-details h3 {
   font-size: 18px;
   font-weight: 700;
+  font-family: suranna;
   margin: 0;
   color: #193B61;
   letter-spacing: 0.3px;
@@ -1096,3 +1097,17 @@ html, body {
     font-size: 16px;
   }
 }
+
+
+
+@media (max-width: 767px) {
+  .side-user-details h3 {
+    white-space: nowrap; /* Prevent line break */
+    display: inline-block;
+  }
+
+  .side-user-details {
+    text-align: center;   /* optional */
+  }
+}
+
