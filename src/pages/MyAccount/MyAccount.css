@@ -15,25 +15,36 @@
 ============================ */
 .account-sidebar {
   width: 400px;
-  background: #fff;
+  background: #edecea;
   padding: 15px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   transition: 0.3s ease;
 }
 
+/* ==================================================
+   HIDE SIDEBAR COMPLETELY ON MOBILE
+================================================== */
 @media (max-width: 768px) {
+
   .account-sidebar {
-    position: fixed;
-    top: 0;
-    left: -350px;
-    height: 100vh;
-    overflow-y: auto;
-    padding: 20px;
-    z-index: 999;
-    transition: all 0.35s ease;
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    left: -9999px !important;
+    height: 0 !important;
+    bottom: auto !important;
+    z-index: -1 !important;
   }
-  .account-sidebar.open { left: 0; }
+
+  .account-sidebar.open {
+    display: none !important;
+  }
+
+  .account-wrapper {
+    padding: 10px !important;
+  }
 }
 
 /* ============================
@@ -44,7 +55,6 @@
   padding: 18px 20px;
   background: #fff;
   border-radius: 12px;
-
   display: flex;
   align-items: center;
   gap: 18px;
@@ -55,14 +65,12 @@
   height: 55px;
 }
 
-/* NEW: Middle section for perfect alignment */
 .user-info {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-/* NEW: Name + View Profile in one row */
 .name-row {
   display: flex;
   align-items: center;
@@ -77,7 +85,6 @@
   color: #193b61;
 }
 
-/* NEW: Phone number exact match */
 .phone-number {
   margin: 0;
   font-size: 15px;
@@ -85,7 +92,6 @@
   color: #00315c;
 }
 
-/* FIXED: View Profile alignment */
 .view-profile {
   margin-left: 50px;
   margin-bottom: -10px;
@@ -97,7 +103,7 @@
   cursor: pointer;
 }
 
-/* STILL KEEPING OLD STRUCTURE (unused but safe) */
+/* STILL KEEPING OLD STRUCTURE */
 .user-details {
   display: flex;
   flex-direction: column;
@@ -118,7 +124,7 @@
 }
 
 /* ============================
-   QUICK BUTTONS — HOVER REMOVED
+   QUICK BUTTONS
 ============================ */
 .action-buttons button {
   width: 100%;
@@ -127,11 +133,9 @@
   display: flex;
   align-items: center;
   gap: 12px;
-
   border-radius: 12px;
   border: 1px solid #00315c;
   background: #fff;
-
   cursor: pointer;
   font-size: 15px;
   transition: none !important;
@@ -173,7 +177,6 @@
   gap: 12px;
   align-items: center;
   cursor: pointer;
-
   font-size: 15px;
   transition: none !important;
 }
@@ -214,8 +217,8 @@
 ============================ */
 .account-content {
   flex: 1;
-  background: #fff;
-  padding: 30px;
+  background: #f4f4f4;
+  padding: px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.06);
 }
@@ -224,6 +227,11 @@
   font-size: 13px;
   color: #555;
   margin-bottom: 10px;
+
+  display: flex;          /* keeps items in one line */
+  gap: 6px;               /* space between items */
+  align-items: center;    /* vertical alignment */
+  white-space: nowrap;    /* ⛔ prevents line break */
 }
 
 .breadcrumb a {
@@ -236,6 +244,7 @@
   font-weight: 700;
 }
 
+
 /* ============================
    PAGE TITLE
 ============================ */
@@ -247,7 +256,7 @@
 }
 
 /* ============================
-   FORM / EDIT BUTTON
+   FORM
 ============================ */
 .title-row {
   display: flex;
@@ -257,7 +266,7 @@
 
 .edit-btn {
   background: #00315c;
-  color: #fff;
+  color: #f4f4f4;
   border: none;
   padding: 8px 16px;
   border-radius: 8px;
@@ -271,38 +280,46 @@
 }
 
 /* ============================
-   FORM FIELDS
+   FORM INPUTS
 ============================ */
 .row {
   display: flex;
   gap: 25px;
   margin-bottom: 20px;
+  align-items: flex-end;
+}
+
+.row > .input-group {
+  flex: 1;
+  min-width: 0;
 }
 
 .input-group {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .input-group label {
   font-size: 14px;
   color: #444;
   margin-bottom: 6px;
-  display: block;
 }
 
 .input-group input,
 .input-group select {
   width: 100%;
+  height: 52px;
   padding: 14px 20px;
   border-radius: 30px;
   border: 1px solid #ccc;
   background: #fafafa;
   font-size: 16px;
   transition: 0.25s ease;
+  box-sizing: border-box;
 }
 
 .input-group input[readonly] {
-  background: #f5f5f5;
+  background: #f4f4f4;
   color: #666;
 }
 
@@ -317,18 +334,25 @@
 ============================ */
 .checkbox-row {
   display: flex;
-  align-items: center;
+  align-items: center;   /* keeps checkbox + text aligned */
   gap: 10px;
   font-size: 15px;
-  margin-top: 5px;
+  margin-top: 10px;
+  white-space: nowrap;   /* prevents text from breaking into 2 lines */
 }
 
 .checkbox-row input {
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
   cursor: pointer;
-  margin: 0;
+  margin: 0;             /* remove unwanted bottom spacing */
 }
+
+.checkbox-row label {
+  margin: 0;
+  line-height: 1;
+}
+
 
 /* ============================
    ORDERS PAGE
@@ -346,7 +370,6 @@
   width: 350px;
   max-width: 80%;
   margin: 0 auto 20px auto;
-  display: block;
 }
 
 .no-order-box h2 {
@@ -364,12 +387,10 @@
 .explore-btn {
   background: #0a2b4f;
   color: #fff;
-  padding: 12px 30px;
+  padding: 12px 10px;
   border-radius: 30px;
   font-size: 15px;
   text-decoration: none;
-  display: inline-block;
-  transition: 0.2s;
 }
 
 .explore-btn:hover {
@@ -381,8 +402,10 @@
 ============================ */
 .addresses-wrapper {
   width: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
-
 .no-address-box {
   margin-top: 25px;
   background: #fafafa;
@@ -390,34 +413,35 @@
   border-radius: 12px;
   border: 1px solid #eee;
   text-align: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
-
 .no-address-box h2 {
   font-size: 20px;
   font-weight: 700;
   color: #0c2c4a;
+  margin: 0 0 10px 0;
 }
-
 .no-address-box p {
   font-size: 15px;
   color: #666;
+  margin-bottom: 25px;
+  line-height: 1.4;
 }
-
 .no-address-box button {
   background: #0a2b4f;
   color: white;
-  border: none;
   padding: 10px 28px;
   border-radius: 25px;
   font-size: 15px;
+  border: none;
   cursor: pointer;
-  opacity: 0.8;
+  transition: opacity 0.2s ease;
 }
-
 .no-address-box button:hover {
-  opacity: 1;
+  opacity: 0.9; /* Changed from 1 for better UX */
 }
-
 .address-card {
   background: #fff;
   padding: 20px;
@@ -425,53 +449,70 @@
   border: 1px solid #e5e5e5;
   max-width: 700px;
   margin-top: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
-
 .address-header {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
 }
-
-.address-header strong {
-  font-size: 15px;
-  color: #002147;
-}
-
 .tag {
   background: #fde3b4;
   padding: 4px 12px;
   border-radius: 10px;
   font-size: 12px;
   color: #7b4b00;
+  white-space: nowrap;
 }
-
 .full-address {
   font-size: 14px;
   color: #444;
   line-height: 1.5;
-  margin-bottom: 16px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
-
+/* ============================
+   ADDRESS FOOTER (Updated)
+============================ */
 .address-footer {
   background: #f4f4f4;
-  padding: 10px;
-  border-radius: 12px;
-  display: flex;
-  justify-content: center;
-}
-
-.edit-btn {
-  border: none;
-  background: none;
-  font-size: 15px;
-  cursor: pointer;
-  color: #002147;
+  padding: 6px 12px;        /* smaller padding */
+  border-radius: 10px;
+  display: inline-flex;     /* ⭐ container fits content */
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 12px;
+  width: auto;              /* ⭐ prevents full width */
 }
 
 /* ============================
-   ADDRESSES FORM PAGE
+   EDIT BUTTON (Updated)
+============================ */
+.edit-btn {
+  border: none;
+  background: none;
+  font-size: 14px;          /* ⭐ slightly smaller */
+  cursor: pointer;
+  color: #002147;
+  text-decoration: underline;
+  padding: 0;               /* removes unnecessary button padding */
+  display: flex;
+  align-items: center;
+  gap: 6px;                 /* spacing between icon + text */
+  transition: color 0.2s ease;
+}
+
+.edit-btn:hover {
+  color: #0a2b4f;
+}
+
+/* ============================
+   ADDRESS FORM
 ============================ */
 .modal-overlay {
   position: fixed;
@@ -482,77 +523,215 @@
   align-items: center;
   z-index: 2000;
 }
-
-.modal-box {
+.address-modal {
   background: #fff;
-  padding: 25px;
-  border-radius: 14px;
-  width: 400px;
-  max-width: 90%;
+  width: 55%;
+  max-width: 600px;
+  border-radius: 16px;
+  padding: 35px 45px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
-
-.modal-box input,
-.modal-box textarea,
-.modal-box select {
-  width: 100%;
-  margin-bottom: 12px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-
-.modal-actions {
+.modal-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
-
-.save-btn {
-  background: #002147;
-  color: #fff;
-  padding: 10px 18px;
-  border-radius: 8px;
+.close-btn {
+  background: none;
   border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
 }
-
-.cancel-btn {
-  background: #ccc;
-  padding: 10px 18px;
-  border-radius: 8px;
-  border: none;
-}
-
 /* ============================
    RESPONSIVE
 ============================ */
 @media (max-width: 900px) {
-  .account-wrapper {
-    flex-direction: column;
-    padding: 20px;
+  .address-modal {
+    width: 90%;
+    padding: 25px;
   }
-
-  .account-sidebar {
-    width: 100%;
-  }
-
-  .row {
+  .two-col {
     flex-direction: column;
+  }
+  .address-card {
+    margin: 16px 0;
+    padding: 18px;
   }
 }
-
-@media (max-width: 480px) {
-  .page-title {
-    font-size: 26px;
+/* ==================================================
+   ⭐⭐⭐ MOBILE BOTTOM NAVBAR ⭐⭐⭐
+================================================== */
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #0a2b4f;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  z-index: 99999 !important;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+.mobile-nav-item {
+  text-decoration: none;
+  color: #fff;
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+.mobile-nav-item img {
+  width: 24px;
+  margin-bottom: 4px;
+}
+.mobile-nav-item.active {
+  color: #c29d5f;
+  opacity: 1;
+}
+.mobile-nav-item:hover {
+  opacity: 1;
+}
+@media (min-width: 769px) {
+  .mobile-bottom-nav {
+    display: none;
   }
-
-  .edit-btn {
-    padding: 6px 12px;
-  }
-
+}
+/* ===========================================================
+   ⭐ FIX MOBILE & TABLET ALIGNMENT (767–768px)
+=========================================================== */
+@media (max-width: 768px) {
+  /* MAIN CONTENT SPACING FOR MOBILE */
   .account-content {
-    padding: 20px;
+    padding: 20px 16px !important; /* Fixed the "px" typo */
+    padding-bottom: 110px !important; /* more space so section never touches bottom nav */
+    box-sizing: border-box;
   }
-
-  .account-wrapper {
-    padding: 15px;
+  /* FIX BREADCRUMB LINE-BREAK */
+  .breadcrumb {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin-bottom: 12px !important;
+    margin-left: auto;
+    font-size: 12.5px !important;
+  }
+  /* HEADING ALIGNMENT */
+  .page-title {
+    font-size: 26px !important;
+    margin-bottom: 12px !important;
+    text-align: left !important;
+  }
+  /* FORM FIXES */
+  .row {
+    flex-direction: column !important;
+    gap: 14px !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+  }
+  .row .input-group {
+    width: 100% !important;
+  }
+  /* CHECKBOX FIX — stay in one line */
+  .checkbox-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    white-space: nowrap !important;
+    margin-top: 10px !important;
+  }
+  .checkbox-row input {
+    margin: 0 !important;
+    width: 18px !important;
+    height: 18px !important;
+  }
+  /* ORDERS PAGE FIX */
+  .orders-wrapper {
+    text-align: center !important;
+    width: 100% !important;
+  }
+  .no-order-box {
+    margin: 0 auto !important;
+    padding: 10px !important;
+  }
+  .no-order-img {
+    max-width: 70% !important;
+    margin: 0 auto 15px auto !important;
+  }
+  /* ADDRESS PAGE FIX — FULL RESPONSIVE */
+  .address-card {
+    margin: 15px 0 !important;
+    width: 100% !important;
+    max-width: none !important; /* Allow full width on mobile */
+    padding: 16px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+  .address-header {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  .full-address {
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+    word-break: break-word !important;
+  }
+  .addresses-wrapper {
+    padding-bottom: 20px !important;
+  }
+  /* Global overflow prevention */
+  .account-content,
+  .addresses-wrapper {
+    overflow-x: hidden !important;
+  }
+}
+/* ===========================================================
+   ⭐ FIX BOTTOM GAP ON SMALL DEVICES (320px–360px)
+=========================================================== */
+@media (max-width: 360px) {
+  .account-content {
+    padding: 16px 12px !important;
+    padding-bottom: 140px !important; /* more space for tiny screens */
+  }
+  .addresses-wrapper,
+  .orders-wrapper {
+    padding-bottom: 130px !important;
+  }
+  .address-card {
+    padding: 14px !important;
+  }
+  /* Ensure nothing pushes up behind the bottom nav */
+  body {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  html, body {
+    overflow-x: hidden !important;
+  }
+}
+/* =====================================================
+   HIDE NEWSLETTER + FOOTER ON MY ACCOUNT MOBILE PAGES
+===================================================== */
+@media (max-width: 768px) {
+  /* Newsletter section */
+  .newsletter-section,
+  .subscribe-section,
+  .footer-signup-section {
+    display: none !important;
+  }
+  /* Main website footer */
+  footer,
+  .site-footer,
+  #footer,
+  .main-footer {
+    display: none !important;
   }
 }

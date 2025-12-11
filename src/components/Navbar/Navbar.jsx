@@ -115,18 +115,31 @@ const Navbar = () => {
   // =======================
   // LOCATION & STICKY
   // =======================
-  useEffect(() => {
-    if (user?.city && user?.pincode) {
-      setLocation(`${user.city.toUpperCase()} (${user.pincode})`);
-    } else {
+useEffect(() => {
+  // ⭐ PRIORITY 1: User address from backend
+  if (user?.city && user?.pincode) {
+    setLocation(`${user.city.toUpperCase()} (${user.pincode})`);
+  } 
+  else {
+    // ⭐ PRIORITY 2: Saved automatically from AddAddressForm
+    const savedCity = localStorage.getItem("user_city");
+    const savedPin = localStorage.getItem("user_pincode");
+
+    if (savedCity && savedPin) {
+      setLocation(`${savedCity.toUpperCase()} (${savedPin})`);
+    } 
+    else {
+      // ⭐ PRIORITY 3: Old manual pincode modal
       const saved = localStorage.getItem("userLocation");
       if (saved) setLocation(saved);
     }
+  }
 
-    const scrollHandler = () => setIsSticky(window.scrollY > 150);
-    window.addEventListener("scroll", scrollHandler);
-    return () => window.removeEventListener("scroll", scrollHandler);
-  }, [user]);
+  const scrollHandler = () => setIsSticky(window.scrollY > 150);
+  window.addEventListener("scroll", scrollHandler);
+  return () => window.removeEventListener("scroll", scrollHandler);
+}, [user]);
+
 
   const handleSaveLocation = () => {
     const selected = place || pincode;

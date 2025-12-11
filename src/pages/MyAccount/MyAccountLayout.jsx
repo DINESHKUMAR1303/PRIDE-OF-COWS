@@ -17,15 +17,32 @@ import paymentIcon from "./images/paymenthistory.svg";
 import giftIcon from "./images/giftcard.svg";
 import logoutIcon from "./images/logout.svg";
 
+/* NEW bottom nav icons */
+import homeIcon from "./images/home.svg";
+import shopIcon from "./images/shop.svg"; 
+import ordersIcon from "./images/myorder.svg";
+import addressNavIcon from "./images/myadress.svg";
+import profileNavIcon from "./images/profile.svg";
+
 const MyAccountLayout = () => {
   const { user, setUser } = useAuth();
   const navigate = useNavigate();
 
-  // For loading state (prevents showing "Please login first" early)
   const [loading, setLoading] = useState(true);
 
+  /* ⭐ NEW: Mobile sidebar toggle states */
+  const [openMenu, setOpenMenu] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const resizeHandler = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", resizeHandler);
+
+    return () => window.removeEventListener("resize", resizeHandler);
+  }, []);
+
   /* ============================================================
-     ⭐ Load profile ONCE (only if localStorage has token)
+     ⭐ Load profile ONCE
   ============================================================ */
   useEffect(() => {
     const token = localStorage.getItem("poc_token");
@@ -37,7 +54,7 @@ const MyAccountLayout = () => {
     const loadProfile = async () => {
       try {
         const profile = await getUserProfile();
-        setUser(profile); // store fresh backend profile
+        setUser(profile);
       } catch (err) {
         console.error("❌ Failed to load profile:", err);
         localStorage.removeItem("poc_user");
@@ -49,12 +66,8 @@ const MyAccountLayout = () => {
     };
 
     loadProfile();
-    // eslint-disable-next-line
-  }, []); // ✔ Runs only once — never again, fixes double API calls
+  }, []);
 
-  /* ============================================================
-     ⭐ While profile is loading
-  ============================================================ */
   if (loading) {
     return (
       <h2 style={{ textAlign: "center", marginTop: 80 }}>
@@ -63,9 +76,6 @@ const MyAccountLayout = () => {
     );
   }
 
-  /* ============================================================
-     ⭐ Redirect if NOT logged in
-  ============================================================ */
   if (!user) {
     return (
       <h2 style={{ textAlign: "center", marginTop: 80 }}>
@@ -74,9 +84,6 @@ const MyAccountLayout = () => {
     );
   }
 
-  /* ============================================================
-     ⭐ Logout Function
-  ============================================================ */
   const handleLogout = () => {
     localStorage.removeItem("poc_user");
     localStorage.removeItem("poc_token");
@@ -84,11 +91,15 @@ const MyAccountLayout = () => {
     navigate("/login", { replace: true });
   };
 
+  const isMobile = windowWidth < 768;
+
   return (
     <div className="account-wrapper">
 
+      
+
       {/* ---------------- LEFT SIDEBAR ---------------- */}
-      <aside className="account-sidebar">
+      <aside className={`account-sidebar ${openMenu ? "open" : ""}`}>
 
         {/* ---- USER INFO CARD ---- */}
         <div className="user-card">
@@ -183,10 +194,44 @@ const MyAccountLayout = () => {
 
       </aside>
 
+
       {/* ---------------- RIGHT CONTENT ---------------- */}
       <main className="account-content">
         <Outlet />
       </main>
+
+
+      {/* ⭐⭐⭐ NEW BOTTOM MOBILE NAVBAR ⭐⭐⭐ */}
+      {isMobile && (
+        <div className="mobile-bottom-nav">
+
+          <NavLink to="/" className="mobile-nav-item">
+            <img src={homeIcon} alt="Home" />
+            <span>Home</span>
+          </NavLink>
+
+          <NavLink to="/shop/all" className="mobile-nav-item">
+            <img src={shopIcon} alt="Shop" />
+            <span>Shop</span>
+          </NavLink>
+
+          <NavLink to="/my-account/orders" className="mobile-nav-item">
+            <img src={ordersIcon} alt="Orders" />
+            <span>Orders</span>
+          </NavLink>
+
+          <NavLink to="/my-account/addresses" className="mobile-nav-item">
+            <img src={addressNavIcon} alt="Addresses" />
+            <span>Addresses</span>
+          </NavLink>
+
+          <NavLink to="/my-account/profile" className="mobile-nav-item">
+            <img src={profileNavIcon} alt="Profile" />
+            <span>Profile</span>
+          </NavLink>
+
+        </div>
+      )}
 
     </div>
   );

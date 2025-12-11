@@ -8,21 +8,18 @@ const AddressesPage = () => {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
 
-  /* ============================================================
-     ⭐ FETCH USER PROFILE → Extract nested address
-  ============================================================ */
   const fetchAddress = async () => {
     try {
       setLoading(true);
-
       const profile = await getUserProfile();
-      console.log("✔ FETCHED PROFILE:", profile);
 
-      // Ensure structured address object exists
       const addr = profile.address || {};
 
       setAddress({
-        name: addr.name || `${profile.firstName} ${profile.lastName}`.trim(),
+        name:
+          addr.name ||
+          `${profile.firstName || ""} ${profile.lastName || ""}`.trim() ||
+          "User",
         type: addr.type || "Home",
         fullAddress: addr.fullAddress || "",
         city: addr.city || "",
@@ -31,23 +28,17 @@ const AddressesPage = () => {
         pincode: addr.pincode || "",
       });
     } catch (err) {
-      console.error("❌ Error fetching user address:", err);
+      console.error("Error fetching user address:", err);
       setAddress(null);
     } finally {
       setLoading(false);
     }
   };
 
-  /* ============================================================
-     ⭐ Run once on mount
-  ============================================================ */
   useEffect(() => {
     fetchAddress();
   }, []);
 
-  /* ============================================================
-     ⭐ Check Address Availability
-  ============================================================ */
   const hasAddress =
     address &&
     address.fullAddress &&
@@ -55,7 +46,6 @@ const AddressesPage = () => {
 
   return (
     <div className="addresses-wrapper">
-      
       {/* Breadcrumb */}
       <p className="breadcrumb">
         <Link to="/" className="breadcrumb-link">HOME</Link>
@@ -66,19 +56,17 @@ const AddressesPage = () => {
 
       <h1 className="page-title">My Addresses</h1>
 
-      {/* ================================ */}
-      {/* ⭐ Loading */}
-      {/* ================================ */}
-      {loading && <p className="loading-text">Loading address...</p>}
+      {/* Loading State */}
+      {loading && <p className="loading-text">Loading your address...</p>}
 
-      {/* ================================ */}
-      {/* ⭐ Address Exists */}
-      {/* ================================ */}
+      {/* Address Exists */}
       {!loading && hasAddress && (
         <div className="address-card">
+
+          {/* ⭐ Name ABOVE — Home BELOW */}
           <div className="address-header">
-            <strong>{address.name}</strong>
-            <span className="tag">{address.type}</span>
+            <strong className="address-name">{address.name}</strong>
+            <span className="address-tag">{address.type}</span>
           </div>
 
           <p className="full-address">
@@ -87,41 +75,42 @@ const AddressesPage = () => {
             {address.city}, {address.state}, {address.country} - {address.pincode}
           </p>
 
+          {/* Edit Button */}
           <div className="address-footer">
-            <button className="edit-btn" onClick={() => setShowForm(true)}>
-              ✏️ Edit
+            <button
+              className="edit-btn"
+              onClick={() => setShowForm(true)}
+              aria-label="Edit address"
+            >
+              Edit
             </button>
           </div>
         </div>
       )}
 
-      {/* ================================ */}
-      {/* ⭐ No Address Found */}
-      {/* ================================ */}
+      {/* No Address */}
       {!loading && !hasAddress && (
         <div className="no-address-box">
           <h2>No Address Added Yet</h2>
           <p>Please add a delivery address to continue shopping.</p>
 
-          <button className="explore-btn" onClick={() => setShowForm(true)}>
-            ADD NEW ADDRESS
+          <button className="add-new-btn" onClick={() => setShowForm(true)}>
+            + Add New Address
           </button>
         </div>
       )}
 
-      {/* ================================ */}
-      {/* ⭐ Add / Edit Modal */}
-      {/* ================================ */}
+      {/* Add/Edit Form Modal */}
       {showForm && (
         <AddAddressForm
+          existingAddress={hasAddress ? address : null}
           onClose={() => setShowForm(false)}
           onSaved={() => {
-            fetchAddress();   // refresh from backend
+            fetchAddress();
             setShowForm(false);
           }}
         />
       )}
-
     </div>
   );
 };
