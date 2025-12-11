@@ -7,150 +7,125 @@ const AddAddressForm = ({ onClose, onSaved }) => {
   const [formData, setFormData] = useState({
     name: localUser ? `${localUser.firstName} ${localUser.lastName}` : "",
     fullAddress: "",
+    street: "",
     city: "",
     pincode: "",
-    state: "",
-    country: "",
     type: "Home",
   });
 
   const [saving, setSaving] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  /* Load existing address */
   useEffect(() => {
-    const loadAddress = async () => {
+    const load = async () => {
       try {
         const data = await getUserAddress();
         if (!data) return;
-
-        setFormData({
-          name: data.name || formData.name,
+        setFormData((prev) => ({
+          ...prev,
+          name: data.name || prev.name,
           fullAddress: data.fullAddress || "",
+          street: data.street || "",
           city: data.city || "",
           pincode: data.pincode || "",
-          state: data.state || "",
-          country: data.country || "",
           type: data.type || "Home",
-        });
-      } catch (err) {
-        console.error("Failed to load address:", err);
+        }));
+      } catch (e) {
+        console.log(e);
       }
     };
-
-    loadAddress();
+    load();
   }, []);
 
-  /* Input Change */
   const handleChange = (e) => {
     let { name, value } = e.target;
 
-    if (name === "name") value = value.replace(/[0-9]/g, "");
-    if (["city", "state", "country"].includes(name))
-      value = value.replace(/[^A-Za-z\s]/g, "");
     if (name === "pincode") value = value.replace(/\D/g, "").slice(0, 6);
 
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((p) => ({ ...p, [name]: value }));
   };
 
-  /* Validation */
-  const isFormValid = () => {
+  const validate = () => {
     if (
       !formData.name ||
       !formData.fullAddress ||
       !formData.city ||
-      !formData.state ||
-      !formData.pincode ||
-      !formData.country
+      !formData.pincode
     ) {
-      setErrorMsg("⚠️ Please fill all fields.");
+      setErrorMsg("Please fill all required fields.");
       return false;
     }
-
     if (formData.pincode.length !== 6) {
-      setErrorMsg("⚠️ Pincode must be exactly 6 digits.");
+      setErrorMsg("Pincode must be 6 digits.");
       return false;
     }
-
     return true;
   };
 
-  /* Submit */
-  const handleSubmit = async (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    if (!isFormValid()) return;
+    if (!validate()) return;
 
     try {
       setSaving(true);
-      setErrorMsg("");
 
       await updateAddress(formData);
 
-      /* save location for navbar */
-      const formatted = `${formData.city.toUpperCase()} (${formData.pincode})`;
-      localStorage.setItem("userLocation", formatted);
+      localStorage.setItem("user_city", formData.city);
+      localStorage.setItem("user_pincode", formData.pincode);
+      localStorage.setItem(
+        "userLocation",
+        `${formData.city.toUpperCase()} (${formData.pincode})`
+      );
 
       onSaved?.();
       onClose?.();
     } catch (err) {
-      setErrorMsg(err.message || "Failed to save address.");
+      setErrorMsg(err.message || "Failed to save.");
     } finally {
       setSaving(false);
     }
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="address-modal">
-
+    <div className="address-modal-overlay">
+      <div className="address-modal-box">
         {/* HEADER */}
-        <div className="modal-header">
+        <div className="address-modal-header">
           <h2>Add Address</h2>
-          <button className="close-btn" onClick={onClose}>✕</button>
+          <button className="address-close-btn" onClick={onClose}>✕</button>
         </div>
 
-        {errorMsg && <p className="error-text">{errorMsg}</p>}
+        {errorMsg && <p className="address-error">{errorMsg}</p>}
 
-        {/* FORM */}
-        <form className="address-form" onSubmit={handleSubmit}>
-
-          {/* Full Name */}
-          <div className="form-row">
+        <form className="address-form" onSubmit={submit}>
+          <div className="address-field">
             <label>Full Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-            />
+            <input name="name" value={formData.name} onChange={handleChange} />
           </div>
 
-          {/* House / Flat */}
-          <div className="form-row">
+          <div className="address-field">
             <label>House / Flat / Building</label>
             <input
-              type="text"
               name="fullAddress"
               value={formData.fullAddress}
               onChange={handleChange}
             />
           </div>
 
-          {/* Street */}
-          <div className="form-row">
+          <div className="address-field">
             <label>Street / Area (optional)</label>
             <input
-              type="text"
-              placeholder=""
+              name="street"
+              value={formData.street}
+              onChange={handleChange}
             />
           </div>
 
-          {/* City + Pincode */}
-          <div className="form-row two-col">
+          <div className="address-row">
             <div>
               <label>City</label>
               <input
-                type="text"
                 name="city"
                 value={formData.city}
                 onChange={handleChange}
@@ -160,7 +135,6 @@ const AddAddressForm = ({ onClose, onSaved }) => {
             <div>
               <label>Pincode</label>
               <input
-                type="text"
                 name="pincode"
                 value={formData.pincode}
                 onChange={handleChange}
@@ -168,41 +142,20 @@ const AddAddressForm = ({ onClose, onSaved }) => {
             </div>
           </div>
 
-          {/* State + Country */}
-          <div className="form-row two-col">
-            <div>
-              <label>State</label>
-              <input
-                type="text"
-                name="state"
-                value={formData.state}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div>
-              <label>Country</label>
-              <input
-                type="text"
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          {/* Address Type */}
-          <div className="form-row">
+          <div className="address-field">
             <label>Address Type</label>
-            <select name="type" value={formData.type} onChange={handleChange}>
-              <option value="Home">Home</option>
-              <option value="Work">Work</option>
-              <option value="Other">Other</option>
+            <select
+              name="type"
+              value={formData.type}
+              onChange={handleChange}
+            >
+              <option>Home</option>
+              <option>Work</option>
+              <option>Other</option>
             </select>
           </div>
 
-          {/* Save Button */}
-          <button type="submit" className="save-btn" disabled={saving}>
+          <button className="address-save-btn" disabled={saving}>
             {saving ? "Saving..." : "Save Address"}
           </button>
         </form>

@@ -64,10 +64,10 @@ const AddressesPage = () => {
         <div className="address-card">
 
           {/* ⭐ Name ABOVE — Home BELOW */}
-          <div className="address-header">
-            <strong className="address-name">{address.name}</strong>
-            <span className="address-tag">{address.type}</span>
-          </div>
+         <div className="address-header">
+  <span className="address-name">{address.name}</span>
+  <span className="address-tag">{address.type}</span>
+</div>
 
           <p className="full-address">
             {address.fullAddress}

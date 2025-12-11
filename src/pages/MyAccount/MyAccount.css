@@ -398,123 +398,9 @@
 }
 
 /* ============================
-   ADDRESSES PAGE
+   MODAL OVERLAY
 ============================ */
-.addresses-wrapper {
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-.no-address-box {
-  margin-top: 25px;
-  background: #fafafa;
-  padding: 30px;
-  border-radius: 12px;
-  border: 1px solid #eee;
-  text-align: center;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-.no-address-box h2 {
-  font-size: 20px;
-  font-weight: 700;
-  color: #0c2c4a;
-  margin: 0 0 10px 0;
-}
-.no-address-box p {
-  font-size: 15px;
-  color: #666;
-  margin-bottom: 25px;
-  line-height: 1.4;
-}
-.no-address-box button {
-  background: #0a2b4f;
-  color: white;
-  padding: 10px 28px;
-  border-radius: 25px;
-  font-size: 15px;
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-}
-.no-address-box button:hover {
-  opacity: 0.9; /* Changed from 1 for better UX */
-}
-.address-card {
-  background: #fff;
-  padding: 20px;
-  border-radius: 16px;
-  border: 1px solid #e5e5e5;
-  max-width: 700px;
-  margin-top: 20px;
-  width: 100%;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-.address-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
-  flex-wrap: wrap;
-}
-.tag {
-  background: #fde3b4;
-  padding: 4px 12px;
-  border-radius: 10px;
-  font-size: 12px;
-  color: #7b4b00;
-  white-space: nowrap;
-}
-.full-address {
-  font-size: 14px;
-  color: #444;
-  line-height: 1.5;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  hyphens: auto;
-}
-/* ============================
-   ADDRESS FOOTER (Updated)
-============================ */
-.address-footer {
-  background: #f4f4f4;
-  padding: 6px 12px;        /* smaller padding */
-  border-radius: 10px;
-  display: inline-flex;     /* ⭐ container fits content */
-  justify-content: flex-end;
-  align-items: center;
-  margin-top: 12px;
-  width: auto;              /* ⭐ prevents full width */
-}
-
-/* ============================
-   EDIT BUTTON (Updated)
-============================ */
-.edit-btn {
-  border: none;
-  background: none;
-  font-size: 14px;          /* ⭐ slightly smaller */
-  cursor: pointer;
-  color: #002147;
-  text-decoration: underline;
-  padding: 0;               /* removes unnecessary button padding */
-  display: flex;
-  align-items: center;
-  gap: 6px;                 /* spacing between icon + text */
-  transition: color 0.2s ease;
-}
-
-.edit-btn:hover {
-  color: #0a2b4f;
-}
-
-/* ============================
-   ADDRESS FORM
-============================ */
-.modal-overlay {
+.address-modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.5);
@@ -523,45 +409,166 @@
   align-items: center;
   z-index: 2000;
 }
-.address-modal {
+
+/* ============================
+   MODAL BOX
+============================ */
+.address-modal-box {
   background: #fff;
   width: 55%;
-  max-width: 600px;
+  max-width: 650px;
   border-radius: 16px;
   padding: 35px 45px;
   max-height: 90vh;
   overflow-y: auto;
   box-sizing: border-box;
 }
-.modal-header {
+
+/* ============================
+   HEADER
+============================ */
+.address-modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
-.close-btn {
+
+.address-close-btn {
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 26px;
   cursor: pointer;
   color: #666;
 }
+
+/* ============================
+   ADDRESS HEADER — GLOBAL FIX
+============================ */
+.address-header {
+  display: flex;
+  justify-content: space-between; /* Moves Home to right */
+  align-items: center;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.address-name {
+  font-weight: 700;
+  font-size: 16px;
+  color: #0a2540;
+}
+
+.address-tag {
+  background: #fde3b4;
+  color: #7b4b00;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+
+/* ============================
+   FORM INPUTS
+============================ */
+.address-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 22px;
+}
+
+.address-field label {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.address-field input,
+.address-field select {
+  padding: 14px 18px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.address-field input:focus,
+.address-field select:focus {
+  border-bottom: 1px solid #0a2b4f;
+}
+
+/* ============================
+   TWO COLUMN (CITY + PINCODE)
+============================ */
+.address-row {
+  display: flex;
+  gap: 25px;
+  margin-bottom: 22px;
+}
+
+.address-row > div {
+  flex: 1;
+}
+
+.address-row label {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.address-row input {
+  width: 100%;
+  padding: 14px 18px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  outline: none;
+}
+
+/* ============================
+   SAVE BUTTON
+============================ */
+.address-save-btn {
+  width: 100%;
+  background: #0a2b4f;
+  padding: 14px 0;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: 0.2s;
+}
+
+.address-save-btn:hover {
+  opacity: 0.9;
+}
+
+/* ERROR */
+.address-error {
+  color: red;
+  margin-bottom: 15px;
+}
+
 /* ============================
    RESPONSIVE
 ============================ */
 @media (max-width: 900px) {
-  .address-modal {
+  .address-modal-box {
     width: 90%;
     padding: 25px;
   }
-  .two-col {
+
+  .address-row {
     flex-direction: column;
-  }
-  .address-card {
-    margin: 16px 0;
-    padding: 18px;
+    gap: 0;
   }
 }
+
 /* ==================================================
    ⭐⭐⭐ MOBILE BOTTOM NAVBAR ⭐⭐⭐
 ================================================== */
@@ -675,10 +682,9 @@
     box-sizing: border-box !important;
     overflow: hidden !important;
   }
-  .address-header {
-    flex-wrap: wrap !important;
-    gap: 8px !important;
-  }
+ 
+
+
   .full-address {
     font-size: 13.5px !important;
     line-height: 1.6 !important;
