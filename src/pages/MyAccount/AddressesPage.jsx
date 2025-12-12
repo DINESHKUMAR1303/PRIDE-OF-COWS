@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AddAddressForm from "./AddAddressForm";
 import { getUserProfile } from "../../api/user";
+import "./AddAddressForm.css";
+
 
 const AddressesPage = () => {
   const [address, setAddress] = useState(null);

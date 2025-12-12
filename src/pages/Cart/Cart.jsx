@@ -237,7 +237,21 @@ const handleProceedToPay = async () => {
                 <span className="address-label">{address.label}</span>
               </div>
 
-              <p className="address-line">{address.fullAddress}</p>
+              <p className="address-line">
+  {address.fullAddress
+    ?.split(",")
+    .map((line, i) => (
+      <span key={i}>{line.trim()}<br /></span>
+    ))}
+
+  {address.city && address.pincode && (
+    <span>
+      {address.city}, {address.pincode}
+      <br />
+    </span>
+  )}
+</p>
+
             </div>
           )}
 
