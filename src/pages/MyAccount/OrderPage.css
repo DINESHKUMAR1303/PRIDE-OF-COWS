@@ -1,181 +1,226 @@
 /* =======================================================
-   ORDERS PAGE — Dedicated Styles
+   ORDERS PAGE – FINAL VERSION (CENTERED DETAILS, NO SCROLL)
 ======================================================= */
 
 .orders-wrapper {
-  text-align: center;
+  max-width: 100%;
   width: 100%;
+  margin: 0 auto;
+  padding: 40px 15px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
-.no-order-box {
-  margin-top: 40px;
-}
-
-.no-order-img {
-  width: 350px;
-  max-width: 80%;
-  margin: 0 auto 20px;
-}
-
-.no-order-box h2 {
-  font-size: 22px;
-  font-weight: 700;
-  color: #0c2c4a;
-}
-
-.no-order-box p {
-  font-size: 15px;
+/* Breadcrumb & Title */
+.breadcrumb {
+  font-size: 14px;
   color: #666;
-  margin-bottom: 25px;
+  margin-bottom: 12px;
+  text-align: center;
 }
 
-.explore-btn {
-  background: #0a2b4f;
-  color: #fff;
-  padding: 12px 10px;
-  border-radius: 30px;
-  font-size: 15px;
-  text-decoration: none;
-}
-
-.explore-btn:hover {
-  opacity: 0.9;
+.page-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #0a2b4f;
+  text-align: center;
+  margin-bottom: 40px;
 }
 
 /* =======================================
-   ORDER CARD LIST
+   ORDER CARD
 ======================================= */
-
 .orders-list {
-  max-width: 900px;
-  margin: 0 auto;
-  margin-top: 30px;
+  display: grid;
+  gap: 28px;
+  width: 100%;
 }
 
 .order-card {
   background: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-  margin-bottom: 20px;
-  text-align: left;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  border: 1px solid rgba(10,43,79,0.08);
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 
+/* HEADER */
 .order-header {
+  background: #0a2b4f;
+  color: white;
+  padding: 1px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  flex-wrap: nowrap;
+  gap: 12px;
 }
 
 .order-header h3 {
-  font-size: 20px;
-  color: #0a2b4f;
   margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .order-status {
-  background: #e8f1ff;
-  color: #00315c;
-  padding: 6px 14px;
-  border-radius: 20px;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(6px);
+  color: white;
+  padding: 1px 18px;
+  border-radius: 30px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.3);
+  flex-shrink: 0;
 }
 
+/* DELIVERY DATE */
 .order-date {
-  font-size: 14px;
+  text-align: center;
+  padding: -10px 20px 10px;
+  font-size: 15px;
   color: #555;
-  margin-bottom: 14px;
 }
 
+.order-date strong {
+  color: #0a2b4f;
+  font-weight: 700;
+}
+
+/* =======================================
+   PRODUCT ROW – DETAILS PERFECTLY CENTERED
+======================================= */
 .order-items {
-  border-top: 1px solid #eee;
-  padding-top: 12px;
+  padding: 0 20px;
 }
 
 .order-item-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;  /* IMAGE | CENTERED DETAILS | PRICE */
+  align-items: center;
+  gap: 16px;
+  padding: 1px 0;
+  min-width: 0;
+  border-bottom: 1px solid #eee;
+}
+
+.order-item-row:last-child {
+  border-bottom: none;
+}
+
+/* Image - Left Side */
+.order-item-img {
+  width: 68px;
+  height: 68px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: white;
+  padding: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  justify-self: start;  /* Stick to left */
+}
+
+/* CENTERED DETAILS SECTION */
+.order-item-info {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 15px;
-}
-
-.order-item-img {
-  width: 55px;
-  height: auto;
-}
-
-.order-item-info {
-  flex: 1;
-  margin-left: 12px;
+  justify-content: center;  /* THIS IS THE MAGIC – centers everything */
+  gap: 20px;                /* Perfect spacing between name | weight | qty */
+  min-width: 0;
 }
 
 .item-title {
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 17px;
+  font-weight: 700;
   color: #0c2c4a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .item-weight {
-  font-size: 13px;
+  font-size: 15px;
   color: #666;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .item-qty {
-  font-size: 13px;
-  color: #333;
-}
-
-.item-amount {
-  font-weight: 700;
-  color: #0c2c4a;
   font-size: 15px;
+  color: #444;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
+/* Price - Right Side */
+.item-amount {
+  font-size: 19px;
+  font-weight: 700;
+  color: #0a2b4f;
+  white-space: nowrap;
+  text-align: right;
+  justify-self: end;  /* Stick to right */
+}
+
+/* FOOTER */
 .order-footer {
-  border-top: 1px solid #eee;
-  margin-top: 10px;
-  padding-top: 12px;
-  display: flex;
-  justify-content: space-between;
+  background: #f8fbff;
+  margin: 10px;
+  text-align: right;
+  border-top: 1px solid #e1e8ff;
 }
 
 .order-total {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 10px;
+  font-weight: 400;
   color: #0a2b4f;
+}
+
+.order-total strong {
+  font-size: 10px;
+  color: #081f3a;
 }
 
 /* =======================================
    RESPONSIVE
 ======================================= */
+@media (max-width: 480px) {
+  .orders-wrapper { padding: 30px 12px; }
 
-@media (max-width: 768px) {
-  .orders-wrapper {
-    text-align: center !important;
-    width: 100% !important;
-  }
-
-  .orders-list {
-    padding: 0 10px;
-  }
-
-  .order-card {
-    padding: 14px;
-  }
-
-  .order-item-row {
+  .order-header {
+    padding: 16px 16px;
     flex-direction: column;
-    align-items: center;
+    text-align: center;
     gap: 8px;
   }
 
-  .item-amount {
-    margin-top: 5px;
+  .order-item-row {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 12px;
   }
 
-  .no-order-img {
-    max-width: 70% !important;
+  .order-item-img {
+    width: 60px;
+    height: 60px;
+    justify-self: center;
   }
+
+  .order-item-info {
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .item-amount {
+    justify-self: center;
+  }
+
+  .order-footer { text-align: center; }
 }
