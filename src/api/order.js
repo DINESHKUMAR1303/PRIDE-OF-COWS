@@ -2,20 +2,34 @@
 import axios from "axios";
 
 const API = import.meta.env.VITE_API_URL; 
-// Make sure .env contains:  VITE_API_URL=http://localhost:5000/api
+// Example: VITE_API_URL=http://localhost:5000/api
 
-export const createOrder = async (orderData, token) => {
-  return await axios.post(`${API}/orders/create`, orderData, {
+// ============================
+// CREATE ORDER (POST /orders)
+// ============================
+export const createOrder = async (orderData) => {
+  const token = localStorage.getItem("poc_token");  // Auto-read token
+
+  const res = await axios.post(`${API}/orders`, orderData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
+
+  return res.data;   // Always return clean data
 };
 
-export const getMyOrders = async (token) => {
-  return await axios.get(`${API}/orders/my-orders`, {
+// ============================
+// GET USER ORDERS (GET /orders/my-orders)
+// ============================
+export const getMyOrders = async () => {
+  const token = localStorage.getItem("poc_token"); // Auto-read token
+
+  const res = await axios.get(`${API}/orders/my-orders`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
+
+  return res.data;   // { success: true, orders: [...] }
 };

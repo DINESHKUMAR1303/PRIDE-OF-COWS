@@ -1,33 +1,21 @@
-// backend/models/Order.js
-import mongoose from "mongoose";
+// src/api/order.js
+import axios from "axios";
 
-const orderSchema = new mongoose.Schema(
-  {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-    items: [
-      {
-        productId: Number,
-        title: String,
-        weight: String,
-        price: Number,
-        qty: Number,
-        img: String,
-      },
-    ],
-    address: {
-      name: String,
-      fullAddress: String,
-      label: String,
-    },
-    deliveryDate: String, // store ISO string
-    totalAmount: Number,
-    status: { type: String, default: "placed" }, // placed | processing | delivered | cancelled
-  },
-  { timestamps: true }
-);
+const API = import.meta.env.VITE_API_URL; 
+// Make sure .env contains:  VITE_API_URL=http://localhost:5000/api
 
-export default mongoose.model("Order", orderSchema);
+export const createOrder = async (orderData, token) => {
+  return await axios.post(`${API}/orders/create`, orderData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const getMyOrders = async (token) => {
+  return await axios.get(`${API}/orders/my-orders`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

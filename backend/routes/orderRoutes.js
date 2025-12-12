@@ -10,10 +10,16 @@ const {
 
 const authMiddleware = require("../middleware/authMiddleware");
 
-// CREATE ORDER
-router.post("/create", authMiddleware, createOrder);
+// =============================
+// CREATE ORDER 
+// Frontend sends POST /api/orders
+// =============================
+router.post("/", authMiddleware, createOrder);
 
-// GET USER ORDERS
+// =============================
+// GET USER ORDERS 
+// GET /api/orders/my-orders
+// =============================
 router.get("/my-orders", authMiddleware, getUserOrders);
 
-module.exports = router;   // ✔ VERY IMPORTANT
+module.exports = router;   // ✔ DO NOT REMOVE
