@@ -8,6 +8,7 @@ const connectDB = require("./config/db");
 // Route Imports
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
+const orderRoutes = require("./routes/orderRoutes"); // ⭐ NEW
 
 // Load environment variables
 dotenv.config();
@@ -44,8 +45,11 @@ app.use((req, res, next) => {
 // Auth: Register & Login
 app.use("/api/auth", authRoutes);
 
-// USER routes — MUST be singular "user" for your frontend
+// USER routes — MUST remain singular "user" for your frontend
 app.use("/api/user", userRoutes);
+
+// ⭐ NEW — ORDER ROUTES
+app.use("/api/orders", orderRoutes);
 
 /* ============================================================
    ⭐ ROOT ROUTE

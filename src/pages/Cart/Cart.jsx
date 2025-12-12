@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 
@@ -18,6 +18,11 @@ import prod6 from "../../components/ProductCarousel/images/proteinbarpack.png";
 import deliveryIcon from "./images/deliveryboy.svg";
 import emptyCartImg from "./images/emptycart.svg";
 
+import { createOrder } from "../../api/order";
+import { getUserProfile } from "../../api/user";
+
+
+
 const cartProducts = [
   { id: 1, title: "Milk", weight: "1L", price: 120, img: prod1 },
   { id: 2, title: "Curd", weight: "320g", price: 95, img: prod2 },
@@ -28,7 +33,8 @@ const cartProducts = [
 ];
 
 const Cart = () => {
-  const { cartItems, increaseItem, decreaseItem } = useCart();
+const { cartItems, increaseItem, decreaseItem, clearCart } = useCart();
+
   const { user } = useAuth();
   const isLoggedIn = !!user;
   const { setLoginOpen } = useLogin();
@@ -64,22 +70,59 @@ const Cart = () => {
 
   /* ⭐ NEW: ORDER SUCCESS POPUP */
   const [orderSuccess, setOrderSuccess] = useState(false);
+  /* ⭐ AUTO-LOAD SAVED ADDRESS WHEN USER LOGS IN */
+useEffect(() => {
+  const loadSavedAddress = async () => {
+    if (!user) return;
 
-  /* ⭐ HANDLE PROCEED TO PAY */
-  const handleProceedToPay = () => {
-    if (!isLoggedIn) {
-      setLoginOpen(true);
-      return;
+    try {
+      const profile = await getUserProfile();
+      const addr = profile.address;
+
+      if (addr) {
+        setAddress({
+          name: addr.name || `${profile.firstName} ${profile.lastName}`,
+          fullAddress: addr.fullAddress,
+          label: addr.type || "Home",
+          city: addr.city,
+          pincode: addr.pincode,
+        });
+      }
+    } catch (err) {
+      console.error("Failed to load saved address:", err);
     }
-
-    // User is logged in → Show success popup
-    setOrderSuccess(true);
-
-    // Auto hide after 2.5 sec
-    setTimeout(() => {
-      setOrderSuccess(false);
-    }, 2500);
   };
+
+  loadSavedAddress();
+}, [user]);
+
+
+
+  
+const handleProceedToPay = () => {
+  if (!isLoggedIn) {
+    setLoginOpen(true);
+    return;
+  }
+
+  if (!address) {
+    alert("Please add a delivery address before placing the order.");
+    return;
+  }
+
+  // Show success popup immediately
+  setOrderSuccess(true);
+
+  // Clear cart
+  clearCart();
+
+  // Redirect after a short delay
+  setTimeout(() => {
+    setOrderSuccess(false);
+    window.location.href = "/myaccount/orders";
+  }, 2000);
+};
+
 
   const handleAddAddressClick = () => {
     if (!isLoggedIn) {
@@ -110,7 +153,8 @@ const Cart = () => {
     month: "short",
   });
 
-  if (cartList.length === 0) {
+ if (cartList.length === 0 && !orderSuccess) {
+
     return (
       <div className="empty-cart-container">
         <p className="empty-breadcrumb">
@@ -293,7 +337,7 @@ const Cart = () => {
               </div>
 
               <div className="form-group">
-                <label>House / Flat / Building</label>
+                <label>Street / Area </label>
                 <input
                   type="text"
                   value={addressForm.line1}
@@ -302,14 +346,14 @@ const Cart = () => {
                 />
               </div>
 
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label>Street / Area (optional)</label>
                 <input
                   type="text"
                   value={addressForm.line2}
                   onChange={(e) => setAddressForm({ ...addressForm, line2: e.target.value })}
                 />
-              </div>
+              </div> */}
 
               <div className="form-row-2">
                 <div className="form-group">

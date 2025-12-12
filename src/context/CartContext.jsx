@@ -33,7 +33,12 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  // ➤ AUTO CALCULATED CART COUNT (NO STATE NEEDED)
+  // ⭐ ➤ CLEAR CART COMPLETELY (NEW STEP 4)
+  const clearCart = () => {
+    setCartItems({});
+  };
+
+  // ➤ AUTO CALCULATED CART COUNT
   const cartCount = Object.values(cartItems).reduce((sum, qty) => sum + qty, 0);
 
   return (
@@ -42,7 +47,8 @@ export const CartProvider = ({ children }) => {
         cartItems,
         increaseItem,
         decreaseItem,
-        cartCount,   // Navbar uses this
+        cartCount,  // Navbar uses this
+        clearCart,  // ⭐ NEW — used after placing order
       }}
     >
       {children}
