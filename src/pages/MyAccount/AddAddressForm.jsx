@@ -105,7 +105,7 @@ const AddAddressForm = ({ onClose, onSaved }) => {
           </div>
 
           <div className="address-field">
-            <label>House / Flat / Building</label>
+            <label>Street / Area</label>
             <input
               name="fullAddress"
               value={formData.fullAddress}
@@ -113,14 +113,14 @@ const AddAddressForm = ({ onClose, onSaved }) => {
             />
           </div>
 
-          <div className="address-field">
+          {/* <div className="address-field">
             <label>Street / Area (optional)</label>
             <input
               name="street"
               value={formData.street}
               onChange={handleChange}
             />
-          </div>
+          </div> */}
 
           <div className="address-row">
             <div>
