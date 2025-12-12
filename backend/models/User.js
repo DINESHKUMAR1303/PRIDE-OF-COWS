@@ -1,6 +1,5 @@
 // backend/models/User.js
-
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 /* ============================================================
    ⭐ ADDRESS SUB-SCHEMA (Clean, Stable & Future-Proof)
@@ -50,11 +49,11 @@ const addressSchema = new mongoose.Schema(
       trim: true,
     },
   },
-  { _id: false } // prevents nested _id from being created
+  { _id: false }
 );
 
 /* ============================================================
-   ⭐ USER SCHEMA (Stable & Matches Your Controllers)
+   ⭐ USER SCHEMA (Matches Your Controllers)
 ============================================================ */
 const userSchema = new mongoose.Schema(
   {
@@ -89,10 +88,6 @@ const userSchema = new mongoose.Schema(
       required: [true, "Password is required"],
     },
 
-    /* --------------------------------------------------------
-       ⭐ CLEAN DEFAULT ADDRESS OBJECT
-       Ensures EVERY NEW user has structured address ready
-    -------------------------------------------------------- */
     address: {
       type: addressSchema,
       default: () => ({}),
@@ -102,7 +97,7 @@ const userSchema = new mongoose.Schema(
 );
 
 /* ============================================================
-   ⭐ SAFE EXPORT (Avoids OverwriteModelError in dev / hot reload)
+   ⭐ EXPORT (ESM — REQUIRED)
 ============================================================ */
-module.exports =
-  mongoose.models.User || mongoose.model("User", userSchema);
+const User = mongoose.models.User || mongoose.model("User", userSchema);
+export default User;

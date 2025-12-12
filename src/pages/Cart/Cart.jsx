@@ -99,7 +99,7 @@ useEffect(() => {
 
 
   
-const handleProceedToPay = () => {
+const handleProceedToPay = async () => {
   if (!isLoggedIn) {
     setLoginOpen(true);
     return;
@@ -110,17 +110,46 @@ const handleProceedToPay = () => {
     return;
   }
 
-  // Show success popup immediately
-  setOrderSuccess(true);
+  try {
+    const token = localStorage.getItem("poc_token");
 
-  // Clear cart
-  clearCart();
+    const orderData = {
+      items: cartList.map((id) => {
+        const item = cartProducts.find((p) => p.id === Number(id));
+        return {
+          productId: item.id,
+          name: item.title,
+          quantity: cartItems[id],
+          price: item.price
+        };
+      }),
+      address: address.fullAddress,
+      deliveryDate: selectedDate,
+      totalAmount: itemTotal
+    };
 
-  // Redirect after a short delay
-  setTimeout(() => {
-    setOrderSuccess(false);
-    window.location.href = "/myaccount/orders";
-  }, 2000);
+    console.log("Sending order:", orderData);
+
+    // ⭐ SEND ORDER TO BACKEND
+    const res = await createOrder(orderData, token);
+    console.log("ORDER RESPONSE:", res);
+
+    // Show success popup
+    setOrderSuccess(true);
+
+    // Clear cart
+    clearCart();
+
+    // Redirect
+    setTimeout(() => {
+      setOrderSuccess(false);
+      window.location.href = "/myaccount/orders";
+    }, 2000);
+
+  } catch (err) {
+    console.error("ORDER FAILED:", err);
+    alert("Failed to place order. Check console.");
+  }
 };
 
 

@@ -1,10 +1,10 @@
 // backend/routes/authRoutes.js
 
-const express = require("express");
-const router = express.Router();
+import express from "express";
+import { registerUser, loginUser } from "../controllers/authController.js";
+import authMiddleware from "../middleware/authMiddleware.js";
 
-const { registerUser, loginUser } = require("../controllers/authController");
-const protect = require("../middleware/authMiddleware");
+const router = express.Router();
 
 /* ============================================================
    🔐 AUTH ROUTES (Base URL → /api/auth)
@@ -23,18 +23,24 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 
 /* ------------------------------------------------------------
-   ⭐ VERIFY TOKEN (Optional - useful for frontend Auth check)
+   ⭐ VERIFY TOKEN
    GET → /api/auth/verify
 ------------------------------------------------------------ */
-router.get("/verify", protect, (req, res) => {
-  return res.json({ valid: true, userId: req.user.id });
+router.get("/verify", authMiddleware, (req, res) => {
+  return res.json({
+    valid: true,
+    userId: req.user._id,
+  });
 });
 
 /* ------------------------------------------------------------
-   ⭐ TEST ROUTE (Optional)
+   ⭐ TEST ROUTE
 ------------------------------------------------------------ */
 router.get("/test", (req, res) => {
   res.json({ message: "Auth routes working ✔️" });
 });
 
-module.exports = router;
+/* ------------------------------------------------------------
+   ⭐ EXPORT ROUTER (ESM)
+------------------------------------------------------------ */
+export default router;

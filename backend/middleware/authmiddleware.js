@@ -1,37 +1,64 @@
 // backend/middleware/authMiddleware.js
 
-const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
-module.exports = async function protect(req, res, next) {
+const authMiddleware = async (req, res, next) => {
   try {
-    let token;
+    // ---------------------------------------
+    // Extract token from "Authorization"
+    // ---------------------------------------
+    let token = null;
 
-    // Should be in: Authorization: Bearer xyz
     if (
       req.headers.authorization &&
-      req.headers.authorization.startsWith("Bearer")
+      req.headers.authorization.startsWith("Bearer ")
     ) {
       token = req.headers.authorization.split(" ")[1];
     }
 
     if (!token) {
+      console.log("⛔ No token provided");
       return res.status(401).json({ message: "Not authorized, no token" });
     }
 
+    // ---------------------------------------
+    // Check if JWT_SECRET exists
+    // ---------------------------------------
+    if (!process.env.JWT_SECRET) {
+      console.error("❌ SERVER ERROR: JWT_SECRET missing in .env");
+      return res.status(500).json({ message: "Server misconfiguration" });
+    }
+
+    // ---------------------------------------
     // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // ---------------------------------------
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_SECRET);
+    } catch (err) {
+      console.error("❌ JWT Verification Error:", err.message);
+      return res.status(401).json({ message: "Invalid or expired token" });
+    }
 
-    // Attach user to request
-    req.user = await User.findById(decoded.id).select("-password");
+    // ---------------------------------------
+    // Load user from DB
+    // ---------------------------------------
+    const user = await User.findById(decoded.id).select("-password");
 
-    if (!req.user) {
+    if (!user) {
+      console.log("⛔ Token user does not exist anymore");
       return res.status(401).json({ message: "User no longer exists" });
     }
 
+    // Attach user to request
+    req.user = user;
+
     next();
   } catch (err) {
-    console.error("❌ AUTH ERROR:", err);
+    console.error("❌ AUTH MIDDLEWARE ERROR:", err);
     return res.status(401).json({ message: "Not authorized" });
   }
 };
+
+export default authMiddleware;

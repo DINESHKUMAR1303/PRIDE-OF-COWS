@@ -3,6 +3,23 @@ import { Link } from "react-router-dom";
 import noOrderImg from "./images/orderbag.png";
 import { getMyOrders } from "../../api/order";
 
+// LOCAL PRODUCT LOOKUP (Backend does NOT store images or weights)
+import prod1 from "../../components/ProductCarousel/images/onelitermilk.png";
+import prod2 from "../../components/ProductCarousel/images/purecurd.png";
+import prod3 from "../../components/ProductCarousel/images/ghee.png";
+import prod4 from "../../components/ProductCarousel/images/panner.png";
+import prod5 from "../../components/ProductCarousel/images/proteinbar.png";
+import prod6 from "../../components/ProductCarousel/images/proteinbarpack.png";
+
+const productData = {
+  1: { img: prod1, weight: "1L" },
+  2: { img: prod2, weight: "320g" },
+  3: { img: prod3, weight: "200ml" },
+  4: { img: prod4, weight: "200g" },
+  5: { img: prod5, weight: "40g" },
+  6: { img: prod6, weight: "320g" }
+};
+
 const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
   const token = localStorage.getItem("poc_token");
@@ -12,10 +29,34 @@ const OrdersPage = () => {
       try {
         const res = await getMyOrders(token);
 
-        // Backend may return: { success: true, orders: [...] }
-        setOrders(res.data.orders || res.data);
+        console.log("📦 Orders API Response:", res.data);
+
+        // Fix: Ensure res.data always exists
+        const data = res?.data || {};
+
+        // If API returned success:false → no orders
+        if (!data.success || !Array.isArray(data.orders)) {
+          console.warn("⚠️ No valid orders found from API");
+          setOrders([]);
+          return;
+        }
+
+        // Format orders for display
+        const formatted = data.orders.map((order) => ({
+          ...order,
+          items: order.items.map((item) => ({
+            title: item.name,
+            qty: item.quantity,
+            price: item.price,
+            img: productData[item.productId]?.img || "",
+            weight: productData[item.productId]?.weight || ""
+          }))
+        }));
+
+        setOrders(formatted);
       } catch (err) {
-        console.error("Error fetching orders:", err);
+        console.error("❌ Error fetching orders:", err);
+        setOrders([]); // fallback safe state
       }
     };
 
@@ -24,8 +65,6 @@ const OrdersPage = () => {
 
   return (
     <div className="orders-wrapper">
-
-      {/* Breadcrumb */}
       <p className="breadcrumb">
         <Link to="/" className="breadcrumb-link">HOME</Link>
         <span> / </span>
@@ -33,21 +72,14 @@ const OrdersPage = () => {
         <span> / MY ORDERS</span>
       </p>
 
-      {/* Page Title */}
       <h1 className="page-title">Orders</h1>
 
       {/* If NO ORDERS */}
       {orders.length === 0 && (
         <div className="no-order-box">
-          <img
-            src={noOrderImg}
-            alt="No Orders"
-            className="no-order-img"
-          />
-
+          <img src={noOrderImg} alt="No Orders" className="no-order-img" />
           <h2>No Order Found!</h2>
           <p>Start shopping and experience premium dairy at home.</p>
-
           <Link to="/shop/all" className="explore-btn">
             EXPLORE MORE PRODUCTS
           </Link>
@@ -79,11 +111,14 @@ const OrdersPage = () => {
               <div className="order-items">
                 {order.items.map((item, index) => (
                   <div key={index} className="order-item-row">
-                    <img
-                      src={item.img}
-                      alt={item.title}
-                      className="order-item-img"
-                    />
+
+                    {item.img && (
+                      <img
+                        src={item.img}
+                        alt={item.title}
+                        className="order-item-img"
+                      />
+                    )}
 
                     <div className="order-item-info">
                       <p className="item-title">{item.title}</p>

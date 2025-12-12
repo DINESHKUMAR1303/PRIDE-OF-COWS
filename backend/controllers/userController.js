@@ -1,6 +1,6 @@
 // backend/controllers/userController.js
 
-const User = require("../models/User");
+import User from "../models/User.js";
 
 /* ============================================================
    ⭐ FORMAT ADDRESS (Works for BOTH old & new users)
@@ -36,9 +36,9 @@ function formatAddress(user) {
 /* ============================================================
    ⭐ GET FULL USER PROFILE
 ============================================================ */
-exports.getUserProfile = async (req, res) => {
+export const getUserProfile = async (req, res) => {
   try {
-    const userId = req.user?.id; // protect middleware sets req.user
+    const userId = req.user?._id; // ⭐ FIXED: our middleware sets _id, not id
 
     if (!userId) {
       return res.status(401).json({ message: "Not authorized" });
@@ -68,9 +68,9 @@ exports.getUserProfile = async (req, res) => {
 /* ============================================================
    ⭐ GET USER ADDRESS ONLY
 ============================================================ */
-exports.getUserAddress = async (req, res) => {
+export const getUserAddress = async (req, res) => {
   try {
-    const userId = req.user?.id;
+    const userId = req.user?._id;
 
     if (!userId) {
       return res.status(401).json({ message: "Not authorized" });
@@ -93,9 +93,9 @@ exports.getUserAddress = async (req, res) => {
 /* ============================================================
    ⭐ UPDATE / SAVE USER ADDRESS
 ============================================================ */
-exports.updateUserAddress = async (req, res) => {
+export const updateUserAddress = async (req, res) => {
   try {
-    const userId = req.user?.id;
+    const userId = req.user?._id;
 
     if (!userId) {
       return res.status(401).json({ message: "Not authorized" });
@@ -109,7 +109,7 @@ exports.updateUserAddress = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // ⭐ Always store in NEW OBJECT FORMAT
+    // ⭐ Always store address in NEW structured format
     user.address = {
       name: name || `${user.firstName} ${user.lastName}`,
       type: type || user.address?.type || "Home",

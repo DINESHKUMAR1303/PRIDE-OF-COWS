@@ -1,14 +1,14 @@
 // backend/server.js
 
-const express = require("express");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const connectDB = require("./config/db");
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import connectDB from "./config/db.js";
 
 // Route Imports
-const authRoutes = require("./routes/authRoutes");
-const userRoutes = require("./routes/userRoutes");
-const orderRoutes = require("./routes/orderRoutes"); // ⭐ NEW
+import authRoutes from "./routes/authRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js"; // ⭐ ESM import
 
 // Load environment variables
 dotenv.config();
@@ -45,10 +45,10 @@ app.use((req, res, next) => {
 // Auth: Register & Login
 app.use("/api/auth", authRoutes);
 
-// USER routes — MUST remain singular "user" for your frontend
+// User routes
 app.use("/api/user", userRoutes);
 
-// ⭐ NEW — ORDER ROUTES
+// Order routes
 app.use("/api/orders", orderRoutes);
 
 /* ============================================================

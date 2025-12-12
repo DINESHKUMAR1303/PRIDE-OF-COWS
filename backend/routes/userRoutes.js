@@ -1,31 +1,34 @@
 // backend/routes/userRoutes.js
 
-const express = require("express");
-const router = express.Router();
-
-const protect = require("../middleware/authMiddleware");
-const {
+import express from "express";
+import authMiddleware from "../middleware/authMiddleware.js";
+import {
   getUserProfile,
   getUserAddress,
-  updateUserAddress,
-} = require("../controllers/userController");
+  updateUserAddress
+} from "../controllers/userController.js";
+
+const router = express.Router();
 
 /* ============================================================
    ⭐ GET FULL USER PROFILE
    GET /api/user/profile
 ============================================================ */
-router.get("/profile", protect, getUserProfile);
+router.get("/profile", authMiddleware, getUserProfile);
 
 /* ============================================================
    ⭐ GET ONLY USER ADDRESS
    GET /api/user/address
 ============================================================ */
-router.get("/address", protect, getUserAddress);
+router.get("/address", authMiddleware, getUserAddress);
 
 /* ============================================================
    ⭐ UPDATE OR SAVE ADDRESS
    PUT /api/user/address
 ============================================================ */
-router.put("/address", protect, updateUserAddress);
+router.put("/address", authMiddleware, updateUserAddress);
 
-module.exports = router;
+/* ============================================================
+   ⭐ EXPORT ROUTER (ESM)
+============================================================ */
+export default router;

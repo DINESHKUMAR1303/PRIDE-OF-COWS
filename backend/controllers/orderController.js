@@ -1,15 +1,22 @@
 // backend/controllers/orderController.js
+
 import Order from "../models/Order.js";
 
-// ==========================
-// CREATE ORDER
-// ==========================
+/* ============================================================
+   ⭐ CREATE ORDER
+============================================================ */
 export const createOrder = async (req, res) => {
   try {
+    console.log("🔥 CREATE ORDER HIT");
+    console.log("➡️ USER:", req.user?._id);
+    console.log("➡️ BODY:", req.body);
+
     const { items, address, deliveryDate, totalAmount } = req.body;
 
-    // Basic validation
-    if (!items || !items.length) {
+    // --------------------------
+    // VALIDATIONS
+    // --------------------------
+    if (!items || !Array.isArray(items) || items.length === 0) {
       return res.status(400).json({
         success: false,
         message: "Order items are required",
@@ -37,23 +44,28 @@ export const createOrder = async (req, res) => {
       });
     }
 
-    // Create order document
+    // --------------------------
+    // CREATE ORDER IN DB
+    // --------------------------
     const order = await Order.create({
-      user: req.user._id, // Auth middleware must attach the user
+      userId: req.user._id,
       items,
       address,
-      deliveryDate: new Date(deliveryDate), // ensure correct Date format
+      deliveryDate: new Date(deliveryDate),
       totalAmount,
+      status: "pending",
     });
+
+    console.log("✅ ORDER SAVED:", order._id);
 
     return res.status(201).json({
       success: true,
       message: "Order created successfully",
       order,
     });
-
   } catch (err) {
-    console.error("❌ createOrder error:", err);
+    console.error("❌ createOrder ERROR:", err);
+
     return res.status(500).json({
       success: false,
       message: "Server error while creating order",
@@ -62,25 +74,41 @@ export const createOrder = async (req, res) => {
   }
 };
 
-// ==========================
-// GET USER ORDERS
-// ==========================
+/* ============================================================
+   ⭐ GET USER ORDERS (My Orders Page)
+============================================================ */
 export const getUserOrders = async (req, res) => {
   try {
-    const orders = await Order.find({ user: req.user._id })
-      .sort({ createdAt: -1 });
+    console.log("🔥 GET USER ORDERS HIT");
+    console.log("➡️ USER:", req.user?._id);
 
-    return res.json({
+    const userId = req.user?._id;
+
+    if (!userId) {
+      console.log("❌ NO USER FOUND IN TOKEN");
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized: User not found",
+        orders: [],
+      });
+    }
+
+    const orders = await Order.find({ userId }).sort({ createdAt: -1 });
+
+    console.log("📦 ORDERS RETURNED:", orders.length);
+
+    return res.status(200).json({
       success: true,
-      orders,
+      orders: orders || [],
     });
-
   } catch (err) {
-    console.error("❌ getUserOrders error:", err);
+    console.error("❌ getUserOrders ERROR:", err);
+
     return res.status(500).json({
       success: false,
       message: "Server error while fetching orders",
       error: err.message,
+      orders: [],
     });
   }
 };

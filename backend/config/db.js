@@ -1,9 +1,6 @@
 // backend/config/db.js
 
-const mongoose = require("mongoose");
-
-// Optional: turn on useful mongoose logs in dev
-// mongoose.set("debug", true);
+import mongoose from "mongoose";
 
 const connectDB = async () => {
   try {
@@ -13,12 +10,12 @@ const connectDB = async () => {
       process.exit(1);
     }
 
-    // Mongoose 7+ recommended usage: just pass the URI
+    // Mongoose 7+ recommended usage: only pass the URI
     const conn = await mongoose.connect(process.env.MONGO_URI);
 
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
 
-    // Optional: handle disconnected / error events
+    // Optional: listen for disconnections
     mongoose.connection.on("disconnected", () => {
       console.warn("⚠️ MongoDB disconnected");
     });
@@ -32,4 +29,4 @@ const connectDB = async () => {
   }
 };
 
-module.exports = connectDB;
+export default connectDB;
