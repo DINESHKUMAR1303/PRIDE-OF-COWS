@@ -116,6 +116,12 @@ const Navbar = () => {
   // LOCATION & STICKY
   // =======================
 useEffect(() => {
+  // ⭐ If user logged out → reset to default
+  if (!user) {
+    setLocation("ENTER A PINCODE");
+    return;
+  }
+
   // ⭐ PRIORITY 1: User address from backend
   if (user?.city && user?.pincode) {
     setLocation(`${user.city.toUpperCase()} (${user.pincode})`);
@@ -456,11 +462,24 @@ useEffect(() => {
               <h4>Other</h4>
               <ul>
                 <li
-                  onClick={() => {
-                    setUser(null);
-                    localStorage.removeItem("token");
-                    navigate("/");
-                  }}
+                 onClick={() => {
+  setUser(null);
+
+  // REMOVE ALL SAVED USER + LOCATION DATA
+  localStorage.removeItem("poc_user");
+  localStorage.removeItem("poc_token");
+
+  // ⭐ These 3 store the location — REMOVE THEM
+  localStorage.removeItem("user_city");
+  localStorage.removeItem("user_pincode");
+  localStorage.removeItem("userLocation");
+
+  navigate("/", { replace: true });
+
+  // Force location reset visually
+  window.location.reload();
+}}
+
                   style={{ color: "#d9534f", fontWeight: "bold", cursor: "pointer" }}
                 >
                   <img src={logoutIcon} className="logout-icon" />
