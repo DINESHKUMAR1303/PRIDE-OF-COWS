@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 // ---------------- Main Pages ----------------
 import Home from "./pages/Home";
@@ -11,14 +11,14 @@ import Milk from "./pages/Milk/Milk";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions/TermsConditions";
 
-// ❌ REMOVED LoginModal import — file does NOT exist
-// import LoginModal from "./components/LoginModal/LoginModal";
-
 // ---------------- My Account (Nested Routes) ----------------
 import MyAccountLayout from "./pages/MyAccount/MyAccountLayout";
 import ProfilePage from "./pages/MyAccount/ProfilePage";
 import OrdersPage from "./pages/MyAccount/OrdersPage";
 import AddressesPage from "./pages/MyAccount/AddressesPage";
+
+// ---------------- Admin ----------------
+import Admin from "./AdminPanel/Admin";
 
 // ---------------- Layout Components ----------------
 import Navbar from "./components/Navbar/Navbar";
@@ -34,27 +34,30 @@ import "./App.css";
 
 // =====================================================================
 // ⭐ Protected Route Wrapper
-// Blocks access to /my-account/... if user is not logged in
 // =====================================================================
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
 
   if (!user) {
-    // redirect to home or open login modal later
     return <Navigate to="/" replace />;
   }
 
   return children;
 };
 
-
 const App = () => {
+  const location = useLocation();
+
+  // ✅ Detect admin route
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
   return (
     <>
       <ScrollToTop />
 
-      <NotificationBar />
-      <Navbar />
+      {/* ❌ Hide on admin */}
+      {!isAdminRoute && <NotificationBar />}
+      {!isAdminRoute && <Navbar />}
 
       <div className="page-wrapper">
         <Routes>
@@ -71,12 +74,7 @@ const App = () => {
 
           {/* ===================================================================
               ⭐ MY ACCOUNT (PROTECTED AREA)
-              -------------------------------------------------------------------
-              /my-account             → MyAccountLayout (Protected)
-              /my-account/profile     → ProfilePage
-              /my-account/orders      → OrdersPage
-              /my-account/addresses   → AddressesPage
-              =================================================================== */}
+          =================================================================== */}
           <Route
             path="/my-account"
             element={
@@ -85,10 +83,7 @@ const App = () => {
               </ProtectedRoute>
             }
           >
-            {/* Default redirect to profile */}
             <Route index element={<Navigate to="profile" replace />} />
-
-            {/* Nested Pages */}
             <Route path="profile" element={<ProfilePage />} />
             <Route path="orders" element={<OrdersPage />} />
             <Route path="addresses" element={<AddressesPage />} />
@@ -98,13 +93,17 @@ const App = () => {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsConditions />} />
 
+          {/* ================= ADMIN ================= */}
+          <Route path="/admin" element={<Admin />} />
+
           {/* ---------------- CATCH ALL ---------------- */}
           <Route path="*" element={<Navigate to="/" replace />} />
 
         </Routes>
       </div>
 
-      <Footer />
+      {/* ❌ Hide on admin */}
+      {!isAdminRoute && <Footer />}
     </>
   );
 };
