@@ -142,7 +142,7 @@ const AdminLogin = ({ onLoginSuccess }) => {
         </div>
 
         <div className="login-footer">
-          © 2024 Pride of Cows. All rights reserved.
+          © 2025 Pride of Cows. All rights reserved.
         </div>
       </div>
     </div>
