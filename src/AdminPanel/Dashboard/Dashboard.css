@@ -378,7 +378,7 @@
 }
 
 .chart-card {
-  max-height: 420px; /* 🔑 caps chart height */
+  max-height: 450px; /* 🔑 caps chart height */
 }
 
 .chart-labels {
