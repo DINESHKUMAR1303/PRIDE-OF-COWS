@@ -3,7 +3,6 @@ import { getDashboardStats } from "../../api/admin";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 
-
 import logo from "./images/logo.png";
 
 /* ===== ICONS (lucide-react) ===== */
@@ -21,6 +20,9 @@ import {
   LogOut,
   Calendar,
   Clock,
+  User,
+  QrCode,
+  ChevronRight,
 } from "lucide-react";
 
 const Dashboard = () => {
@@ -70,27 +72,29 @@ const Dashboard = () => {
   return (
     <div className="admin-dashboard">
       <div className="dashboard-wrapper">
-        {/* ================= SIDEBAR ================= */}
+        {/* ================= SIDEBAR (Desktop) ================= */}
         <aside className="sidebar">
           <div className="sidebar-header">
             <div className="logo">
-  <img
-    src={logo}
-    alt="Pride of Cows"
-    className="brand-logo"
-  />
-  <div>
-    <h1>Pride of Cows</h1>
-    <span>Admin Panel</span>
-  </div>
-</div>
-
+              <img src={logo} alt="Pride of Cows" className="brand-logo" />
+              <div>
+                <h1>Pride of Cows</h1>
+                <span>Admin Panel</span>
+              </div>
+            </div>
           </div>
 
           <nav className="sidebar-nav">
             <button className="nav-item active">
               <LayoutGrid size={20} />
               <span>Dashboard</span>
+            </button>
+            <button
+              className="nav-item"
+              onClick={() => navigate("/admin/users")}
+            >
+              <Users size={20} />
+              <span>Users</span>
             </button>
             <button className="nav-item">
               <ShoppingCart size={20} />
@@ -99,10 +103,6 @@ const Dashboard = () => {
             <button className="nav-item">
               <Package size={20} />
               <span>Products</span>
-            </button>
-            <button className="nav-item">
-              <Users size={20} />
-              <span>Customers</span>
             </button>
             <button className="nav-item">
               <Settings size={20} />
@@ -319,6 +319,36 @@ const Dashboard = () => {
             </div>
           </section>
         </main>
+
+        {/* ================= MOBILE BOTTOM NAVIGATION ================= */}
+        <nav className="mobile-bottom-nav">
+          <div className="mobile-nav-items">
+            <button className="mobile-nav-item">
+              <User size={24} />
+            </button>
+
+            <button className="mobile-nav-item">
+              <ShoppingCart size={24} />
+            </button>
+
+            <button className="mobile-nav-item highlight">
+              <QrCode size={28} />
+            </button>
+
+            <button className="mobile-nav-item">
+              <Package size={24} />
+            </button>
+
+            <button className="mobile-nav-item">
+              <Settings size={24} />
+            </button>
+          </div>
+
+          {/* Floating Arrow Button */}
+          <button className="mobile-floating-arrow">
+            <ChevronRight size={28} />
+          </button>
+        </nav>
       </div>
     </div>
   );

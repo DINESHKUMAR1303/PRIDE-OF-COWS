@@ -1,8 +1,10 @@
 import React from "react";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 
+/* ===== ADMIN PAGES ===== */
 import AdminLogin from "./AdminLogin/AdminLogin";
 import Dashboard from "./Dashboard/Dashboard";
+import Users from "./Users/Users";   // ✅ ADD THIS
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -24,7 +26,7 @@ const Admin = () => {
 
   return (
     <Routes>
-      {/* /admin → Admin Login */}
+      {/* ================= ADMIN LOGIN ================= */}
       <Route
         index
         element={
@@ -36,12 +38,24 @@ const Admin = () => {
         }
       />
 
-      {/* /admin/dashboard → Dashboard */}
+      {/* ================= DASHBOARD ================= */}
       <Route
         path="dashboard"
         element={
           isLoggedIn ? (
             <Dashboard onLogout={handleLogout} />
+          ) : (
+            <Navigate to="/admin" replace />
+          )
+        }
+      />
+
+      {/* ================= USERS MODULE ================= */}
+      <Route
+        path="users"
+        element={
+          isLoggedIn ? (
+            <Users />
           ) : (
             <Navigate to="/admin" replace />
           )
