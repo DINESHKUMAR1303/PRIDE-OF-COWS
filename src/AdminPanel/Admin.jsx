@@ -1,35 +1,53 @@
-import React, { useState } from "react";
+import React from "react";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+
 import AdminLogin from "./AdminLogin/AdminLogin";
 import Dashboard from "./Dashboard/Dashboard";
 
 const Admin = () => {
-  // ✅ Check login state from localStorage
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    !!localStorage.getItem("admin_token")
-  );
+  const navigate = useNavigate();
 
-  // ✅ Login success handler
+  // ✅ Check admin login status
+  const isLoggedIn = !!localStorage.getItem("admin_token");
+
+  // ✅ When login succeeds
   const handleLoginSuccess = (token) => {
     localStorage.setItem("admin_token", token);
-    setIsLoggedIn(true);
+    navigate("/admin/dashboard", { replace: true });
   };
 
   // ✅ Logout handler
   const handleLogout = () => {
     localStorage.removeItem("admin_token");
-    setIsLoggedIn(false);
+    navigate("/admin", { replace: true });
   };
 
   return (
-    <>
-      {!isLoggedIn ? (
-        // 🔐 Admin Login Page
-        <AdminLogin onLoginSuccess={handleLoginSuccess} />
-      ) : (
-        // 📊 Admin Dashboard
-        <Dashboard onLogout={handleLogout} />
-      )}
-    </>
+    <Routes>
+      {/* /admin → Admin Login */}
+      <Route
+        index
+        element={
+          isLoggedIn ? (
+            <Navigate to="dashboard" replace />
+          ) : (
+            <AdminLogin onLoginSuccess={handleLoginSuccess} />
+          )
+        }
+      />
+
+      {/* /admin/dashboard → Dashboard */}
+      <Route
+        path="dashboard"
+        element={
+          isLoggedIn ? (
+            <Dashboard onLogout={handleLogout} />
+          ) : (
+            <Navigate to="/admin" replace />
+          )
+        }
+      />
+    </Routes>
   );
 };
 

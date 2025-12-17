@@ -31,9 +31,8 @@ import { useAuth } from "./context/AuthContext";
 
 import "./App.css";
 
-
 // =====================================================================
-// ⭐ Protected Route Wrapper
+// ⭐ Protected Route Wrapper (USER)
 // =====================================================================
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
@@ -48,14 +47,14 @@ const ProtectedRoute = ({ children }) => {
 const App = () => {
   const location = useLocation();
 
-  // ✅ Detect admin route
+  // ✅ Detect admin routes
   const isAdminRoute = location.pathname.startsWith("/admin");
 
   return (
     <>
       <ScrollToTop />
 
-      {/* ❌ Hide on admin */}
+      {/* ❌ Hide on admin routes */}
       {!isAdminRoute && <NotificationBar />}
       {!isAdminRoute && <Navbar />}
 
@@ -93,8 +92,8 @@ const App = () => {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsConditions />} />
 
-          {/* ================= ADMIN ================= */}
-          <Route path="/admin" element={<Admin />} />
+          {/* ================= ADMIN (FIXED) ================= */}
+          <Route path="/admin/*" element={<Admin />} />
 
           {/* ---------------- CATCH ALL ---------------- */}
           <Route path="*" element={<Navigate to="/" replace />} />
@@ -102,7 +101,7 @@ const App = () => {
         </Routes>
       </div>
 
-      {/* ❌ Hide on admin */}
+      {/* ❌ Hide on admin routes */}
       {!isAdminRoute && <Footer />}
     </>
   );

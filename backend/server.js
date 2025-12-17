@@ -1,6 +1,7 @@
 // backend/server.js
 
 import express from "express";
+import mongoose from "mongoose";          // ✅ ADD THIS
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
@@ -8,13 +9,19 @@ import connectDB from "./config/db.js";
 // Route Imports
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-import orderRoutes from "./routes/orderRoutes.js"; // ⭐ ESM import
+import orderRoutes from "./routes/orderRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 
 // Load environment variables
 dotenv.config();
 
 // Connect MongoDB
-connectDB();
+await connectDB();                         // ✅ ensure DB connects first
+
+// ✅ LOG CONNECTED DATABASE NAME (VERY IMPORTANT)
+mongoose.connection.once("open", () => {
+  console.log(`📦 Connected MongoDB Database: ${mongoose.connection.name}`);
+});
 
 const app = express();
 
@@ -23,7 +30,7 @@ const app = express();
 ============================================================ */
 app.use(
   cors({
-    origin: "*", // Change in production
+    origin: "*", // change in production
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
@@ -42,7 +49,7 @@ app.use((req, res, next) => {
    ⭐ API ROUTES
 ============================================================ */
 
-// Auth: Register & Login
+// Auth routes
 app.use("/api/auth", authRoutes);
 
 // User routes
@@ -50,6 +57,9 @@ app.use("/api/user", userRoutes);
 
 // Order routes
 app.use("/api/orders", orderRoutes);
+
+// Admin routes (Dashboard)
+app.use("/api/admin", adminRoutes);
 
 /* ============================================================
    ⭐ ROOT ROUTE
