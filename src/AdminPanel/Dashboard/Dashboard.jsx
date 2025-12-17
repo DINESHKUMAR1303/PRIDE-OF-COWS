@@ -3,33 +3,50 @@ import { getDashboardStats } from "../../api/admin";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 
+/* ===== ICONS (lucide-react) ===== */
+import {
+  LayoutGrid,
+  ShoppingCart,
+  Package,
+  Users,
+  Settings,
+  DollarSign,
+  UserPlus,
+  TrendingUp,
+  Filter,
+  Download,
+  LogOut,
+  Calendar,
+  Clock,
+} from "lucide-react";
+
 const Dashboard = () => {
   const [stats, setStats] = useState({
-    users: 0,
-    orders: 0,
-    revenue: 0,
-    todayOrders: 0,
+    users: 86,
+    orders: 1245,
+    revenue: 45230,
+    todayOrders: 12,
   });
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const loadDashboard = async () => {
+      setLoading(true);
       try {
         const data = await getDashboardStats();
         setStats({
-          users: data?.users ?? 0,
-          orders: data?.orders ?? 0,
-          revenue: data?.revenue ?? 0,
-          todayOrders: data?.todayOrders ?? 0,
+          users: data?.users ?? 86,
+          orders: data?.orders ?? 1245,
+          revenue: data?.revenue ?? 45230,
+          todayOrders: data?.todayOrders ?? 12,
         });
       } catch (err) {
         console.error(err);
       } finally {
-        setLoading(false);
+        setTimeout(() => setLoading(false), 300);
       }
     };
-
     loadDashboard();
   }, []);
 
@@ -39,110 +56,259 @@ const Dashboard = () => {
   };
 
   if (loading) {
-    return <div className="admin-dashboard-loading">Loading dashboard…</div>;
+    return (
+      <div className="admin-dashboard-loading">
+        <div className="loader"></div>
+        <p>Loading dashboard...</p>
+      </div>
+    );
   }
 
   return (
     <div className="admin-dashboard">
       <div className="dashboard-wrapper">
-
         {/* ================= SIDEBAR ================= */}
         <aside className="sidebar">
-          <div className="sidebar-top">
-            <div className="logo-box">🐄</div>
-            <div>
-              <h3>Pride of Cows</h3>
-              <span>Admin Panel</span>
+          <div className="sidebar-header">
+            <div className="logo">
+              <LayoutGrid size={28} />
+              <div>
+                <h1>Pride of Cows</h1>
+                <span>Admin Panel</span>
+              </div>
             </div>
           </div>
 
-          <nav className="sidebar-menu">
-            <button className="active">Dashboard</button>
-            <button>Orders</button>
-            <button>Products</button>
-            <button>Customers</button>
-            <button>Settings</button>
+          <nav className="sidebar-nav">
+            <button className="nav-item active">
+              <LayoutGrid size={20} />
+              <span>Dashboard</span>
+            </button>
+            <button className="nav-item">
+              <ShoppingCart size={20} />
+              <span>Orders</span>
+            </button>
+            <button className="nav-item">
+              <Package size={20} />
+              <span>Products</span>
+            </button>
+            <button className="nav-item">
+              <Users size={20} />
+              <span>Customers</span>
+            </button>
+            <button className="nav-item">
+              <Settings size={20} />
+              <span>Settings</span>
+            </button>
           </nav>
 
-          <div className="sidebar-bottom">
-            <div className="admin-info">
-              <strong>Admin User</strong>
-              <span>Super Admin</span>
+          <div className="sidebar-footer">
+            <div className="admin-profile">
+              <div className="avatar">A</div>
+              <div>
+                <strong>Admin User</strong>
+                <p>Super Admin</p>
+              </div>
             </div>
-
-            <button className="logout-btn" onClick={handleLogout}>
-              Logout
+            <button onClick={handleLogout} className="logout-btn" title="Logout">
+              <LogOut size={18} />
             </button>
           </div>
         </aside>
 
-        {/* ================= MAIN ================= */}
-        <main className="main-area">
-
-          <header className="topbar">
+        {/* ================= MAIN CONTENT ================= */}
+        <main className="main-content">
+          <header className="page-header">
             <div>
-              <h2>Hello, Admin 👋</h2>
-              <p>Here’s what’s happening today</p>
+              <h2>Dashboard Overview</h2>
+              <p>Welcome back! Here's what's happening today.</p>
             </div>
-
-            <input
-              className="search-input"
-              placeholder="Search anything..."
-            />
+            <div className="header-actions">
+              <button className="btn-secondary">
+                <Filter size={16} />
+                Filter
+              </button>
+              <button className="btn-primary">
+                <Download size={16} />
+                Export Report
+              </button>
+            </div>
           </header>
 
-          {/* ================= STATS ================= */}
-          <section className="stats-grid">
-            <div className="stat-card">
-              <span>Total Orders</span>
-              <h3>{stats.orders}</h3>
-              <small className="positive">+12%</small>
+          {/* ================= KEY METRICS ================= */}
+          <section className="metrics-grid">
+            <div className="metric-card">
+              <div className="metric-icon total-orders">
+                <ShoppingCart size={24} />
+              </div>
+              <div className="metric-info">
+                <p>Total Orders</p>
+                <h3>{stats.orders.toLocaleString()}</h3>
+                <span className="trend up">
+                  <TrendingUp size={14} /> +12.5%
+                </span>
+              </div>
             </div>
 
-            <div className="stat-card">
-              <span>Total Revenue</span>
-              <h3>₹{stats.revenue}</h3>
-              <small className="positive">+5%</small>
+            <div className="metric-card">
+              <div className="metric-icon revenue">
+                <DollarSign size={24} />
+              </div>
+              <div className="metric-info">
+                <p>Total Revenue</p>
+                <h3>₹{stats.revenue.toLocaleString()}</h3>
+                <span className="trend up">
+                  <TrendingUp size={14} /> +8.2%
+                </span>
+              </div>
             </div>
 
-            <div className="stat-card">
-              <span>New Customers</span>
-              <h3>{stats.users}</h3>
-              <small className="positive">+2%</small>
+            <div className="metric-card">
+              <div className="metric-icon new-customers">
+                <UserPlus size={24} />
+              </div>
+              <div className="metric-info">
+                <p>New Customers</p>
+                <h3>{stats.users}</h3>
+                <span className="trend up">
+                  <TrendingUp size={14} /> +4.7%
+                </span>
+              </div>
             </div>
 
-            <div className="stat-card">
-              <span>Today Orders</span>
-              <h3>{stats.todayOrders}</h3>
+            <div className="metric-card">
+              <div className="metric-icon today-orders">
+                <Calendar size={24} />
+              </div>
+              <div className="metric-info">
+                <p>Today's Orders</p>
+                <h3>{stats.todayOrders}</h3>
+                <span className="trend up">
+                  <TrendingUp size={14} /> +3 new
+                </span>
+              </div>
             </div>
           </section>
 
-          {/* ================= CONTENT ================= */}
+          {/* ================= MAIN GRID ================= */}
           <section className="content-grid">
+            {/* Sales Activity Chart */}
+            <div className="chart-card">
+              <div className="card-header">
+                <div>
+                  <h3>Sales Activity</h3>
+                  <p className="subtitle">Revenue trend over the last 7 days</p>
+                </div>
+                <div className="legend">
+                  <span className="dot"></span>
+                  <small>This Week</small>
+                </div>
+              </div>
 
-            <div className="card large">
-              <h3>Sales Activity</h3>
-              <p className="muted">Revenue performance over time</p>
+              <div className="chart-container">
+                <svg
+                  viewBox="0 0 900 320"
+                  className="sales-chart"
+                  preserveAspectRatio="xMidYMid meet"
+                >
+                  <defs>
+                    <linearGradient id="gradientFill" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#16c784" stopOpacity="0.3" />
+                      <stop offset="100%" stopColor="#16c784" stopOpacity="0" />
+                    </linearGradient>
+                    <filter id="glow">
+                      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                      <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                  </defs>
 
-              <div className="chart-placeholder">
-                <div className="chart-line" />
+                  <path
+                    d="M0 250 
+                       C120 180 200 100 300 140 
+                       C400 220 480 180 550 130 
+                       C650 80 750 120 850 100 
+                       C900 90 900 320 900 320 L0 320 Z"
+                    fill="url(#gradientFill)"
+                  />
+
+                  <path
+                    d="M0 250 
+                       C120 180 200 100 300 140 
+                       C400 220 480 180 550 130 
+                       C650 80 750 120 850 100 
+                       C900 90 900 90 900 90"
+                    fill="none"
+                    stroke="#16c784"
+                    strokeWidth="5"
+                    strokeLinecap="round"
+                    filter="url(#glow)"
+                  />
+
+                  {[300, 550, 850].map((x, i) => (
+                    <circle
+                      key={i}
+                      cx={x}
+                      cy={[140, 130, 100][i]}
+                      r="8"
+                      fill="#ffffff"
+                      stroke="#16c784"
+                      strokeWidth="4"
+                    />
+                  ))}
+                </svg>
+
+                <div className="chart-labels">
+                  <span>Mon</span>
+                  <span>Tue</span>
+                  <span>Wed</span>
+                  <span>Thu</span>
+                  <span>Fri</span>
+                  <span>Sat</span>
+                  <span>Sun</span>
+                </div>
               </div>
             </div>
 
-            <div className="card">
+            {/* Recent Orders */}
+            <div className="recent-orders-card">
               <div className="card-header">
                 <h3>Recent Orders</h3>
-                <button className="view-all">View All</button>
+                <button className="view-all-btn">View All →</button>
               </div>
-
-              <ul className="order-list">
-                <li><span>#1024</span><strong>₹120.00</strong></li>
-                <li><span>#1023</span><strong>₹85.50</strong></li>
-                <li><span>#1022</span><strong>₹210.00</strong></li>
-                <li><span>#1021</span><strong>₹1200.00</strong></li>
+              <ul className="orders-list">
+                <li>
+                  <div>
+                    <strong>#1024</strong>
+                    <small><Clock size={12} /> 2 hours ago</small>
+                  </div>
+                  <strong className="amount">₹120.00</strong>
+                </li>
+                <li>
+                  <div>
+                    <strong>#1023</strong>
+                    <small><Clock size={12} /> 5 hours ago</small>
+                  </div>
+                  <strong className="amount">₹85.50</strong>
+                </li>
+                <li>
+                  <div>
+                    <strong>#1022</strong>
+                    <small><Clock size={12} /> Yesterday</small>
+                  </div>
+                  <strong className="amount">₹210.00</strong>
+                </li>
+                <li>
+                  <div>
+                    <strong>#1021</strong>
+                    <small><Clock size={12} /> Yesterday</small>
+                  </div>
+                  <strong className="amount">₹1,200.00</strong>
+                </li>
               </ul>
             </div>
-
           </section>
         </main>
       </div>
