@@ -33,6 +33,9 @@ const Dashboard = () => {
     todayOrders: 12,
   });
   const [loading, setLoading] = useState(true);
+
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -89,13 +92,37 @@ const Dashboard = () => {
               <LayoutGrid size={20} />
               <span>Dashboard</span>
             </button>
-            <button
-              className="nav-item"
-              onClick={() => navigate("/admin/users")}
-            >
-              <Users size={20} />
-              <span>Users</span>
-            </button>
+          
+
+
+{/* ===== USER MODULE ===== */}
+<div className={`user-module ${userMenuOpen ? "open" : ""}`}>
+  <button
+    className={`nav-item user-module-btn ${userMenuOpen ? "active" : ""}`}
+    onClick={() => setUserMenuOpen(!userMenuOpen)}
+  >
+    <Users size={20} />
+    <span>User Module</span>
+    <ChevronRight size={16} className="chevron" />
+  </button>
+
+  <div className="user-submenu">
+    <button
+      className="submenu-item"
+      onClick={() => navigate("/admin/users/add")}
+    >
+      New User
+    </button>
+
+    <button
+      className="submenu-item active"
+      onClick={() => navigate("/admin/users")}
+    >
+      Manage User
+    </button>
+  </div>
+</div>
+
             <button className="nav-item">
               <ShoppingCart size={20} />
               <span>Orders</span>

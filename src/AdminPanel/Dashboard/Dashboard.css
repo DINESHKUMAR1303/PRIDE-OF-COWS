@@ -531,6 +531,80 @@
   object-fit: contain;
 }
 
+
+
+/* ================= USER MODULE ================= */
+
+.user-module {
+  margin-bottom: 6px;
+}
+
+/* Green pill */
+.user-module-btn {
+  justify-content: space-between;
+}
+
+.user-module-btn.active {
+  background: #16c784;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(22, 199, 132, 0.35);
+}
+
+.user-module-btn.active svg {
+  color: #ffffff;
+}
+
+/* Arrow */
+.chevron {
+  transition: transform 0.3s ease;
+  color: #ffffff;
+}
+
+.user-module.open .chevron {
+  transform: rotate(90deg);
+}
+
+/* ===== Submenu container ===== */
+.user-submenu {
+  margin-left: 44px;
+  margin-top: 6px;
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.user-module.open .user-submenu {
+  display: flex;
+}
+
+/* ===== Submenu items ===== */
+.submenu-item {
+  background: transparent;
+  border: none;
+  text-align: left;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.submenu-item:hover {
+  background: #f0fdf4;
+  color: #16c784;
+}
+
+/* Active submenu (light green) */
+.submenu-item.active {
+  background: #eafff5;
+  color: #16c784;
+  font-weight: 600;
+}
+
+
 /* ================= RESPONSIVE ================= */
 @media (max-width: 1280px) {
   .metrics-grid {

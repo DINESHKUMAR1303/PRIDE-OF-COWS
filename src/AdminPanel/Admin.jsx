@@ -4,7 +4,10 @@ import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 /* ===== ADMIN PAGES ===== */
 import AdminLogin from "./AdminLogin/AdminLogin";
 import Dashboard from "./Dashboard/Dashboard";
-import Users from "./Users/Users";   // ✅ ADD THIS
+
+/* ===== USER MODULE PAGES ===== */
+// import Users from "./Users/Users";          // Manage Users
+import AddUser from "./Users/AddUser";      // Add User
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -50,15 +53,18 @@ const Admin = () => {
         }
       />
 
-      {/* ================= USERS MODULE ================= */}
-      <Route
+      {/* ================= USER MODULE ================= */}
+      {/* <Route
         path="users"
         element={
-          isLoggedIn ? (
-            <Users />
-          ) : (
-            <Navigate to="/admin" replace />
-          )
+          isLoggedIn ? <Users /> : <Navigate to="/admin" replace />
+        }
+      /> */}
+
+      <Route
+        path="users/add"
+        element={
+          isLoggedIn ? <AddUser /> : <Navigate to="/admin" replace />
         }
       />
     </Routes>
