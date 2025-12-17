@@ -31,7 +31,7 @@ const AdminLogin = ({ onLoginSuccess }) => {
     // TEMP login check
     setTimeout(() => {
       if (
-        email === "admin@prideofcows.com" &&
+        email === "admin@gmail.com" &&
         password === "admin123"
       ) {
         const fakeAdminToken = "admin_logged_in_token";
