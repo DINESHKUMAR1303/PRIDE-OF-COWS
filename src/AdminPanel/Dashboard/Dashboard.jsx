@@ -3,6 +3,9 @@ import { getDashboardStats } from "../../api/admin";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 
+
+import logo from "./images/logo.png";
+
 /* ===== ICONS (lucide-react) ===== */
 import {
   LayoutGrid,
@@ -71,12 +74,17 @@ const Dashboard = () => {
         <aside className="sidebar">
           <div className="sidebar-header">
             <div className="logo">
-              <LayoutGrid size={28} />
-              <div>
-                <h1>Pride of Cows</h1>
-                <span>Admin Panel</span>
-              </div>
-            </div>
+  <img
+    src={logo}
+    alt="Pride of Cows"
+    className="brand-logo"
+  />
+  <div>
+    <h1>Pride of Cows</h1>
+    <span>Admin Panel</span>
+  </div>
+</div>
+
           </div>
 
           <nav className="sidebar-nav">
