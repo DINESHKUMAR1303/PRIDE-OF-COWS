@@ -15,44 +15,27 @@ import {
 } from "lucide-react";
 
 const Dashboard = () => {
-  const [stats, setStats] = useState({
-    users: 86,
-    orders: 1245,
-    revenue: 45230,
-    todayOrders: 12,
-  });
-  const [loading, setLoading] = useState(true);
+  // ✅ Backend-only state
+  const [stats, setStats] = useState(null);
 
-  /* ✅ BACKEND DATA — UNTOUCHED */
+  /* ✅ Fetch data from backend */
   useEffect(() => {
     const loadDashboard = async () => {
-      setLoading(true);
       try {
         const data = await getDashboardStats();
-        setStats({
-          users: data?.users ?? 86,
-          orders: data?.orders ?? 1245,
-          revenue: data?.revenue ?? 45230,
-          todayOrders: data?.todayOrders ?? 12,
-        });
+        setStats(data);
       } catch (err) {
-        console.error(err);
-      } finally {
-        setTimeout(() => setLoading(false), 300);
+        console.error("Dashboard API error:", err);
       }
     };
     loadDashboard();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="admin-dashboard-loading">
-        <div className="loader"></div>
-        <p>Loading dashboard...</p>
-      </div>
-    );
+  /* ✅ Guard until backend responds */
+  if (!stats) {
+    return <p>Loading dashboard...</p>;
   }
-
+ 
   return (
     <>
       {/* ================= PAGE HEADER ================= */}

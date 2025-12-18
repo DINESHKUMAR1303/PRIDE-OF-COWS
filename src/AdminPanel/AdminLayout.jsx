@@ -1,12 +1,5 @@
 import React, { useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { CalendarCheck } from "lucide-react";
-
-import "./Dashboard/Dashboard.css";
-
-import logo from "./Dashboard/images/logo.png";
-
-/* ===== ICONS ===== */
 import {
   LayoutGrid,
   Users,
@@ -17,15 +10,18 @@ import {
   Settings,
   LogOut,
   ChevronRight,
+  CalendarCheck,
 } from "lucide-react";
+
+import "./Dashboard/Dashboard.css";
+import logo from "./Dashboard/images/logo.png";
 
 const AdminLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [userMenuOpen, setUserMenuOpen] = useState(
-    location.pathname.includes("/admin/users")
-  );
+  // ✅ CLOSED BY DEFAULT
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("admin_token");
@@ -60,7 +56,7 @@ const AdminLayout = () => {
               <span>Dashboard</span>
             </button>
 
-            {/* User Module */}
+            {/* ================= USER MODULE ================= */}
             <div className={`user-module ${userMenuOpen ? "open" : ""}`}>
               <button
                 className={`nav-item user-module-btn ${
@@ -75,25 +71,28 @@ const AdminLayout = () => {
                 <ChevronRight size={18} className="chevron" />
               </button>
 
-              <div className="user-submenu">
-                <button
-                  className={`submenu-item ${
-                    location.pathname === "/admin/users/add" ? "active" : ""
-                  }`}
-                  onClick={() => navigate("/admin/users/add")}
-                >
-                  Add User
-                </button>
+              {/* SHOW ONLY WHEN OPEN */}
+              {userMenuOpen && (
+                <div className="user-submenu">
+                  <button
+                    className={`submenu-item ${
+                      location.pathname === "/admin/users/add" ? "active" : ""
+                    }`}
+                    onClick={() => navigate("/admin/users/add")}
+                  >
+                    Add User
+                  </button>
 
-                <button
-                  className={`submenu-item ${
-                    location.pathname === "/admin/users" ? "active" : ""
-                  }`}
-                  onClick={() => navigate("/admin/users")}
-                >
-                  Manage User
-                </button>
-              </div>
+                  <button
+                    className={`submenu-item ${
+                      location.pathname === "/admin/users" ? "active" : ""
+                    }`}
+                    onClick={() => navigate("/admin/users")}
+                  >
+                    Manage User
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Category */}
@@ -126,9 +125,9 @@ const AdminLayout = () => {
               onClick={() => navigate("/admin/customers")}
             >
               <UserCheck size={20} />
-              <span> Customers</span>
+              <span>Customers</span>
             </button>
-            
+
             {/* Booking */}
             <button
               className={`nav-item ${
