@@ -3,6 +3,8 @@ import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import {
   LayoutGrid,
   Users,
+  UserPlus,
+  UserCog,
   Folder,
   Package,
   UserCheck,
@@ -73,25 +75,28 @@ const AdminLayout = () => {
 
               {/* SHOW ONLY WHEN OPEN */}
               {userMenuOpen && (
-                <div className="user-submenu">
-                  <button
-                    className={`submenu-item ${
-                      location.pathname === "/admin/users/add" ? "active" : ""
-                    }`}
-                    onClick={() => navigate("/admin/users/add")}
-                  >
-                    Add User
-                  </button>
+<div className="user-submenu">
+  <button
+    className={`submenu-item ${
+      location.pathname === "/admin/users/add" ? "active" : ""
+    }`}
+    onClick={() => navigate("/admin/users/add")}
+  >
+    <UserPlus size={16} />
+    <span>Add User</span>
+  </button>
 
-                  <button
-                    className={`submenu-item ${
-                      location.pathname === "/admin/users" ? "active" : ""
-                    }`}
-                    onClick={() => navigate("/admin/users")}
-                  >
-                    Manage User
-                  </button>
-                </div>
+  <button
+    className={`submenu-item ${
+      location.pathname === "/admin/users" ? "active" : ""
+    }`}
+    onClick={() => navigate("/admin/users")}
+  >
+    <UserCog size={16} />
+    <span>Manage User</span>
+  </button>
+</div>
+
               )}
             </div>
 
