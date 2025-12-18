@@ -1,28 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { getDashboardStats } from "../../api/admin";
-import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
-
-import logo from "./images/logo.png";
 
 /* ===== ICONS (lucide-react) ===== */
 import {
-  LayoutGrid,
   ShoppingCart,
-  Package,
-  Users,
-  Settings,
   DollarSign,
   UserPlus,
   TrendingUp,
   Filter,
   Download,
-  LogOut,
   Calendar,
   Clock,
-  User,
-  QrCode,
-  ChevronRight,
 } from "lucide-react";
 
 const Dashboard = () => {
@@ -34,10 +23,7 @@ const Dashboard = () => {
   });
   const [loading, setLoading] = useState(true);
 
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
-
-  const navigate = useNavigate();
-
+  /* ✅ BACKEND DATA — UNTOUCHED */
   useEffect(() => {
     const loadDashboard = async () => {
       setLoading(true);
@@ -58,11 +44,6 @@ const Dashboard = () => {
     loadDashboard();
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("admin_token");
-    navigate("/admin", { replace: true });
-  };
-
   if (loading) {
     return (
       <div className="admin-dashboard-loading">
@@ -73,173 +54,96 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="admin-dashboard">
-      <div className="dashboard-wrapper">
-        {/* ================= SIDEBAR (Desktop) ================= */}
-        <aside className="sidebar">
-          <div className="sidebar-header">
-            <div className="logo">
-              <img src={logo} alt="Pride of Cows" className="brand-logo" />
-              <div>
-                <h1>Pride of Cows</h1>
-                <span>Admin Panel</span>
-              </div>
-            </div>
+    <>
+      {/* ================= PAGE HEADER ================= */}
+      <header className="page-header">
+        <div>
+          <h2>Dashboard Overview</h2>
+          <p>Welcome back! Here's what's happening today.</p>
+        </div>
+        <div className="header-actions">
+          <button className="btn-secondary">
+            <Filter size={16} />
+            Filter
+          </button>
+          <button className="btn-primary">
+            <Download size={16} />
+            Export Report
+          </button>
+        </div>
+      </header>
+
+      {/* ================= KEY METRICS ================= */}
+      <section className="metrics-grid">
+        <div className="metric-card">
+          <div className="metric-icon total-orders">
+            <ShoppingCart size={24} />
           </div>
-
-          <nav className="sidebar-nav">
-            <button className="nav-item active">
-              <LayoutGrid size={20} />
-              <span>Dashboard</span>
-            </button>
-          
-
-
-{/* ===== USER MODULE ===== */}
-<div className={`user-module ${userMenuOpen ? "open" : ""}`}>
-  <button
-    className={`nav-item user-module-btn ${userMenuOpen ? "active" : ""}`}
-    onClick={() => setUserMenuOpen(!userMenuOpen)}
-  >
-    <Users size={20} />
-    <span>User Module</span>
-    <ChevronRight size={16} className="chevron" />
-  </button>
-
-  <div className="user-submenu">
-    <button
-      className="submenu-item"
-      onClick={() => navigate("/admin/users/add")}
-    >
-      New User
-    </button>
-
-    <button
-      className="submenu-item active"
-      onClick={() => navigate("/admin/users")}
-    >
-      Manage User
-    </button>
-  </div>
-</div>
-
-            <button className="nav-item">
-              <ShoppingCart size={20} />
-              <span>Orders</span>
-            </button>
-            <button className="nav-item">
-              <Package size={20} />
-              <span>Products</span>
-            </button>
-            <button className="nav-item">
-              <Settings size={20} />
-              <span>Settings</span>
-            </button>
-          </nav>
-
-          <div className="sidebar-footer">
-            <div className="admin-profile">
-              <div className="avatar">A</div>
-              <div>
-                <strong>Admin User</strong>
-                <p>Super Admin</p>
-              </div>
-            </div>
-            <button onClick={handleLogout} className="logout-btn" title="Logout">
-              <LogOut size={18} />
-            </button>
+          <div className="metric-info">
+            <p>Total Orders</p>
+            <h3>{stats.orders.toLocaleString()}</h3>
+            <span className="trend up">
+              <TrendingUp size={14} /> +12.5%
+            </span>
           </div>
-        </aside>
+        </div>
 
-        {/* ================= MAIN CONTENT ================= */}
-        <main className="main-content">
-          <header className="page-header">
+        <div className="metric-card">
+          <div className="metric-icon revenue">
+            <DollarSign size={24} />
+          </div>
+          <div className="metric-info">
+            <p>Total Revenue</p>
+            <h3>₹{stats.revenue.toLocaleString()}</h3>
+            <span className="trend up">
+              <TrendingUp size={14} /> +8.2%
+            </span>
+          </div>
+        </div>
+
+        <div className="metric-card">
+          <div className="metric-icon new-customers">
+            <UserPlus size={24} />
+          </div>
+          <div className="metric-info">
+            <p>New Customers</p>
+            <h3>{stats.users}</h3>
+            <span className="trend up">
+              <TrendingUp size={14} /> +4.7%
+            </span>
+          </div>
+        </div>
+
+        <div className="metric-card">
+          <div className="metric-icon today-orders">
+            <Calendar size={24} />
+          </div>
+          <div className="metric-info">
+            <p>Today's Orders</p>
+            <h3>{stats.todayOrders}</h3>
+            <span className="trend up">
+              <TrendingUp size={14} /> +3 new
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= MAIN GRID ================= */}
+      <section className="content-grid">
+        {/* Sales Activity — UNTOUCHED */}
+        <div className="chart-card">
+          <div className="card-header">
             <div>
-              <h2>Dashboard Overview</h2>
-              <p>Welcome back! Here's what's happening today.</p>
+              <h3>Sales Activity</h3>
+              <p className="subtitle">Revenue trend over the last 7 days</p>
             </div>
-            <div className="header-actions">
-              <button className="btn-secondary">
-                <Filter size={16} />
-                Filter
-              </button>
-              <button className="btn-primary">
-                <Download size={16} />
-                Export Report
-              </button>
+            <div className="legend">
+              <span className="dot"></span>
+              <small>This Week</small>
             </div>
-          </header>
+          </div>
 
-          {/* ================= KEY METRICS ================= */}
-          <section className="metrics-grid">
-            <div className="metric-card">
-              <div className="metric-icon total-orders">
-                <ShoppingCart size={24} />
-              </div>
-              <div className="metric-info">
-                <p>Total Orders</p>
-                <h3>{stats.orders.toLocaleString()}</h3>
-                <span className="trend up">
-                  <TrendingUp size={14} /> +12.5%
-                </span>
-              </div>
-            </div>
-
-            <div className="metric-card">
-              <div className="metric-icon revenue">
-                <DollarSign size={24} />
-              </div>
-              <div className="metric-info">
-                <p>Total Revenue</p>
-                <h3>₹{stats.revenue.toLocaleString()}</h3>
-                <span className="trend up">
-                  <TrendingUp size={14} /> +8.2%
-                </span>
-              </div>
-            </div>
-
-            <div className="metric-card">
-              <div className="metric-icon new-customers">
-                <UserPlus size={24} />
-              </div>
-              <div className="metric-info">
-                <p>New Customers</p>
-                <h3>{stats.users}</h3>
-                <span className="trend up">
-                  <TrendingUp size={14} /> +4.7%
-                </span>
-              </div>
-            </div>
-
-            <div className="metric-card">
-              <div className="metric-icon today-orders">
-                <Calendar size={24} />
-              </div>
-              <div className="metric-info">
-                <p>Today's Orders</p>
-                <h3>{stats.todayOrders}</h3>
-                <span className="trend up">
-                  <TrendingUp size={14} /> +3 new
-                </span>
-              </div>
-            </div>
-          </section>
-
-          {/* ================= MAIN GRID ================= */}
-          <section className="content-grid">
-            {/* Sales Activity Chart */}
-            <div className="chart-card">
-              <div className="card-header">
-                <div>
-                  <h3>Sales Activity</h3>
-                  <p className="subtitle">Revenue trend over the last 7 days</p>
-                </div>
-                <div className="legend">
-                  <span className="dot"></span>
-                  <small>This Week</small>
-                </div>
-              </div>
-
+         
               <div className="chart-container">
                 <svg
                   viewBox="0 0 900 320"
@@ -345,39 +249,7 @@ const Dashboard = () => {
               </ul>
             </div>
           </section>
-        </main>
-
-        {/* ================= MOBILE BOTTOM NAVIGATION ================= */}
-        <nav className="mobile-bottom-nav">
-          <div className="mobile-nav-items">
-            <button className="mobile-nav-item">
-              <User size={24} />
-            </button>
-
-            <button className="mobile-nav-item">
-              <ShoppingCart size={24} />
-            </button>
-
-            <button className="mobile-nav-item highlight">
-              <QrCode size={28} />
-            </button>
-
-            <button className="mobile-nav-item">
-              <Package size={24} />
-            </button>
-
-            <button className="mobile-nav-item">
-              <Settings size={24} />
-            </button>
-          </div>
-
-          {/* Floating Arrow Button */}
-          <button className="mobile-floating-arrow">
-            <ChevronRight size={28} />
-          </button>
-        </nav>
-      </div>
-    </div>
+    </>
   );
 };
 

@@ -1,9 +1,16 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./AddUser.css";
 
 const AddUser = () => {
+  const navigate = useNavigate();
+
+  const [showSuccess, setShowSuccess] = useState(false);
+
   const [formData, setFormData] = useState({
-    userId: "USR-2023-884",
+    userId: `USR-${new Date().getFullYear()}-${Math.floor(
+      100 + Math.random() * 900
+    )}`,
     name: "",
     email: "",
     phone: "",
@@ -36,30 +43,37 @@ const AddUser = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    console.log("NEW USER:", formData);
+    setShowSuccess(true);
   };
 
+  const formatLabel = (key) =>
+    key.charAt(0).toUpperCase() + key.slice(1);
+
   return (
-    <div className="add-user-wrapper">
-
-      {/* ===== Header ===== */}
-      <div className="add-user-header">
-        <h1>User Management</h1>
-        <p>
-          User Modules <span>›</span> <b>Add User</b>
-        </p>
-      </div>
-
-      {/* ===== Success Alert ===== */}
-      <div className="success-box">
-        <span className="success-icon">✔</span>
+    <>
+      {/* ===== PAGE HEADER ===== */}
+      <header className="page-header">
         <div>
-          <h4>Success</h4>
-          <p>User account has been created successfully.</p>
+          <h2>User Management</h2>
+          <p>
+            User Modules <span>›</span> <b>Add User</b>
+          </p>
         </div>
-      </div>
+      </header>
 
-      {/* ===== Card ===== */}
+      {/* ===== SUCCESS MESSAGE ===== */}
+      {showSuccess && (
+        <div className="success-box">
+          <span className="success-icon">✔</span>
+          <div>
+            <h4>Success</h4>
+            <p>User account has been created successfully.</p>
+          </div>
+        </div>
+      )}
+
+      {/* ===== ADD USER CARD ===== */}
       <div className="add-user-card">
         <div className="card-head">
           <h2>New User Details</h2>
@@ -67,7 +81,6 @@ const AddUser = () => {
         </div>
 
         <form onSubmit={handleSubmit}>
-
           {/* Row 1 */}
           <div className="form-grid">
             <div className="form-group">
@@ -82,6 +95,7 @@ const AddUser = () => {
                 placeholder="Enter full name"
                 value={formData.name}
                 onChange={handleChange}
+                required
               />
             </div>
           </div>
@@ -95,6 +109,7 @@ const AddUser = () => {
                 placeholder="user@example.com"
                 value={formData.email}
                 onChange={handleChange}
+                required
               />
             </div>
 
@@ -133,6 +148,7 @@ const AddUser = () => {
                 placeholder="••••••••"
                 value={formData.password}
                 onChange={handleChange}
+                required
               />
             </div>
           </div>
@@ -160,9 +176,7 @@ const AddUser = () => {
                     checked={formData.permissions[key]}
                     onChange={() => togglePermission(key)}
                   />
-                  <span>
-                    {key.charAt(0).toUpperCase() + key.slice(1)}
-                  </span>
+                  <span>{formatLabel(key)}</span>
                 </label>
               ))}
             </div>
@@ -170,17 +184,20 @@ const AddUser = () => {
 
           {/* Actions */}
           <div className="form-actions">
-            <button type="button" className="btn-cancel">
+            <button
+              type="button"
+              className="btn-cancel"
+              onClick={() => navigate("/admin/users")}
+            >
               Cancel
             </button>
             <button type="submit" className="btn-save">
               Save Changes
             </button>
           </div>
-
         </form>
       </div>
-    </div>
+    </>
   );
 };
 

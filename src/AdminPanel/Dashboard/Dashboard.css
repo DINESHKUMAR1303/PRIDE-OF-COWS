@@ -539,11 +539,20 @@
   margin-bottom: 6px;
 }
 
-/* Green pill */
+/* Main green pill */
 .user-module-btn {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 
+.user-module-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Active pill */
 .user-module-btn.active {
   background: #16c784;
   color: #ffffff;
@@ -555,12 +564,13 @@
   color: #ffffff;
 }
 
-/* Arrow */
+/* Chevron arrow */
 .chevron {
   transition: transform 0.3s ease;
   color: #ffffff;
 }
 
+/* Rotate arrow when open */
 .user-module.open .chevron {
   transform: rotate(90deg);
 }
@@ -569,13 +579,9 @@
 .user-submenu {
   margin-left: 44px;
   margin-top: 6px;
-  display: none;
+  display: flex;
   flex-direction: column;
   gap: 6px;
-}
-
-.user-module.open .user-submenu {
-  display: flex;
 }
 
 /* ===== Submenu items ===== */
@@ -597,12 +603,13 @@
   color: #16c784;
 }
 
-/* Active submenu (light green) */
+/* Active submenu (light green highlight) */
 .submenu-item.active {
   background: #eafff5;
   color: #16c784;
   font-weight: 600;
 }
+
 
 
 /* ================= RESPONSIVE ================= */
