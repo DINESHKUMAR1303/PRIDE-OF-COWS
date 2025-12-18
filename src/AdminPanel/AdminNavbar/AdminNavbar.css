@@ -1,0 +1,115 @@
+.admin-navbar {
+  height: 64px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Left */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #374151;
+}
+
+.brand {
+  font-size: 20px;
+  font-weight: 600;
+  color: #d81b60; /* Pink like image */
+}
+
+/* Right */
+.navbar-right {
+  position: relative;
+}
+
+.profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.avatar-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-text {
+  text-align: left;
+}
+
+.profile-text .name {
+  font-size: 14px;
+  font-weight: 600;
+  display: block;
+}
+
+.profile-text .role {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Dropdown */
+.profile-dropdown {
+  position: absolute;
+  right: 0;
+  top: 54px;
+  width: 220px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.dropdown-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.dropdown-user p {
+  margin: 0;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.dropdown-item {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dropdown-item:hover {
+  background: #f3f4f6;
+}
+
+.dropdown-item.logout {
+  color: #ef4444;
+}

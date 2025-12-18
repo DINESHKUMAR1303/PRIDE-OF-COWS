@@ -1,405 +1,172 @@
-/* ================================
-   PAGE BASE
-================================ */
-.add-user-page {
-  padding: 24px 32px;
-  background: #f6f8fa;
+.au-wrapper {
+  padding: 32px;
+  background: #f6f8fb;
   min-height: 100vh;
 }
 
-/* ================================
-   PAGE HEADER
-================================ */
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.au-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.au-header p {
+  color: #6b7280;
+  margin-top: 6px;
+}
+
+.au-container {
+  max-width: 1100px;
+  margin: 24px auto;
+}
+
+.au-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+}
+
+.au-card-header {
+  border-bottom: 1px solid #edf0f4;
+  padding-bottom: 20px;
   margin-bottom: 28px;
 }
 
-.header-content h1 {
-  margin: 0;
-  font-size: 26px;
-  font-weight: 700;
-  color: #0f172a;
+.au-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 22px;
 }
 
-.breadcrumb {
-  margin-top: 6px;
+@media (max-width: 768px) {
+  .au-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+label {
   font-size: 14px;
-  color: #6b7280;
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
 }
 
-.breadcrumb strong {
-  color: #111827;
-}
-
-.header-right {
+.au-input {
+  height: 52px;
   display: flex;
   align-items: center;
   gap: 12px;
+  border: 1px solid #e4e8ee;
+  border-radius: 14px;
+  padding: 0 16px;
+  background: #ffffff;
 }
 
-.search-input {
-  width: 260px;
-  padding: 10px 14px;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
+.au-input svg {
+  width: 18px;
+  height: 18px;
+  color: #9ca3af;
+  flex-shrink: 0;
+}
+
+.au-input input {
+  flex: 1;
+  height: 100%;
+  border: none;
+  outline: none;
   font-size: 14px;
+  background: transparent;
+}
+
+.au-input span {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.au-input.disabled {
+  background: #f3f6f9;
+}
+
+select {
+  height: 52px;
+  border-radius: 14px;
+  border: 1px solid #e4e8ee;
+  padding: 0 16px;
+  width: 100%;
+}
+
+.au-permissions {
+  margin-top: 28px;
+}
+
+.au-permissions h4 {
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7280;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.au-permission-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+}
+
+.perm-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #e4e8ee;
+  padding: 12px 14px;
+  border-radius: 12px;
   background: #fff;
 }
 
-.add-icon {
-  color: #16a34a;
-  cursor: pointer;
-}
-
-/* ================================
-   CONTAINER
-================================ */
-.main-container {
-  max-width: 1180px;
-  margin: 0 auto;
-}
-
-/* ================================
-   SUCCESS ALERT
-================================ */
-.success-alert {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  background: #ecfdf3;
-  border: 1px solid #bbf7d0;
-  padding: 18px 20px;
-  border-radius: 14px;
-  margin-bottom: 24px;
-  position: relative;
-}
-
-.success-icon {
-  color: #16a34a;
-}
-
-.success-text h3 {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 600;
-  color: #065f46;
-}
-
-.success-text p {
-  margin: 4px 0 0;
-  font-size: 14px;
-  color: #047857;
-}
-
-.close-btn {
-  position: absolute;
-  right: 16px;
-  top: 16px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  color: #065f46;
-}
-
-/* ================================
-   FORM CARD
-================================ */
-.form-card {
-  background: #ffffff;
-  border-radius: 16px;
-  border: 1px solid #eef1f4;
-  overflow: hidden;
-}
-
-/* ================================
-   CARD HEADER
-================================ */
-.card-header {
-  padding: 28px 32px;
-  border-bottom: 1px solid #eef1f4;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.card-header h2 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 700;
-  color: #0f172a;
-}
-
-.card-header p {
-  margin: 0;
-  font-size: 14px;
-  color: #6b7280;
-}
-
-/* ================================
-   FORM BODY
-================================ */
-form {
-  padding: 32px;
-}
-
-/* ================================
-   FORM GRID
-================================ */
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 28px;
-  margin-bottom: 26px;
-}
-
-/* ================================
-   FORM GROUP
-================================ */
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.form-group label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #111827;
-}
-
-/* ================================
-   INPUTS (BOX STYLE)
-================================ */
-.form-group input,
-.form-group select {
-  height: 46px;
-  padding: 0 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  font-size: 14px;
-  background: #ffffff;
-  color: #111827;
-  transition: border-color 0.2s ease;
-}
-
-.form-group input::placeholder {
-  color: #9ca3af;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: #22c55e;
-}
-
-.disabled-input {
-  background: #f9fafb;
-  color: #6b7280;
-}
-
-/* ================================
-   INPUT WITH ICON
-================================ */
-.input-with-icon {
-  position: relative;
-}
-
-.input-icon {
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #9ca3af;
-}
-
-.input-with-icon input {
-  padding-left: 46px;
-}
-
-/* ================================
-   PASSWORD
-================================ */
-.password-wrapper {
-  position: relative;
-}
-
-.eye-btn {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #9ca3af;
-}
-
-/* ================================
-   SELECT
-================================ */
-.select-wrapper {
-  position: relative;
-}
-
-.select-wrapper select {
-  appearance: none;
-  padding-right: 44px;
-}
-
-.select-icon {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: #9ca3af;
-}
-
-/* ================================
-   PROFILE UPLOAD
-================================ */
-.upload-section {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin: 32px 0;
-  padding: 24px;
-  background: #fafafa;
-  border: 1px dashed #d1d5db;
-  border-radius: 16px;
-}
-
-.avatar-placeholder {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: #f1f5f9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #94a3b8;
-}
-
-.upload-info h4 {
-  margin: 0 0 4px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #111827;
-}
-
-.upload-info p {
-  margin: 0;
-  font-size: 13px;
-  color: #6b7280;
-}
-
-.file-label {
-  margin-left: auto;
-  background: #16a34a;
-  color: #ffffff;
-  padding: 10px 18px;
-  border-radius: 10px;
-  font-size: 14px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-/* ================================
-   PERMISSIONS
-================================ */
-.permissions-section {
-  margin-top: 32px;
-}
-
-.permissions-section h5 {
-  margin-bottom: 18px;
-  font-size: 14px;
-  font-weight: 700;
-  color: #111827;
-  letter-spacing: 0.4px;
-}
-
-.permissions-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-
-.permission-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
-  cursor: pointer;
-}
-
-.permission-item input {
-  display: none;
-}
-
-.checkmark {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #d1d5db;
-  border-radius: 6px;
-  position: relative;
-}
-
-.permission-item input:checked + .checkmark {
-  border-color: #22c55e;
-  background: #22c55e;
-}
-
-.permission-item input:checked + .checkmark::after {
-  content: "✓";
-  position: absolute;
-  left: 4px;
-  top: -1px;
-  color: #ffffff;
-  font-size: 14px;
-}
-
-.permission-label {
-  font-size: 14px;
-  color: #111827;
-}
-
-/* ================================
-   FORM ACTIONS
-================================ */
-.form-actions {
+.au-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 14px;
-  margin-top: 40px;
+  gap: 16px;
+  margin-top: 36px;
+  border-top: 1px solid #edf0f4;
   padding-top: 24px;
-  border-top: 1px solid #eef1f4;
 }
 
-.cancel-btn {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  padding: 12px 28px;
+.btn-cancel {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  padding: 12px 26px;
   border-radius: 12px;
-  font-size: 15px;
   font-weight: 600;
-  cursor: pointer;
-  color: #111827;
 }
 
-.save-btn {
-  background: #16a34a;
-  color: #ffffff;
+.btn-save {
+  background: #00c57c;
+  color: #fff;
   border: none;
-  padding: 12px 30px;
+  padding: 12px 32px;
   border-radius: 12px;
-  font-size: 15px;
   font-weight: 600;
+}
+
+.au-success {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  padding: 16px 18px;
+  border-radius: 14px;
+  margin-bottom: 24px;
+}
+
+.au-success svg {
+  color: #16a34a;
+}
+
+.au-success svg:last-child {
+  margin-left: auto;
   cursor: pointer;
 }
