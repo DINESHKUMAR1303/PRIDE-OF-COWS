@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { CalendarCheck } from "lucide-react";
+
 import "./Dashboard/Dashboard.css";
 
 import logo from "./Dashboard/images/logo.png";
+
+/* ===== ICONS ===== */
 import {
   LayoutGrid,
   Users,
-  ShoppingCart,
+  Folder,
   Package,
+  UserCheck,
+  BarChart3,
   Settings,
   LogOut,
   ChevronRight,
@@ -16,6 +22,7 @@ import {
 const AdminLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
   const [userMenuOpen, setUserMenuOpen] = useState(
     location.pathname.includes("/admin/users")
   );
@@ -42,6 +49,7 @@ const AdminLayout = () => {
           </div>
 
           <nav className="sidebar-nav">
+            {/* Dashboard */}
             <button
               className={`nav-item ${
                 location.pathname === "/admin/dashboard" ? "active" : ""
@@ -52,7 +60,7 @@ const AdminLayout = () => {
               <span>Dashboard</span>
             </button>
 
-            {/* USER MODULE */}
+            {/* User Module */}
             <div className={`user-module ${userMenuOpen ? "open" : ""}`}>
               <button
                 className={`nav-item user-module-btn ${
@@ -88,22 +96,74 @@ const AdminLayout = () => {
               </div>
             </div>
 
-            <button className="nav-item">
-              <ShoppingCart size={20} />
-              <span>Orders</span>
+            {/* Category */}
+            <button
+              className={`nav-item ${
+                location.pathname.includes("/admin/categories") ? "active" : ""
+              }`}
+              onClick={() => navigate("/admin/categories")}
+            >
+              <Folder size={20} />
+              <span>Category</span>
             </button>
 
-            <button className="nav-item">
+            {/* Product */}
+            <button
+              className={`nav-item ${
+                location.pathname.includes("/admin/products") ? "active" : ""
+              }`}
+              onClick={() => navigate("/admin/products")}
+            >
               <Package size={20} />
-              <span>Products</span>
+              <span>Product</span>
             </button>
 
-            <button className="nav-item">
+            {/* Customers */}
+            <button
+              className={`nav-item ${
+                location.pathname.includes("/admin/customers") ? "active" : ""
+              }`}
+              onClick={() => navigate("/admin/customers")}
+            >
+              <UserCheck size={20} />
+              <span> Customers</span>
+            </button>
+            
+            {/* Booking */}
+            <button
+              className={`nav-item ${
+                location.pathname.includes("/admin/booking") ? "active" : ""
+              }`}
+              onClick={() => navigate("/admin/booking")}
+            >
+              <CalendarCheck size={20} />
+              <span>Booking</span>
+            </button>
+
+            {/* Reports */}
+            <button
+              className={`nav-item ${
+                location.pathname.includes("/admin/reports") ? "active" : ""
+              }`}
+              onClick={() => navigate("/admin/reports")}
+            >
+              <BarChart3 size={20} />
+              <span>Reports</span>
+            </button>
+
+            {/* Settings */}
+            <button
+              className={`nav-item ${
+                location.pathname.includes("/admin/settings") ? "active" : ""
+              }`}
+              onClick={() => navigate("/admin/settings")}
+            >
               <Settings size={20} />
               <span>Settings</span>
             </button>
           </nav>
 
+          {/* Footer */}
           <div className="sidebar-footer">
             <div className="admin-profile">
               <div className="avatar">A</div>
@@ -112,6 +172,7 @@ const AdminLayout = () => {
                 <p>Super Admin</p>
               </div>
             </div>
+
             <button onClick={handleLogout} className="logout-btn">
               <LogOut size={18} />
             </button>
