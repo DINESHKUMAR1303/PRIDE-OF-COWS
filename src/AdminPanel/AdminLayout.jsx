@@ -13,7 +13,7 @@ import {
   CalendarCheck,
 } from "lucide-react";
 
-import "./Dashboard/Dashboard.css";
+import "./AdminLayout.css";   // ✅ CORRECT
 import logo from "./Dashboard/images/logo.png";
 
 const AdminLayout = () => {
