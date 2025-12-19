@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .page-header h2 {
@@ -15,11 +15,12 @@
 
 .page-header p {
   color: #64748b;
-  margin: 0;
+  margin: 1;
   font-size: 15px;
 }
 
 .header-actions {
+  margin: 15px;
   display: flex;
   gap: 12px;
 }

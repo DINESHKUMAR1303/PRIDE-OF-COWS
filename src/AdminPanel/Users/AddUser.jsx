@@ -10,6 +10,7 @@ import {
   EyeOff,
   CheckCircle2,
   X,
+  Image,
 } from "lucide-react";
 import "./AddUser.css";
 
@@ -25,20 +26,19 @@ const AddUser = () => {
     designation: "Administrator",
     password: "",
     permissions: {
-      Category: true,
-      Product: true,
-      Customers: false,
-      Booking: false,
-      Reports: false,
-      Settings: false,
+      Enquiry: true,
+      Enrollment: true,
+      Attendance: false,
+      Staff: false,
+      Placement: false,
+      Report: false,
     },
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
-  const togglePermission = (key) => {
+  const togglePermission = (key) =>
     setFormData({
       ...formData,
       permissions: {
@@ -46,7 +46,6 @@ const AddUser = () => {
         [key]: !formData.permissions[key],
       },
     });
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -54,45 +53,51 @@ const AddUser = () => {
   };
 
   return (
-    <div className="au-wrapper">
-      <div className="au-header">
+    <div className="adduser-wrapper">
+      {/* HEADER */}
+      <div className="adduser-header">
         <h1>User Management</h1>
         <p>
           User Modules <span>›</span> <b>Add User</b>
         </p>
       </div>
 
-      <div className="au-container">
+      <div className="adduser-container">
+        {/* SUCCESS MESSAGE */}
         {showSuccess && (
-          <div className="au-success">
+          <div className="adduser-success">
             <CheckCircle2 />
-            <div>
+            <div className="adduser-success-text">
               <h4>Success</h4>
               <p>User account has been created successfully.</p>
             </div>
-            <X onClick={() => setShowSuccess(false)} />
+            <X
+              className="adduser-success-close"
+              onClick={() => setShowSuccess(false)}
+            />
           </div>
         )}
 
-        <div className="au-card">
-          <div className="au-card-header">
+        <div className="adduser-card">
+          <div className="adduser-card-header">
             <h2>New User Details</h2>
             <p>Fill in the information below to create a new user profile.</p>
           </div>
 
           <form onSubmit={handleSubmit}>
-            <div className="au-grid">
-              <div>
+            {/* ROW 1 */}
+            <div className="adduser-grid adduser-grid-compact">
+              <div className="adduser-field">
                 <label>User ID</label>
-                <div className="au-input disabled">
+                <div className="adduser-input adduser-input-disabled">
                   <BadgeCheck />
                   <input value={formData.userId} disabled />
                 </div>
               </div>
 
-              <div>
+              <div className="adduser-field">
                 <label>Name</label>
-                <div className="au-input">
+                <div className="adduser-input">
                   <User />
                   <input
                     name="name"
@@ -104,10 +109,11 @@ const AddUser = () => {
               </div>
             </div>
 
-            <div className="au-grid">
-              <div>
+            {/* ROW 2 */}
+            <div className="adduser-grid adduser-grid-compact">
+              <div className="adduser-field">
                 <label>E-Mail ID</label>
-                <div className="au-input">
+                <div className="adduser-input">
                   <Mail />
                   <input
                     name="email"
@@ -118,9 +124,9 @@ const AddUser = () => {
                 </div>
               </div>
 
-              <div>
+              <div className="adduser-field">
                 <label>Contact No.</label>
-                <div className="au-input">
+                <div className="adduser-input">
                   <Phone />
                   <input
                     name="phone"
@@ -132,10 +138,12 @@ const AddUser = () => {
               </div>
             </div>
 
-            <div className="au-grid">
-              <div>
+            {/* ROW 3 */}
+            <div className="adduser-grid adduser-grid-compact">
+              <div className="adduser-field">
                 <label>Designation</label>
                 <select
+                  className="adduser-select"
                   name="designation"
                   value={formData.designation}
                   onChange={handleChange}
@@ -146,9 +154,9 @@ const AddUser = () => {
                 </select>
               </div>
 
-              <div>
+              <div className="adduser-field">
                 <label>Password</label>
-                <div className="au-input">
+                <div className="adduser-input">
                   <Lock />
                   <input
                     type={showPassword ? "text" : "password"}
@@ -157,18 +165,38 @@ const AddUser = () => {
                     value={formData.password}
                     onChange={handleChange}
                   />
-                  <span onClick={() => setShowPassword(!showPassword)}>
+                  <span
+                    className="adduser-password-toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
                     {showPassword ? <EyeOff /> : <Eye />}
                   </span>
                 </div>
               </div>
             </div>
 
-            <div className="au-permissions">
+            {/* PROFILE IMAGE */}
+            <div className="adduser-profile">
+              <div className="adduser-profile-left">
+                <div className="adduser-avatar">
+                  <Image />
+                </div>
+                <div>
+                  <h4>Profile Picture</h4>
+                  <p>PNG, JPG or JPEG. Max size 3MB.</p>
+                </div>
+              </div>
+              <button type="button" className="adduser-upload-btn">
+                Select Image
+              </button>
+            </div>
+
+            {/* PERMISSIONS */}
+            <div className="adduser-permissions adduser-permissions-compact">
               <h4>Department Permission</h4>
-              <div className="au-permission-grid">
+              <div className="adduser-permission-row">
                 {Object.keys(formData.permissions).map((key) => (
-                  <label key={key} className="perm-item">
+                  <label key={key} className="adduser-permission-pill">
                     <input
                       type="checkbox"
                       checked={formData.permissions[key]}
@@ -180,11 +208,12 @@ const AddUser = () => {
               </div>
             </div>
 
-            <div className="au-actions">
-              <button type="button" className="btn-cancel">
+            {/* ACTIONS */}
+            <div className="adduser-actions adduser-actions-compact">
+              <button type="button" className="adduser-btn-cancel">
                 Cancel
               </button>
-              <button type="submit" className="btn-save">
+              <button type="submit" className="adduser-btn-save">
                 Save Changes
               </button>
             </div>

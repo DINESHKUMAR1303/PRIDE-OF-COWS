@@ -1,9 +1,11 @@
+/* ================= WRAPPER ================= */
 .au-wrapper {
-  padding: 32px;
+  padding: 28px;
   background: #f6f8fb;
-  min-height: 100vh;
+  height: 100%;
 }
 
+/* ================= HEADER ================= */
 .au-header h1 {
   font-size: 24px;
   font-weight: 700;
@@ -11,55 +13,72 @@
 
 .au-header p {
   color: #6b7280;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
+/* ================= CONTAINER ================= */
 .au-container {
   max-width: 1100px;
-  margin: 24px auto;
+  margin: 20px auto 0;
 }
 
+/* ================= CARD ================= */
 .au-card {
   background: #ffffff;
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.05);
 }
 
+/* ================= CARD HEADER ================= */
 .au-card-header {
   border-bottom: 1px solid #edf0f4;
-  padding-bottom: 20px;
-  margin-bottom: 28px;
-}
-
-.au-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  padding-bottom: 18px;
   margin-bottom: 22px;
 }
 
-@media (max-width: 768px) {
+.au-card-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.au-card-header p {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+/* ================= GRID ================= */
+.au-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-bottom: 18px;
+}
+
+@media (max-width: 1024px) {
   .au-grid {
     grid-template-columns: 1fr;
   }
 }
 
+/* ================= LABEL ================= */
 label {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   display: block;
 }
 
+/* ================= INPUT ================= */
 .au-input {
-  height: 52px;
+  height: 46px; /* compact */
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   border: 1px solid #e4e8ee;
-  border-radius: 14px;
-  padding: 0 16px;
+  border-radius: 12px;
+  padding: 0 14px;
   background: #ffffff;
 }
 
@@ -89,77 +108,92 @@ label {
   background: #f3f6f9;
 }
 
+/* ================= SELECT ================= */
 select {
-  height: 52px;
-  border-radius: 14px;
+  height: 46px;
+  border-radius: 12px;
   border: 1px solid #e4e8ee;
-  padding: 0 16px;
+  padding: 0 14px;
   width: 100%;
+  font-size: 14px;
 }
 
+/* ================= PERMISSIONS ================= */
 .au-permissions {
-  margin-top: 28px;
+  margin-top: 20px;
 }
 
 .au-permissions h4 {
   font-size: 12px;
   font-weight: 700;
   color: #6b7280;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   text-transform: uppercase;
 }
 
 .au-permission-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(6, 1fr); /* force single row */
+  gap: 14px;
+}
+
+@media (max-width: 1200px) {
+  .au-permission-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .perm-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   border: 1px solid #e4e8ee;
-  padding: 12px 14px;
-  border-radius: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
   background: #fff;
+  font-size: 13px;
 }
 
+/* ================= ACTIONS ================= */
 .au-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 16px;
-  margin-top: 36px;
+  gap: 14px;
+  margin-top: 24px;
   border-top: 1px solid #edf0f4;
-  padding-top: 24px;
+  padding-top: 18px;
 }
 
+/* ================= BUTTONS ================= */
 .btn-cancel {
   background: #fff;
   border: 1px solid #d1d5db;
-  padding: 12px 26px;
-  border-radius: 12px;
+  padding: 10px 24px;
+  border-radius: 10px;
   font-weight: 600;
+  font-size: 14px;
 }
 
 .btn-save {
   background: #00c57c;
   color: #fff;
   border: none;
-  padding: 12px 32px;
-  border-radius: 12px;
+  padding: 10px 30px;
+  border-radius: 10px;
   font-weight: 600;
+  font-size: 14px;
 }
 
+/* ================= SUCCESS ================= */
 .au-success {
   display: flex;
   align-items: center;
   gap: 14px;
   background: #ecfdf5;
   border: 1px solid #a7f3d0;
-  padding: 16px 18px;
+  padding: 14px 16px;
   border-radius: 14px;
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
 .au-success svg {
