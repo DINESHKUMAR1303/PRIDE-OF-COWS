@@ -1,224 +1,242 @@
 // src/AdminPanel/Users/AddUser.jsx
 import React, { useState } from "react";
 import {
+  CheckCircle,
+  X,
+  Upload,
+  Lock,
   Mail,
   Phone,
   User,
-  Lock,
-  BadgeCheck,
-  Eye,
-  EyeOff,
-  CheckCircle2,
-  X,
-  Image,
+  Briefcase,
+  Bell,
+  Search,
 } from "lucide-react";
 import "./AddUser.css";
 
 const AddUser = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
   const [formData, setFormData] = useState({
-    userId: "USR-2023-884",
     name: "",
     email: "",
-    phone: "",
+    contact: "",
     designation: "Administrator",
     password: "",
-    permissions: {
-      Enquiry: true,
-      Enrollment: true,
-      Attendance: false,
-      Staff: false,
-      Placement: false,
-      Report: false,
-    },
   });
 
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const [errors, setErrors] = useState({});
+  const departments = [
+    "Category",
+    "Product",
+    "Customers",
+    "Booking",
+    "Reports",
+    "Settings",
+  ];
+  const [selectedDepartments, setSelectedDepartments] = useState([]);
 
-  const togglePermission = (key) =>
-    setFormData({
-      ...formData,
-      permissions: {
-        ...formData.permissions,
-        [key]: !formData.permissions[key],
-      },
-    });
+  const toggleDepartment = (dept) => {
+    setSelectedDepartments((prev) =>
+      prev.includes(dept) ? prev.filter((d) => d !== dept) : [...prev, dept]
+    );
+  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const validateForm = () => {
+    const e = {};
+    if (!formData.name) e.name = "Name is required";
+    if (!formData.email) e.email = "E-Mail ID is required";
+    if (!formData.contact) e.contact = "Contact No. is required";
+    if (!formData.password) e.password = "Password is required";
+    if (selectedDepartments.length === 0)
+      e.departments = "Select at least one department permission";
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const handleSubmit = (ev) => {
+    ev.preventDefault();
+    if (!validateForm()) return;
     setShowSuccess(true);
   };
 
   return (
-    <div className="adduser-wrapper">
-      {/* HEADER */}
-      <div className="adduser-header">
-        <h1>User Management</h1>
-        <p>
-          User Modules <span>›</span> <b>Add User</b>
-        </p>
+    <div className="add-user-page">
+      {/* ================= HEADER ================= */}
+      <div className="page-header">
+        <div className="page-header-left">
+          <h1>User Management</h1>
+          <div className="breadcrumb">
+            User Modules <span>›</span> <strong>Add User</strong>
+          </div>
+        </div>
+
+        <div className="page-header-right">
+          <div className="header-search">
+            <Search size={16} />
+            <input placeholder="Search..." />
+          </div>
+          <button className="header-bell">
+            <Bell size={18} />
+            <span className="bell-dot" />
+          </button>
+        </div>
       </div>
 
-      <div className="adduser-container">
-        {/* SUCCESS MESSAGE */}
-        {showSuccess && (
-          <div className="adduser-success">
-            <CheckCircle2 />
-            <div className="adduser-success-text">
-              <h4>Success</h4>
-              <p>User account has been created successfully.</p>
-            </div>
-            <X
-              className="adduser-success-close"
-              onClick={() => setShowSuccess(false)}
-            />
-          </div>
-        )}
+      {/* ================= SUCCESS ================= */}
+      {showSuccess && (
+        <div className="success-alert">
+          <CheckCircle size={18} />
+          <span>User account has been created successfully.</span>
+          <button onClick={() => setShowSuccess(false)}>
+            <X size={16} />
+          </button>
+        </div>
+      )}
 
-        <div className="adduser-card">
-          <div className="adduser-card-header">
-            <h2>New User Details</h2>
-            <p>Fill in the information below to create a new user profile.</p>
-          </div>
+      {/* ================= CARD ================= */}
+      <div className="add-user-card">
+        <div className="card-title">
+          <h2>New User Details</h2>
+          <p>Fill in the information below to create a new user profile.</p>
+        </div>
 
-          <form onSubmit={handleSubmit}>
-            {/* ROW 1 */}
-            <div className="adduser-grid adduser-grid-compact">
-              <div className="adduser-field">
-                <label>User ID</label>
-                <div className="adduser-input adduser-input-disabled">
-                  <BadgeCheck />
-                  <input value={formData.userId} disabled />
-                </div>
-              </div>
-
-              <div className="adduser-field">
-                <label>Name</label>
-                <div className="adduser-input">
-                  <User />
-                  <input
-                    name="name"
-                    placeholder="Enter full name"
-                    value={formData.name}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
+        <form onSubmit={handleSubmit} className="add-user-form">
+          <div className="form-grid">
+            <div className="form-group readonly">
+              <label>User ID</label>
+              <div className="readonly-input">USR-2025-884</div>
             </div>
 
-            {/* ROW 2 */}
-            <div className="adduser-grid adduser-grid-compact">
-              <div className="adduser-field">
-                <label>E-Mail ID</label>
-                <div className="adduser-input">
-                  <Mail />
-                  <input
-                    name="email"
-                    placeholder="user@example.com"
-                    value={formData.email}
-                    onChange={handleChange}
-                  />
-                </div>
+            <div className="form-group">
+              <label>Name</label>
+              <div className="input-wrapper">
+                <User size={16} />
+                <input
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  placeholder="Enter full name"
+                />
               </div>
-
-              <div className="adduser-field">
-                <label>Contact No.</label>
-                <div className="adduser-input">
-                  <Phone />
-                  <input
-                    name="phone"
-                    placeholder="+91 98765 43210"
-                    value={formData.phone}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
+              {errors.name && <span className="error">{errors.name}</span>}
             </div>
 
-            {/* ROW 3 */}
-            <div className="adduser-grid adduser-grid-compact">
-              <div className="adduser-field">
-                <label>Designation</label>
+            <div className="form-group">
+              <label>E-Mail ID</label>
+              <div className="input-wrapper">
+                <Mail size={16} />
+                <input
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                  placeholder="user@example.com"
+                />
+              </div>
+              {errors.email && <span className="error">{errors.email}</span>}
+            </div>
+
+            <div className="form-group">
+              <label>Contact No.</label>
+              <div className="input-wrapper">
+                <Phone size={16} />
+                <input
+                  value={formData.contact}
+                  onChange={(e) =>
+                    setFormData({ ...formData, contact: e.target.value })
+                  }
+                  placeholder="98765 43210"
+                />
+              </div>
+              {errors.contact && <span className="error">{errors.contact}</span>}
+            </div>
+
+            <div className="form-group">
+              <label>Designation</label>
+              <div className="input-wrapper select-wrapper">
+                <Briefcase size={16} />
                 <select
-                  className="adduser-select"
-                  name="designation"
                   value={formData.designation}
-                  onChange={handleChange}
+                  onChange={(e) =>
+                    setFormData({ ...formData, designation: e.target.value })
+                  }
                 >
                   <option>Administrator</option>
-                  <option>Store Manager</option>
-                  <option>Support Agent</option>
+                  <option>Manager</option>
+                  <option>Staff</option>
                 </select>
               </div>
+            </div>
 
-              <div className="adduser-field">
-                <label>Password</label>
-                <div className="adduser-input">
-                  <Lock />
+            <div className="form-group">
+              <label>Password</label>
+              <div className="input-wrapper">
+                <Lock size={16} />
+                <input
+                  type="password"
+                  value={formData.password}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
+                  placeholder="••••••••"
+                />
+              </div>
+              {errors.password && <span className="error">{errors.password}</span>}
+            </div>
+          </div>
+
+          {/* PROFILE */}
+          <div className="profile-box">
+            <div className="profile-left">
+              <div className="avatar">
+                <User size={28} />
+              </div>
+              <div>
+                <strong>Profile Picture</strong>
+                <p>PNG, JPG or JPEG. Max size 5MB.</p>
+              </div>
+            </div>
+            <label className="upload-btn">
+              <Upload size={16} />
+              Select Image
+              <input type="file" hidden />
+            </label>
+          </div>
+
+          {/* PERMISSIONS */}
+          <div className="permissions">
+            <label className="section-label">DEPARTMENT PERMISSION</label>
+            <div className="permission-grid">
+              {departments.map((d) => (
+                <label key={d} className="checkbox-item">
                   <input
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    placeholder="••••••••"
-                    value={formData.password}
-                    onChange={handleChange}
+                    type="checkbox"
+                    checked={selectedDepartments.includes(d)}
+                    onChange={() => toggleDepartment(d)}
                   />
-                  <span
-                    className="adduser-password-toggle"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? <EyeOff /> : <Eye />}
-                  </span>
-                </div>
-              </div>
+                  <span className="checkmark" />
+                  {d}
+                </label>
+              ))}
             </div>
+            {errors.departments && (
+              <span className="error">{errors.departments}</span>
+            )}
+          </div>
 
-            {/* PROFILE IMAGE */}
-            <div className="adduser-profile">
-              <div className="adduser-profile-left">
-                <div className="adduser-avatar">
-                  <Image />
-                </div>
-                <div>
-                  <h4>Profile Picture</h4>
-                  <p>PNG, JPG or JPEG. Max size 3MB.</p>
-                </div>
-              </div>
-              <button type="button" className="adduser-upload-btn">
-                Select Image
-              </button>
-            </div>
-
-            {/* PERMISSIONS */}
-            <div className="adduser-permissions adduser-permissions-compact">
-              <h4>Department Permission</h4>
-              <div className="adduser-permission-row">
-                {Object.keys(formData.permissions).map((key) => (
-                  <label key={key} className="adduser-permission-pill">
-                    <input
-                      type="checkbox"
-                      checked={formData.permissions[key]}
-                      onChange={() => togglePermission(key)}
-                    />
-                    <span>{key}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* ACTIONS */}
-            <div className="adduser-actions adduser-actions-compact">
-              <button type="button" className="adduser-btn-cancel">
-                Cancel
-              </button>
-              <button type="submit" className="adduser-btn-save">
-                Save Changes
-              </button>
-            </div>
-          </form>
-        </div>
+          {/* ACTIONS */}
+          <div className="form-actions">
+            <button type="button" className="btn-cancel">
+              Cancel
+            </button>
+            <button type="submit" className="btn-save">
+              <CheckCircle size={16} />
+              Save Changes
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

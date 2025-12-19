@@ -535,9 +535,3 @@
   }
 }
 
-/* Final fallback for very large screens */
-@media (min-width: 1400px) {
-  .main-content {
-    overflow-y: hidden;
-  }
-}

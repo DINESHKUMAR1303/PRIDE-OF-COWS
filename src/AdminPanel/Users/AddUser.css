@@ -1,206 +1,172 @@
-/* ================= WRAPPER ================= */
-.au-wrapper {
-  padding: 28px;
-  background: #f6f8fb;
-  height: 100%;
+/* ================= PAGE ================= */
+.add-user-page {
+  background: #f8fafc;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-/* ================= HEADER ================= */
-.au-header h1 {
-  font-size: 24px;
+/* ================= HEADER (EXACT DASHBOARD STYLE) ================= */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 32px;
+}
+
+.page-header-left h1 {
+  margin: 0;
+  font-size: 28px;
   font-weight: 700;
+  color: #0f172a;
 }
 
-.au-header p {
-  color: #6b7280;
-  margin-top: 4px;
-}
-
-/* ================= CONTAINER ================= */
-.au-container {
-  max-width: 1100px;
-  margin: 20px auto 0;
-}
-
-/* ================= CARD ================= */
-.au-card {
-  background: #ffffff;
-  border-radius: 18px;
-  padding: 28px;
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.05);
-}
-
-/* ================= CARD HEADER ================= */
-.au-card-header {
-  border-bottom: 1px solid #edf0f4;
-  padding-bottom: 18px;
-  margin-bottom: 22px;
-}
-
-.au-card-header h2 {
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.au-card-header p {
+.breadcrumb {
+  margin-top: 8px;
+  margin-left: 10px;
   font-size: 14px;
-  color: #6b7280;
-  margin-top: 4px;
+  color: #64748b;
 }
 
-/* ================= GRID ================= */
-.au-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 22px;
-  margin-bottom: 18px;
+.breadcrumb span {
+  margin: 0 6px;
+  color: #94a3b8;
 }
 
-@media (max-width: 1024px) {
-  .au-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ================= LABEL ================= */
-label {
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 6px;
-  display: block;
-}
-
-/* ================= INPUT ================= */
-.au-input {
-  height: 46px; /* compact */
+.page-header-right {
   display: flex;
   align-items: center;
-  gap: 10px;
-  border: 1px solid #e4e8ee;
-  border-radius: 12px;
-  padding: 0 14px;
-  background: #ffffff;
-}
-
-.au-input svg {
-  width: 18px;
-  height: 18px;
-  color: #9ca3af;
-  flex-shrink: 0;
-}
-
-.au-input input {
-  flex: 1;
-  height: 100%;
-  border: none;
-  outline: none;
-  font-size: 14px;
-  background: transparent;
-}
-
-.au-input span {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.au-input.disabled {
-  background: #f3f6f9;
-}
-
-/* ================= SELECT ================= */
-select {
-  height: 46px;
-  border-radius: 12px;
-  border: 1px solid #e4e8ee;
-  padding: 0 14px;
-  width: 100%;
-  font-size: 14px;
-}
-
-/* ================= PERMISSIONS ================= */
-.au-permissions {
-  margin-top: 20px;
-}
-
-.au-permissions h4 {
-  font-size: 12px;
-  font-weight: 700;
-  color: #6b7280;
-  margin-bottom: 12px;
-  text-transform: uppercase;
-}
-
-.au-permission-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr); /* force single row */
   gap: 14px;
 }
 
-@media (max-width: 1200px) {
-  .au-permission-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+/* Search */
+.header-search {
+  position: relative;
 }
 
-.perm-item {
+.header-search input {
+  height: 40px;
+  width: 240px;
+  padding: 0 14px 0 38px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  font-size: 14px;
+}
+
+.header-search svg {
+  position: absolute;
+  left: 14px;
+  top: 35%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+/* Bell */
+.header-bell {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
   display: flex;
   align-items: center;
-  gap: 8px;
-  border: 1px solid #e4e8ee;
-  padding: 10px 12px;
-  border-radius: 10px;
-  background: #fff;
-  font-size: 13px;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 17px;
 }
 
-/* ================= ACTIONS ================= */
-.au-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 14px;
-  margin-top: 24px;
-  border-top: 1px solid #edf0f4;
-  padding-top: 18px;
-}
-
-/* ================= BUTTONS ================= */
-.btn-cancel {
-  background: #fff;
-  border: 1px solid #d1d5db;
-  padding: 10px 24px;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.btn-save {
-  background: #00c57c;
-  color: #fff;
-  border: none;
-  padding: 10px 30px;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 14px;
+.bell-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
 }
 
 /* ================= SUCCESS ================= */
-.au-success {
+.success-alert {
+  margin: 0 32px 16px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: #f0fdf4;
+  border: 1px solid #86efac;
   display: flex;
   align-items: center;
-  gap: 14px;
-  background: #ecfdf5;
-  border: 1px solid #a7f3d0;
-  padding: 14px 16px;
+  gap: 10px;
+  font-size: 14px;
+  color: #166534;
+}
+
+/* ================= CARD ================= */
+.add-user-card {
+  background: #ffffff;
+  margin: 0 32px 32px;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+/* ================= FORM ================= */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+.input-wrapper input,
+.input-wrapper select {
+  height: 44px;
+  width: 100%;
+  padding: 0 14px 0 42px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.readonly-input {
+  height: 44px;
+  padding: 0 14px;
+  border-radius: 10px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+}
+
+.profile-box {
+  margin: 24px 0;
+  padding: 18px;
+  border: 1px dashed #cbd5e1;
   border-radius: 14px;
-  margin-bottom: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.au-success svg {
-  color: #16a34a;
+.permission-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
 }
 
-.au-success svg:last-child {
-  margin-left: auto;
-  cursor: pointer;
+.form-actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
 }
