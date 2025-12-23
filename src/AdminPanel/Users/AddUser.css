@@ -153,35 +153,58 @@
   display: block;
 }
 
-/* INPUTS */
 .input-wrapper {
   position: relative;
 }
 
+
 .input-wrapper svg {
   position: absolute;
-  left: 14px;
+  left: 16px;
   top: 50%;
   transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
   color: #9ca3af;
+}
+
+
+
+
+.input-wrapper select {
+  appearance: none;
+  -webkit-appearance: none;
+  line-height: normal;
 }
 
 .input-wrapper input,
 .input-wrapper select {
   height: 44px;
   width: 100%;
-  padding: 0 14px 0 42px;
+
+  /* 🔥 MOVE PLACEHOLDER DOWN */
+  padding: 20px 14px 0 52px !important;
+  line-height: normal !important;
+
+  box-sizing: border-box !important;
   border-radius: 10px;
   border: 1px solid #e2e8f0;
   background: #f8fafc;
+
   font-size: 14px;
   color: #0f172a;
-  line-height: 44px;
 }
+
+
+
+
+
 
 .input-wrapper input::placeholder {
   color: #9ca3af;
+  opacity: 1;
 }
+
 
 .select-wrapper::after {
   content: "▼";
@@ -330,4 +353,101 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+
+
+/* ===================================================== */
+/* ================= RESPONSIVE ONLY =================== */
+/* ===================================================== */
+
+/* ---------- Tablets (<= 1024px) ---------- */
+@media (max-width: 1024px) {
+  .adduser-header {
+    padding: 0 24px;
+  }
+
+  .add-user-card {
+    margin: 0 24px 24px;
+    padding: 24px;
+  }
+
+  .permission-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ---------- Small Tablets & Large Phones (<= 768px) ---------- */
+@media (max-width: 768px) {
+  .adduser-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .adduser-header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .header-search input {
+    width: 100%;
+  }
+
+  .add-user-card {
+    margin: 0 16px 20px;
+    padding: 20px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-box {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .permission-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .btn-cancel,
+  .btn-save {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ---------- Mobile (<= 480px) ---------- */
+@media (max-width: 480px) {
+  .adduser-header {
+    padding: 0 16px;
+  }
+
+  .adduser-header-left h1 {
+    font-size: 22px;
+  }
+
+  .breadcrumb {
+    margin-left: 0;
+  }
+
+  .header-bell {
+    margin-bottom: 0;
+  }
+
+  .permission-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .avatar {
+    width: 48px;
+    height: 48px;
+  }
 }
