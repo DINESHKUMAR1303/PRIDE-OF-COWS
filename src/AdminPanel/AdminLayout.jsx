@@ -101,7 +101,7 @@ const AdminLayout = () => {
             </div>
 
             {/* Category */}
-            <button
+            {/* <button
               className={`nav-item ${
                 location.pathname.includes("/admin/categories") ? "active" : ""
               }`}
@@ -109,7 +109,7 @@ const AdminLayout = () => {
             >
               <Folder size={20} />
               <span>Category</span>
-            </button>
+            </button> */}
 
             {/* Product */}
             <button

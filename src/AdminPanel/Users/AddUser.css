@@ -1,10 +1,12 @@
 /* ================= PAGE ================= */
 .add-user-page {
   background: #f8fafc;
-  min-height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
+
 
 /* ===================================================== */
 /* ================= HEADER (SCOPED) =================== */
@@ -16,23 +18,25 @@
   align-items: center;
   padding: 0px 40px;
   margin-bottom: 10px;
+  margin-top: -20px;
 }
 
 .adduser-header-left h1 {
-  margin: 0;
+  margin-left:-30px;
   font-size: 28px;
   font-weight: 700;
+  margin-bottom: 10px;
   color: #0f172a;
 }
 
-.breadcrumb {
+.add-user-page .breadcrumb { 
   margin-top: 8px;
-  margin-left: 10px;
+  margin-left: -28px;
   font-size: 14px;
   color: #64748b;
 }
 
-.breadcrumb span {
+.add-user-page .breadcrumb  span {
   margin: 0 6px;
   color: #94a3b8;
 }
@@ -43,11 +47,11 @@
   gap: 14px;
 }
 
-.header-search {
+.add-user-page .header-search {
   position: relative;
 }
 
-.header-search input {
+.add-user-page .header-search input  {
   height: 40px;
   width: 240px;
   padding: 0 14px 0 38px;
@@ -57,7 +61,7 @@
   font-size: 14px;
 }
 
-.header-search svg {
+.add-user-page .header-search svg{
   position: absolute;
   left: 14px;
   top: 35%;
@@ -111,11 +115,14 @@
 
 .add-user-card {
   background: #ffffff;
-  margin: 0 32px 32px;
   border-radius: 20px;
-  padding: 32px;
+  padding: 24px;
+  max-height: 100%;
+  flex: 1;
+  overflow: hidden;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
 }
+
 
 .card-title h2 {
   margin: 0 0 6px;
@@ -129,6 +136,8 @@
   font-size: 14px;
   color: #64748b;
 }
+
+
 
 /* ===================================================== */
 /* ================= FORM GRID ========================= */
@@ -182,11 +191,12 @@
   height: 44px;
   width: 100%;
 
-  /* 🔥 MOVE PLACEHOLDER DOWN */
-  padding: 20px 14px 0 52px !important;
-  line-height: normal !important;
+  /* ✅ balanced vertical spacing */
+  padding: 8px 14px 0 52px !important;
+  line-height: 20px !important;
 
   box-sizing: border-box !important;
+
   border-radius: 10px;
   border: 1px solid #e2e8f0;
   background: #f8fafc;
@@ -194,6 +204,7 @@
   font-size: 14px;
   color: #0f172a;
 }
+
 
 
 
@@ -222,7 +233,7 @@
 /* ===================================================== */
 
 .profile-box {
-  margin: 26px 0;
+  margin: 16px 0;
   padding: 20px 22px;
   border: 1px dashed #cbd5e1;
   border-radius: 14px;
@@ -265,7 +276,7 @@
 /* ===================================================== */
 
 .permissions {
-  margin-bottom: 26px;
+  margin-bottom: 16px;
 }
 
 .section-label {
@@ -276,13 +287,13 @@
   display: block;
 }
 
-.permission-grid {
+.add-user-page .permission-grid  {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 14px;
 }
 
-.checkbox-item {
+.add-user-page .checkbox-item  {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -294,23 +305,23 @@
   cursor: pointer;
 }
 
-.checkbox-item input {
+.add-user-page .checkbox-item input {
   display: none;
 }
 
-.checkmark {
+.add-user-page .checkmark {
   width: 16px;
   height: 16px;
   border: 2px solid #cbd5e1;
   border-radius: 4px;
 }
 
-.checkbox-item input:checked + .checkmark {
+.add-user-page .checkbox-item input:checked + .checkmark {
   background: #16c784;
   border-color: #16c784;
 }
 
-.checkbox-item input:checked + .checkmark::after {
+.add-user-page .checkbox-item input:checked + .checkmark::after {
   content: "✓";
   color: white;
   font-size: 11px;
@@ -322,16 +333,16 @@
 /* ================= ACTIONS =========================== */
 /* ===================================================== */
 
-.form-actions {
-  margin-top: 28px;
+.add-user-page .form-actions  {
+  margin-top: 12px;
   display: flex;
   justify-content: flex-end;
   gap: 14px;
-  padding-top: 18px;
+  padding-top: 12px;
   border-top: 1px solid #eef2f7;
 }
 
-.btn-cancel {
+.add-user-page .btn-cancel {
   height: 42px;
   padding: 0 24px;
   border-radius: 10px;
@@ -341,7 +352,8 @@
   color: #475569;
 }
 
-.btn-save {
+
+.add-user-page .btn-save{
   height: 42px;
   padding: 0 28px;
   border-radius: 10px;
@@ -390,7 +402,7 @@
     justify-content: space-between;
   }
 
-  .header-search input {
+  .add-user-page .header-search input {
     width: 100%;
   }
 
@@ -409,16 +421,16 @@
     gap: 16px;
   }
 
-  .permission-grid {
+  .add-user-page .permission-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .form-actions {
+  .add-user-page .form-actions {
     flex-direction: column-reverse;
   }
 
-  .btn-cancel,
-  .btn-save {
+  .add-user-page .btn-cancel,
+  .add-user-page .btn-save {
     width: 100%;
     justify-content: center;
   }
@@ -434,7 +446,7 @@
     font-size: 22px;
   }
 
-  .breadcrumb {
+  .add-user-page .breadcrumb {
     margin-left: 0;
   }
 
@@ -442,7 +454,7 @@
     margin-bottom: 0;
   }
 
-  .permission-grid {
+  .add-user-page .permission-grid {
     grid-template-columns: 1fr;
   }
 

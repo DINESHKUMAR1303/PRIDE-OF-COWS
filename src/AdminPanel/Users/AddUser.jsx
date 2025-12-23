@@ -11,14 +11,17 @@ import {
   Briefcase,
   Bell,
   Search,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 import "./AddUser.css";
 
 const AddUser = () => {
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
-    userId: "",
+    userId: "USR-2023-884",
     name: "",
     email: "",
     contact: "",
@@ -27,44 +30,143 @@ const AddUser = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
 
   const departments = [
-    "Category",
-    "Product",
-    "Customers",
-    "Booking",
-    "Reports",
-    "Settings",
+    "Enquiry",
+    "Enrollment",
+    "Attendance",
+    "Staff",
+    "Placement",
+    "Report",
   ];
 
   const [selectedDepartments, setSelectedDepartments] = useState([]);
 
   const toggleDepartment = (dept) => {
     setSelectedDepartments((prev) =>
-      prev.includes(dept)
-        ? prev.filter((d) => d !== dept)
-        : [...prev, dept]
+      prev.includes(dept) ? prev.filter((d) => d !== dept) : [...prev, dept]
     );
+    // Clear department error when user selects one
+    if (errors.departments) {
+      setErrors((prev) => ({ ...prev, departments: "" }));
+    }
+  };
+
+  const validateField = (name, value) => {
+    let error = "";
+
+    switch (name) {
+      case "userId":
+        if (!value.trim()) error = "User ID is required";
+        break;
+      case "name":
+        if (!value.trim()) error = "Name is required";
+        else if (value.trim().length < 3)
+          error = "Name must be at least 3 characters";
+        break;
+      case "email":
+        if (!value.trim()) error = "E-Mail ID is required";
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+          error = "Please enter a valid email address";
+        break;
+      case "contact":
+        if (!value.trim()) error = "Contact No. is required";
+        else if (!/^\d{10}$/.test(value.replace(/\s/g, "")))
+          error = "Please enter a valid 10-digit contact number";
+        break;
+      case "password":
+        if (!value) error = "Password is required";
+        else if (value.length < 6)
+          error = "Password must be at least 6 characters";
+        break;
+      default:
+        break;
+    }
+
+    return error;
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // Real-time validation if field was touched
+    if (touched[name]) {
+      const error = validateField(name, value);
+      setErrors((prev) => ({ ...prev, [name]: error }));
+    }
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    setTouched((prev) => ({ ...prev, [name]: true }));
+    const error = validateField(name, value);
+    setErrors((prev) => ({ ...prev, [name]: error }));
   };
 
   const validateForm = () => {
-    const e = {};
-    if (!formData.userId) e.userId = "User ID is required";
-    if (!formData.name) e.name = "Name is required";
-    if (!formData.email) e.email = "E-Mail ID is required";
-    if (!formData.contact) e.contact = "Contact No. is required";
-    if (!formData.password) e.password = "Password is required";
-    if (selectedDepartments.length === 0)
-      e.departments = "Select at least one department permission";
+    const newErrors = {};
 
-    setErrors(e);
-    return Object.keys(e).length === 0;
+    Object.keys(formData).forEach((key) => {
+      const error = validateField(key, formData[key]);
+      if (error) newErrors[key] = error;
+    });
+
+    if (selectedDepartments.length === 0) {
+      newErrors.departments = "Please select at least one department permission";
+    }
+
+    setErrors(newErrors);
+    setTouched({
+      userId: true,
+      name: true,
+      email: true,
+      contact: true,
+      password: true,
+    });
+
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
+
+    // Simulate API call
     setShowSuccess(true);
+    setTimeout(() => {
+      setShowSuccess(false);
+    }, 4000);
+
+    // Reset form after successful submission
+    setTimeout(() => {
+      setFormData({
+        userId: "USR-2023-884",
+        name: "",
+        email: "",
+        contact: "",
+        designation: "Administrator",
+        password: "",
+      });
+      setSelectedDepartments([]);
+      setTouched({});
+      setErrors({});
+    }, 4500);
+  };
+
+  const handleCancel = () => {
+    setFormData({
+      userId: "USR-2023-884",
+      name: "",
+      email: "",
+      contact: "",
+      designation: "Administrator",
+      password: "",
+    });
+    setSelectedDepartments([]);
+    setErrors({});
+    setTouched({});
   };
 
   return (
@@ -73,9 +175,10 @@ const AddUser = () => {
       <div className="adduser-header">
         <div className="adduser-header-left">
           <h1>User Management</h1>
-          <div className="breadcrumb">
-            User Modules <span>›</span> <strong>Add User</strong>
-          </div>
+<div className="breadcrumb">
+  User Modules <span>›</span> <strong>Add User</strong>
+</div>
+
         </div>
 
         <div className="adduser-header-right">
@@ -91,13 +194,23 @@ const AddUser = () => {
         </div>
       </div>
 
-      {/* ================= SUCCESS ================= */}
+      {/* ================= SUCCESS ALERT ================= */}
       {showSuccess && (
         <div className="success-alert">
-          <CheckCircle size={18} />
-          <span>User account has been created successfully.</span>
-          <button onClick={() => setShowSuccess(false)}>
-            <X size={16} />
+          <div className="success-content">
+            <div className="success-icon-wrapper">
+              <CheckCircle size={20} />
+            </div>
+            <div className="success-text">
+              <strong>Success</strong>
+              <p>User account has been created successfully.</p>
+            </div>
+          </div>
+          <button
+            className="success-close"
+            onClick={() => setShowSuccess(false)}
+          >
+            <X size={18} />
           </button>
         </div>
       )}
@@ -105,76 +218,91 @@ const AddUser = () => {
       {/* ================= CARD ================= */}
       <div className="add-user-card">
         <div className="card-title">
-          <h2>New User Details</h2>
-          <p>Fill in the information below to create a new user profile.</p>
+          <div>
+            <h2>New User Details</h2>
+            <p>Fill in the information below to create a new user profile.</p>
+          </div>
+          <User size={24} className="title-icon" />
         </div>
 
-        <form onSubmit={handleSubmit} className="add-user-form">
+        <form onSubmit={handleSubmit} className="add-user-form" noValidate>
           {/* ================= FORM GRID ================= */}
           <div className="form-grid">
             {/* User ID */}
             <div className="form-group">
               <label>User ID</label>
               <div className="input-wrapper">
-                <User size={16} />
+                <User size={18} />
                 <input
-                  placeholder="Enter user ID"
+                  name="userId"
+                  placeholder="USR-2023-884"
                   value={formData.userId}
-                  onChange={(e) =>
-                    setFormData({ ...formData, userId: e.target.value })
-                  }
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  className={errors.userId && touched.userId ? "error" : ""}
+                  readOnly
                 />
               </div>
-              {errors.userId && <span className="error">{errors.userId}</span>}
+              {errors.userId && touched.userId && (
+                <span className="error-text">{errors.userId}</span>
+              )}
             </div>
 
             {/* Name */}
             <div className="form-group">
               <label>Name</label>
               <div className="input-wrapper">
-                <User size={16} />
+                <User size={18} />
                 <input
+                  name="name"
                   placeholder="Enter full name"
                   value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  className={errors.name && touched.name ? "error" : ""}
                 />
               </div>
-              {errors.name && <span className="error">{errors.name}</span>}
+              {errors.name && touched.name && (
+                <span className="error-text">{errors.name}</span>
+              )}
             </div>
 
             {/* Email */}
             <div className="form-group">
               <label>E-Mail ID</label>
               <div className="input-wrapper">
-                <Mail size={16} />
+                <Mail size={18} />
                 <input
+                  name="email"
+                  type="email"
                   placeholder="user@example.com"
                   value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  className={errors.email && touched.email ? "error" : ""}
                 />
               </div>
-              {errors.email && <span className="error">{errors.email}</span>}
+              {errors.email && touched.email && (
+                <span className="error-text">{errors.email}</span>
+              )}
             </div>
 
             {/* Contact */}
             <div className="form-group">
               <label>Contact No.</label>
               <div className="input-wrapper">
-                <Phone size={16} />
+                <Phone size={18} />
                 <input
-                  placeholder="98765 43210"
+                  name="contact"
+                  placeholder="+91 98765 43210"
                   value={formData.contact}
-                  onChange={(e) =>
-                    setFormData({ ...formData, contact: e.target.value })
-                  }
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  className={errors.contact && touched.contact ? "error" : ""}
                 />
               </div>
-              {errors.contact && (
-                <span className="error">{errors.contact}</span>
+              {errors.contact && touched.contact && (
+                <span className="error-text">{errors.contact}</span>
               )}
             </div>
 
@@ -182,19 +310,16 @@ const AddUser = () => {
             <div className="form-group">
               <label>Designation</label>
               <div className="input-wrapper select-wrapper">
-                <Briefcase size={16} />
+                <Briefcase size={18} />
                 <select
+                  name="designation"
                   value={formData.designation}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      designation: e.target.value,
-                    })
-                  }
+                  onChange={handleInputChange}
                 >
                   <option>Administrator</option>
                   <option>Manager</option>
                   <option>Staff</option>
+                  <option>Employee</option>
                 </select>
               </div>
             </div>
@@ -202,19 +327,27 @@ const AddUser = () => {
             {/* Password */}
             <div className="form-group">
               <label>Password</label>
-              <div className="input-wrapper">
-                <Lock size={16} />
+              <div className="input-wrapper password-wrapper">
+                <Lock size={18} />
                 <input
-                  type="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   value={formData.password}
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
+                  onChange={handleInputChange}
+                  onBlur={handleBlur}
+                  className={errors.password && touched.password ? "error" : ""}
                 />
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
-              {errors.password && (
-                <span className="error">{errors.password}</span>
+              {errors.password && touched.password && (
+                <span className="error-text">{errors.password}</span>
               )}
             </div>
           </div>
@@ -227,14 +360,14 @@ const AddUser = () => {
               </div>
               <div>
                 <strong>Profile Picture</strong>
-                <p>PNG, JPG or JPEG. Max size 5MB.</p>
+                <p>Supports PNG, JPG or JPEG. Max file size 3MB</p>
               </div>
             </div>
 
             <label className="upload-btn">
               <Upload size={16} />
               Select Image
-              <input type="file" hidden />
+              <input type="file" accept="image/*" hidden />
             </label>
           </div>
 
@@ -242,26 +375,28 @@ const AddUser = () => {
           <div className="permissions">
             <label className="section-label">DEPARTMENT PERMISSION</label>
             <div className="permission-grid">
-              {departments.map((d) => (
-                <label key={d} className="checkbox-item">
+              {departments.map((dept) => (
+                <label key={dept} className="checkbox-item">
                   <input
                     type="checkbox"
-                    checked={selectedDepartments.includes(d)}
-                    onChange={() => toggleDepartment(d)}
+                    checked={selectedDepartments.includes(dept)}
+                    onChange={() => toggleDepartment(dept)}
                   />
                   <span className="checkmark" />
-                  {d}
+                  {dept}
                 </label>
               ))}
             </div>
             {errors.departments && (
-              <span className="error">{errors.departments}</span>
+              <span className="error-text dept-error">
+                {errors.departments}
+              </span>
             )}
           </div>
 
           {/* ================= ACTIONS ================= */}
           <div className="form-actions">
-            <button type="button" className="btn-cancel">
+            <button type="button" className="btn-cancel" onClick={handleCancel}>
               Cancel
             </button>
             <button type="submit" className="btn-save">
