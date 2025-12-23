@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+
 import {
   CheckCircle,
   X,
@@ -19,17 +21,26 @@ const AddUser = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  /* ================= USER ID COUNTER ================= */
-  const [userCounter, setUserCounter] = useState(1);
+/* ================= USER ID COUNTER ================= */
+const [userCounter, setUserCounter] = useState(1);
 
-  const [formData, setFormData] = useState({
+/* ================= FORM DATA ================= */
+const [formData, setFormData] = useState({
+  userId: "USR-1",
+  name: "",
+  email: "",
+  contact: "",
+  designation: "Administrator",
+  password: "",
+});
+
+/* ✅ Sync User ID whenever counter changes */
+useEffect(() => {
+  setFormData((prev) => ({
+    ...prev,
     userId: `USR-${userCounter}`,
-    name: "",
-    email: "",
-    contact: "",
-    designation: "Administrator",
-    password: "",
-  });
+  }));
+}, [userCounter]);
 
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
@@ -129,45 +140,47 @@ const AddUser = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
+const handleSubmit = (e) => {
+  e.preventDefault();
+  if (!validateForm()) return;
 
-    setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 4000);
+  setShowSuccess(true);
+  setTimeout(() => setShowSuccess(false), 4000);
 
-    setTimeout(() => {
-      const nextId = userCounter + 1;
-      setUserCounter(nextId);
+  setTimeout(() => {
+    setUserCounter((prev) => prev + 1); // ✅ only increment counter
 
-      setFormData({
-        userId: `USR-${nextId}`,
-        name: "",
-        email: "",
-        contact: "",
-        designation: "Administrator",
-        password: "",
-      });
-
-      setSelectedDepartments([]);
-      setTouched({});
-      setErrors({});
-    }, 4500);
-  };
-
-  const handleCancel = () => {
     setFormData({
-      userId: `USR-${userCounter}`,
+      userId: "", // ✅ will be auto-filled by useEffect
       name: "",
       email: "",
       contact: "",
       designation: "Administrator",
       password: "",
     });
+
     setSelectedDepartments([]);
-    setErrors({});
     setTouched({});
-  };
+    setErrors({});
+  }, 4500);
+};
+
+
+const handleCancel = () => {
+  setFormData({
+    userId: "",
+    name: "",
+    email: "",
+    contact: "",
+    designation: "Administrator",
+    password: "",
+  });
+
+  setSelectedDepartments([]);
+  setErrors({});
+  setTouched({});
+};
+
 
   return (
     <div className="add-user-page">
