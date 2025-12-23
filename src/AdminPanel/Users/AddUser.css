@@ -16,22 +16,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 40px;
+  padding: 0px 0px 0;
   margin-bottom: 10px;
-  margin-top: -20px;
 }
 
+.adduser-header-left {
+  display: flex;
+  flex-direction: column;
+}
 .adduser-header-left h1 {
-  margin-left:-30px;
+  margin: 0;
   font-size: 28px;
   font-weight: 700;
-  margin-bottom: 10px;
   color: #0f172a;
 }
 
 .add-user-page .breadcrumb { 
-  margin-top: 8px;
-  margin-left: -28px;
+  margin-top: 6px;
   font-size: 14px;
   color: #64748b;
 }
@@ -138,6 +139,32 @@
 }
 
 
+/* ================= CARD TITLE ICON POSITION ================= */
+
+.add-user-card {
+  position: relative;
+}
+
+.card-title {
+  position: relative;
+  padding-right: 48px; /* space for icon */
+}
+
+.title-icon {
+  position: absolute;
+  top: 1px;
+  right: 24px;
+
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+
+  background: #f1f5f9;
+  border-radius: 12px;
+  color: #16c784;
+}
+
+
 
 /* ===================================================== */
 /* ================= FORM GRID ========================= */
@@ -192,7 +219,7 @@
   width: 100%;
 
   /* ✅ balanced vertical spacing */
-  padding: 8px 14px 0 52px !important;
+  padding: 23px 14px 0 52px !important;
   line-height: 20px !important;
 
   box-sizing: border-box !important;
@@ -227,6 +254,43 @@
   color: #9ca3af;
   pointer-events: none;
 }
+
+/* ================= PASSWORD FINAL ALIGN FIX ================= */
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  padding: px 44px 0 52px !important; /* ⬇ moves text down */
+  line-height: 40px !important;       /* visual centering */
+}
+
+/* Lock icon */
+.password-wrapper svg {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Eye toggle icon */
+.password-toggle {
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  background: none;
+  border: none;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  color: #9ca3af;
+}
+
 
 /* ===================================================== */
 /* ================= PROFILE =========================== */

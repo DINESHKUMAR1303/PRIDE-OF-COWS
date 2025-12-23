@@ -1,4 +1,3 @@
-// src/AdminPanel/Users/AddUser.jsx
 import React, { useState } from "react";
 import {
   CheckCircle,
@@ -20,8 +19,11 @@ const AddUser = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  /* ================= USER ID COUNTER ================= */
+  const [userCounter, setUserCounter] = useState(1);
+
   const [formData, setFormData] = useState({
-    userId: "USR-2023-884",
+    userId: `USR-${userCounter}`,
     name: "",
     email: "",
     contact: "",
@@ -47,7 +49,6 @@ const AddUser = () => {
     setSelectedDepartments((prev) =>
       prev.includes(dept) ? prev.filter((d) => d !== dept) : [...prev, dept]
     );
-    // Clear department error when user selects one
     if (errors.departments) {
       setErrors((prev) => ({ ...prev, departments: "" }));
     }
@@ -91,7 +92,6 @@ const AddUser = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Real-time validation if field was touched
     if (touched[name]) {
       const error = validateField(name, value);
       setErrors((prev) => ({ ...prev, [name]: error }));
@@ -133,22 +133,22 @@ const AddUser = () => {
     e.preventDefault();
     if (!validateForm()) return;
 
-    // Simulate API call
     setShowSuccess(true);
-    setTimeout(() => {
-      setShowSuccess(false);
-    }, 4000);
+    setTimeout(() => setShowSuccess(false), 4000);
 
-    // Reset form after successful submission
     setTimeout(() => {
+      const nextId = userCounter + 1;
+      setUserCounter(nextId);
+
       setFormData({
-        userId: "USR-2023-884",
+        userId: `USR-${nextId}`,
         name: "",
         email: "",
         contact: "",
         designation: "Administrator",
         password: "",
       });
+
       setSelectedDepartments([]);
       setTouched({});
       setErrors({});
@@ -157,7 +157,7 @@ const AddUser = () => {
 
   const handleCancel = () => {
     setFormData({
-      userId: "USR-2023-884",
+      userId: `USR-${userCounter}`,
       name: "",
       email: "",
       contact: "",
@@ -175,10 +175,9 @@ const AddUser = () => {
       <div className="adduser-header">
         <div className="adduser-header-left">
           <h1>User Management</h1>
-<div className="breadcrumb">
-  User Modules <span>›</span> <strong>Add User</strong>
-</div>
-
+          <div className="breadcrumb">
+            User Modules <span>›</span> <strong>Add User</strong>
+          </div>
         </div>
 
         <div className="adduser-header-right">
@@ -226,28 +225,19 @@ const AddUser = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="add-user-form" noValidate>
-          {/* ================= FORM GRID ================= */}
           <div className="form-grid">
-            {/* User ID */}
             <div className="form-group">
               <label>User ID</label>
               <div className="input-wrapper">
                 <User size={18} />
                 <input
                   name="userId"
-                  placeholder="USR-2023-884"
                   value={formData.userId}
-                  onChange={handleInputChange}
-                  onBlur={handleBlur}
-                  className={errors.userId && touched.userId ? "error" : ""}
                   readOnly
                 />
               </div>
-              {errors.userId && touched.userId && (
-                <span className="error-text">{errors.userId}</span>
-              )}
             </div>
-
+          
             {/* Name */}
             <div className="form-group">
               <label>Name</label>
