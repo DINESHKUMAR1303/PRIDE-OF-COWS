@@ -19,9 +19,9 @@ import logoutIcon from "./images/logout.svg";
 
 /* NEW bottom nav icons */
 import homeIcon from "./images/home.svg";
-import shopIcon from "./images/shop.svg"; 
+import shopIcon from "./images/shop.png"; 
 import ordersIcon from "./images/myorder.svg";
-import addressNavIcon from "./images/myadress.svg";
+import addressNavIcon from "./images/pin.png";
 import profileNavIcon from "./images/profile.svg";
 
 const MyAccountLayout = () => {

@@ -7,6 +7,7 @@ export const CartProvider = ({ children }) => {
 
   // ➤ INCREASE ITEM
   const increaseItem = (id) => {
+    debugger
     setCartItems((prev) => ({
       ...prev,
       [id]: (prev[id] || 0) + 1,
