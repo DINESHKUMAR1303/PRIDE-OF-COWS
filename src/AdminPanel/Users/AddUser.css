@@ -1,23 +1,36 @@
 /* ===== FORCE BOX STYLE — OVERRIDE ADMIN DASHBOARD ===== */
 .admin-dashboard .add-user-page input,
 .admin-dashboard .add-user-page select {
-  border: 1px solid #e2e8f0 !important;
-  border-bottom: 1px solid #e2e8f0 !important;
-  background: #ffffff !important;
-  border-radius: 12px !important;
   height: 48px !important;
+  width: 100%;
+  padding-left: 48px !important;   /* space for left icon */
+  padding-right: 44px !important;  /* space for right icon */
+  border-radius: 12px !important;
+  border: 1px solid #e2e8f0 !important;
+  box-sizing: border-box;  /* ✅ ENSURES CENTERING */
+  background: #ffffff !important;
+  font-size: 14px;
+  line-height: 48px !important;   /* ✅ CHANGE HERE */
 }
 
+
 .admin-dashboard .add-user-page .input-wrapper svg {
-  left: 18px !important;
+  position: absolute;             /* ✅ REQUIRED */
+  left: 18px;                     /* ✅ horizontal spacing */
+  top: 50%;                       /* ✅ vertical center */
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: #9ca3af;
+  pointer-events: none;
 }
+
+
 
 /* ================= PAGE ================= */
 .add-user-card {
   margin: 0;
-  padding: 24px;
-  padding-top: 20px;
-  padding-bottom: 16px;
+  padding: 30px;
   border-radius: 20px;
   background: #ffffff;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
@@ -148,7 +161,7 @@
 }
 
 .card-title h2 {
-  margin: 0 0 6px;
+  margin: 0 0 30px;
   font-size: 20px;
   font-weight: 600;
   color: #0f172a;
@@ -168,8 +181,9 @@
 .form-main-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 28px 40px; /* Vertical gap 28px, horizontal 40px */
-  margin-bottom: 32px;
+  gap: 10px 100px; /* Vertical gap 28px, horizontal 40px */
+  margin-bottom: 0px;
+
 }
 
 /* Hide label for Designation */
@@ -186,29 +200,7 @@
   position: relative;
 }
 
-.input-wrapper svg {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  color: #9ca3af;
-}
 
-.input-wrapper input,
-.input-wrapper select {
-  height: 44px;
-  width: 100%;
-  padding: 23px 44px 0 52px !important; /* ⬅️ extra right padding */
-  line-height: 20px !important;
-  box-sizing: border-box !important;
-  border-radius: 10px;
-  border: 1px solid #e2e8f0;
-  background: #f8fafc;
-  font-size: 14px;
-  color: #0f172a;
-}
 
 .input-wrapper input::placeholder {
   color: #9ca3af;
@@ -223,7 +215,7 @@
 .select-wrapper::after {
   content: "▼";
   position: absolute;
-  right: 16px;          /* ⬅️ was 14px */
+  right: 18px;   /* ✅ MATCH ICON SPACING */
   top: 50%;
   transform: translateY(-50%);
   font-size: 11px;
@@ -236,13 +228,10 @@
   position: relative;
 }
 
-.password-wrapper input {
-  padding: 23px 44px 0 52px !important;
-}
 
 .password-toggle {
   position: absolute;
-  right: 14px;
+  right: 16px;          /* ✅ INSIDE INPUT */
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -251,6 +240,12 @@
   cursor: pointer;
   color: #9ca3af;
 }
+
+
+.upload-btn input[type="file"] {
+  display: none;
+}
+
 
 /* Error text */
 .error-text {
@@ -266,7 +261,8 @@
 
 /* ================= PROFILE BOX ================= */
 .profile-box {
-  margin: 32px 0;
+  margin: 0px 0;
+  margin-bottom: 20px;
   padding: 20px 22px;
   border: 1px dashed #cbd5e1;
   border-radius: 14px;
@@ -324,16 +320,18 @@
 }
 
 .checkbox-item {
+  height: 44px;
+  padding: 0 14px;          /* ✅ remove vertical padding */
   display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 12px;
+  align-items: center;     /* ✅ vertical center */
+  gap: 10px;
   border: 1px solid #e2e8f0;
   border-radius: 10px;
   font-size: 13px;
   color: #475569;
   cursor: pointer;
 }
+
 
 .checkbox-item input {
   display: none;

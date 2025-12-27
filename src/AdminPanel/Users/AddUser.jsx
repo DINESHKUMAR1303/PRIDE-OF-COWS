@@ -23,7 +23,7 @@ const AddUser = () => {
   const [userCounter, setUserCounter] = useState(1);
 
   const [formData, setFormData] = useState({
-    userId: "USR-1",
+    userId: "USR - 1",
     name: "",
     email: "",
     contact: "",
@@ -34,7 +34,7 @@ const AddUser = () => {
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
-      userId: `USR-${userCounter}`,
+      userId: `USR - ${userCounter}`,
     }));
   }, [userCounter]);
 
