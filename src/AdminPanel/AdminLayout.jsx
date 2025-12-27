@@ -183,10 +183,13 @@ const AdminLayout = () => {
           </div>
         </aside>
 
-        {/* ========== PAGE CONTENT ========== */}
-        <main className="main-content">
-          <Outlet />
-        </main>
+      {/* ========== PAGE CONTENT ========== */}
+<main className="main-content">
+  <div className="main-content-inner">
+    <Outlet />
+  </div>
+</main>
+
       </div>
     </div>
   );
