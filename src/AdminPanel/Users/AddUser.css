@@ -1,3 +1,17 @@
+/* ===== FORCE BOX STYLE — OVERRIDE ADMIN DASHBOARD ===== */
+.admin-dashboard .add-user-page input,
+.admin-dashboard .add-user-page select {
+  border: 1px solid #e2e8f0 !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  height: 48px !important;
+}
+
+.admin-dashboard .add-user-page .input-wrapper svg {
+  left: 18px !important;
+}
+
 /* ================= PAGE ================= */
 .add-user-card {
   margin: 0;
@@ -186,7 +200,7 @@
 .input-wrapper select {
   height: 44px;
   width: 100%;
-  padding: 23px 14px 0 52px !important;
+  padding: 23px 44px 0 52px !important; /* ⬅️ extra right padding */
   line-height: 20px !important;
   box-sizing: border-box !important;
   border-radius: 10px;
@@ -209,13 +223,14 @@
 .select-wrapper::after {
   content: "▼";
   position: absolute;
-  right: 14px;
+  right: 16px;          /* ⬅️ was 14px */
   top: 50%;
   transform: translateY(-50%);
   font-size: 11px;
   color: #9ca3af;
   pointer-events: none;
 }
+
 
 .password-wrapper {
   position: relative;
