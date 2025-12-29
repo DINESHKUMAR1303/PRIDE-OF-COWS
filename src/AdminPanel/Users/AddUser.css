@@ -3,7 +3,7 @@
   height: 48px !important;
   width: 100%;
   padding-left: 60px !important;
-  padding-right: 44px !important;
+ 
 
   /* ✅ REAL VISUAL FIX */
   padding-top: 20px !important;
@@ -19,38 +19,20 @@
 }
 
 
-/* 🔧 Optical placeholder fix */
-.admin-dashboard .add-user-page input::placeholder {
-  transform: translateY(1px);
-}
-
-
-/* ===================================================== */
-/* ===== INPUT WRAPPER (POSITION ONLY) ================= */
-/* ===================================================== */
-
-.admin-dashboard .add-user-page .input-wrapper {
-  position: relative;
-}
-
-/* ===================================================== */
-/* ===== LEFT ICON (PERFECT CENTER) ==================== */
-/* ===================================================== */
-
-.admin-dashboard .add-user-page .input-wrapper svg {
+/* LEFT ICON — ONLY FIRST SVG */
+.admin-dashboard .add-user-page .input-wrapper > svg {
   position: absolute;
   left: 18px;
   top: 50%;
   transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  color: #9ca3af;
   pointer-events: none;
 }
 
-/* ===================================================== */
-/* ===== RIGHT ICONS (EYE / SELECT ARROW) ============== */
-/* ===================================================== */
+
+/* PASSWORD */
+.password-wrapper {
+  position: relative;
+}
 
 .password-toggle {
   position: absolute;
@@ -59,21 +41,22 @@
   transform: translateY(-50%);
   background: none;
   border: none;
+  padding: 0;
   cursor: pointer;
   color: #9ca3af;
 }
+
+
+/* ================= SELECT ARROW ================= */
 
 .select-wrapper::after {
   content: "▼";
   position: absolute;
   right: 18px;
-  top: 50%;
-  transform: translateY(-50%);
   font-size: 11px;
   color: #9ca3af;
   pointer-events: none;
 }
-
 
 
 /* ================= PAGE ================= */
