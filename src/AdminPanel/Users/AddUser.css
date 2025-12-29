@@ -161,18 +161,60 @@
 }
 
 /* ================= SUCCESS ALERT =================== */
+/* ================= SUCCESS ALERT =================== */
 .success-alert {
   margin: 12px 32px 20px;
   padding: 14px 18px;
   border-radius: 12px;
   background: #f0fdf4;
   border: 1px solid #86efac;
+
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
+
   font-size: 14px;
   color: #166534;
 }
+
+.success-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.success-icon-wrapper {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #22c55e;
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.success-text strong {
+  display: block;
+  font-weight: 600;
+}
+
+.success-text p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #166534;
+}
+
+.success-close {
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
 
 /* ================= CARD TITLE ================= */
 .card-title {
