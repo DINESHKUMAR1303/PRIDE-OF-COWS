@@ -1,71 +1,37 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Menu, LogOut, User } from "lucide-react";
+// src/AdminPanel/AdminNavbar/AdminNavbar.jsx
+import React from "react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import "./AdminNavbar.css";
 
-const AdminNavbar = () => {
-  const [open, setOpen] = useState(false);
-  const dropdownRef = useRef(null);
-
-  // Close dropdown on outside click
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
+const AdminNavbar = ({ onMenuToggle, isSidebarOpen }) => {
   return (
     <header className="admin-navbar">
-      {/* Left */}
-      <div className="navbar-left">
-        <button className="menu-btn">
-          <Menu size={22} />
-        </button>
-        <h2 className="brand">Nschool</h2>
-      </div>
+      <div className="navbar-content">
 
-      {/* Right */}
-      <div className="navbar-right" ref={dropdownRef}>
-        <button className="profile-btn" onClick={() => setOpen(!open)}>
-          <img
-            src="https://i.pravatar.cc/40"
-            alt="User"
-            className="avatar-img"
-          />
-          <div className="profile-text">
-            <span className="name">User Name</span>
-            <span className="role">Admin</span>
-          </div>
+        {/* LEFT — Hamburger */}
+        <button
+          className="mobile-menu-toggle"
+          onClick={onMenuToggle}
+          aria-label="Toggle sidebar"
+        >
+          {isSidebarOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
 
-        {open && (
-          <div className="profile-dropdown">
-            <div className="dropdown-user">
-              <img
-                src="https://i.pravatar.cc/48"
-                alt="User"
-                className="avatar-img"
-              />
-              <div>
-                <strong>User Name</strong>
-                <p>Admin</p>
-              </div>
-            </div>
+        {/* CENTER — TITLE */}
+        <h1 className="navbar-title">Pride of Cows Admin Panel</h1>
 
-            <button className="dropdown-item">
-              <User size={16} />
-              Profile
-            </button>
+        {/* RIGHT — PROFILE */}
+        <div className="admin-profile-section">
+          <div className="admin-avatar">A</div>
 
-            <button className="dropdown-item logout">
-              <LogOut size={16} />
-              Log out
-            </button>
+          <div className="admin-info">
+            <span className="admin-name">Admin User</span>
+            <span className="admin-role">Super Admin</span>
           </div>
-        )}
+
+          <ChevronDown size={16} className="dropdown-arrow" />
+        </div>
+
       </div>
     </header>
   );

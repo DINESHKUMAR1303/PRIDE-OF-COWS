@@ -13,29 +13,52 @@ import {
   LogOut,
   ChevronRight,
   CalendarCheck,
+  Menu, // Hamburger icon
+  X,    // Close icon
 } from "lucide-react";
 
-import "./AdminLayout.css";   // ✅ CORRECT
+import AdminNavbar from "./AdminNavbar/AdminNavbar";
+
+import "./AdminLayout.css";
 import logo from "./Dashboard/images/logo.png";
 
 const AdminLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // ✅ CLOSED BY DEFAULT
+  // User Module submenu state
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  // Mobile sidebar toggle state
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("admin_token");
     navigate("/admin", { replace: true });
+    setSidebarOpen(false); // Close sidebar on logout
   };
+
+  const closeSidebar = () => setSidebarOpen(false);
 
   return (
     <div className="admin-dashboard">
       <div className="dashboard-wrapper">
 
-        {/* ========== SIDEBAR ========== */}
-        <aside className="sidebar">
+        {/* Mobile Hamburger Toggle */}
+        <button
+          className="mobile-toggle-btn"
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          aria-label="Toggle Sidebar"
+        >
+          {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+
+        {/* Sidebar with mobile open/close */}
+        <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
+          {/* Close button for mobile (inside sidebar) */}
+          <button className="mobile-close-btn" onClick={closeSidebar}>
+            <X size={24} />
+          </button>
+
           <div className="sidebar-header">
             <div className="logo">
               <img src={logo} alt="Pride of Cows" className="brand-logo" />
@@ -49,21 +72,17 @@ const AdminLayout = () => {
           <nav className="sidebar-nav">
             {/* Dashboard */}
             <button
-              className={`nav-item ${
-                location.pathname === "/admin/dashboard" ? "active" : ""
-              }`}
-              onClick={() => navigate("/admin/dashboard")}
+              className={`nav-item ${location.pathname === "/admin/dashboard" ? "active" : ""}`}
+              onClick={() => { navigate("/admin/dashboard"); closeSidebar(); }}
             >
               <LayoutGrid size={20} />
               <span>Dashboard</span>
             </button>
 
-            {/* ================= USER MODULE ================= */}
+            {/* User Module */}
             <div className={`user-module ${userMenuOpen ? "open" : ""}`}>
               <button
-                className={`nav-item user-module-btn ${
-                  location.pathname.includes("/admin/users") ? "active" : ""
-                }`}
+                className={`nav-item user-module-btn ${location.pathname.includes("/admin/users") ? "active" : ""}`}
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
               >
                 <div className="user-module-left">
@@ -73,50 +92,30 @@ const AdminLayout = () => {
                 <ChevronRight size={18} className="chevron" />
               </button>
 
-              {/* SHOW ONLY WHEN OPEN */}
               {userMenuOpen && (
-<div className="user-submenu">
-  <button
-    className={`submenu-item ${
-      location.pathname === "/admin/users/add" ? "active" : ""
-    }`}
-    onClick={() => navigate("/admin/users/add")}
-  >
-    <UserPlus size={16} />
-    <span>Add User</span>
-  </button>
-
-  <button
-    className={`submenu-item ${
-      location.pathname === "/admin/users" ? "active" : ""
-    }`}
-    onClick={() => navigate("/admin/users")}
-  >
-    <UserCog size={16} />
-    <span>Manage User</span>
-  </button>
-</div>
-
+                <div className="user-submenu">
+                  <button
+                    className={`submenu-item ${location.pathname === "/admin/users/add" ? "active" : ""}`}
+                    onClick={() => { navigate("/admin/users/add"); closeSidebar(); }}
+                  >
+                    <UserPlus size={16} />
+                    <span>Add User</span>
+                  </button>
+                  <button
+                    className={`submenu-item ${location.pathname === "/admin/users" ? "active" : ""}`}
+                    onClick={() => { navigate("/admin/users"); closeSidebar(); }}
+                  >
+                    <UserCog size={16} />
+                    <span>Manage User</span>
+                  </button>
+                </div>
               )}
             </div>
 
-            {/* Category */}
-            {/* <button
-              className={`nav-item ${
-                location.pathname.includes("/admin/categories") ? "active" : ""
-              }`}
-              onClick={() => navigate("/admin/categories")}
-            >
-              <Folder size={20} />
-              <span>Category</span>
-            </button> */}
-
             {/* Product */}
             <button
-              className={`nav-item ${
-                location.pathname.includes("/admin/products") ? "active" : ""
-              }`}
-              onClick={() => navigate("/admin/products")}
+              className={`nav-item ${location.pathname.includes("/admin/products") ? "active" : ""}`}
+              onClick={() => { navigate("/admin/products"); closeSidebar(); }}
             >
               <Package size={20} />
               <span>Product</span>
@@ -124,10 +123,8 @@ const AdminLayout = () => {
 
             {/* Customers */}
             <button
-              className={`nav-item ${
-                location.pathname.includes("/admin/customers") ? "active" : ""
-              }`}
-              onClick={() => navigate("/admin/customers")}
+              className={`nav-item ${location.pathname.includes("/admin/customers") ? "active" : ""}`}
+              onClick={() => { navigate("/admin/customers"); closeSidebar(); }}
             >
               <UserCheck size={20} />
               <span>Customers</span>
@@ -135,10 +132,8 @@ const AdminLayout = () => {
 
             {/* Booking */}
             <button
-              className={`nav-item ${
-                location.pathname.includes("/admin/booking") ? "active" : ""
-              }`}
-              onClick={() => navigate("/admin/booking")}
+              className={`nav-item ${location.pathname.includes("/admin/booking") ? "active" : ""}`}
+              onClick={() => { navigate("/admin/booking"); closeSidebar(); }}
             >
               <CalendarCheck size={20} />
               <span>Booking</span>
@@ -146,10 +141,8 @@ const AdminLayout = () => {
 
             {/* Reports */}
             <button
-              className={`nav-item ${
-                location.pathname.includes("/admin/reports") ? "active" : ""
-              }`}
-              onClick={() => navigate("/admin/reports")}
+              className={`nav-item ${location.pathname.includes("/admin/reports") ? "active" : ""}`}
+              onClick={() => { navigate("/admin/reports"); closeSidebar(); }}
             >
               <BarChart3 size={20} />
               <span>Reports</span>
@@ -157,10 +150,8 @@ const AdminLayout = () => {
 
             {/* Settings */}
             <button
-              className={`nav-item ${
-                location.pathname.includes("/admin/settings") ? "active" : ""
-              }`}
-              onClick={() => navigate("/admin/settings")}
+              className={`nav-item ${location.pathname.includes("/admin/settings") ? "active" : ""}`}
+              onClick={() => { navigate("/admin/settings"); closeSidebar(); }}
             >
               <Settings size={20} />
               <span>Settings</span>
@@ -183,12 +174,27 @@ const AdminLayout = () => {
           </div>
         </aside>
 
-      {/* ========== PAGE CONTENT ========== */}
-<main className="main-content">
+        {/* Overlay when sidebar is open on mobile */}
+        {sidebarOpen && (
+          <div className="mobile-overlay" onClick={closeSidebar} />
+        )}
+
+        {/* Main Content */}
+     <main className="main-content">
+  {/* ===== ADMIN TOP NAVBAR (MOBILE ONLY) ===== */}
+<div className="admin-mobile-navbar">
+  <AdminNavbar
+    onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
+    isSidebarOpen={sidebarOpen}
+  />
+</div>
+
+
   <div className="main-content-inner">
     <Outlet />
   </div>
 </main>
+
 
       </div>
     </div>

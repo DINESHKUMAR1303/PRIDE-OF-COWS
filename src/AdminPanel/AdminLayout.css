@@ -5,6 +5,12 @@
   color: #1e293b;
 }
 
+/* ❌ Hide Admin Navbar on desktop & tablet */
+.admin-mobile-navbar {
+  display: none;
+}
+
+
 /* ================= ROOT ================= */
 .admin-dashboard {
   min-height: 100vh;
@@ -21,6 +27,7 @@
   display: flex;
   height: 100vh;
   overflow: hidden;
+  position: relative; /* Needed for mobile overlay */
 }
 
 /* ================= SIDEBAR - FULL HEIGHT & PINNED FOOTER ================= */
@@ -33,9 +40,12 @@
   height: 100vh;
   flex-shrink: 0;
   box-shadow: 4px 0 20px rgba(0, 0, 0, 0.04);
+  transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 999;
 }
 
-/* Header - Fixed at top */
+/* Header */
 .sidebar-header {
   padding: 28px 20px 24px;
   border-bottom: 1px solid #f1f5f9;
@@ -69,7 +79,7 @@
   margin-top: 4px;
 }
 
-/* Navigation - Takes all middle space */
+/* Navigation */
 .sidebar-nav {
   flex: 1;
   padding: 20px 16px;
@@ -79,7 +89,7 @@
   flex-direction: column;
 }
 
-/* Nav Items */
+/* Main Nav Items */
 .nav-item {
   width: 100%;
   padding: 14px 16px;
@@ -123,7 +133,7 @@
   color: #ffffff;
 }
 
-/* User Module Collapsible */
+/* User Module */
 .user-module {
   margin-bottom: 6px;
 }
@@ -155,41 +165,54 @@
   margin-left: 44px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
+/* Submenu Items - Clean, Borderless, Soft Backgrounds */
 .submenu-item {
-  padding: 10px 14px;
-  border-radius: 10px;
-  font-size: 14px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14.5px;
   font-weight: 500;
-  color: #64748b;
+  color: #475569;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: #f8fafc; /* Default light background */
 }
 
 .submenu-item svg {
   color: #94a3b8;
-  transition: color 0.2s ease;
+  flex-shrink: 0;
+  transition: color 0.25s ease;
+  font-size: 18px;
 }
 
-.submenu-item:hover,
-.submenu-item:hover svg {
+.submenu-item:hover {
   background: #f0fdf4;
   color: #16c784;
 }
 
-.submenu-item.active,
-.submenu-item.active svg {
-  background: #eafff5;
+.submenu-item:hover svg {
+  color: #16c784;
+}
+
+.submenu-item.active {
+  background: #ecfdf5;
   color: #16c784;
   font-weight: 600;
 }
 
-/* Footer - Always pinned to bottom */
+.submenu-item.active svg {
+  color: #16c784;
+}
+
+/* Footer */
 .sidebar-footer {
   padding: 20px 24px;
   border-top: 1px solid #e2e8f0;
@@ -249,12 +272,13 @@
   transform: scale(1.05);
 }
 
-/* ================= MAIN CONTENT ================= */
+/* Main Content */
 .main-content {
   flex: 1;
   padding: 32px;
   overflow-y: auto;
   background: #f8fafc;
+  transition: padding 0.3s ease;
 }
 
 .main-content-inner {
@@ -263,9 +287,115 @@
   width: 100%;
 }
 
-/* ================= RESPONSIVE (1440px stays perfect) ================= */
+/* ================= MOBILE TOGGLE BUTTON ================= */
+.mobile-toggle-btn {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #475569;
+}
 
-/* Large laptops (1280px - 1599px) - default 280px sidebar */
+.mobile-toggle-btn:hover {
+  background: #f0fdf4;
+  transform: scale(1.05);
+}
+
+/* Mobile Close Button (inside sidebar) */
+.mobile-close-btn {
+  display: none;
+  position: absolute;
+  top: 20px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.mobile-close-btn:hover {
+  background: #f1f5f9;
+}
+
+/* Mobile Overlay */
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+}
+
+.mobile-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ================= RESPONSIVE BREAKPOINTS ================= */
+
+/* Mobile (< 768px) */
+@media (max-width: 767px) {
+  .mobile-toggle-btn {
+    display: flex;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: -280px;
+    top: 0;
+    height: 100vh;
+    z-index: 999;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .mobile-close-btn {
+    display: block;
+  }
+
+  .mobile-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .main-content {
+    padding: 20px 16px 100px;
+  }
+}
+
+
+/* Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .sidebar {
+    width: 280px; /* SAME AS DESKTOP */
+  }
+
+  .main-content {
+    padding: 32px;
+  }
+}
+
+
+
+/* Desktop - 1280px to 1599px */
 @media (min-width: 1280px) and (max-width: 1599px) {
   .sidebar {
     width: 280px;
@@ -275,7 +405,7 @@
   }
 }
 
-/* 1440px+ - keep everything perfect */
+/* 1440px+ - Perfect as designed */
 @media (min-width: 1440px) {
   .sidebar {
     width: 280px;
@@ -285,7 +415,7 @@
   }
 }
 
-/* Larger screens - slight upscale */
+/* Large Screens */
 @media (min-width: 1600px) {
   .sidebar {
     width: 300px;
@@ -302,42 +432,21 @@
   }
 }
 
-/* Tablet landscape (768px - 1023px) - compact sidebar */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .sidebar {
-    width: 80px;
+/* ✅ Show Admin Navbar ONLY on mobile */
+@media (max-width: 767px) {
+  .admin-mobile-navbar {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
   }
-  .logo h1, .logo span, .nav-item span, .admin-profile strong, .admin-profile p {
-    display: none;
-  }
-  .nav-item {
-    justify-content: center;
-    padding: 16px;
-  }
-  .user-module-btn {
-    justify-content: center;
-  }
-  .chevron {
-    display: none;
-  }
-  .main-content {
-    padding: 30px;
-  }
+
+    .main-content-inner {
+    padding-top: 56px; /* height of AdminNavbar */
 }
 
-/* Mobile - hide sidebar */
-@media (max-width: 767px) {
-  .sidebar {
-    position: fixed;
-    left: -280px;
-    top: 0;
-    z-index: 999;
-    transition: left 0.4s ease;
-  }
-  .sidebar.open {
-    left: 0;
-  }
-  .main-content {
-    padding: 20px 16px 100px;
-  }
+
+  
 }
