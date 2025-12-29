@@ -10,12 +10,11 @@
   display: none;
 }
 
-
 /* ================= ROOT ================= */
 .admin-dashboard {
   min-height: 100vh;
-  overflow: hidden;
   background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
+  overflow-x: hidden;   /* ✅ allow vertical scroll */
 }
 
 .admin-dashboard * {
@@ -25,25 +24,51 @@
 /* ================= WRAPPER ================= */
 .dashboard-wrapper {
   display: flex;
-  height: 100vh;
-  overflow: hidden;
-  position: relative; /* Needed for mobile overlay */
+  min-height: 100vh;    /* ✅ safer than height: 100vh */
+  position: relative;
 }
 
-/* ================= SIDEBAR - FULL HEIGHT & PINNED FOOTER ================= */
+
+
+
+/* ================= SIDEBAR ================= */
+/* ================= SIDEBAR ================= */
 .sidebar {
   width: 280px;
   background: #ffffff;
   border-right: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   flex-shrink: 0;
   box-shadow: 4px 0 20px rgba(0, 0, 0, 0.04);
-  transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   z-index: 999;
 }
+
+/* ================= MOBILE SIDEBAR ANIMATION ================= */
+@media (max-width: 767px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+
+    /* 🔥 START HIDDEN */
+    transform: translateX(-100%);
+    opacity: 0;
+
+    /* 🔥 SMOOTH ANIMATION */
+    transition: transform 0.35s ease-out, opacity 0.25s ease-out;
+  }
+
+  /* 🔥 WHEN OPEN */
+  .sidebar.open {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 
 /* Header */
 .sidebar-header {
@@ -272,13 +297,11 @@
   transform: scale(1.05);
 }
 
-/* Main Content */
+/* ================= MAIN CONTENT ================= */
 .main-content {
   flex: 1;
   padding: 32px;
-  overflow-y: auto;
   background: #f8fafc;
-  transition: padding 0.3s ease;
 }
 
 .main-content-inner {
@@ -316,20 +339,37 @@
 .mobile-close-btn {
   display: none;
   position: absolute;
-  top: 20px;
-  right: 16px;
-  background: transparent;
-  border: none;
-  color: #64748b;
+  top: 10px;
+  right: 10px;
+
+  width: 30px;
+  height: 30px;
+
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 50%;
+
+  color: #0f172a;
   cursor: pointer;
-  padding: 8px;
-  border-radius: 8px;
-  transition: background 0.2s ease;
+
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  transition: all 0.25s ease;
 }
 
+
 .mobile-close-btn:hover {
-  background: #f1f5f9;
+  background: #16c784;
+  color: #ffffff;
+  transform: translateX(4px); /* 👉 slide feel */
 }
+
+.mobile-close-btn:active {
+  transform: scale(0.95);
+}
+
 
 /* Mobile Overlay */
 .mobile-overlay {
@@ -347,6 +387,8 @@
   visibility: visible;
 }
 
+
+
 /* ================= RESPONSIVE BREAKPOINTS ================= */
 
 /* Mobile (< 768px) */
@@ -355,20 +397,31 @@
     display: flex;
   }
 
+@media (max-width: 767px) {
   .sidebar {
     position: fixed;
-    left: -280px;
     top: 0;
+    left: 0;
+
     height: 100vh;
+    width: 280px;
+
+    /* 🔥 IMPORTANT */
+    transform: translateX(-100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+    will-change: transform;
     z-index: 999;
   }
 
+  /* ===== OPEN STATE ===== */
   .sidebar.open {
-    left: 0;
+    transform: translateX(0);
   }
+}
 
-  .mobile-close-btn {
-    display: block;
+ .sidebar.open .mobile-close-btn {
+    display: flex;
   }
 
   .mobile-overlay.active {
@@ -377,7 +430,7 @@
   }
 
   .main-content {
-    padding: 20px 16px 100px;
+     padding: calc(20px + 56px) 16px 100px;
   }
 }
 
@@ -432,21 +485,14 @@
   }
 }
 
-/* ✅ Show Admin Navbar ONLY on mobile */
 @media (max-width: 767px) {
-  .admin-mobile-navbar {
-    display: block;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background: #ffffff;
-    border-bottom: 1px solid #e2e8f0;
+  .main-content {
+    padding: calc(20px + 56px) 16px 100px;
   }
-
-    .main-content-inner {
-    padding-top: 56px; /* height of AdminNavbar */
 }
 
-
-  
+@media (max-width: 767px) {
+  .dashboard-wrapper {
+    display: block; /* ✅ BREAK FLEX ON MOBILE */
+  }
 }

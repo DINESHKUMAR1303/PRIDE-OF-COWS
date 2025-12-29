@@ -1,37 +1,44 @@
 // src/AdminPanel/AdminNavbar/AdminNavbar.jsx
-import React from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Menu } from "lucide-react";
 import "./AdminNavbar.css";
 
 const AdminNavbar = ({ onMenuToggle, isSidebarOpen }) => {
-  return (
-    <header className="admin-navbar">
-      <div className="navbar-content">
+  const [isSticky, setIsSticky] = useState(false);
 
-        {/* LEFT — Hamburger */}
+  // ✅ Detect WINDOW scroll (same as your website navbar)
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <header
+      className={`
+        admin-navbar
+        ${isSticky ? "sticky" : ""}
+        ${isSidebarOpen ? "navbar-hidden" : ""}
+      `}
+    >
+      <div className="navbar-content">
+        {/* LEFT — HAMBURGER */}
         <button
           className="mobile-menu-toggle"
           onClick={onMenuToggle}
-          aria-label="Toggle sidebar"
+          aria-label="Open sidebar"
         >
-          {isSidebarOpen ? <X size={22} /> : <Menu size={22} />}
+          <Menu size={22} />
         </button>
 
         {/* CENTER — TITLE */}
-        <h1 className="navbar-title">Pride of Cows Admin Panel</h1>
+        <h1 className="navbar-title">Pride of Cows</h1>
 
-        {/* RIGHT — PROFILE */}
-        <div className="admin-profile-section">
-          <div className="admin-avatar">A</div>
-
-          <div className="admin-info">
-            <span className="admin-name">Admin User</span>
-            <span className="admin-role">Super Admin</span>
-          </div>
-
-          <ChevronDown size={16} className="dropdown-arrow" />
-        </div>
-
+        {/* RIGHT — SPACER */}
+        <div style={{ width: 32 }} />
       </div>
     </header>
   );

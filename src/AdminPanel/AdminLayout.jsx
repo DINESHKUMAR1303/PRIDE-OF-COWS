@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import {
   LayoutGrid,
@@ -31,6 +31,13 @@ const AdminLayout = () => {
   // Mobile sidebar toggle state
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+
+  // ✅ AUTO-CLOSE SIDEBAR ON ROUTE CHANGE (FIX)
+useEffect(() => {
+  setSidebarOpen(false);
+}, [location.pathname]);
+
+
   const handleLogout = () => {
     localStorage.removeItem("admin_token");
     navigate("/admin", { replace: true });
@@ -43,14 +50,7 @@ const AdminLayout = () => {
     <div className="admin-dashboard">
       <div className="dashboard-wrapper">
 
-        {/* Mobile Hamburger Toggle */}
-        <button
-          className="mobile-toggle-btn"
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          aria-label="Toggle Sidebar"
-        >
-          {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        
 
         {/* Sidebar with mobile open/close */}
         <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
@@ -175,21 +175,21 @@ const AdminLayout = () => {
         </aside>
 
         {/* Overlay when sidebar is open on mobile */}
-        {sidebarOpen && (
-          <div className="mobile-overlay" onClick={closeSidebar} />
-        )}
-
-        {/* Main Content */}
-     <main className="main-content">
-  {/* ===== ADMIN TOP NAVBAR (MOBILE ONLY) ===== */}
-<div className="admin-mobile-navbar">
-  <AdminNavbar
-    onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
-    isSidebarOpen={sidebarOpen}
-  />
-</div>
+       <div
+  className={`mobile-overlay ${sidebarOpen ? "active" : ""}`}
+  onClick={closeSidebar}
+/>
 
 
+
+{/* ✅ ADMIN NAVBAR — OUTSIDE SCROLL CONTAINER */}
+<AdminNavbar
+  onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
+  isSidebarOpen={sidebarOpen}
+/>
+
+{/* ✅ ONLY CONTENT SCROLLS */}
+<main className="main-content">
   <div className="main-content-inner">
     <Outlet />
   </div>
