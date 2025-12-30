@@ -247,6 +247,44 @@
 }
 
 /* ================= RESPONSIVE (DASHBOARD-SPECIFIC) ================= */
+
+/* ================= TABLET LANDSCAPE FIX (769px–1024px) ================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  /* PAGE HEADER */
+  .page-header {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  /* METRICS GRID */
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr); /* keep 2×2 clean */
+    gap: 20px;                              /* reduce spacing */
+  }
+
+  .metric-card {
+    padding: 22px;                          /* tighter cards */
+  }
+
+  /* CONTENT GRID */
+  .content-grid {
+    grid-template-columns: 1fr;            /* stack chart + orders */
+    gap: 24px;
+  }
+
+  /* CHART */
+  .chart-container {
+    padding: 16px 22px 20px;
+  }
+
+}
+
 @media (max-width: 1280px) {
   .metrics-grid {
     grid-template-columns: repeat(2, 1fr);

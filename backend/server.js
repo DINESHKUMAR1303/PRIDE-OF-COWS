@@ -1,7 +1,7 @@
 // backend/server.js
 
 import express from "express";
-import mongoose from "mongoose";          // ✅ ADD THIS
+import mongoose from "mongoose";         
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";

@@ -466,6 +466,7 @@
 }
 
 /* ================= RESPONSIVE ================= */
+
 @media (max-width: 1024px) {
   .form-main-grid {
     grid-template-columns: 1fr;
