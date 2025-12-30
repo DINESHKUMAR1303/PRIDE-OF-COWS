@@ -13,6 +13,7 @@ import {
   Search,
   Eye,
   EyeOff,
+  Hash
 } from "lucide-react";
 import "./AddUser.css";
 
@@ -196,18 +197,19 @@ const AddUser = () => {
       <div className="add-user-card">
         <div className="card-title">
           <h2>New User Details</h2>
-          <User size={24} className="title-icon" />
+          <User size={48} className="title-icon" />
         </div>
 
         <form onSubmit={handleSubmit} className="add-user-form" noValidate>
           <div className="form-main-grid">
             {/* Row 1: USER ID + NAME */}
-            <div className="form-group">
-              <div className="input-wrapper">
-                <User size={18} />
-                <input name="userId" value={formData.userId} readOnly />
-              </div>
-            </div>
+<div className="form-group">
+  <div className="input-wrapper">
+    <Hash size={18} />   {/* ✅ CHANGED ICON */}
+    <input name="userId" value={formData.userId} readOnly />
+  </div>
+</div>
+
 
             <div className="form-group">
               <div className="input-wrapper">
@@ -330,7 +332,7 @@ const AddUser = () => {
                     onChange={() => toggleDepartment(dept)}
                   />
                   <span className="checkmark" />
-                  {dept}
+                  <span className="checkbox-label">{dept}</span>
                 </label>
               ))}
             </div>
