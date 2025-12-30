@@ -1,11 +1,10 @@
-/* ================= GLOBAL INPUTS & SELECTS ================= */
-.admin-dashboard .add-user-page .add-user-form input,
-.admin-dashboard .add-user-page .add-user-form select {
-
+/* ONLY form inputs inside the Add User card */
+.admin-dashboard .add-user-page .add-user-card input,
+.admin-dashboard .add-user-page .add-user-card select {
   height: 48px !important;
   width: 100%;
   padding-left: 60px !important;
-  padding-top: 10px !important;
+  padding-top: 20px !important;
   padding-bottom: 0 !important;
   font-size: 14px;
   line-height: normal !important;
@@ -19,7 +18,7 @@
 .admin-dashboard .add-user-page .input-wrapper > svg {
   position: absolute;
   left: 18px;
-  top: 41%;
+  top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
 }
@@ -28,6 +27,7 @@
 .password-wrapper {
   position: relative;
 }
+
 .password-toggle {
   position: absolute;
   right: 16px;
@@ -45,6 +45,8 @@
   content: "▼";
   position: absolute;
   right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
   font-size: 11px;
   color: #9ca3af;
   pointer-events: none;
@@ -66,58 +68,69 @@
   justify-content: space-between;
   align-items: center;
   height: 72px;
-  padding: 0;
+  padding: 0 24px;
   margin-bottom: 16px;
 }
+
 .adduser-header-left {
   margin-top: -15px;
   display: flex;
   flex-direction: column;
 }
+
 .adduser-header-left h1 {
   margin: 0;
   font-size: 24px;
   font-weight: 700;
   color: #0f172a;
 }
+
 .add-user-page .breadcrumb {
   margin-top: 6px;
   margin-left: 10px;
   font-size: 14px;
   color: #64748b;
 }
+
 .add-user-page .breadcrumb strong {
   color: #0f172a;
   font-weight: 600;
 }
+
 .add-user-page .breadcrumb span {
   margin: 0 6px;
   color: #94a3b8;
 }
+
 .adduser-header-right {
   display: flex;
   align-items: center;
   gap: 14px;
+  flex-shrink: 0;
 }
+
 .header-search {
   position: relative;
 }
+
 .header-search input {
   height: 40px;
-  width: 240px;
+  width: 200px;
   padding: 0 14px 0 38px;
   border-radius: 999px;
   border: 1px solid #e2e8f0;
   background: #ffffff;
   font-size: 14px;
 }
+
 .header-search svg {
   position: absolute;
   left: 14px;
-  top: 35%;
+  top: 20px;
   transform: translateY(-50%);
   color: #94a3b8;
 }
+
 .header-bell {
   width: 40px;
   height: 40px;
@@ -128,8 +141,8 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  margin-bottom: 17px;
 }
+
 .bell-dot {
   position: absolute;
   top: 6px;
@@ -153,11 +166,13 @@
   font-size: 14px;
   color: #166534;
 }
+
 .success-content {
   display: flex;
   align-items: center;
   gap: 12px;
 }
+
 .success-icon-wrapper {
   width: 28px;
   height: 28px;
@@ -168,15 +183,18 @@
   align-items: center;
   justify-content: center;
 }
+
 .success-text strong {
   display: block;
   font-weight: 600;
 }
+
 .success-text p {
   margin: 2px 0 0;
   font-size: 13px;
   color: #166534;
 }
+
 .success-close {
   background: none;
   border: none;
@@ -191,6 +209,7 @@
   position: relative;
   padding-right: 48px;
 }
+
 .title-icon {
   position: absolute;
   top: 1px;
@@ -202,6 +221,7 @@
   border-radius: 12px;
   color: #16c784;
 }
+
 .card-title h2 {
   margin: 0 0 30px;
   font-size: 20px;
@@ -209,88 +229,59 @@
   color: #0f172a;
 }
 
-.title-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.title-row svg {
-  color: #16c784;
-}
-
 /* ================= FORM LAYOUT ================= */
 .add-user-form {
   display: flex;
   flex-direction: column;
 }
-.form-grid {
-  display: none !important;
-}
+
 .form-main-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px 100px;
   margin-bottom: 0px;
 }
+
 .designation-group > label {
   display: none;
 }
-.admin-dashboard .add-user-page .form-group label {
+
+.form-group label {
   display: none;
 }
+
 .input-wrapper {
   position: relative;
 }
+
 .input-wrapper input::placeholder {
   color: #9ca3af;
   opacity: 1;
 }
+
 .input-wrapper select {
   appearance: none;
   -webkit-appearance: none;
 }
-.select-wrapper::after {
-  content: "▼";
-  position: absolute;
-  right: 18px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 11px;
-  color: #9ca3af;
-  pointer-events: none;
-}
-.password-wrapper {
-  position: relative;
-}
-.password-toggle {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  color: #9ca3af;
-}
+
 .upload-btn input[type="file"] {
   display: none;
 }
+
 .error-text {
   color: #ef4444;
   font-size: 12px;
   margin-top: 6px;
   display: block;
 }
+
 .input-wrapper input.error {
   border-color: #ef4444;
 }
 
 /* ================= PROFILE BOX ================= */
 .profile-box {
-  margin: 0px 0;
-  margin-bottom: 20px;
+  margin: 0 0 20px;
   padding: 10px 22px;
   border: 1px dashed #cbd5e1;
   border-radius: 14px;
@@ -298,11 +289,13 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .profile-left {
   display: flex;
   align-items: center;
   gap: 16px;
 }
+
 .avatar {
   width: 56px;
   height: 56px;
@@ -313,6 +306,7 @@
   justify-content: center;
   color: #9ca3af;
 }
+
 .upload-btn {
   padding: 10px 18px;
   border-radius: 10px;
@@ -329,6 +323,7 @@
 .permissions {
   margin-bottom: 32px;
 }
+
 .section-label {
   font-size: 12px;
   font-weight: 700;
@@ -336,11 +331,13 @@
   margin-bottom: 14px;
   display: block;
 }
+
 .permission-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 12px;
 }
+
 .checkbox-item {
   height: 44px;
   padding: 0 14px;
@@ -352,17 +349,10 @@
   font-size: 13px;
   color: #475569;
   cursor: pointer;
-  overflow: hidden;
 }
 
 .checkbox-item input {
   display: none;
-}
-.checkbox-label {
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .checkmark {
@@ -371,10 +361,12 @@
   border: 2px solid #cbd5e1;
   border-radius: 4px;
 }
+
 .checkbox-item input:checked + .checkmark {
   background: #16c784;
   border-color: #16c784;
 }
+
 .checkbox-item input:checked + .checkmark::after {
   content: "✓";
   color: white;
@@ -392,6 +384,7 @@
   padding-top: 12px;
   border-top: 1px solid #eef2f7;
 }
+
 .btn-cancel {
   height: 42px;
   padding: 0 24px;
@@ -401,6 +394,7 @@
   font-size: 14px;
   color: #475569;
 }
+
 .btn-save {
   height: 42px;
   padding: 0 28px;
@@ -415,14 +409,12 @@
   gap: 8px;
 }
 
-/* ================= RESPONSIVE: MOBILE ONLY CHANGES ================= */
+/* ===================================================== */
+/* ================= RESPONSIVE ======================== */
+/* ===================================================== */
 
-/* Small Mobile - 320px to 480px */
-@media (max-width: 480px) {
-  .add-user-page {
-    padding: 12px;
-  }
-
+/* ---------- MOBILE ONLY (≤768px) ---------- */
+@media (max-width: 768px) {
   .add-user-card {
     padding: 20px;
     border-radius: 16px;
@@ -431,21 +423,18 @@
   .adduser-header {
     flex-direction: column;
     align-items: flex-start;
-    height: auto;
     gap: 16px;
-    margin-bottom: 20px;
+    height: auto;
+    padding: 0 16px;
   }
 
   .adduser-header-left {
     margin-top: 0;
   }
 
-  .adduser-header-left h1 {
-    font-size: 22px;
-  }
-
-  .breadcrumb {
-    margin-left: 0 !important;
+  .adduser-header-right {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .header-search input {
@@ -453,224 +442,108 @@
     height: 44px;
   }
 
-  .header-bell {
-    margin-bottom: 20px;
-  }
-
-  .adduser-header-right {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .card-title {
-    padding-right: 0;
-    text-align: center;
-    position: relative;
-  }
-
-  .title-icon {
-    position: static;
-    margin: 6px auto 0;
-    display: inline-flex;
-  }
-
-  .card-title h2 {
-    margin-bottom: 6px;
-  }
-
   .form-main-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 18px;
+  }
+
+  .admin-dashboard .add-user-page .add-user-card input,
+  .admin-dashboard .add-user-page .add-user-card select {
+    padding-left: 52px !important;
   }
 
   .profile-box {
     flex-direction: column;
-    text-align: center;
-    padding: 16px;
-    gap: 16px;
+    align-items: flex-start;
+    gap: 14px;
   }
 
-  .profile-left {
-    flex-direction: column;
-    gap: 12px;
+  .upload-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .permission-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+
+  .btn-cancel,
+  .btn-save {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ---------- SMALL MOBILE (≤480px) ---------- */
+@media (max-width: 480px) {
+  .permission-grid {
+    grid-template-columns: 1fr;
   }
 
   .avatar {
     width: 48px;
     height: 48px;
   }
-
-  .upload-btn {
-    width: 100%;
-    justify-content: center;
-    padding: 12px 20px;
-  }
-
-  /* Vertical stacked permissions - matching your image */
-  .permission-grid {
-    display: block;
-  }
-
-  .checkbox-item {
-    height: auto;
-    min-height: 64px;
-    padding: 16px 18px;
-    margin-bottom: 12px;
-    border-radius: 16px;
-    font-size: 15px;
-    font-weight: 500;
-  }
-
-  .checkbox-item:last-child {
-    margin-bottom: 0;
-  }
-
-  .checkbox-label {
-    white-space: normal;
-    text-overflow: clip;
-  }
-
-  .checkmark {
-    width: 18px;
-    height: 18px;
-    border-radius: 6px;
-  }
-
-  .checkbox-item input:checked + .checkmark::after {
-    font-size: 12px;
-    line-height: 18px;
-  }
-
-  .form-actions {
-    flex-direction: column-reverse;
-    gap: 12px;
-  }
-
-  .btn-cancel,
-  .btn-save {
-    width: 100%;
-    justify-content: center;
-    padding: 0 20px;
-  }
-
-  .success-alert {
-    margin: 16px 0;
-    flex-direction: column;
-    text-align: center;
-    gap: 12px;
-    padding: 16px;
-  }
-
-  .success-content {
-    justify-content: center;
-  }
 }
 
-/* Mobile - 481px to 768px */
-@media (min-width: 481px) and (max-width: 768px) {
-  .add-user-page {
-    padding: 16px;
-  }
-
+/* ---------- MID-TABLET & SMALL DESKTOP (769px – 1024px) ---------- */
+/* Includes 767–867px → Horizontal header, 2-column form */
+@media (min-width: 769px) and (max-width: 1024px) {
   .add-user-card {
     padding: 24px;
   }
 
   .adduser-header {
-    flex-direction: column;
-    align-items: flex-start;
-    height: auto;
-    gap: 16px;
-    margin-bottom: 24px;
-  }
-
-  .adduser-header-left h1 {
-    font-size: 23px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 72px;
+    padding: 0 20px;
   }
 
   .header-search input {
-    width: 100%;
-  }
-
-  .adduser-header-right {
-    width: 100%;
-    justify-content: space-between;
+    width: 200px;
   }
 
   .form-main-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 40px;
   }
 
-  .profile-box {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px;
-    gap: 20px;
-  }
-
-  .upload-btn {
-    width: 100%;
-    justify-content: center;
-  }
-
-  /* Same vertical stacked style on mid-size mobile */
   .permission-grid {
-    display: block;
-  }
-
-  .checkbox-item {
-    height: auto;
-    min-height: 66px;
-    padding: 18px 20px;
-    margin-bottom: 14px;
-    border-radius: 16px;
-    font-size: 15px;
-    font-weight: 500;
-  }
-
-  .checkbox-item:last-child {
-    margin-bottom: 0;
-  }
-
-  .checkbox-label {
-    white-space: normal;
-  }
-
-  .checkmark {
-    width: 18px;
-    height: 18px;
-    border-radius: 6px;
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .form-actions {
-    flex-direction: column-reverse;
-    gap: 14px;
+    flex-direction: row;
   }
 
   .btn-cancel,
   .btn-save {
-    width: 100%;
-    justify-content: center;
+    width: auto;
   }
 }
 
-/* Larger screens - keep original 7-column grid */
-@media (min-width: 769px) {
-  .permission-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 12px;
+/* ---------- FULL DESKTOP (≥1025px) ---------- */
+@media (min-width: 1025px) {
+  .adduser-header {
+    padding: 0 32px;
   }
-}
 
-/* Existing larger breakpoint overrides (unchanged) */
-@media (max-width: 1024px) {
+  .header-search input {
+    width: 240px;
+  }
+
   .form-main-grid {
-    grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 10px 100px;
   }
+
   .permission-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(7, 1fr);
   }
 }
