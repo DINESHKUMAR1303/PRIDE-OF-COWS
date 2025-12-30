@@ -266,7 +266,7 @@
 }
 
 /* Remove all other labels - we use placeholders now */
-.form-group label {
+.admin-dashboard .add-user-page .form-group label {
   display: none;
 }
 
