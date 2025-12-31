@@ -42,9 +42,10 @@ const AdminLogin = ({ onLoginSuccess }) => {
   };
 
   return (
+    <div className="admin-login-root">
   <div className="admin-login-page">
-    <div className="page-wrapper admin-login-wrapper">
-      <div className="admin-login-card">
+
+        <div className="admin-login-card">
 
           {/* ================= LEFT PANEL ================= */}
           <div className="login-image-panel">
@@ -80,7 +81,7 @@ const AdminLogin = ({ onLoginSuccess }) => {
 
               <form className="login-form" onSubmit={handleLogin}>
                 {/* EMAIL */}
-                <div className="form-group email-group">
+                <div className="form-group">
                   <label htmlFor="email">Email Address</label>
                   <input
                     id="email"
