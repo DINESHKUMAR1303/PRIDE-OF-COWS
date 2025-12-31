@@ -1,6 +1,6 @@
 /* ONLY form inputs inside the Add User card */
-.admin-dashboard .add-user-page .add-user-card input,
-.admin-dashboard .add-user-page .add-user-card select {
+.adduser-card input,
+.adduser-card select {
   height: 48px !important;
   width: 100%;
   padding-left: 60px !important;
@@ -15,7 +15,7 @@
 }
 
 /* LEFT ICON — ONLY FIRST SVG */
-.admin-dashboard .add-user-page .input-wrapper > svg {
+.adduser-input-wrapper > svg {
   position: absolute;
   left: 18px;
   top: 50%;
@@ -24,11 +24,11 @@
 }
 
 /* PASSWORD */
-.password-wrapper {
+.adduser-password-wrapper {
   position: relative;
 }
 
-.password-toggle {
+.adduser-password-toggle {
   position: absolute;
   right: 16px;
   top: 50%;
@@ -41,7 +41,7 @@
 }
 
 /* ================= SELECT ARROW ================= */
-.select-wrapper::after {
+.adduser-select-wrapper::after {
   content: "▼";
   position: absolute;
   right: 18px;
@@ -53,7 +53,7 @@
 }
 
 /* ================= PAGE ================= */
-.add-user-card {
+.adduser-card {
   margin: 0;
   padding: 30px;
   border-radius: 20px;
@@ -63,7 +63,7 @@
 }
 
 /* ================= HEADER =================== */
-.adduser-header {
+.adduser-top-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -72,48 +72,48 @@
   margin-bottom: 16px;
 }
 
-.adduser-header-left {
+.adduser-top-header-left {
   margin-top: -15px;
   display: flex;
   flex-direction: column;
 }
 
-.adduser-header-left h1 {
+.adduser-top-header-left h1 {
   margin: 0;
   font-size: 24px;
   font-weight: 700;
   color: #0f172a;
 }
 
-.add-user-page .breadcrumb {
+.adduser-breadcrumb {
   margin-top: 6px;
   margin-left: 10px;
   font-size: 14px;
   color: #64748b;
 }
 
-.add-user-page .breadcrumb strong {
+.adduser-breadcrumb strong {
   color: #0f172a;
   font-weight: 600;
 }
 
-.add-user-page .breadcrumb span {
+.adduser-breadcrumb span {
   margin: 0 6px;
   color: #94a3b8;
 }
 
-.adduser-header-right {
+.adduser-top-header-right {
   display: flex;
   align-items: center;
   gap: 14px;
   flex-shrink: 0;
 }
 
-.header-search {
+.adduser-header-search {
   position: relative;
 }
 
-.header-search input {
+.adduser-header-search input {
   height: 40px;
   width: 200px;
   padding: 0 14px 0 38px;
@@ -123,7 +123,7 @@
   font-size: 14px;
 }
 
-.header-search svg {
+.adduser-header-search svg {
   position: absolute;
   left: 14px;
   top: 20px;
@@ -131,7 +131,7 @@
   color: #94a3b8;
 }
 
-.header-bell {
+.adduser-header-bell {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -143,7 +143,7 @@
   position: relative;
 }
 
-.bell-dot {
+.adduser-bell-dot {
   position: absolute;
   top: 6px;
   right: 6px;
@@ -154,7 +154,7 @@
 }
 
 /* ================= SUCCESS ALERT =================== */
-.success-alert {
+.adduser-success-alert {
   margin: 12px 32px 20px;
   padding: 14px 18px;
   border-radius: 12px;
@@ -167,13 +167,13 @@
   color: #166534;
 }
 
-.success-content {
+.adduser-success-content {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.success-icon-wrapper {
+.adduser-success-icon-wrapper {
   width: 28px;
   height: 28px;
   border-radius: 50%;
@@ -184,18 +184,18 @@
   justify-content: center;
 }
 
-.success-text strong {
+.adduser-success-text strong {
   display: block;
   font-weight: 600;
 }
 
-.success-text p {
+.adduser-success-text p {
   margin: 2px 0 0;
   font-size: 13px;
   color: #166534;
 }
 
-.success-close {
+.adduser-success-close {
   background: none;
   border: none;
   color: #64748b;
@@ -205,12 +205,12 @@
 }
 
 /* ================= CARD TITLE ================= */
-.card-title {
+.adduser-card-title {
   position: relative;
   padding-right: 48px;
 }
 
-.title-icon {
+.adduser-title-icon {
   position: absolute;
   top: 1px;
   right: 24px;
@@ -222,7 +222,7 @@
   color: #16c784;
 }
 
-.card-title h2 {
+.adduser-card-title h2 {
   margin: 0 0 30px;
   font-size: 20px;
   font-weight: 600;
@@ -230,57 +230,57 @@
 }
 
 /* ================= FORM LAYOUT ================= */
-.add-user-form {
+.adduser-form {
   display: flex;
   flex-direction: column;
 }
 
-.form-main-grid {
+.adduser-form-main-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px 100px;
   margin-bottom: 0px;
 }
 
-.designation-group > label {
+.adduser-designation-group > label {
   display: none;
 }
 
-.form-group label {
+.adduser-form-group label {
   display: none;
 }
 
-.input-wrapper {
+.adduser-input-wrapper {
   position: relative;
 }
 
-.input-wrapper input::placeholder {
+.adduser-input-wrapper input::placeholder {
   color: #9ca3af;
   opacity: 1;
 }
 
-.input-wrapper select {
+.adduser-input-wrapper select {
   appearance: none;
   -webkit-appearance: none;
 }
 
-.upload-btn input[type="file"] {
+.adduser-upload-btn input[type="file"] {
   display: none;
 }
 
-.error-text {
+.adduser-error-text {
   color: #ef4444;
   font-size: 12px;
   margin-top: 6px;
   display: block;
 }
 
-.input-wrapper input.error {
+.adduser-input-wrapper input.error {
   border-color: #ef4444;
 }
 
 /* ================= PROFILE BOX ================= */
-.profile-box {
+.adduser-profile-box {
   margin: 0 0 20px;
   padding: 10px 22px;
   border: 1px dashed #cbd5e1;
@@ -290,13 +290,13 @@
   align-items: center;
 }
 
-.profile-left {
+.adduser-profile-left {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.avatar {
+.adduser-avatar {
   width: 56px;
   height: 56px;
   background: #f1f5f9;
@@ -307,7 +307,7 @@
   color: #9ca3af;
 }
 
-.upload-btn {
+.adduser-upload-btn {
   padding: 10px 18px;
   border-radius: 10px;
   border: 1px solid #e2e8f0;
@@ -320,11 +320,11 @@
 }
 
 /* ================= PERMISSIONS ================= */
-.permissions {
+.adduser-permissions {
   margin-bottom: 32px;
 }
 
-.section-label {
+.adduser-section-label {
   font-size: 12px;
   font-weight: 700;
   color: #64748b;
@@ -332,13 +332,13 @@
   display: block;
 }
 
-.permission-grid {
+.adduser-permission-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 12px;
 }
 
-.checkbox-item {
+.adduser-checkbox-item {
   height: 44px;
   padding: 0 14px;
   display: flex;
@@ -352,11 +352,11 @@
   white-space: nowrap;
 }
 
-.checkbox-item input {
+.adduser-checkbox-item input {
   display: none;
 }
 
-.checkmark {
+.adduser-checkmark {
   width: 16px;
   height: 16px;
   border: 2px solid #cbd5e1;
@@ -364,12 +364,12 @@
   flex-shrink: 0;
 }
 
-.checkbox-item input:checked + .checkmark {
+.adduser-checkbox-item input:checked + .adduser-checkmark {
   background: #16c784;
   border-color: #16c784;
 }
 
-.checkbox-item input:checked + .checkmark::after {
+.adduser-checkbox-item input:checked + .adduser-checkmark::after {
   content: "✓";
   color: white;
   font-size: 11px;
@@ -378,13 +378,13 @@
   line-height: 16px;
 }
 
-.checkbox-label {
+.adduser-checkbox-label {
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 /* ================= ACTIONS ================= */
-.form-actions {
+.adduser-form-actions {
   display: flex;
   justify-content: flex-end;
   gap: 14px;
@@ -392,7 +392,7 @@
   border-top: 1px solid #eef2f7;
 }
 
-.btn-cancel {
+.adduser-btn-cancel {
   height: 42px;
   padding: 0 24px;
   border-radius: 10px;
@@ -403,7 +403,7 @@
   cursor: pointer;
 }
 
-.btn-save {
+.adduser-btn-save {
   height: 42px;
   padding: 0 28px;
   border-radius: 10px;
@@ -424,12 +424,12 @@
 
 /* ---------- MOBILE ONLY (≤768px) ---------- */
 @media (max-width: 768px) {
-  .add-user-card {
+  .adduser-card {
     padding: 20px;
     border-radius: 16px;
   }
 
-  .adduser-header {
+  .adduser-top-header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -439,22 +439,22 @@
     gap: 12px;
   }
 
-  .adduser-header-left {
+  .adduser-top-header-left {
     margin-top: 0;
     flex: 1 1 100%;
     min-width: 100%;
   }
 
-  .adduser-header-left h1 {
+  .adduser-top-header-left h1 {
     font-size: 20px;
   }
 
-  .add-user-page .breadcrumb {
+  .adduser-breadcrumb {
     margin-left: 0;
     font-size: 13px;
   }
 
-  .adduser-header-right {
+  .adduser-top-header-right {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -462,54 +462,54 @@
     justify-content: flex-end;
   }
 
-  .header-search {
+  .adduser-header-search {
     flex: 1;
     max-width: 180px;
   }
 
-  .header-search input {
+  .adduser-header-search input {
     width: 100%;
     height: 40px;
   }
 
-  .header-bell {
+  .adduser-header-bell {
     width: 40px;
     height: 40px;
     flex-shrink: 0;
   }
 
-  .form-main-grid {
+  .adduser-form-main-grid {
     grid-template-columns: 1fr;
     gap: 18px;
   }
 
-  .admin-dashboard .add-user-page .add-user-card input,
-  .admin-dashboard .add-user-page .add-user-card select {
+  .adduser-card input,
+  .adduser-card select {
     padding-left: 52px !important;
   }
 
-  .profile-box {
+  .adduser-profile-box {
     flex-direction: column;
     align-items: flex-start;
     gap: 14px;
   }
 
-  .upload-btn {
+  .adduser-upload-btn {
     width: 100%;
     justify-content: center;
   }
 
-  .permission-grid {
+  .adduser-permission-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .form-actions {
+  .adduser-form-actions {
     flex-direction: column-reverse;
     gap: 10px;
   }
 
-  .btn-cancel,
-  .btn-save {
+  .adduser-btn-cancel,
+  .adduser-btn-save {
     width: 100%;
     justify-content: center;
   }
@@ -517,11 +517,11 @@
 
 /* ---------- SMALL MOBILE (≤480px) ---------- */
 @media (max-width: 480px) {
-  .permission-grid {
+  .adduser-permission-grid {
     grid-template-columns: 1fr;
   }
 
-  .avatar {
+  .adduser-avatar {
     width: 48px;
     height: 48px;
   }
@@ -533,7 +533,7 @@
 @media (min-width: 769px) and (max-width: 871px) {
 
   /* Header */
-  .adduser-header {
+  .adduser-top-header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -543,114 +543,114 @@
     gap: 16px;
   }
 
-  .adduser-header-left {
+  .adduser-top-header-left {
     margin-top: 0;
     flex: 1;
   }
 
-  .adduser-header-left h1 {
+  .adduser-top-header-left h1 {
     font-size: 22px;
   }
 
-  .add-user-page .breadcrumb {
+  .adduser-breadcrumb {
     margin-left: 0;
     font-size: 13px;
   }
 
-  .adduser-header-right {
+  .adduser-top-header-right {
     display: flex;
     align-items: center;
     gap: 12px;
     flex-shrink: 0;
   }
 
-  .header-search input {
+  .adduser-header-search input {
     width: 160px;
     height: 40px;
   }
 
-  .header-bell {
+  .adduser-header-bell {
     width: 40px;
     height: 40px;
   }
 
   /* Card */
-  .add-user-card {
+  .adduser-card {
     padding: 28px;
     max-width: 100%;
   }
 
   /* Form - Single Column with Better Spacing */
-  .form-main-grid {
+  .adduser-form-main-grid {
     grid-template-columns: 1fr;
     gap: 24px;
   }
 
-  .admin-dashboard .add-user-page .add-user-card input,
-  .admin-dashboard .add-user-page .add-user-card select {
+  .adduser-card input,
+  .adduser-card select {
     padding-left: 54px !important;
   }
 
   /* Profile Box */
-  .profile-box {
+  .adduser-profile-box {
     padding: 16px 20px;
     margin-bottom: 26px;
   }
 
   /* Permissions - 3 Columns */
-  .permission-grid {
+  .adduser-permission-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 14px;
   }
 
-  .checkbox-item {
+  .adduser-checkbox-item {
     padding: 0 12px;
     font-size: 12.5px;
   }
 
-  .permissions {
+  .adduser-permissions {
     margin-bottom: 30px;
   }
 
   /* Actions */
-  .form-actions {
+  .adduser-form-actions {
     flex-direction: row;
     justify-content: flex-end;
   }
 
-  .btn-cancel,
-  .btn-save {
+  .adduser-btn-cancel,
+  .adduser-btn-save {
     width: auto;
   }
 }
 
 /* ---------- MID-TABLET & SMALL DESKTOP (871px – 1024px) ---------- */
 @media (min-width: 871px) and (max-width: 1024px) {
-  .add-user-card {
+  .adduser-card {
     padding: 26px;
   }
 
-  .adduser-header {
+  .adduser-top-header {
     padding: 0 20px;
   }
 
-  .header-search input {
+  .adduser-header-search input {
     width: 200px;
   }
 
   /* Form - 2 Columns with Tighter Gap */
-  .form-main-grid {
+  .adduser-form-main-grid {
     grid-template-columns: 1fr 1fr;
     gap: 20px 50px;
   }
 
   /* Permissions - 4 Columns */
-  .permission-grid {
+  .adduser-permission-grid {
     grid-template-columns: repeat(4, 1fr);
     gap: 12px;
   }
 
-  .checkbox-item {
+  .adduser-checkbox-item {
     padding: 0 12px;
     font-size: 12.5px;
   }
@@ -661,31 +661,31 @@
 /* ===================================================== */
 @media (min-width: 1025px) and (max-width: 1200px) {
   
-  .add-user-card {
+  .adduser-card {
     padding: 28px;
   }
 
-  .adduser-header {
+  .adduser-top-header {
     padding: 0 24px;
   }
 
-  .header-search input {
+  .adduser-header-search input {
     width: 220px;
   }
 
   /* Form - Reduce Gap Between Columns */
-  .form-main-grid {
+  .adduser-form-main-grid {
     grid-template-columns: 1fr 1fr;
     gap: 10px 60px;
   }
 
   /* Permissions - 5 Columns Instead of 7 */
-  .permission-grid {
+  .adduser-permission-grid {
     grid-template-columns: repeat(5, 1fr);
     gap: 12px;
   }
 
-  .checkbox-item {
+  .adduser-checkbox-item {
     padding: 0 12px;
     font-size: 12.5px;
   }
@@ -694,26 +694,26 @@
 /* ---------- LARGE DESKTOP (1201px – 1439px) ---------- */
 @media (min-width: 1201px) and (max-width: 1439px) {
   
-  .adduser-header {
+  .adduser-top-header {
     padding: 0 28px;
   }
 
-  .header-search input {
+  .adduser-header-search input {
     width: 230px;
   }
 
-  .form-main-grid {
+  .adduser-form-main-grid {
     grid-template-columns: 1fr 1fr;
     gap: 10px 80px;
   }
 
   /* Permissions - 6 Columns */
-  .permission-grid {
+  .adduser-permission-grid {
     grid-template-columns: repeat(6, 1fr);
     gap: 12px;
   }
 
-  .checkbox-item {
+  .adduser-checkbox-item {
     font-size: 13px;
   }
 }
@@ -721,26 +721,26 @@
 /* ---------- EXTRA LARGE DESKTOP (≥1440px) ---------- */
 @media (min-width: 1440px) {
   
-  .adduser-header {
+  .adduser-top-header {
     padding: 0 32px;
   }
 
-  .header-search input {
+  .adduser-header-search input {
     width: 240px;
   }
 
-  .form-main-grid {
+  .adduser-form-main-grid {
     grid-template-columns: 1fr 1fr;
     gap: 10px 100px;
   }
 
   /* Permissions - Full 7 Columns */
-  .permission-grid {
+  .adduser-permission-grid {
     grid-template-columns: repeat(7, 1fr);
     gap: 12px;
   }
 
-  .checkbox-item {
+  .adduser-checkbox-item {
     font-size: 13px;
   }
 }

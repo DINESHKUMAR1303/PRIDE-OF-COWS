@@ -157,62 +157,62 @@ const AddUser = () => {
   };
 
   return (
-    <div className="add-user-page">
-      <div className="adduser-header">
-        <div className="adduser-header-left">
+    <div className="adduser-page-wrapper">
+      <div className="adduser-top-header">
+        <div className="adduser-top-header-left">
           <h1>User Management</h1>
-          <p className="breadcrumb">
+          <p className="adduser-breadcrumb">
             User Modules <span>›</span> <strong>Add User</strong>
           </p>
         </div>
-        <div className="adduser-header-right">
-          <div className="header-search">
+        <div className="adduser-top-header-right">
+          <div className="adduser-header-search">
             <Search size={16} />
             <input placeholder="Search" />
           </div>
-          <button className="header-bell">
+          <button className="adduser-header-bell">
             <Bell size={18} />
-            <span className="bell-dot" />
+            <span className="adduser-bell-dot" />
           </button>
         </div>
       </div>
 
       {showSuccess && (
-        <div className="success-alert">
-          <div className="success-content">
-            <div className="success-icon-wrapper">
+        <div className="adduser-success-alert">
+          <div className="adduser-success-content">
+            <div className="adduser-success-icon-wrapper">
               <CheckCircle size={20} />
             </div>
-            <div className="success-text">
+            <div className="adduser-success-text">
               <strong>Success</strong>
               <p>User account has been created successfully.</p>
             </div>
           </div>
-          <button className="success-close" onClick={() => setShowSuccess(false)}>
+          <button className="adduser-success-close" onClick={() => setShowSuccess(false)}>
             <X size={18} />
           </button>
         </div>
       )}
 
-      <div className="add-user-card">
-        <div className="card-title">
+      <div className="adduser-card">
+        <div className="adduser-card-title">
           <h2>New User Details</h2>
-          <User size={48} className="title-icon" />
+          <User size={48} className="adduser-title-icon" />
         </div>
 
-        <form onSubmit={handleSubmit} className="add-user-form" noValidate>
-          <div className="form-main-grid">
+        <form onSubmit={handleSubmit} className="adduser-form" noValidate>
+          <div className="adduser-form-main-grid">
             {/* Row 1: USER ID + NAME */}
-<div className="form-group">
-  <div className="input-wrapper">
+<div className="adduser-form-group">
+  <div className="adduser-input-wrapper">
     <Hash size={18} />   {/* ✅ CHANGED ICON */}
     <input name="userId" value={formData.userId} readOnly />
   </div>
 </div>
 
 
-            <div className="form-group">
-              <div className="input-wrapper">
+            <div className="adduser-form-group">
+              <div className="adduser-input-wrapper">
                 <User size={18} />
                 <input
                   name="name"
@@ -223,12 +223,12 @@ const AddUser = () => {
                   className={errors.name && touched.name ? "error" : ""}
                 />
               </div>
-              {errors.name && touched.name && <span className="error-text">{errors.name}</span>}
+              {errors.name && touched.name && <span className="adduser-error-text">{errors.name}</span>}
             </div>
 
             {/* Row 2: E-MAIL ID + CONTACT NO. */}
-            <div className="form-group">
-              <div className="input-wrapper">
+            <div className="adduser-form-group">
+              <div className="adduser-input-wrapper">
                 <Mail size={18} />
                 <input
                   name="email"
@@ -240,11 +240,11 @@ const AddUser = () => {
                   className={errors.email && touched.email ? "error" : ""}
                 />
               </div>
-              {errors.email && touched.email && <span className="error-text">{errors.email}</span>}
+              {errors.email && touched.email && <span className="adduser-error-text">{errors.email}</span>}
             </div>
 
-            <div className="form-group">
-              <div className="input-wrapper">
+            <div className="adduser-form-group">
+              <div className="adduser-input-wrapper">
                 <Phone size={18} />
                 <input
                   name="contact"
@@ -255,12 +255,12 @@ const AddUser = () => {
                   className={errors.contact && touched.contact ? "error" : ""}
                 />
               </div>
-              {errors.contact && touched.contact && <span className="error-text">{errors.contact}</span>}
+              {errors.contact && touched.contact && <span className="adduser-error-text">{errors.contact}</span>}
             </div>
 
             {/* Row 3: Designation (no label) + PASSWORD */}
-            <div className="form-group designation-group">
-              <div className="input-wrapper select-wrapper">
+            <div className="adduser-form-group adduser-designation-group">
+              <div className="adduser-input-wrapper adduser-select-wrapper">
                 <Briefcase size={18} />
                 <select
                   name="designation"
@@ -275,8 +275,8 @@ const AddUser = () => {
               </div>
             </div>
 
-            <div className="form-group">
-              <div className="input-wrapper password-wrapper">
+            <div className="adduser-form-group">
+              <div className="adduser-input-wrapper adduser-password-wrapper">
                 <Lock size={18} />
                 <input
                   name="password"
@@ -289,22 +289,22 @@ const AddUser = () => {
                 />
                 <button
                   type="button"
-                  className="password-toggle"
+                  className="adduser-password-toggle"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
               {errors.password && touched.password && (
-                <span className="error-text">{errors.password}</span>
+                <span className="adduser-error-text">{errors.password}</span>
               )}
             </div>
           </div>
 
           {/* ================= PROFILE ================= */}
-          <div className="profile-box">
-            <div className="profile-left">
-              <div className="avatar">
+          <div className="adduser-profile-box">
+            <div className="adduser-profile-left">
+              <div className="adduser-avatar">
                 <User size={28} />
               </div>
               <div>
@@ -313,7 +313,7 @@ const AddUser = () => {
               </div>
             </div>
 
-            <label className="upload-btn">
+            <label className="adduser-upload-btn">
               <Upload size={16} />
               Select Image
               <input type="file" accept="image/*" hidden />
@@ -321,34 +321,34 @@ const AddUser = () => {
           </div>
 
           {/* ================= PERMISSIONS ================= */}
-          <div className="permissions">
-            <label className="section-label">DEPARTMENT PERMISSION</label>
-            <div className="permission-grid">
+          <div className="adduser-permissions">
+            <label className="adduser-section-label">DEPARTMENT PERMISSION</label>
+            <div className="adduser-permission-grid">
               {departments.map((dept) => (
-                <label key={dept} className="checkbox-item">
+                <label key={dept} className="adduser-checkbox-item">
                   <input
                     type="checkbox"
                     checked={selectedDepartments.includes(dept)}
                     onChange={() => toggleDepartment(dept)}
                   />
-                  <span className="checkmark" />
-                  <span className="checkbox-label">{dept}</span>
+                  <span className="adduser-checkmark" />
+                  <span className="adduser-checkbox-label">{dept}</span>
                 </label>
               ))}
             </div>
             {errors.departments && (
-              <span className="error-text dept-error">
+              <span className="adduser-error-text adduser-dept-error">
                 {errors.departments}
               </span>
             )}
           </div>
 
           {/* ================= ACTIONS ================= */}
-          <div className="form-actions">
-            <button type="button" className="btn-cancel" onClick={handleCancel}>
+          <div className="adduser-form-actions">
+            <button type="button" className="adduser-btn-cancel" onClick={handleCancel}>
               Cancel
             </button>
-            <button type="submit" className="btn-save">
+            <button type="submit" className="adduser-btn-save">
               <CheckCircle size={16} />
               Save Changes
             </button>

@@ -1,31 +1,36 @@
+/* ================= WRAPPER (NO LAYOUT IMPACT) ================= */
+.admin-dashboard {
+  display: contents;
+}
+
 /* ================= PAGE HEADER ================= */
-.page-header {
+.admin-dashboard .page-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 30px;
 }
 
-.page-header h2 {
+.admin-dashboard .page-header h2 {
   font-size: 24px;
   font-weight: 700;
   margin: 0 0 0px;
   color: #0f172a;
 }
 
-.page-header p {
+.admin-dashboard .page-header p {
   color: #64748b;
   margin-top: 10px;
   font-size: 15px;
 }
 
-.header-actions {
+.admin-dashboard .header-actions {
   display: flex;
   gap: 12px;
 }
 
-.btn-secondary,
-.btn-primary {
+.admin-dashboard .btn-secondary,
+.admin-dashboard .btn-primary {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -38,35 +43,35 @@
   transition: all 0.2s;
 }
 
-.btn-secondary {
+.admin-dashboard .btn-secondary {
   background: #ffffff;
   color: #475569;
   border: 1px solid #e2e8f0;
 }
 
-.btn-secondary:hover {
+.admin-dashboard .btn-secondary:hover {
   background: #f8fafc;
   border-color: #cbd5e1;
 }
 
-.btn-primary {
+.admin-dashboard .btn-primary {
   background: #0f172a;
   color: #ffffff;
 }
 
-.btn-primary:hover {
+.admin-dashboard .btn-primary:hover {
   background: #1e293b;
 }
 
 /* ================= METRICS ================= */
-.metrics-grid {
+.admin-dashboard .metrics-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
   margin-bottom: 40px;
 }
 
-.metric-card {
+.admin-dashboard .metric-card {
   background: #ffffff;
   padding: 28px;
   border-radius: 20px;
@@ -77,11 +82,11 @@
   transition: transform 0.3s ease;
 }
 
-.metric-card:hover {
+.admin-dashboard .metric-card:hover {
   transform: translateY(-6px);
 }
 
-.metric-icon {
+.admin-dashboard .metric-icon {
   width: 60px;
   height: 60px;
   border-radius: 18px;
@@ -91,25 +96,25 @@
   flex-shrink: 0;
 }
 
-.metric-icon.total-orders   { background: #e0f2fe; color: #0284c7; }
-.metric-icon.revenue        { background: #dcfce7; color: #16a34a; }
-.metric-icon.new-customers  { background: #fce7f3; color: #be185d; }
-.metric-icon.today-orders   { background: #fef3c7; color: #d97706; }
+.admin-dashboard .metric-icon.total-orders   { background: #e0f2fe; color: #0284c7; }
+.admin-dashboard .metric-icon.revenue        { background: #dcfce7; color: #16a34a; }
+.admin-dashboard .metric-icon.new-customers  { background: #fce7f3; color: #be185d; }
+.admin-dashboard .metric-icon.today-orders   { background: #fef3c7; color: #d97706; }
 
-.metric-info p {
+.admin-dashboard .metric-info p {
   font-size: 14px;
   color: #64748b;
   margin: 0 0 6px;
 }
 
-.metric-info h3 {
+.admin-dashboard .metric-info h3 {
   font-size: 32px;
   font-weight: 700;
   margin: 0 0 8px;
   color: #0f172a;
 }
 
-.trend {
+.admin-dashboard .trend {
   font-size: 13px;
   font-weight: 500;
   display: flex;
@@ -117,46 +122,46 @@
   gap: 4px;
 }
 
-.trend.up {
+.admin-dashboard .trend.up {
   color: #16a34a;
 }
 
 /* ================= CONTENT GRID ================= */
-.content-grid {
+.admin-dashboard .content-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 28px;
 }
 
-.chart-card,
-.recent-orders-card {
+.admin-dashboard .chart-card,
+.admin-dashboard .recent-orders-card {
   background: #ffffff;
   border-radius: 20px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.04);
   overflow: hidden;
 }
 
-.card-header {
+.admin-dashboard .card-header {
   padding: 28px 28px 0;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
 }
 
-.card-header h3 {
+.admin-dashboard .card-header h3 {
   font-size: 18px;
   font-weight: 600;
   margin: 0 0 6px;
   color: #0f172a;
 }
 
-.subtitle {
+.admin-dashboard .subtitle {
   color: #64748b;
   font-size: 14px;
   margin: 0;
 }
 
-.legend {
+.admin-dashboard .legend {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -164,29 +169,29 @@
   color: #64748b;
 }
 
-.dot {
+.admin-dashboard .dot {
   width: 10px;
   height: 10px;
   background: #16c784;
   border-radius: 50%;
 }
 
-.chart-container {
+.admin-dashboard .chart-container {
   padding: 16px 28px 20px;
   position: relative;
 }
 
-.sales-chart {
+.admin-dashboard .sales-chart {
   width: 100%;
   height: 260px;
   display: block;
 }
 
-.chart-card {
+.admin-dashboard .chart-card {
   max-height: 450px;
 }
 
-.chart-labels {
+.admin-dashboard .chart-labels {
   display: flex;
   justify-content: space-between;
   margin-top: 16px;
@@ -196,7 +201,7 @@
 }
 
 /* Recent Orders */
-.view-all-btn {
+.admin-dashboard .view-all-btn {
   background: transparent;
   border: none;
   color: #16c784;
@@ -205,13 +210,13 @@
   cursor: pointer;
 }
 
-.orders-list {
+.admin-dashboard .orders-list {
   list-style: none;
   padding: 0;
   margin: 20px 0 0;
 }
 
-.orders-list li {
+.admin-dashboard .orders-list li {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -220,19 +225,19 @@
   transition: background 0.2s;
 }
 
-.orders-list li:hover {
+.admin-dashboard .orders-list li:hover {
   background: #f8fafc;
 }
 
-.orders-list li:last-child {
+.admin-dashboard .orders-list li:last-child {
   border-bottom: none;
 }
 
-.orders-list strong {
+.admin-dashboard .orders-list strong {
   font-weight: 600;
 }
 
-.orders-list small {
+.admin-dashboard .orders-list small {
   color: #94a3b8;
   font-size: 12px;
   display: flex;
@@ -241,7 +246,7 @@
   margin-top: 4px;
 }
 
-.amount {
+.admin-dashboard .amount {
   color: #16c784;
   font-size: 16px;
 }
@@ -252,101 +257,101 @@
 @media (min-width: 769px) and (max-width: 1024px) {
 
   /* PAGE HEADER */
-  .page-header {
+  .admin-dashboard .page-header {
     flex-wrap: wrap;
     gap: 16px;
   }
 
-  .header-actions {
+  .admin-dashboard .header-actions {
     width: 100%;
     justify-content: flex-end;
   }
 
   /* METRICS GRID */
-  .metrics-grid {
+  .admin-dashboard .metrics-grid {
     grid-template-columns: repeat(2, 1fr); /* keep 2×2 clean */
     gap: 20px;                              /* reduce spacing */
   }
 
-  .metric-card {
+  .admin-dashboard .metric-card {
     padding: 22px;                          /* tighter cards */
   }
 
   /* CONTENT GRID */
-  .content-grid {
+  .admin-dashboard .content-grid {
     grid-template-columns: 1fr;            /* stack chart + orders */
     gap: 24px;
   }
 
   /* CHART */
-  .chart-container {
+  .admin-dashboard .chart-container {
     padding: 16px 22px 20px;
   }
 
 }
 
 @media (max-width: 1280px) {
-  .metrics-grid {
+  .admin-dashboard .metrics-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .content-grid {
+  .admin-dashboard .content-grid {
     grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 768px) {
-  .metrics-grid {
+  .admin-dashboard .metrics-grid {
     grid-template-columns: 1fr;
     gap: 16px;
   }
 
-  .metric-card {
+  .admin-dashboard .metric-card {
     padding: 20px;
   }
 
-  .metric-info h3 {
+  .admin-dashboard .metric-info h3 {
     font-size: 28px;
   }
 
   /* Stack header on medium screens */
-  .page-header {
+  .admin-dashboard .page-header {
     flex-direction: column;
     align-items: stretch;
     gap: 16px;
   }
 
-  .header-actions {
+  .admin-dashboard .header-actions {
     justify-content: flex-end;
   }
 }
 
 @media (max-width: 480px) {
-  .page-header {
+  .admin-dashboard .page-header {
     flex-direction: column;
     align-items: stretch;
     gap: 16px;
   }
 
-  .page-header h2 {
+  .admin-dashboard .page-header h2 {
     font-size: 24px;
   }
 
-  .header-actions {
+  .admin-dashboard .header-actions {
     width: 100%;
     justify-content: stretch;
   }
 
-  .btn-secondary,
-  .btn-primary {
+  .admin-dashboard .btn-secondary,
+  .admin-dashboard .btn-primary {
     flex: 1;
     justify-content: center;
   }
 
-  .card-header {
+  .admin-dashboard .card-header {
     padding: 20px 20px 0;
   }
 
-  .chart-container {
+  .admin-dashboard .chart-container {
     padding: 12px 20px 20px;
   }
 }

@@ -30,10 +30,7 @@ const AdminLogin = ({ onLoginSuccess }) => {
 
     // TEMP login check
     setTimeout(() => {
-      if (
-        email === "admin@gmail.com" &&
-        password === "admin123"
-      ) {
+      if (email === "admin@gmail.com" && password === "admin123") {
         const fakeAdminToken = "admin_logged_in_token";
         onLoginSuccess(fakeAdminToken);
       } else {
@@ -45,9 +42,9 @@ const AdminLogin = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div className="admin-login-page">
-      <div className="admin-login-wrapper">
-        <div className="admin-login-card">
+  <div className="admin-login-page">
+    <div className="page-wrapper admin-login-wrapper">
+      <div className="admin-login-card">
 
           {/* ================= LEFT PANEL ================= */}
           <div className="login-image-panel">
@@ -83,9 +80,10 @@ const AdminLogin = ({ onLoginSuccess }) => {
 
               <form className="login-form" onSubmit={handleLogin}>
                 {/* EMAIL */}
-                <div className="form-group">
-                  <label>Email Address</label>
+                <div className="form-group email-group">
+                  <label htmlFor="email">Email Address</label>
                   <input
+                    id="email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -97,12 +95,13 @@ const AdminLogin = ({ onLoginSuccess }) => {
                 {/* PASSWORD */}
                 <div className="form-group">
                   <div className="password-header">
-                    <label>Password</label>
+                    <label htmlFor="password">Password</label>
                     <span className="forgot">Forgot Password?</span>
                   </div>
 
                   <div className="password-wrapper">
                     <input
+                      id="password"
                       type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -134,11 +133,10 @@ const AdminLogin = ({ onLoginSuccess }) => {
                 className="return-store clickable"
                 onClick={() => navigate("/")}
               >
-                 Return to Store
+                ← Return to Store
               </div>
             </div>
           </div>
-
         </div>
 
         <div className="login-footer">
