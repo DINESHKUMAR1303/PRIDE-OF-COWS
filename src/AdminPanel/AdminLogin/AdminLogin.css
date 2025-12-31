@@ -1,387 +1,285 @@
-/* =====================================================
-   ADMIN LOGIN — SCOPED RESET (SAFE)
-===================================================== */
-
-/* 🔒 HARD ISOLATION — ADMIN LOGIN ONLY */
-.admin-login-root {
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
-}
-
-
-
-.admin-login-page,
-.admin-login-page * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-.admin-login-page {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-}
-
-/* =====================================================
-   PAGE
-===================================================== */
-.admin-login-page {
-  height: 100vh;
-  background: #f6f8f6;
+/* ROOT WRAPPER - FULLY SCOPED */
+.pride-admin-login {
+  min-height: 100vh;
+  background: #f8fafc;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* =====================================================
-   WRAPPER
-===================================================== */
-.admin-login-wrapper {
+.pride-login-container {
   width: 100%;
+  max-width: 1200px;
   padding: 24px;
 }
 
-/* =====================================================
-   CARD
-===================================================== */
-.admin-login-card {
-  max-width: 1080px;
-  width: 100%;
-  min-height: 600px;
-  margin: auto;
-  background: #ffffff;
-  border-radius: 16px;
-  display: flex;
+.pride-login-card {
+  background: white;
+  border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 680px;
 }
 
-/* =====================================================
-   LEFT PANEL
-===================================================== */
-.login-image-panel {
-  width: 50%;
-  padding: 48px;
-  color: #ffffff;
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
+/* LEFT PANEL */
+.pride-brand-panel {
   position: relative;
-  background: #0f1a0f;
+  color: white;
+  display: none; /* Hidden on mobile */
 }
-.login-image-panel img {
+
+@media (min-width: 768px) {
+  .pride-brand-panel {
+    display: block;
+  }
+}
+
+.pride-bg-image {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 0;
 }
-.login-image-panel::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 100%);
-  z-index: 1;
-}
-.brand-header,
-.brand-content {
+
+.pride-brand-overlay {
   position: relative;
   z-index: 2;
-}
-
-/* =====================================================
-   BRAND HEADER
-===================================================== */
-.brand-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.brand-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.brand-icon img {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-}
-.brand-name {
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-}
-
-/* =====================================================
-   BRAND CONTENT
-===================================================== */
-.brand-content h2 {
-  font-size: 36px;
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 16px;
-  letter-spacing: -0.5px;
-}
-.brand-content p {
-  max-width: 360px;
-  font-size: 15px;
-  line-height: 1.6;
-  opacity: 0.92;
-}
-
-/* =====================================================
-   RIGHT PANEL
-===================================================== */
-.login-form-panel {
-  width: 100%;
+  height: 100%;
   padding: 48px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #ffffff;
-}
-.login-form-container {
-  width: 100%;
-  max-width: 400px;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(135deg, rgba(0,0,0,0.65), rgba(0,0,0,0.35));
 }
 
-/* =====================================================
-   TEXT
-===================================================== */
-.form-title {
-  font-size: 30px;
+.pride-logo-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pride-logo-circle {
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(12px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pride-logo-circle img {
+  width: 32px;
+  height: 32px;
+}
+
+.pride-brand-title {
+  font-size: 22px;
   font-weight: 700;
-  color: #111827;
-  margin-bottom: 8px;
+}
+
+.pride-tagline-section h1.pride-tagline {
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 0 20px 0;
   letter-spacing: -0.5px;
 }
-.form-subtitle {
-  color: #6b7280;
-  font-size: 15px;
-  margin-bottom: 32px;
-  line-height: 1.5;
+
+.pride-description {
+  font-size: 16px;
+  line-height: 1.6;
+  opacity: 0.95;
+  max-width: 380px;
 }
 
-/* =====================================================
-   FORM
-===================================================== */
-.login-form {
+/* RIGHT PANEL */
+.pride-form-panel {
+  padding: 60px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+}
+
+.pride-form-box {
+  width: 100%;
+  max-width: 420px;
+}
+
+.pride-form-heading {
+  font-size: 32px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 8px 0;
+}
+
+.pride-form-subheading {
+  color: #64748b;
+  font-size: 15px;
+  margin-bottom: 36px;
+}
+
+.pride-error-message {
+  background: #fef2f2;
+  color: #ef4444;
+  padding: 14px 18px;
+  border-radius: 10px;
+  border-left: 4px solid #ef4444;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.pride-login-form {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-.form-group label {
+
+.pride-input-group label {
+  display: block;
   font-size: 14px;
   font-weight: 600;
   color: #374151;
   margin-bottom: 8px;
-}
-.form-group input {
-  height: 48px;
-  padding: 0 16px;
-  border-radius: 8px;
-  border: 1.5px solid #d1d5db;
-  background: #ffffff;
-  font-size: 15px;
-  color: #111827;
-  transition: all 0.2s ease;
-  outline: none;
-}
-.form-group input::placeholder {
-  color: #9ca3af;
-}
-.form-group input:focus {
-  border-color: #22c55e;
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
-}
-.form-group input:hover:not(:focus) {
-  border-color: #9ca3af;
 }
 
-/* =====================================================
-   PASSWORD HEADER
-===================================================== */
-.password-header {
+.pride-input-group input {
+  width: 100%;
+  height: 52px;
+  padding: 0 18px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 15px;
+  transition: all 0.2s;
+}
+
+.pride-input-group input:focus {
+  outline: none;
+  border-color: #22c55e;
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.15);
+}
+
+.pride-input-group input::placeholder {
+  color: #94a3b8;
+}
+
+.pride-password-label {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 8px;
-  gap: 16px;
 }
-.password-header label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #374151;
-  margin-bottom: 0;
-  flex-shrink: 0;
-}
-.forgot {
+
+.pride-forgot-link {
+  color: #22c55e;
   font-size: 13px;
   font-weight: 500;
-  color: #22c55e;
   cursor: pointer;
-  white-space: nowrap;
-  transition: color 0.2s ease;
-  flex-shrink: 0;
 }
-.forgot:hover {
-  color: #16a34a;
+
+.pride-forgot-link:hover {
   text-decoration: underline;
 }
 
-/* =====================================================
-   PASSWORD FIELD
-===================================================== */
-.password-wrapper {
+.pride-password-input {
   position: relative;
-  display: flex;
-  align-items: center;
 }
-.password-wrapper input {
-  width: 100%;
-  padding-right: 48px;
+
+.pride-password-input input {
+  padding-right: 56px;
 }
-.toggle-password {
+
+.pride-toggle-eye {
   position: absolute;
-  right: 14px;
+  right: 16px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 18px;
+  background: none;
+  border: none;
+  font-size: 20px;
   cursor: pointer;
-  user-select: none;
   opacity: 0.6;
-  transition: opacity 0.2s ease;
 }
-.toggle-password:hover {
+
+.pride-toggle-eye:hover {
   opacity: 1;
 }
 
-/* =====================================================
-   BUTTON
-===================================================== */
-.login-button {
-  margin-top: 8px;
-  height: 50px;
-  border: none;
-  border-radius: 10px;
-  background: #7cff4d;
-  color: #0a0f0a;
+.pride-login-btn {
+  height: 56px;
+  background: #22c55e;
+  color: white;
   font-size: 16px;
   font-weight: 700;
+  border: none;
+  border-radius: 14px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  letter-spacing: 0.3px;
+  margin-top: 12px;
+  transition: all 0.2s;
 }
-.login-button:hover:not(:disabled) {
-  background: #6eef3d;
+
+.pride-login-btn:hover:not(:disabled) {
+  background: #16a34a;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(124, 255, 77, 0.4);
 }
-.login-button:active:not(:disabled) {
-  transform: translateY(0);
-}
-.login-button:disabled {
-  opacity: 0.6;
+
+.pride-login-btn:disabled {
+  opacity: 0.7;
   cursor: not-allowed;
 }
 
-/* =====================================================
-   FOOTER & LINKS
-===================================================== */
-.return-store {
-  margin-top: 28px;
-  padding-top: 20px;
-  border-top: 1px solid #e5e7eb;
+.pride-return-link {
   text-align: center;
-  color: #6b7280;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #e2e8f0;
+  color: #64748b;
   font-size: 14px;
-  font-weight: 500;
-  transition: color 0.2s ease;
-}
-.return-store.clickable {
   cursor: pointer;
 }
-.return-store.clickable:hover {
+
+.pride-return-link:hover {
   color: #22c55e;
 }
-.login-footer {
-  margin-top: 24px;
+
+.pride-login-footer {
   text-align: center;
+  margin-top: 32px;
+  color: #94a3b8;
   font-size: 13px;
-  color: #9ca3af;
 }
 
-/* =====================================================
-   ERROR
-===================================================== */
-.error-text {
-  color: #ef4444;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 12px 16px;
-  background: #fef2f2;
-  border-radius: 8px;
-  border-left: 3px solid #ef4444;
-  margin-bottom: 20px;
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .pride-login-card {
+    grid-template-columns: 1fr;
+  }
+
+  .pride-form-panel {
+    padding: 48px 40px;
+  }
 }
 
-/* =====================================================
-   RESPONSIVE
-===================================================== */
-@media (min-width: 768px) {
-  .login-image-panel {
-    display: flex;
-  }
-  .login-form-panel {
-    width: 50%;
-  }
-}
-@media (max-width: 767px) {
-  .admin-login-card {
-    min-height: auto;
-  }
-  .login-form-panel {
-    padding: 40px 24px;
-  }
-  .form-title {
-    font-size: 26px;
-  }
-  .form-subtitle {
-    margin-bottom: 28px;
-  }
-}
 @media (max-width: 480px) {
-  .admin-login-wrapper {
+  .pride-login-container {
     padding: 16px;
   }
-  .login-form-panel {
-    padding: 32px 20px;
+
+  .pride-form-panel {
+    padding: 40px 24px;
   }
-  .form-title {
-    font-size: 24px;
-  }
-  .brand-content h2 {
+
+  .pride-form-heading {
     font-size: 28px;
   }
-  .forgot {
-    font-size: 12px;
-  }
-  .login-button {
-    height: 48px;
-  }
-  .password-header {
-    gap: 12px;
+
+  .pride-tagline {
+    font-size: 32px;
   }
 }

@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AdminLogin.css";
 
+// Replace these with your actual image paths
 import loginBg from "./images/admin.png";
-import brandIcon from "./images/crown.svg";
+import crownIcon from "./images/crown.svg";
 
 const AdminLogin = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
@@ -14,124 +15,118 @@ const AdminLogin = ({ onLoginSuccess }) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  /* ======================================
-     HANDLE LOGIN (TEMP — UI LEVEL)
-  ====================================== */
   const handleLogin = (e) => {
     e.preventDefault();
     setError("");
 
     if (!email || !password) {
-      setError("Please enter email and password");
+      setError("Please enter both email and password");
       return;
     }
 
     setLoading(true);
 
-    // TEMP login check
+    // Temporary mock login
     setTimeout(() => {
       if (email === "admin@gmail.com" && password === "admin123") {
-        const fakeAdminToken = "admin_logged_in_token";
-        onLoginSuccess(fakeAdminToken);
+        onLoginSuccess("fake-admin-token-2025");
       } else {
         setError("Invalid email or password");
       }
-
       setLoading(false);
-    }, 600);
+    }, 800);
   };
 
   return (
-    <div className="admin-login-root">
-  <div className="admin-login-page">
+    <div className="pride-admin-login">
+      <div className="pride-login-container">
+        <div className="pride-login-card">
 
-        <div className="admin-login-card">
+          {/* Left: Brand Panel */}
+          <div className="pride-brand-panel">
+            <img src={loginBg} alt="Farm background" className="pride-bg-image" />
 
-          {/* ================= LEFT PANEL ================= */}
-          <div className="login-image-panel">
-            <img src={loginBg} alt="Admin Login Background" />
-
-            <div className="brand-header">
-              <div className="brand-icon">
-                <img src={brandIcon} alt="Brand Logo" />
+            <div className="pride-brand-overlay">
+              <div className="pride-logo-section">
+                <div className="pride-logo-circle">
+                  <img src={crownIcon} alt="Pride of Cows" />
+                </div>
+                <span className="pride-brand-title">Pride of Cows</span>
               </div>
-              <span className="brand-name">Pride of Cows</span>
-            </div>
 
-            <div className="brand-content">
-              <h2>
-                Farm to Home,<br />Pure & Fresh.
-              </h2>
-              <p>
-                Manage orders, inventory, and customer relationships
-                from one central hub.
-              </p>
+              <div className="pride-tagline-section">
+                <h1 className="pride-tagline">
+                  Farm to Home,<br />
+                  Pure & Fresh.
+                </h1>
+                <p className="pride-description">
+                  Manage orders, inventory, and customer relationships<br />
+                  from one central hub.
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* ================= RIGHT PANEL ================= */}
-          <div className="login-form-panel">
-            <div className="login-form-container">
-              <h2 className="form-title">Admin Portal</h2>
-              <p className="form-subtitle">
+          {/* Right: Login Form */}
+          <div className="pride-form-panel">
+            <div className="pride-form-box">
+              <h2 className="pride-form-heading">Admin Portal</h2>
+              <p className="pride-form-subheading">
                 Welcome back! Please enter your details.
               </p>
 
-              {error && <p className="error-text">{error}</p>}
+              {error && <div className="pride-error-message">{error}</div>}
 
-              <form className="login-form" onSubmit={handleLogin}>
-                {/* EMAIL */}
-                <div className="form-group">
-                  <label htmlFor="email">Email Address</label>
+              <form onSubmit={handleLogin} className="pride-login-form">
+                <div className="pride-input-group">
+                  <label htmlFor="admin-email">Email Address</label>
                   <input
-                    id="email"
+                    id="admin-email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="admin@prideofcows.com"
-                    autoComplete="username"
+                    required
                   />
                 </div>
 
-                {/* PASSWORD */}
-                <div className="form-group">
-                  <div className="password-header">
-                    <label htmlFor="password">Password</label>
-                    <span className="forgot">Forgot Password?</span>
+                <div className="pride-input-group">
+                  <div className="pride-password-label">
+                    <label htmlFor="admin-password">Password</label>
+                    <span className="pride-forgot-link">Forgot Password?</span>
                   </div>
 
-                  <div className="password-wrapper">
+                  <div className="pride-password-input">
                     <input
-                      id="password"
+                      id="admin-password"
                       type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="••••••••••"
-                      autoComplete="current-password"
+                      placeholder="••••••••"
+                      required
                     />
-                    <span
-                      className="toggle-password"
+                    <button
+                      type="button"
+                      className="pride-toggle-eye"
                       onClick={() => setShowPassword(!showPassword)}
-                      role="button"
                       aria-label="Toggle password visibility"
                     >
                       {showPassword ? "🙈" : "👁️"}
-                    </span>
+                    </button>
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="login-button"
+                  className="pride-login-btn"
                   disabled={loading}
                 >
                   {loading ? "Logging in..." : "Log In"}
                 </button>
               </form>
 
-              {/* RETURN TO STORE */}
               <div
-                className="return-store clickable"
+                className="pride-return-link"
                 onClick={() => navigate("/")}
               >
                 ← Return to Store
@@ -140,9 +135,9 @@ const AdminLogin = ({ onLoginSuccess }) => {
           </div>
         </div>
 
-        <div className="login-footer">
+        <footer className="pride-login-footer">
           © 2025 Pride of Cows. All rights reserved.
-        </div>
+        </footer>
       </div>
     </div>
   );
