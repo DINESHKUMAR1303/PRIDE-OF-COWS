@@ -25,10 +25,14 @@ const AddUser = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
-  const [userCounter, setUserCounter] = useState(1);
+  // Initialize counter from localStorage
+  const [userCounter, setUserCounter] = useState(() => {
+    const saved = localStorage.getItem('userCounter');
+    return saved ? parseInt(saved, 10) : 1;
+  });
 
   const [formData, setFormData] = useState({
-    userId: "USR - 1",
+    userId: "",
     name: "",
     email: "",
     contact: "",
@@ -36,6 +40,7 @@ const AddUser = () => {
     password: "",
   });
 
+  // Update userId when counter changes
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
@@ -150,62 +155,73 @@ const AddUser = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  if (!validateForm()) return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
 
-  try {
-    // 🔥 CREATE FORM DATA FOR BACKEND
-    const payload = new FormData();
-    payload.append("userId", formData.userId);
-    payload.append("name", formData.name);
-    payload.append("email", formData.email);
-    payload.append("contact", formData.contact);
-    payload.append("designation", formData.designation);
-    payload.append("password", formData.password);
-    payload.append(
-      "departments",
-      JSON.stringify(selectedDepartments)
-    );
+    try {
+      // Create unique userId with timestamp to avoid duplicates
+      const uniqueUserId = `USR-${Date.now()}-${userCounter}`;
+      
+      // CREATE FORM DATA FOR BACKEND
+      const payload = new FormData();
+      payload.append("userId", uniqueUserId);
+      payload.append("name", formData.name);
+      payload.append("email", formData.email);
+      payload.append("contact", formData.contact);
+      payload.append("designation", formData.designation);
+      payload.append("password", formData.password);
+      payload.append(
+        "departments",
+        JSON.stringify(selectedDepartments)
+      );
 
-    if (selectedImage) {
-      payload.append("profileImage", selectedImage);
+      if (selectedImage) {
+        payload.append("profileImage", selectedImage);
+      }
+
+      // SAVE TO MONGODB
+      const res = await createStaff(payload);
+
+      // SET PREVIEW FROM SERVER PATH
+      if (res?.data?.data?.profileImage) {
+        setImagePreview(`http://localhost:5000${res.data.data.profileImage}`);
+      }
+
+      // SHOW SUCCESS
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 4000);
+
+      // RESET FORM AND INCREMENT COUNTER
+      setTimeout(() => {
+        const newCounter = userCounter + 1;
+        setUserCounter(newCounter);
+        localStorage.setItem('userCounter', newCounter.toString());
+        
+        setFormData({
+          userId: `USR - ${newCounter}`,
+          name: "",
+          email: "",
+          contact: "",
+          designation: "Administrator",
+          password: "",
+        });
+        setSelectedDepartments([]);
+        setTouched({});
+        setErrors({});
+        setSelectedImage(null);
+        setImagePreview(null);
+      }, 4500);
+
+    } catch (error) {
+      alert(error.message || "Failed to save user");
     }
-
-    // 🔥 SAVE TO MONGODB
-    await createStaff(payload);
-
-    // ✅ SHOW SUCCESS
-    setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 4000);
-
-    // ✅ RESET FORM
-    setTimeout(() => {
-      setUserCounter((prev) => prev + 1);
-      setFormData({
-        userId: "",
-        name: "",
-        email: "",
-        contact: "",
-        designation: "Administrator",
-        password: "",
-      });
-      setSelectedDepartments([]);
-      setTouched({});
-      setErrors({});
-      setSelectedImage(null);
-      setImagePreview(null);
-    }, 4500);
-
-  } catch (error) {
-    alert(error.message || "Failed to save user");
-  }
-};
+  };
 
 
   const handleCancel = () => {
     setFormData({
-      userId: "",
+      userId: `USR - ${userCounter}`,
       name: "",
       email: "",
       contact: "",

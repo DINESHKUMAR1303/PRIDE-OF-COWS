@@ -14,7 +14,7 @@ import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
-import staffRoutes from "./routes/staffRoutes.js"; // ✅ NEW
+import staffRoutes from "./routes/staffRoutes.js";
 
 // ================= CONFIG =================
 dotenv.config();
@@ -24,7 +24,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // ================= DB CONNECTION =================
-await connectDB(); // ✅ ensure DB connects first
+await connectDB();
 
 mongoose.connection.once("open", () => {
   console.log(`📦 Connected MongoDB Database: ${mongoose.connection.name}`);
@@ -35,12 +35,16 @@ const app = express();
 // ================= GLOBAL MIDDLEWARES =================
 app.use(
   cors({
-    origin: "*", // 🔒 change in production
+    origin: "*", // 🔒 restrict in production
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 
+// 🔹 REQUIRED FOR JSON
 app.use(express.json());
+
+// 🔹 REQUIRED FOR FORM-DATA TEXT FIELDS
+app.use(express.urlencoded({ extended: true }));
 
 // ================= STATIC FILES (IMAGE UPLOADS) =================
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -52,20 +56,10 @@ app.use((req, res, next) => {
 });
 
 // ================= API ROUTES =================
-
-// Auth routes
 app.use("/api/auth", authRoutes);
-
-// User routes
 app.use("/api/user", userRoutes);
-
-// Order routes
 app.use("/api/orders", orderRoutes);
-
-// Admin routes (Dashboard)
 app.use("/api/admin", adminRoutes);
-
-// ✅ STAFF ROUTES (ADMIN PANEL)
 app.use("/api/admin/staff", staffRoutes);
 
 // ================= ROOT ROUTE =================

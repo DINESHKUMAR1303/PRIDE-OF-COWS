@@ -3,6 +3,8 @@ import Staff from "../models/Staff.js";
 
 /* ============================================================
    ⭐ CREATE STAFF (ADD USER)
+   - Image saved in filesystem
+   - Only HTTP path saved in MongoDB
 ============================================================ */
 export const createStaff = async (req, res) => {
   try {
@@ -16,8 +18,13 @@ export const createStaff = async (req, res) => {
       departments,
     } = req.body;
 
-    // Hash password
+    // 🔒 Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    // 🖼️ IMAGE HTTP PATH (IMPORTANT)
+    const profileImage = req.file
+      ? `/uploads/users/${req.file.filename}`
+      : "";
 
     const staff = new Staff({
       userId,
@@ -27,7 +34,7 @@ export const createStaff = async (req, res) => {
       designation,
       password: hashedPassword,
       departments: departments ? JSON.parse(departments) : [],
-      profileImage: req.file ? `/uploads/${req.file.filename}` : "",
+      profileImage, // ✅ correct HTTP path
     });
 
     await staff.save();
@@ -39,6 +46,7 @@ export const createStaff = async (req, res) => {
     });
   } catch (error) {
     console.error("❌ Create Staff Error:", error);
+
     res.status(500).json({
       success: false,
       message: error.message || "Failed to create staff",
@@ -52,10 +60,16 @@ export const createStaff = async (req, res) => {
 export const getAllStaff = async (req, res) => {
   try {
     const staff = await Staff.find().sort({ createdAt: -1 });
-    res.status(200).json(staff);
+
+    res.status(200).json({
+      success: true,
+      data: staff,
+    });
   } catch (error) {
     console.error("❌ Fetch Staff Error:", error);
+
     res.status(500).json({
+      success: false,
       message: error.message || "Failed to fetch staff",
     });
   }
