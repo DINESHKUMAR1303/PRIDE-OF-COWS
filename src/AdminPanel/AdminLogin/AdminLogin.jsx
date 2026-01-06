@@ -49,7 +49,7 @@ const AdminLogin = ({ onLoginSuccess }) => {
             <div className="pride-brand-overlay">
               <div className="pride-logo-section">
                 <div className="pride-logo-circle">
-                  <img src={crownIcon} alt="Pride of Cows" />
+                  <img src={crownIcon} alt="Crown" />
                 </div>
                 <span className="pride-brand-title">Pride of Cows</span>
               </div>
@@ -136,7 +136,7 @@ const AdminLogin = ({ onLoginSuccess }) => {
         </div>
 
         <footer className="pride-login-footer">
-          © 2025 Pride of Cows. All rights reserved.
+          © 2026 Pride of Cows. All rights reserved.
         </footer>
       </div>
     </div>
