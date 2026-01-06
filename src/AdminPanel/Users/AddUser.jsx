@@ -20,6 +20,8 @@ import "./AddUser.css";
 const AddUser = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   const [userCounter, setUserCounter] = useState(1);
 
@@ -60,6 +62,33 @@ const AddUser = () => {
     );
     if (errors.departments) {
       setErrors((prev) => ({ ...prev, departments: "" }));
+    }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Check file size (3MB limit)
+      if (file.size > 3 * 1024 * 1024) {
+        alert("File size should not exceed 3MB");
+        return;
+      }
+
+      // Check file type
+      const validTypes = ["image/png", "image/jpeg", "image/jpg"];
+      if (!validTypes.includes(file.type)) {
+        alert("Please select a PNG, JPG or JPEG image");
+        return;
+      }
+
+      setSelectedImage(file);
+
+      // Create preview URL
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -139,6 +168,8 @@ const AddUser = () => {
       setSelectedDepartments([]);
       setTouched({});
       setErrors({});
+      setSelectedImage(null);
+      setImagePreview(null);
     }, 4500);
   };
 
@@ -154,6 +185,8 @@ const AddUser = () => {
     setSelectedDepartments([]);
     setErrors({});
     setTouched({});
+    setSelectedImage(null);
+    setImagePreview(null);
   };
 
   return (
@@ -203,13 +236,12 @@ const AddUser = () => {
         <form onSubmit={handleSubmit} className="adduser-form" noValidate>
           <div className="adduser-form-main-grid">
             {/* Row 1: USER ID + NAME */}
-<div className="adduser-form-group">
-  <div className="adduser-input-wrapper">
-    <Hash size={18} />   {/* ✅ CHANGED ICON */}
-    <input name="userId" value={formData.userId} readOnly />
-  </div>
-</div>
-
+            <div className="adduser-form-group">
+              <div className="adduser-input-wrapper">
+                <Hash size={18} />
+                <input name="userId" value={formData.userId} readOnly />
+              </div>
+            </div>
 
             <div className="adduser-form-group">
               <div className="adduser-input-wrapper">
@@ -258,7 +290,7 @@ const AddUser = () => {
               {errors.contact && touched.contact && <span className="adduser-error-text">{errors.contact}</span>}
             </div>
 
-            {/* Row 3: Designation (no label) + PASSWORD */}
+            {/* Row 3: Designation + PASSWORD */}
             <div className="adduser-form-group adduser-designation-group">
               <div className="adduser-input-wrapper adduser-select-wrapper">
                 <Briefcase size={18} />
@@ -305,18 +337,26 @@ const AddUser = () => {
           <div className="adduser-profile-box">
             <div className="adduser-profile-left">
               <div className="adduser-avatar">
-                <User size={28} />
+                {imagePreview ? (
+                  <img src={imagePreview} alt="Profile" className="adduser-avatar-image" />
+                ) : (
+                  <User size={28} />
+                )}
               </div>
               <div>
                 <strong>Profile Picture</strong>
-                <p>Supports PNG, JPG or JPEG. Max file size 3MB</p>
+                {selectedImage ? (
+                  <p className="adduser-image-name">{selectedImage.name}</p>
+                ) : (
+                  <p>Supports PNG, JPG or JPEG. Max file size 3MB</p>
+                )}
               </div>
             </div>
 
             <label className="adduser-upload-btn">
               <Upload size={16} />
               Select Image
-              <input type="file" accept="image/*" hidden />
+              <input type="file" accept="image/png,image/jpeg,image/jpg" onChange={handleImageChange} hidden />
             </label>
           </div>
 

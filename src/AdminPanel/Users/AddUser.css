@@ -305,6 +305,38 @@
   align-items: center;
   justify-content: center;
   color: #9ca3af;
+  overflow: hidden;
+  position: relative;
+}
+
+.adduser-avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.adduser-image-name {
+  color: #16c784;
+  font-weight: 500;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.adduser-profile-left > div strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 2px;
+}
+
+.adduser-profile-left > div p {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
 }
 
 .adduser-upload-btn {
@@ -317,6 +349,12 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  transition: all 0.2s;
+}
+
+.adduser-upload-btn:hover {
+  background: #f8fafc;
+  border-color: #16c784;
 }
 
 /* ================= PERMISSIONS ================= */
@@ -401,6 +439,12 @@
   font-size: 14px;
   color: #475569;
   cursor: pointer;
+  transition: all 0.2s;
+}
+
+.adduser-btn-cancel:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
 }
 
 .adduser-btn-save {
@@ -416,6 +460,13 @@
   align-items: center;
   gap: 8px;
   cursor: pointer;
+  transition: all 0.2s;
+}
+
+.adduser-btn-save:hover {
+  background: #12a86b;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(22, 199, 132, 0.3);
 }
 
 /* ===================================================== */
