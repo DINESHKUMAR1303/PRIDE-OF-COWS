@@ -1,0 +1,131 @@
+.manage-user-page {
+  padding: 24px;
+  background: #f8fafc;
+  height: 100%;
+}
+
+.manage-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.manage-subtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 16px;
+}
+
+.manage-table-wrapper {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+  overflow-x: auto;
+}
+
+.manage-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.manage-table thead th {
+  text-align: left;
+  padding: 12px;
+  color: #64748b;
+  font-weight: 600;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.manage-table tbody td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.manage-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+/* Avatar */
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #334155;
+  overflow: hidden;
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Email */
+.email {
+  color: #64748b;
+}
+
+/* Permissions */
+.permission-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.badge {
+  background: #0f172a;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+}
+
+/* Actions */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btn.edit {
+  background: #fde68a;
+  color: #92400e;
+}
+
+.btn.view {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.btn.delete {
+  background: #fecaca;
+  color: #7f1d1d;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.no-data {
+  text-align: center;
+  padding: 24px;
+  color: #94a3b8;
+}

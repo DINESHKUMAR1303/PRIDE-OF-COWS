@@ -27,15 +27,18 @@ const AdminLayout = () => {
   const location = useLocation();
 
   // User Module submenu state
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(
+    location.pathname.includes("/admin/users")
+  );
+
   // Mobile sidebar toggle state
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
 
   // ✅ AUTO-CLOSE SIDEBAR ON ROUTE CHANGE (FIX)
-useEffect(() => {
-  setSidebarOpen(false);
-}, [location.pathname]);
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [location.pathname]);
 
 
   const handleLogout = () => {
@@ -50,7 +53,7 @@ useEffect(() => {
     <div className="admin-dashboard">
       <div className="dashboard-wrapper">
 
-        
+
 
         {/* Sidebar with mobile open/close */}
         <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
@@ -102,12 +105,13 @@ useEffect(() => {
                     <span>Add User</span>
                   </button>
                   <button
-                    className={`submenu-item ${location.pathname === "/admin/users" ? "active" : ""}`}
-                    onClick={() => { navigate("/admin/users"); closeSidebar(); }}
+                    className={`submenu-item ${location.pathname === "/admin/users/manage" ? "active" : ""}`}
+                    onClick={() => { navigate("/admin/users/manage"); closeSidebar(); }}
                   >
                     <UserCog size={16} />
                     <span>Manage User</span>
                   </button>
+
                 </div>
               )}
             </div>
@@ -175,25 +179,25 @@ useEffect(() => {
         </aside>
 
         {/* Overlay when sidebar is open on mobile */}
-       <div
-  className={`mobile-overlay ${sidebarOpen ? "active" : ""}`}
-  onClick={closeSidebar}
-/>
+        <div
+          className={`mobile-overlay ${sidebarOpen ? "active" : ""}`}
+          onClick={closeSidebar}
+        />
 
 
 
-{/* ✅ ADMIN NAVBAR — OUTSIDE SCROLL CONTAINER */}
-<AdminNavbar
-  onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
-  isSidebarOpen={sidebarOpen}
-/>
+        {/* ✅ ADMIN NAVBAR — OUTSIDE SCROLL CONTAINER */}
+        <AdminNavbar
+          onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
+          isSidebarOpen={sidebarOpen}
+        />
 
-{/* ✅ ONLY CONTENT SCROLLS */}
-<main className="main-content">
-  <div className="main-content-inner">
-    <Outlet />
-  </div>
-</main>
+        {/* ✅ ONLY CONTENT SCROLLS */}
+        <main className="main-content">
+          <div className="main-content-inner">
+            <Outlet />
+          </div>
+        </main>
 
 
       </div>

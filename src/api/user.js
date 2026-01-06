@@ -2,56 +2,64 @@
 import axios from "axios";
 
 /* ============================================================
-   ⭐ BASE URL FOR USER ROUTES (Correct: /api/user)
+   ⭐ BASE INSTANCES
 ============================================================ */
-const API = axios.create({
+
+// User APIs
+const USER_API = axios.create({
   baseURL: "http://localhost:5000/api/user",
 });
 
-/* ============================================================
-   ⭐ INTERCEPTOR → Automatically attach token
-============================================================ */
-API.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem("poc_token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+// Admin Staff APIs
+const STAFF_API = axios.create({
+  baseURL: "http://localhost:5000/api/admin/staff",
+});
 
 /* ============================================================
-   ⭐ GET USER PROFILE
-   GET /api/user/profile
+   ⭐ INTERCEPTOR → Attach JWT token automatically
 ============================================================ */
+const attachToken = (config) => {
+  const token = localStorage.getItem("poc_token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+};
+
+USER_API.interceptors.request.use(attachToken, Promise.reject);
+STAFF_API.interceptors.request.use(attachToken, Promise.reject);
+
+/* ============================================================
+   ⭐ USER APIs
+============================================================ */
+
+/**
+ * GET /api/user/profile
+ */
 export const getUserProfile = async () => {
   try {
-    const res = await API.get("/profile");
+    const res = await USER_API.get("/profile");
     return res.data;
   } catch (err) {
     throw err.response?.data || { message: "Failed to fetch user profile" };
   }
 };
 
-/* ============================================================
-   ⭐ GET USER ADDRESS
-   GET /api/user/address
-============================================================ */
+/**
+ * GET /api/user/address
+ */
 export const getUserAddress = async () => {
   try {
-    const res = await API.get("/address");
+    const res = await USER_API.get("/address");
     return res.data;
   } catch (err) {
     throw err.response?.data || { message: "Failed to fetch address" };
   }
 };
 
-/* ============================================================
-   ⭐ UPDATE USER ADDRESS
-   PUT /api/user/address
-============================================================ */
+/**
+ * PUT /api/user/address
+ */
 export const updateAddress = async (addressData) => {
   try {
     const payload = {
@@ -64,12 +72,48 @@ export const updateAddress = async (addressData) => {
       pincode: addressData.pincode?.trim(),
     };
 
-    const res = await API.put("/address", payload);
+    const res = await USER_API.put("/address", payload);
     return res.data;
-
   } catch (err) {
     throw err.response?.data || { message: "Failed to update address" };
   }
 };
 
-export default API;
+/* ============================================================
+   ⭐ ADMIN PANEL → STAFF APIs
+============================================================ */
+
+/**
+ * POST /api/admin/staff/create
+ * Create new staff (Add User form)
+ */
+export const createStaff = async (formData) => {
+  try {
+    const res = await STAFF_API.post("/create", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return res.data;
+  } catch (err) {
+    throw err.response?.data || { message: "Failed to create staff" };
+  }
+};
+
+/**
+ * GET /api/admin/staff/list
+ * Fetch all staff (Manage User table)
+ */
+export const fetchStaff = async () => {
+  try {
+    const res = await STAFF_API.get("/list");
+    return res.data;
+  } catch (err) {
+    throw err.response?.data || { message: "Failed to fetch staff list" };
+  }
+};
+
+/* ============================================================
+   ⭐ EXPORT DEFAULT USER API INSTANCE (optional)
+============================================================ */
+export default USER_API;

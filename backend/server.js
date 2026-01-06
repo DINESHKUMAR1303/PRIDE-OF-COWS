@@ -1,53 +1,57 @@
 // backend/server.js
 
 import express from "express";
-import mongoose from "mongoose";         
+import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
+
 import connectDB from "./config/db.js";
 
-// Route Imports
+// ================= ROUTE IMPORTS =================
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import staffRoutes from "./routes/staffRoutes.js"; // ✅ NEW
 
-// Load environment variables
+// ================= CONFIG =================
 dotenv.config();
 
-// Connect MongoDB
-await connectDB();                         // ✅ ensure DB connects first
+// Fix __dirname for ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// ✅ LOG CONNECTED DATABASE NAME (VERY IMPORTANT)
+// ================= DB CONNECTION =================
+await connectDB(); // ✅ ensure DB connects first
+
 mongoose.connection.once("open", () => {
   console.log(`📦 Connected MongoDB Database: ${mongoose.connection.name}`);
 });
 
 const app = express();
 
-/* ============================================================
-   ⭐ GLOBAL MIDDLEWARES
-============================================================ */
+// ================= GLOBAL MIDDLEWARES =================
 app.use(
   cors({
-    origin: "*", // change in production
+    origin: "*", // 🔒 change in production
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 
 app.use(express.json());
 
-/* ============================================================
-   ⭐ REQUEST LOGGER
-============================================================ */
+// ================= STATIC FILES (IMAGE UPLOADS) =================
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// ================= REQUEST LOGGER =================
 app.use((req, res, next) => {
   console.log(`➡️  ${req.method} ${req.url}`);
   next();
 });
 
-/* ============================================================
-   ⭐ API ROUTES
-============================================================ */
+// ================= API ROUTES =================
 
 // Auth routes
 app.use("/api/auth", authRoutes);
@@ -61,31 +65,26 @@ app.use("/api/orders", orderRoutes);
 // Admin routes (Dashboard)
 app.use("/api/admin", adminRoutes);
 
-/* ============================================================
-   ⭐ ROOT ROUTE
-============================================================ */
+// ✅ STAFF ROUTES (ADMIN PANEL)
+app.use("/api/admin/staff", staffRoutes);
+
+// ================= ROOT ROUTE =================
 app.get("/", (req, res) => {
   res.send("🚀 Pride of Cows API is running...");
 });
 
-/* ============================================================
-   ⭐ 404 HANDLER
-============================================================ */
+// ================= 404 HANDLER =================
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
 
-/* ============================================================
-   ⭐ GLOBAL ERROR HANDLER
-============================================================ */
+// ================= GLOBAL ERROR HANDLER =================
 app.use((err, req, res, next) => {
   console.error("❌ SERVER ERROR:", err);
   res.status(500).json({ message: "Internal Server Error" });
 });
 
-/* ============================================================
-   ⭐ START SERVER
-============================================================ */
+// ================= START SERVER =================
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

@@ -16,6 +16,8 @@ import {
   Hash
 } from "lucide-react";
 import "./AddUser.css";
+import { createStaff } from "../../api/user";
+
 
 const AddUser = () => {
   const [showSuccess, setShowSuccess] = useState(false);
@@ -148,13 +150,36 @@ const AddUser = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!validateForm()) return;
 
+  try {
+    // 🔥 CREATE FORM DATA FOR BACKEND
+    const payload = new FormData();
+    payload.append("userId", formData.userId);
+    payload.append("name", formData.name);
+    payload.append("email", formData.email);
+    payload.append("contact", formData.contact);
+    payload.append("designation", formData.designation);
+    payload.append("password", formData.password);
+    payload.append(
+      "departments",
+      JSON.stringify(selectedDepartments)
+    );
+
+    if (selectedImage) {
+      payload.append("profileImage", selectedImage);
+    }
+
+    // 🔥 SAVE TO MONGODB
+    await createStaff(payload);
+
+    // ✅ SHOW SUCCESS
     setShowSuccess(true);
     setTimeout(() => setShowSuccess(false), 4000);
 
+    // ✅ RESET FORM
     setTimeout(() => {
       setUserCounter((prev) => prev + 1);
       setFormData({
@@ -171,7 +196,12 @@ const AddUser = () => {
       setSelectedImage(null);
       setImagePreview(null);
     }, 4500);
-  };
+
+  } catch (error) {
+    alert(error.message || "Failed to save user");
+  }
+};
+
 
   const handleCancel = () => {
     setFormData({
