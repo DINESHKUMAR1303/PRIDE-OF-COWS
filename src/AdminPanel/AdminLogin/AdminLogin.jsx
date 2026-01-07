@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Mail, Lock, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import "./AdminLogin.css";
 
 import loginBg from "./images/admin.png";
@@ -81,8 +82,8 @@ const AdminLogin = ({ onLoginSuccess }) => {
                   Pure & Fresh.
                 </h1>
                 <p className="pride-description">
-                  Manage orders, inventory, and customer relationships<br />
-                  from one central hub.
+                  Manage orders, inventory, and customer<br />
+                  relationships from one central hub.
                 </p>
               </div>
             </div>
@@ -101,14 +102,17 @@ const AdminLogin = ({ onLoginSuccess }) => {
               <form onSubmit={handleLogin} className="pride-login-form">
                 <div className="pride-input-group">
                   <label htmlFor="admin-email">Email Address</label>
-                  <input
-                    id="admin-email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="admin@prideofcows.com"
-                    required
-                  />
+                  <div className="pride-input-with-icon">
+                    <input
+                      id="admin-email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="admin@prideofcows.com"
+                      required
+                    />
+                    <Mail className="input-icon" size={18} />
+                  </div>
                 </div>
 
                 <div className="pride-input-group">
@@ -117,7 +121,7 @@ const AdminLogin = ({ onLoginSuccess }) => {
                     <span className="pride-forgot-link">Forgot Password?</span>
                   </div>
 
-                  <div className="pride-password-input">
+                  <div className="pride-input-with-icon">
                     <input
                       id="admin-password"
                       type={showPassword ? "text" : "password"}
@@ -132,7 +136,7 @@ const AdminLogin = ({ onLoginSuccess }) => {
                       onClick={() => setShowPassword(!showPassword)}
                       aria-label="Toggle password visibility"
                     >
-                      {showPassword ? "🙈" : "👁️"}
+                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
                   </div>
                 </div>
@@ -150,7 +154,8 @@ const AdminLogin = ({ onLoginSuccess }) => {
                 className="pride-return-link"
                 onClick={() => navigate("/")}
               >
-                ← Return to Store
+                <ArrowLeft size={16} />
+                Return to Store
               </div>
             </div>
           </div>

@@ -1,43 +1,56 @@
-/* ROOT WRAPPER - FULLY SCOPED */
-.pride-admin-login {
-  height: 100vh;
+/* ROOT WRAPPER - CLEAN DESKTOP PAGE */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
   overflow: hidden;
   background: #f8fafc;
+  /* Professional light background */
+}
+
+.pride-admin-login {
+  height: 100vh;
+  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 40px;
+  /* Exact equal gaps on all sides */
+  box-sizing: border-box;
 }
 
 .pride-login-container {
   width: 100%;
-  max-width: 1200px;
-  padding: 24px;
-  height: 100%;
+  max-width: 1080px;
+  /* Optimized desktop width from reference */
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: 24px;
+  align-items: center;
 }
 
 .pride-login-card {
   background: white;
-  border-radius: 24px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
   display: grid;
   grid-template-columns: 1fr 1fr;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+  /* Sophisticated subtle shadow */
+  height: 600px;
+  /* Precise height from desktop structure */
   width: 100%;
-  max-width: 1200px;
-  height: 100%;
-  max-height: calc(100vh - 48px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* LEFT PANEL */
+/* LEFT PANEL - BRANDING (Dark Contrast remains for premium feel) */
 .pride-brand-panel {
-  height: 100%;
   position: relative;
+  background: #131811;
   color: white;
-  display: none;
+  overflow: hidden;
 }
 
 .pride-bg-image {
@@ -46,7 +59,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  opacity: 0.6;
   z-index: 1;
 }
 
@@ -54,29 +67,26 @@
   position: relative;
   z-index: 2;
   height: 100%;
-  padding: 48px;
-  box-sizing: border-box;
+  padding: 60px 50px 80px 50px;
+  /* Precise text-up alignment */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: linear-gradient(
-    135deg,
-    rgba(0,0,0,0.65),
-    rgba(0,0,0,0.35)
-  );
+  background: linear-gradient(to top, #131811 0%, transparent 60%);
+  box-sizing: border-box;
 }
 
 .pride-logo-section {
   display: flex;
   align-items: center;
-  padding-top: 60px;
-  gap: 16px;
+  gap: 12px;
 }
 
 .pride-logo-circle {
-  width: 56px;
-  height: 56px;
-  background: transparent;
+  width: 44px;
+  height: 44px;
+  background: #5fe633;
+  /* Corporate green brand color */
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -85,66 +95,59 @@
 }
 
 .pride-logo-circle img {
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  /* Exact crown size */
+  height: 26px;
+  object-fit: contain;
 }
 
 .pride-brand-title {
   font-size: 22px;
   font-weight: 700;
+  letter-spacing: -0.025em;
 }
 
 .pride-tagline-section h1.pride-tagline {
-  font-size: 40px;
+  font-size: 32px;
   font-weight: 800;
-  line-height: 1.2;
-  margin: 0 0 20px 0;
-  letter-spacing: -0.5px;
+  line-height: 1.15;
+  margin-bottom: 20px;
 }
 
 .pride-description {
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.6;
-  opacity: 0.95;
-  max-width: 380px;
+  color: #a4b89d;
+  /* Text-muted color from spec */
+  max-width: 320px;
 }
 
-/* RIGHT PANEL */
+/* RIGHT PANEL - FORM */
 .pride-form-panel {
-  padding: 60px 48px;
+  padding: 60px 80px;
+  /* Balanced desktop form spacing */
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  overflow-y: auto;
+  background: white;
 }
 
 .pride-form-box {
   width: 100%;
-  max-width: 420px;
+  max-width: 360px;
 }
 
 .pride-form-heading {
   font-size: 32px;
-  font-weight: 700;
+  font-weight: 800;
   color: #0f172a;
-  margin: 0 0 8px 0;
+  margin-bottom: 8px;
 }
 
 .pride-form-subheading {
   color: #64748b;
   font-size: 15px;
-  margin-bottom: 36px;
-}
-
-.pride-error-message {
-  background: #fef2f2;
-  color: #ef4444;
-  padding: 14px 18px;
-  border-radius: 10px;
-  border-left: 4px solid #ef4444;
-  font-size: 14px;
-  margin-bottom: 24px;
+  margin-bottom: 40px;
 }
 
 .pride-login-form {
@@ -153,719 +156,158 @@
   gap: 24px;
 }
 
+.pride-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .pride-input-group label {
-  display: block;
   font-size: 14px;
   font-weight: 600;
-  color: #374151;
-  margin-bottom: 8px;
+  color: #1e293b;
 }
 
-.pride-input-group input {
+.pride-input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.pride-input-with-icon input {
+  height: 52px;
   width: 100%;
-  height: 56px;
-  padding: 0 18px;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 14px;
+  padding: 0 45px 0 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
   font-size: 15px;
+  background: #f8fafc;
+  transition: all 0.2s ease;
   box-sizing: border-box;
-  transition: all 0.2s;
 }
 
-.pride-input-group input:focus {
+.pride-input-with-icon input:focus {
   outline: none;
-  border-color: #22c55e;
-  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.15);
+  border-color: #5fe633;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(95, 230, 51, 0.1);
 }
 
-.pride-input-group input::placeholder {
+.input-icon {
+  position: absolute;
+  right: 16px;
+  top: 40%;
+  transform: translateY(-50%);
   color: #94a3b8;
+  display: flex;
+  align-items: center;
 }
 
 .pride-password-label {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
+  align-items: baseline;
 }
 
 .pride-forgot-link {
-  color: #22c55e;
+  color: #5fe633;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
 }
 
 .pride-forgot-link:hover {
   text-decoration: underline;
 }
 
-.pride-password-input {
-  position: relative;
-}
-
-.pride-password-input input {
-  height: 56px;
-  padding-right: 56px;
-}
-
 .pride-toggle-eye {
   position: absolute;
-  right: 16px;
-  top: 50%;
+  right: 12px;
+  top: 40%;
   transform: translateY(-50%);
-  height: 24px;
-  width: 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 8px;
+  color: #94a3b8;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-  opacity: 0.6;
-  transition: opacity 0.2s;
+  transition: color 0.2s;
 }
 
 .pride-toggle-eye:hover {
-  opacity: 1;
+  color: #0f172a;
 }
 
 .pride-login-btn {
-  height: 56px;
-  background: #22c55e;
-  color: white;
-  font-size: 16px;
-  font-weight: 700;
+  height: 54px;
+  background: #5fe633;
+  color: #131811;
   border: none;
-  border-radius: 14px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 800;
   cursor: pointer;
   margin-top: 12px;
-  transition: all 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.pride-login-btn:hover:not(:disabled) {
-  background: #16a34a;
+.pride-login-btn:hover {
+  background: #4dd62b;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
-}
-
-.pride-login-btn:active:not(:disabled) {
-  transform: translateY(0);
-}
-
-.pride-login-btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
+  box-shadow: 0 10px 15px -3px rgba(95, 230, 51, 0.3);
 }
 
 .pride-return-link {
-  text-align: center;
-  margin-top: 32px;
+  margin-top: 40px;
   padding-top: 24px;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #64748b;
   font-size: 14px;
+  gap: 10px;
   cursor: pointer;
   transition: color 0.2s;
 }
 
 .pride-return-link:hover {
-  color: #22c55e;
+  color: #0f172a;
 }
 
 .pride-login-footer {
   text-align: center;
-  margin-top: 12px;
+  font-size: 12px;
   color: #94a3b8;
-  font-size: 13px;
 }
 
-/* TABLET LANDSCAPE (1024px - 1200px) */
-@media (max-width: 1200px) {
-  .pride-login-card {
-    max-width: 1024px;
-  }
-
-  .pride-brand-overlay {
-    padding: 40px;
-  }
-
-  .pride-tagline-section h1.pride-tagline {
-    font-size: 36px;
-  }
-
-  .pride-form-panel {
-    padding: 48px 40px;
-  }
+.pride-error-message {
+  background: #fef2f2;
+  color: #ef4444;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 24px;
+  border: 1px solid #fee2e2;
 }
 
-/* TABLET (768px - 1024px) */
-@media (max-width: 1024px) {
-  .pride-login-card {
-    grid-template-columns: 0.8fr 1.5fr;
-    max-height: calc(100vh - 32px);
-  }
-
-  .pride-brand-panel {
-    display: block;
-  }
-
-  .pride-login-container {
-    padding: 16px;
-  }
-
-  .pride-brand-overlay {
-    padding: 24px 16px;
-    justify-content: center;
-  }
-
-  .pride-logo-section {
-    padding-top: 0;
-    flex-direction: row;
-    justify-content: center;
-    text-align: center;
-  }
-
-  .pride-logo-circle {
-    width: 48px;
-    height: 48px;
-  }
-
-  .pride-logo-circle img {
-    width: 28px;
-    height: 28px;
-  }
-
-  .pride-brand-title {
-    font-size: 16px;
-  }
-
-  .pride-tagline-section {
-    display: none;
-  }
-
-  .pride-form-panel {
-    padding: 32px 28px;
-  }
-
-  .pride-form-heading {
-    font-size: 26px;
-  }
-
-  .pride-form-subheading {
-    font-size: 13px;
-    margin-bottom: 24px;
-  }
-
-  .pride-login-form {
-    gap: 18px;
-  }
-
-  .pride-input-group input {
-    height: 50px;
-  }
-
-  .pride-password-input input {
-    height: 50px;
-  }
-
-  .pride-login-btn {
-    height: 50px;
-    font-size: 15px;
-  }
-}
-
-/* MOBILE LANDSCAPE (640px - 768px) */
-@media (max-width: 768px) {
+/* RESPONSIVE */
+@media (max-width: 960px) {
   .pride-admin-login {
-    height: 100vh;
+    height: auto;
+    min-height: 100vh;
+    padding: 24px;
+    overflow: auto;
   }
 
   .pride-login-card {
     grid-template-columns: 1fr;
-    border-radius: 20px;
-    max-height: calc(100vh - 32px);
+    max-width: 480px;
+    height: auto;
   }
 
   .pride-brand-panel {
-    display: block;
-    height: auto;
-    min-height: 100px;
-  }
-
-  .pride-brand-overlay {
-    padding: 16px 20px;
-    justify-content: center;
-  }
-
-  .pride-logo-section {
-    padding-top: 0;
-    flex-direction: row;
-    justify-content: center;
-    gap: 12px;
-  }
-
-  .pride-logo-circle {
-    width: 44px;
-    height: 44px;
-  }
-
-  .pride-logo-circle img {
-    width: 26px;
-    height: 26px;
-  }
-
-  .pride-brand-title {
-    font-size: 18px;
-  }
-
-  .pride-tagline-section {
     display: none;
   }
-
-  .pride-form-panel {
-    padding: 32px 32px;
-  }
-
-  .pride-form-heading {
-    font-size: 28px;
-  }
-
-  .pride-form-subheading {
-    font-size: 14px;
-    margin-bottom: 28px;
-  }
-
-  .pride-login-form {
-    gap: 20px;
-  }
-
-  .pride-input-group input {
-    height: 52px;
-    font-size: 14px;
-  }
-
-  .pride-password-input input {
-    height: 52px;
-    padding-right: 52px;
-  }
-
-  .pride-login-btn {
-    height: 52px;
-    font-size: 15px;
-  }
-
-  .pride-return-link {
-    margin-top: 28px;
-    padding-top: 20px;
-    font-size: 13px;
-  }
-
-  .pride-login-footer {
-    font-size: 12px;
-    margin-top: 8px;
-  }
 }
-
-/* MOBILE PORTRAIT (480px - 640px) */
-@media (max-width: 640px) {
-  .pride-login-container {
-    padding: 12px;
-  }
-
-  .pride-login-card {
-    border-radius: 16px;
-  }
-
-  .pride-brand-panel {
-    min-height: 85px;
-  }
-
-  .pride-brand-overlay {
-    padding: 14px 16px;
-  }
-
-  .pride-logo-section {
-    flex-direction: row;
-    gap: 10px;
-  }
-
-  .pride-logo-circle {
-    width: 40px;
-    height: 40px;
-  }
-
-  .pride-logo-circle img {
-    width: 24px;
-    height: 24px;
-  }
-
-  .pride-brand-title {
-    font-size: 16px;
-  }
-
-  .pride-form-panel {
-    padding: 28px 24px;
-  }
-
-  .pride-form-heading {
-    font-size: 26px;
-  }
-
-  .pride-form-subheading {
-    font-size: 13px;
-    margin-bottom: 24px;
-  }
-
-  .pride-error-message {
-    padding: 12px 16px;
-    font-size: 13px;
-    margin-bottom: 20px;
-  }
-
-  .pride-login-form {
-    gap: 18px;
-  }
-
-  .pride-input-group label {
-    font-size: 13px;
-    margin-bottom: 6px;
-  }
-
-  .pride-input-group input {
-    height: 50px;
-    padding: 0 16px;
-    font-size: 14px;
-    border-radius: 12px;
-  }
-
-  .pride-password-input input {
-    height: 50px;
-    padding-right: 50px;
-  }
-
-  .pride-toggle-eye {
-    right: 14px;
-    font-size: 16px;
-  }
-
-  .pride-password-label {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .pride-forgot-link {
-    font-size: 12px;
-  }
-
-  .pride-login-btn {
-    height: 50px;
-    font-size: 15px;
-    border-radius: 12px;
-    margin-top: 8px;
-  }
-
-  .pride-return-link {
-    margin-top: 24px;
-    padding-top: 18px;
-    font-size: 13px;
-  }
-}
-
-/* SMALL MOBILE (320px - 480px) */
-@media (max-width: 480px) {
-  .pride-admin-login {
-    background: white;
-  }
-
-  .pride-login-container {
-    padding: 8px;
-  }
-
-  .pride-login-card {
-    border-radius: 12px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-  }
-
-  .pride-brand-panel {
-    min-height: 75px;
-  }
-
-  .pride-brand-overlay {
-    padding: 12px 14px;
-  }
-
-  .pride-logo-section {
-    flex-direction: row;
-    gap: 10px;
-  }
-
-  .pride-logo-circle {
-    width: 36px;
-    height: 36px;
-  }
-
-  .pride-logo-circle img {
-    width: 22px;
-    height: 22px;
-  }
-
-  .pride-brand-title {
-    font-size: 15px;
-  }
-
-  .pride-form-panel {
-    padding: 20px 20px;
-  }
-
-  .pride-form-heading {
-    font-size: 24px;
-  }
-
-  .pride-form-subheading {
-    font-size: 13px;
-    margin-bottom: 20px;
-  }
-
-  .pride-error-message {
-    padding: 10px 14px;
-    font-size: 12px;
-    border-radius: 8px;
-  }
-
-  .pride-login-form {
-    gap: 16px;
-  }
-
-  .pride-input-group label {
-    font-size: 12px;
-  }
-
-  .pride-input-group input {
-    height: 48px;
-    padding: 0 14px;
-    font-size: 14px;
-    border-radius: 10px;
-  }
-
-  .pride-password-input input {
-    height: 48px;
-    padding-right: 48px;
-  }
-
-  .pride-toggle-eye {
-    right: 12px;
-    font-size: 16px;
-    width: 20px;
-    height: 20px;
-  }
-
-  .pride-login-btn {
-    height: 48px;
-    font-size: 14px;
-    border-radius: 10px;
-  }
-
-  .pride-return-link {
-    margin-top: 20px;
-    padding-top: 16px;
-    font-size: 12px;
-  }
-
-  .pride-login-footer {
-    font-size: 11px;
-    margin-top: 6px;
-  }
-}
-
-/* EXTRA SMALL MOBILE (Below 375px) */
-@media (max-width: 375px) {
-  .pride-brand-panel {
-    min-height: 70px;
-  }
-
-  .pride-brand-overlay {
-    padding: 10px 12px;
-  }
-
-  .pride-logo-section {
-    gap: 8px;
-  }
-
-  .pride-logo-circle {
-    width: 32px;
-    height: 32px;
-  }
-
-  .pride-logo-circle img {
-    width: 20px;
-    height: 20px;
-  }
-
-  .pride-brand-title {
-    font-size: 14px;
-  }
-
-  .pride-form-panel {
-    padding: 20px 16px;
-  }
-
-  .pride-form-heading {
-    font-size: 22px;
-  }
-
-  .pride-form-subheading {
-    font-size: 12px;
-  }
-
-  .pride-input-group input {
-    height: 46px;
-    font-size: 13px;
-  }
-
-  .pride-password-input input {
-    height: 46px;
-  }
-
-  .pride-login-btn {
-    height: 46px;
-    font-size: 14px;
-  }
-}
-
-/* SHOW BRAND PANEL ON LARGE TABLETS AND ABOVE */
-@media (min-width: 768px) {
-  .pride-brand-panel {
-    display: block;
-  }
-}
-
-/* LANDSCAPE ORIENTATION FOR MOBILE */
-@media (max-height: 600px) and (orientation: landscape) {
-  .pride-admin-login {
-    height: auto;
-    min-height: 100vh;
-  }
-
-  .pride-login-container {
-    height: auto;
-    padding: 16px;
-  }
-
-  .pride-login-card {
-    max-height: none;
-    height: auto;
-  }
-
-  .pride-brand-panel {
-    min-height: 80px;
-  }
-
-  .pride-brand-overlay {
-    padding: 12px;
-  }
-
-  .pride-logo-section {
-    flex-direction: row;
-    gap: 8px;
-  }
-
-  .pride-logo-circle {
-    width: 32px;
-    height: 32px;
-  }
-
-  .pride-logo-circle img {
-    width: 20px;
-    height: 20px;
-  }
-
-  .pride-brand-title {
-    font-size: 14px;
-  }
-
-  .pride-form-panel {
-    padding: 24px 32px;
-    overflow-y: visible;
-  }
-
-  .pride-form-heading {
-    font-size: 24px;
-    margin-bottom: 4px;
-  }
-
-  .pride-form-subheading {
-    margin-bottom: 16px;
-  }
-
-  .pride-login-form {
-    gap: 12px;
-  }
-
-  .pride-input-group input,
-  .pride-password-input input,
-  .pride-login-btn {
-    height: 44px;
-  }
-
-  .pride-return-link {
-    margin-top: 16px;
-    padding-top: 12px;
-  }
-
-  .pride-login-footer {
-    margin-top: 8px;
-  }
-}
-
-/* HIGH DPI SCREENS */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .pride-login-card {
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
-  }
-
-  .pride-input-group input {
-    border-width: 1px;
-  }
-}
-
-/* DARK MODE SUPPORT (Optional) */
-@media (prefers-color-scheme: dark) {
-  .pride-admin-login {
-    background: #0f172a;
-  }
-
-  .pride-login-card {
-    background: #1e293b;
-  }
-
-  .pride-form-heading {
-    color: #f1f5f9;
-  }
-
-  .pride-form-subheading {
-    color: #94a3b8;
-  }
-
-  .pride-input-group label {
-    color: #e2e8f0;
-  }
-
-  .pride-input-group input {
-    background: #0f172a;
-    border-color: #334155;
-    color: #f1f5f9;
-  }
-
-  .pride-input-group input:focus {
-    background: #1e293b;
-  }
-
-  .pride-return-link {
-    border-top-color: #334155;
-
-  }
-} 
