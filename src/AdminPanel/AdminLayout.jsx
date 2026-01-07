@@ -26,6 +26,41 @@ const AdminLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [adminUser, setAdminUser] = useState({
+    name: "Admin User",
+    designation: "Super Admin",
+    departments: [],
+    profileImage: ""
+  });
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("admin_user");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        // Ensure departments is an array (handle potential stringified JSON from DB)
+        if (typeof parsed.departments === 'string') {
+          parsed.departments = JSON.parse(parsed.departments);
+        }
+        setAdminUser(parsed);
+      }
+    } catch (err) {
+      console.error("Failed to load admin user", err);
+    }
+  }, []);
+
+  // Check permissions
+  const hasPermission = (dept) => {
+    // ⭐ BYPASS: If user is "Administrator" or "Super Admin", give full access
+    if (adminUser.designation === "Administrator" || adminUser.designation === "Super Admin") {
+      return true;
+    }
+
+    // Otherwise, check strict permissions
+    if (!adminUser.departments || adminUser.departments.length === 0) return false;
+    return adminUser.departments.includes(dept);
+  };
+
   // User Module submenu state
   const [userMenuOpen, setUserMenuOpen] = useState(
     location.pathname.includes("/admin/users")
@@ -43,6 +78,7 @@ const AdminLayout = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("admin_token");
+    localStorage.removeItem("admin_user");
     navigate("/admin", { replace: true });
     setSidebarOpen(false); // Close sidebar on logout
   };
@@ -74,101 +110,125 @@ const AdminLayout = () => {
 
           <nav className="sidebar-nav">
             {/* Dashboard */}
-            <button
-              className={`nav-item ${location.pathname === "/admin/dashboard" ? "active" : ""}`}
-              onClick={() => { navigate("/admin/dashboard"); closeSidebar(); }}
-            >
-              <LayoutGrid size={20} />
-              <span>Dashboard</span>
-            </button>
+            {hasPermission("Dashboard") && (
+              <button
+                className={`nav-item ${location.pathname === "/admin/dashboard" ? "active" : ""}`}
+                onClick={() => { navigate("/admin/dashboard"); closeSidebar(); }}
+              >
+                <LayoutGrid size={20} />
+                <span>Dashboard</span>
+              </button>
+            )}
 
             {/* User Module */}
-            <div className={`user-module ${userMenuOpen ? "open" : ""}`}>
-              <button
-                className={`nav-item user-module-btn ${location.pathname.includes("/admin/users") ? "active" : ""}`}
-                onClick={() => setUserMenuOpen(!userMenuOpen)}
-              >
-                <div className="user-module-left">
-                  <Users size={20} />
-                  <span>User Module</span>
-                </div>
-                <ChevronRight size={18} className="chevron" />
-              </button>
+            {hasPermission("User Module") && (
+              <div className={`user-module ${userMenuOpen ? "open" : ""}`}>
+                <button
+                  className={`nav-item user-module-btn ${location.pathname.includes("/admin/users") ? "active" : ""}`}
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                >
+                  <div className="user-module-left">
+                    <Users size={20} />
+                    <span>User Module</span>
+                  </div>
+                  <ChevronRight size={18} className="chevron" />
+                </button>
 
-              {userMenuOpen && (
-                <div className="user-submenu">
-                  <button
-                    className={`submenu-item ${location.pathname === "/admin/users/add" ? "active" : ""}`}
-                    onClick={() => { navigate("/admin/users/add"); closeSidebar(); }}
-                  >
-                    <UserPlus size={16} />
-                    <span>Add User</span>
-                  </button>
-                  <button
-                    className={`submenu-item ${location.pathname === "/admin/users/manage" ? "active" : ""}`}
-                    onClick={() => { navigate("/admin/users/manage"); closeSidebar(); }}
-                  >
-                    <UserCog size={16} />
-                    <span>Manage User</span>
-                  </button>
+                {userMenuOpen && (
+                  <div className="user-submenu">
+                    <button
+                      className={`submenu-item ${location.pathname === "/admin/users/add" ? "active" : ""}`}
+                      onClick={() => { navigate("/admin/users/add"); closeSidebar(); }}
+                    >
+                      <UserPlus size={16} />
+                      <span>Add User</span>
+                    </button>
+                    <button
+                      className={`submenu-item ${location.pathname === "/admin/users/manage" ? "active" : ""}`}
+                      onClick={() => { navigate("/admin/users/manage"); closeSidebar(); }}
+                    >
+                      <UserCog size={16} />
+                      <span>Manage User</span>
+                    </button>
 
-                </div>
-              )}
-            </div>
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Product */}
-            <button
-              className={`nav-item ${location.pathname.includes("/admin/products") ? "active" : ""}`}
-              onClick={() => { navigate("/admin/products"); closeSidebar(); }}
-            >
-              <Package size={20} />
-              <span>Product</span>
-            </button>
+            {hasPermission("Product") && (
+              <button
+                className={`nav-item ${location.pathname.includes("/admin/products") ? "active" : ""}`}
+                onClick={() => { navigate("/admin/products"); closeSidebar(); }}
+              >
+                <Package size={20} />
+                <span>Product</span>
+              </button>
+            )}
 
             {/* Customers */}
-            <button
-              className={`nav-item ${location.pathname.includes("/admin/customers") ? "active" : ""}`}
-              onClick={() => { navigate("/admin/customers"); closeSidebar(); }}
-            >
-              <UserCheck size={20} />
-              <span>Customers</span>
-            </button>
+            {hasPermission("Customers") && (
+              <button
+                className={`nav-item ${location.pathname.includes("/admin/customers") ? "active" : ""}`}
+                onClick={() => { navigate("/admin/customers"); closeSidebar(); }}
+              >
+                <UserCheck size={20} />
+                <span>Customers</span>
+              </button>
+            )}
 
             {/* Booking */}
-            <button
-              className={`nav-item ${location.pathname.includes("/admin/booking") ? "active" : ""}`}
-              onClick={() => { navigate("/admin/booking"); closeSidebar(); }}
-            >
-              <CalendarCheck size={20} />
-              <span>Booking</span>
-            </button>
+            {hasPermission("Booking") && (
+              <button
+                className={`nav-item ${location.pathname.includes("/admin/booking") ? "active" : ""}`}
+                onClick={() => { navigate("/admin/booking"); closeSidebar(); }}
+              >
+                <CalendarCheck size={20} />
+                <span>Booking</span>
+              </button>
+            )}
 
             {/* Reports */}
-            <button
-              className={`nav-item ${location.pathname.includes("/admin/reports") ? "active" : ""}`}
-              onClick={() => { navigate("/admin/reports"); closeSidebar(); }}
-            >
-              <BarChart3 size={20} />
-              <span>Reports</span>
-            </button>
+            {hasPermission("Reports") && (
+              <button
+                className={`nav-item ${location.pathname.includes("/admin/reports") ? "active" : ""}`}
+                onClick={() => { navigate("/admin/reports"); closeSidebar(); }}
+              >
+                <BarChart3 size={20} />
+                <span>Reports</span>
+              </button>
+            )}
 
             {/* Settings */}
-            <button
-              className={`nav-item ${location.pathname.includes("/admin/settings") ? "active" : ""}`}
-              onClick={() => { navigate("/admin/settings"); closeSidebar(); }}
-            >
-              <Settings size={20} />
-              <span>Settings</span>
-            </button>
+            {hasPermission("Settings") && (
+              <button
+                className={`nav-item ${location.pathname.includes("/admin/settings") ? "active" : ""}`}
+                onClick={() => { navigate("/admin/settings"); closeSidebar(); }}
+              >
+                <Settings size={20} />
+                <span>Settings</span>
+              </button>
+            )}
           </nav>
 
           {/* Footer */}
           <div className="sidebar-footer">
             <div className="admin-profile">
-              <div className="avatar">A</div>
-              <div>
-                <strong>Admin User</strong>
-                <p>Super Admin</p>
+              {adminUser.profileImage ? (
+                <img
+                  src={`http://localhost:5000${adminUser.profileImage}`}
+                  alt="Profile"
+                  className="avatar-img"
+                  style={{ width: 40, height: 40, borderRadius: "12px", objectFit: "cover" }}
+                />
+              ) : (
+                <div className="avatar">{adminUser.name?.charAt(0) || "A"}</div>
+              )}
+
+              <div className="admin-profile-info">
+                <strong>{adminUser.name}</strong>
+                <p>{adminUser.designation}</p>
               </div>
             </div>
 
@@ -183,8 +243,6 @@ const AdminLayout = () => {
           className={`mobile-overlay ${sidebarOpen ? "active" : ""}`}
           onClick={closeSidebar}
         />
-
-
 
         {/* ✅ ADMIN NAVBAR — OUTSIDE SCROLL CONTAINER */}
         <AdminNavbar

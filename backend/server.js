@@ -59,8 +59,8 @@ app.use((req, res, next) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/orders", orderRoutes);
-app.use("/api/admin", adminRoutes);
 app.use("/api/admin/staff", staffRoutes);
+app.use("/api/admin", adminRoutes);
 
 // ================= ROOT ROUTE =================
 app.get("/", (req, res) => {

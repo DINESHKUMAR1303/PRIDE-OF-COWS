@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AdminLogin.css";
 
-// Replace these with your actual image paths
 import loginBg from "./images/admin.png";
 import crownIcon from "./images/crown.svg";
+import { loginStaff } from "../../api/user";
 
 const AdminLogin = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const AdminLogin = ({ onLoginSuccess }) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
 
@@ -26,15 +26,36 @@ const AdminLogin = ({ onLoginSuccess }) => {
 
     setLoading(true);
 
-    // Temporary mock login
-    setTimeout(() => {
-      if (email === "admin@gmail.com" && password === "admin123") {
-        onLoginSuccess("fake-admin-token-2025");
-      } else {
-        setError("Invalid email or password");
-      }
+    // 1️⃣ CHECK HARDCODED ADMIN (Fallback)
+    if (email === "admin@gmail.com" && password === "admin123") {
+      const superAdminData = {
+        name: "Admin User",
+        designation: "Super Admin", // Grants full access via hasPermission
+        departments: [],
+        profileImage: ""
+      };
+      localStorage.setItem("admin_user", JSON.stringify(superAdminData));
+      onLoginSuccess("mock-super-admin-token");
       setLoading(false);
-    }, 800);
+      return;
+    }
+
+    // 2️⃣ CHECK DATABASE USERS
+    try {
+      const response = await loginStaff({ email, password });
+
+      if (response && response.token) {
+        // Save user details to localStorage
+        localStorage.setItem("admin_user", JSON.stringify(response.data));
+        onLoginSuccess(response.token);
+      } else {
+        setError("Invalid response from server");
+      }
+    } catch (err) {
+      setError(err.message || "Invalid email or password");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

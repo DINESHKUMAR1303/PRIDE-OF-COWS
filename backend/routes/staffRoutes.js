@@ -5,6 +5,7 @@ import path from "path";
 import {
   createStaff,
   getAllStaff,
+  loginStaff,
 } from "../controllers/staffController.js";
 
 const router = express.Router();
@@ -52,6 +53,9 @@ router.post(
   upload.single("profileImage"), // 🔑 must match frontend
   createStaff
 );
+
+// STAFF LOGIN (NEW)
+router.post("/login", loginStaff);
 
 // GET STAFF LIST
 router.get("/list", getAllStaff);

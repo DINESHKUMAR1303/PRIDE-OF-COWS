@@ -101,6 +101,19 @@ export const createStaff = async (formData) => {
 };
 
 /**
+ * POST /api/admin/staff/login
+ * Login for staff members
+ */
+export const loginStaff = async (credentials) => {
+  try {
+    const res = await STAFF_API.post("/login", credentials);
+    return res.data;
+  } catch (err) {
+    throw err.response?.data || { message: "Failed to login" };
+  }
+};
+
+/**
  * GET /api/admin/staff/list
  * Fetch all staff (Manage User table)
  */

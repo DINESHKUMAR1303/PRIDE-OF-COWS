@@ -4,21 +4,23 @@
   height: 48px !important;
   width: 100%;
   padding-left: 60px !important;
-  padding-top: 20px !important;
+  padding-top: 0 !important;
   padding-bottom: 0 !important;
   font-size: 14px;
-  line-height: normal !important;
-  border-radius: 12px !important;
+  line-height: 46px !important;
+  border-radius: 4px !important;
   border: 1px solid #e2e8f0 !important;
   box-sizing: border-box;
   background: #ffffff !important;
 }
 
 /* LEFT ICON — ONLY FIRST SVG */
-.adduser-input-wrapper > svg {
+/* LEFT ICON — ONLY FIRST SVG */
+.adduser-input-wrapper>svg {
   position: absolute;
-  left: 18px;
-  top: 50%;
+  left: 12px;
+  top: 35%;
+  /* Slight visual tweak for perfect center */
   transform: translateY(-50%);
   pointer-events: none;
 }
@@ -111,36 +113,54 @@
 
 .adduser-header-search {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .adduser-header-search input {
   height: 40px;
   width: 200px;
-  padding: 0 14px 0 38px;
+  padding: 0 14px 0 50px;
+  /* Increased left padding */
   border-radius: 999px;
   border: 1px solid #e2e8f0;
   background: #ffffff;
   font-size: 14px;
+  color: #0f172a;
+  box-sizing: border-box;
+}
+
+.adduser-header-search input::placeholder {
+  color: #64748b;
+  opacity: 1;
 }
 
 .adduser-header-search svg {
   position: absolute;
-  left: 14px;
-  top: 20px;
+  left: 17px;
+  /* Exact center of 50px padding (50-16)/2 */
+  top: 35%;
+  /* Visual tweak */
   transform: translateY(-50%);
   color: #94a3b8;
+  pointer-events: none;
 }
 
 .adduser-header-bell {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  margin-bottom: 20px;
   border: 1px solid #e2e8f0;
   background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  box-sizing: border-box;
+  /* Fix sizing */
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .adduser-bell-dot {
@@ -239,10 +259,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px 100px;
-  margin-bottom: 0px;
+  margin-bottom: 10px;
 }
 
-.adduser-designation-group > label {
+.adduser-designation-group>label {
   display: none;
 }
 
@@ -325,7 +345,7 @@
   margin-top: 4px;
 }
 
-.adduser-profile-left > div strong {
+.adduser-profile-left>div strong {
   display: block;
   font-size: 14px;
   font-weight: 600;
@@ -333,7 +353,7 @@
   margin-bottom: 2px;
 }
 
-.adduser-profile-left > div p {
+.adduser-profile-left>div p {
   margin: 0;
   font-size: 13px;
   color: #64748b;
@@ -366,7 +386,7 @@
   font-size: 12px;
   font-weight: 700;
   color: #64748b;
-  margin-bottom: 14px;
+  margin-bottom: 17px;
   display: block;
 }
 
@@ -402,12 +422,12 @@
   flex-shrink: 0;
 }
 
-.adduser-checkbox-item input:checked + .adduser-checkmark {
+.adduser-checkbox-item input:checked+.adduser-checkmark {
   background: #16c784;
   border-color: #16c784;
 }
 
-.adduser-checkbox-item input:checked + .adduser-checkmark::after {
+.adduser-checkbox-item input:checked+.adduser-checkmark::after {
   content: "✓";
   color: white;
   font-size: 11px;
@@ -711,7 +731,7 @@
 /* 🔥 1025px – 1200px FIX (Cramped Permissions) 🔥      */
 /* ===================================================== */
 @media (min-width: 1025px) and (max-width: 1200px) {
-  
+
   .adduser-card {
     padding: 28px;
   }
@@ -744,7 +764,7 @@
 
 /* ---------- LARGE DESKTOP (1201px – 1439px) ---------- */
 @media (min-width: 1201px) and (max-width: 1439px) {
-  
+
   .adduser-top-header {
     padding: 0 28px;
   }
@@ -771,7 +791,7 @@
 
 /* ---------- EXTRA LARGE DESKTOP (≥1440px) ---------- */
 @media (min-width: 1440px) {
-  
+
   .adduser-top-header {
     padding: 0 32px;
   }

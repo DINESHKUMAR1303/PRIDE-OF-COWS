@@ -144,14 +144,20 @@ const AddUser = () => {
 
   const validateForm = () => {
     const newErrors = {};
+    const allTouched = {};
+
     ["name", "email", "contact", "password"].forEach((key) => {
       const error = validateField(key, formData[key]);
       if (error) newErrors[key] = error;
+      allTouched[key] = true;
     });
+
     if (selectedDepartments.length === 0) {
       newErrors.departments = "Please select at least one department permission";
     }
+
     setErrors(newErrors);
+    setTouched(allTouched);
     return Object.keys(newErrors).length === 0;
   };
 
@@ -162,7 +168,7 @@ const AddUser = () => {
     try {
       // Create unique userId with timestamp to avoid duplicates
       const uniqueUserId = `USR-${Date.now()}-${userCounter}`;
-      
+
       // CREATE FORM DATA FOR BACKEND
       const payload = new FormData();
       payload.append("userId", uniqueUserId);
@@ -197,7 +203,7 @@ const AddUser = () => {
         const newCounter = userCounter + 1;
         setUserCounter(newCounter);
         localStorage.setItem('userCounter', newCounter.toString());
-        
+
         setFormData({
           userId: `USR - ${newCounter}`,
           name: "",
@@ -436,7 +442,7 @@ const AddUser = () => {
             </button>
             <button type="submit" className="adduser-btn-save">
               <CheckCircle size={16} />
-              Save Changes
+              Submit
             </button>
           </div>
         </form>
