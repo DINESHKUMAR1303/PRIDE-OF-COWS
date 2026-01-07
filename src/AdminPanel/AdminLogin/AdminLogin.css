@@ -85,7 +85,6 @@ body {
 .pride-logo-circle {
   width: 44px;
   height: 44px;
-  background: #5fe633;
   /* Corporate green brand color */
   border-radius: 50%;
   display: flex;
@@ -246,7 +245,7 @@ body {
   border: none;
   border-radius: 8px;
   font-size: 16px;
-  font-weight: 800;
+  font-weight: 600;
   cursor: pointer;
   margin-top: 12px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -294,20 +293,120 @@ body {
 
 /* RESPONSIVE */
 @media (max-width: 960px) {
+
+  html,
+  body {
+    overflow-y: auto;
+    /* allow scroll on mobile */
+  }
+
   .pride-admin-login {
     height: auto;
     min-height: 100vh;
     padding: 24px;
-    overflow: auto;
+    align-items: flex-start;
+    /* better for long vertical scrolls */
+  }
+
+  .pride-login-container {
+    max-width: 500px;
+    gap: 16px;
   }
 
   .pride-login-card {
     grid-template-columns: 1fr;
-    max-width: 480px;
+    /* Stack vertically */
     height: auto;
+    max-height: none;
   }
 
   .pride-brand-panel {
+    height: 260px;
+    /* Reduced height for mobile header */
+    display: block;
+    /* Ensure it stays visible as requested */
+  }
+
+  .pride-brand-overlay {
+    padding: 32px;
+    justify-content: flex-end;
+    /* Push content to bottom of brand panel */
+    background: linear-gradient(to top, rgba(19, 24, 17, 0.9), transparent);
+  }
+
+  .pride-logo-section {
+    position: absolute;
+    top: 32px;
+    left: 32px;
+  }
+
+  .pride-tagline-section h1.pride-tagline {
+    font-size: 26px;
+    margin-bottom: 8px;
+  }
+
+  .pride-description {
+    font-size: 13px;
+    max-width: 100%;
+    opacity: 0.8;
+  }
+
+  .pride-form-panel {
+    padding: 40px 32px;
+  }
+
+  .pride-form-heading {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pride-admin-login {
+    padding: 12px;
+  }
+
+  .pride-brand-panel {
+    height: 200px;
+  }
+
+  .pride-brand-overlay {
+    padding: 20px;
+  }
+
+  .pride-logo-section {
+    top: 20px;
+    left: 20px;
+    gap: 8px;
+  }
+
+  .pride-logo-circle {
+    width: 36px;
+    height: 36px;
+  }
+
+  .pride-logo-circle img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .pride-brand-title {
+    font-size: 18px;
+  }
+
+  .pride-tagline-section h1.pride-tagline {
+    font-size: 22px;
+  }
+
+  .pride-description {
     display: none;
+    /* remove small desc on very small screens to save space */
+  }
+
+  .pride-form-panel {
+    padding: 32px 20px;
+  }
+
+  .pride-form-subheading {
+    margin-bottom: 24px;
   }
 }
