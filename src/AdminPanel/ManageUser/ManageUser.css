@@ -694,8 +694,4 @@
 }
 
 
-@media (max-width: 768px) {
-  .items-per-page {
-    min-width: 140px;
-  }
-}
+
