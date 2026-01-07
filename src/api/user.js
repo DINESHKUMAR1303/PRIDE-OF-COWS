@@ -126,6 +126,49 @@ export const fetchStaff = async () => {
   }
 };
 
+/**
+ * PUT /api/admin/staff/update/:id
+ * Update staff member details
+ */
+export const updateStaff = async (id, formData) => {
+  try {
+    const res = await STAFF_API.put(`/update/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return res.data;
+  } catch (err) {
+    throw err.response?.data || { message: "Failed to update staff" };
+  }
+};
+
+/**
+ * DELETE /api/admin/staff/delete/:id
+ * Delete a single staff member
+ */
+export const deleteStaff = async (id) => {
+  try {
+    const res = await STAFF_API.delete(`/delete/${id}`);
+    return res.data;
+  } catch (err) {
+    throw err.response?.data || { message: "Failed to delete staff" };
+  }
+};
+
+/**
+ * POST /api/admin/staff/bulk-delete
+ * Delete multiple staff members
+ */
+export const bulkDeleteStaff = async (ids) => {
+  try {
+    const res = await STAFF_API.post("/bulk-delete", { ids });
+    return res.data;
+  } catch (err) {
+    throw err.response?.data || { message: "Failed to bulk delete staff" };
+  }
+};
+
 /* ============================================================
    ⭐ EXPORT DEFAULT USER API INSTANCE (optional)
 ============================================================ */

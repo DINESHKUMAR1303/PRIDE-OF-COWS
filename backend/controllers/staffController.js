@@ -119,3 +119,111 @@ export const loginStaff = async (req, res) => {
     res.status(500).json({ message: "Server error during login" });
   }
 };
+
+/* ============================================================
+   ⭐ UPDATE STAFF
+============================================================ */
+export const updateStaff = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      name,
+      email,
+      contact,
+      designation,
+      password,
+      departments,
+    } = req.body;
+
+    const updateData = {
+      name,
+      email,
+      contact,
+      designation,
+    };
+
+    // Only update password if provided
+    if (password) {
+      updateData.password = await bcrypt.hash(password, 10);
+    }
+
+    if (departments) {
+      updateData.departments = JSON.parse(departments);
+    }
+
+    // Only update image if provided
+    if (req.file) {
+      updateData.profileImage = `/uploads/users/${req.file.filename}`;
+    }
+
+    const updatedStaff = await Staff.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
+
+    if (!updatedStaff) {
+      return res.status(404).json({ success: false, message: "Staff not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Staff updated successfully",
+      data: updatedStaff,
+    });
+  } catch (error) {
+    console.error("❌ Update Staff Error:", error);
+    res.status(500).json({
+      success: false,
+      message: error.message || "Failed to update staff",
+    });
+  }
+};
+
+/* ============================================================
+   ⭐ DELETE STAFF
+============================================================ */
+export const deleteStaff = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedStaff = await Staff.findByIdAndDelete(id);
+
+    if (!deletedStaff) {
+      return res.status(404).json({ success: false, message: "Staff not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Staff deleted successfully",
+    });
+  } catch (error) {
+    console.error("❌ Delete Staff Error:", error);
+    res.status(500).json({
+      success: false,
+      message: error.message || "Failed to delete staff",
+    });
+  }
+};
+
+/* ============================================================
+   ⭐ BULK DELETE STAFF
+============================================================ */
+export const bulkDeleteStaff = async (req, res) => {
+  try {
+    const { ids } = req.body;
+    if (!ids || !Array.isArray(ids)) {
+      return res.status(400).json({ success: false, message: "IDs array is required" });
+    }
+
+    await Staff.deleteMany({ _id: { $in: ids } });
+
+    res.status(200).json({
+      success: true,
+      message: "Staff members deleted successfully",
+    });
+  } catch (error) {
+    console.error("❌ Bulk Delete Error:", error);
+    res.status(500).json({
+      success: false,
+      message: error.message || "Failed to bulk delete staff",
+    });
+  }
+};

@@ -6,6 +6,9 @@ import {
   createStaff,
   getAllStaff,
   loginStaff,
+  updateStaff,
+  deleteStaff,
+  bulkDeleteStaff,
 } from "../controllers/staffController.js";
 
 const router = express.Router();
@@ -18,8 +21,7 @@ const storage = multer.diskStorage({
     cb(null, "uploads/users"); // ✅ correct folder
   },
   filename: (req, file, cb) => {
-    const uniqueName =
-      Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const uniqueName = Date.now() + "-" + Math.round(Math.random() * 1e9);
     cb(null, uniqueName + path.extname(file.originalname));
   },
 });
@@ -48,16 +50,21 @@ const upload = multer({
 // ================= ROUTES =================
 
 // CREATE STAFF (WITH IMAGE)
-router.post(
-  "/create",
-  upload.single("profileImage"), // 🔑 must match frontend
-  createStaff
-);
+router.post("/create", upload.single("profileImage"), createStaff);
 
-// STAFF LOGIN (NEW)
+// STAFF LOGIN
 router.post("/login", loginStaff);
 
 // GET STAFF LIST
 router.get("/list", getAllStaff);
+
+// UPDATE STAFF
+router.put("/update/:id", upload.single("profileImage"), updateStaff);
+
+// DELETE STAFF
+router.delete("/delete/:id", deleteStaff);
+
+// BULK DELETE
+router.post("/bulk-delete", bulkDeleteStaff);
 
 export default router;

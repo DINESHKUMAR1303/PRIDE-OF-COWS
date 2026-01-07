@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import {
   CheckCircle,
@@ -16,11 +17,14 @@ import {
   Hash
 } from "lucide-react";
 import "./AddUser.css";
-import { createStaff } from "../../api/user";
+import { createStaff, updateStaff } from "../../api/user";
 
 
 const AddUser = () => {
   const [showSuccess, setShowSuccess] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const editUser = location.state?.editUser;
   const [showPassword, setShowPassword] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -42,11 +46,26 @@ const AddUser = () => {
 
   // Update userId when counter changes
   useEffect(() => {
-    setFormData((prev) => ({
-      ...prev,
-      userId: `USR - ${userCounter}`,
-    }));
-  }, [userCounter]);
+    if (editUser) {
+      setFormData({
+        userId: editUser.userId || "",
+        name: editUser.name || "",
+        email: editUser.email || "",
+        contact: editUser.contact || "",
+        designation: editUser.designation || "Administrator",
+        password: "", // Keep password empty for security, handle update logic if needed
+      });
+      setSelectedDepartments(editUser.departments || []);
+      if (editUser.profileImage) {
+        setImagePreview(`http://localhost:5000${editUser.profileImage}`);
+      }
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        userId: `USR - ${userCounter}`,
+      }));
+    }
+  }, [userCounter, editUser]);
 
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
@@ -147,6 +166,10 @@ const AddUser = () => {
     const allTouched = {};
 
     ["name", "email", "contact", "password"].forEach((key) => {
+      // If editing, password is optional
+      if (editUser && key === "password" && !formData[key]) {
+        return;
+      }
       const error = validateField(key, formData[key]);
       if (error) newErrors[key] = error;
       allTouched[key] = true;
@@ -166,17 +189,20 @@ const AddUser = () => {
     if (!validateForm()) return;
 
     try {
-      // Create unique userId with timestamp to avoid duplicates
-      const uniqueUserId = `USR-${Date.now()}-${userCounter}`;
-
       // CREATE FORM DATA FOR BACKEND
       const payload = new FormData();
-      payload.append("userId", uniqueUserId);
+      // Use existing userId if editing, otherwise generate one (or use the one from state which handles counter)
+      payload.append("userId", editUser ? editUser.userId : formData.userId);
       payload.append("name", formData.name);
       payload.append("email", formData.email);
       payload.append("contact", formData.contact);
       payload.append("designation", formData.designation);
-      payload.append("password", formData.password);
+
+      // Only append password if it's provided
+      if (formData.password) {
+        payload.append("password", formData.password);
+      }
+
       payload.append(
         "departments",
         JSON.stringify(selectedDepartments)
@@ -186,41 +212,48 @@ const AddUser = () => {
         payload.append("profileImage", selectedImage);
       }
 
-      // SAVE TO MONGODB
-      const res = await createStaff(payload);
+      if (editUser) {
+        // UPDATE EXISTING USER
+        await updateStaff(editUser._id, payload);
+        alert("User updated successfully");
+        navigate("/admin/users/manage");
+      } else {
+        // SAVE NEW USER TO MONGODB
+        const res = await createStaff(payload);
 
-      // SET PREVIEW FROM SERVER PATH
-      if (res?.data?.data?.profileImage) {
-        setImagePreview(`http://localhost:5000${res.data.data.profileImage}`);
+        // SET PREVIEW FROM SERVER PATH
+        if (res?.data?.data?.profileImage) {
+          setImagePreview(`http://localhost:5000${res.data.data.profileImage}`);
+        }
+
+        // SHOW SUCCESS
+        setShowSuccess(true);
+        setTimeout(() => setShowSuccess(false), 4000);
+
+        // RESET FORM AND INCREMENT COUNTER
+        setTimeout(() => {
+          const newCounter = userCounter + 1;
+          setUserCounter(newCounter);
+          localStorage.setItem('userCounter', newCounter.toString());
+
+          setFormData({
+            userId: `USR - ${newCounter}`,
+            name: "",
+            email: "",
+            contact: "",
+            designation: "Administrator",
+            password: "",
+          });
+          setSelectedDepartments([]);
+          setTouched({});
+          setErrors({});
+          setSelectedImage(null);
+          setImagePreview(null);
+        }, 4500);
       }
 
-      // SHOW SUCCESS
-      setShowSuccess(true);
-      setTimeout(() => setShowSuccess(false), 4000);
-
-      // RESET FORM AND INCREMENT COUNTER
-      setTimeout(() => {
-        const newCounter = userCounter + 1;
-        setUserCounter(newCounter);
-        localStorage.setItem('userCounter', newCounter.toString());
-
-        setFormData({
-          userId: `USR - ${newCounter}`,
-          name: "",
-          email: "",
-          contact: "",
-          designation: "Administrator",
-          password: "",
-        });
-        setSelectedDepartments([]);
-        setTouched({});
-        setErrors({});
-        setSelectedImage(null);
-        setImagePreview(null);
-      }, 4500);
-
     } catch (error) {
-      alert(error.message || "Failed to save user");
+      alert(error.message || `Failed to ${editUser ? 'update' : 'save'} user`);
     }
   };
 
@@ -270,7 +303,7 @@ const AddUser = () => {
             </div>
             <div className="adduser-success-text">
               <strong>Success</strong>
-              <p>User account has been created successfully.</p>
+              <p>User account has been {editUser ? "updated" : "created"} successfully.</p>
             </div>
           </div>
           <button className="adduser-success-close" onClick={() => setShowSuccess(false)}>
@@ -281,7 +314,7 @@ const AddUser = () => {
 
       <div className="adduser-card">
         <div className="adduser-card-title">
-          <h2>New User Details</h2>
+          <h2>{editUser ? "Edit User Details" : "New User Details"}</h2>
           <User size={48} className="adduser-title-icon" />
         </div>
 
@@ -442,7 +475,7 @@ const AddUser = () => {
             </button>
             <button type="submit" className="adduser-btn-save">
               <CheckCircle size={16} />
-              Submit
+              {editUser ? "Update Changes" : "Submit"}
             </button>
           </div>
         </form>

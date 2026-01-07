@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { fetchStaff } from "../../api/user";
+﻿import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { fetchStaff, deleteStaff, bulkDeleteStaff } from "../../api/user";
 import {
   Pencil,
-  Settings,
+  Eye,
   Trash2,
   Search,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  X
 } from "lucide-react";
-import { FaFilePdf, FaFileExcel, FaPrint } from "react-icons/fa";
+import { FaFilePdf, FaFileExcel } from "react-icons/fa";
+import { MdPrint } from "react-icons/md";
 import "./ManageUser.css";
 
 const ManageUser = () => {
@@ -17,6 +20,8 @@ const ManageUser = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [selectedUsers, setSelectedUsers] = useState([]);
+  const [viewingUser, setViewingUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadUsers();
@@ -116,19 +121,36 @@ const ManageUser = () => {
 
   // Action handlers
   const handleEdit = (user) => {
-    console.log("Edit user:", user);
-    // Implement edit logic
+    // Navigate to AddUser page with user data for editing
+    navigate(`/admin/users/add`, { state: { editUser: user } });
   };
 
   const handleViewSettings = (user) => {
-    console.log("View settings:", user);
-    // Implement settings view logic
+    setViewingUser(user);
   };
 
-  const handleDelete = (user) => {
+  const handleDelete = async (user) => {
     if (window.confirm(`Are you sure you want to delete ${user.name}?`)) {
-      console.log("Delete user:", user);
-      // Implement delete logic
+      try {
+        await deleteStaff(user._id);
+        await loadUsers();
+        alert("User deleted successfully");
+      } catch (err) {
+        alert(err.message || "Failed to delete user");
+      }
+    }
+  };
+
+  const handleBulkDelete = async () => {
+    if (window.confirm(`Are you sure you want to delete ${selectedUsers.length} selected users?`)) {
+      try {
+        await bulkDeleteStaff(selectedUsers);
+        await loadUsers();
+        setSelectedUsers([]);
+        alert("Users deleted successfully");
+      } catch (err) {
+        alert(err.message || "Failed to delete users");
+      }
     }
   };
 
@@ -153,6 +175,11 @@ const ManageUser = () => {
           </div>
 
           <div className="toolbar-right">
+            {selectedUsers.length > 0 && (
+              <button className="bulk-delete-btn" onClick={handleBulkDelete}>
+                <Trash2 size={18} />
+              </button>
+            )}
             <div className="search-box">
               <input
                 type="text"
@@ -173,7 +200,7 @@ const ManageUser = () => {
               </button>
               <div className="export-divider"></div>
               <button className="export-btn print" onClick={handlePrint} title="Print">
-                <FaPrint size={18} />
+                <MdPrint size={20} />
               </button>
             </div>
 
@@ -289,9 +316,9 @@ const ManageUser = () => {
                         <button
                           className="btn view"
                           onClick={() => handleViewSettings(u)}
-                          title="View Settings"
+                          title="View User"
                         >
-                          <Settings size={14} />
+                          <Eye size={14} />
                         </button>
                         <button
                           className="btn delete"
@@ -327,6 +354,70 @@ const ManageUser = () => {
           </div>
         )}
       </div>
+
+      {/* View User Modal */}
+      {viewingUser && (
+        <div className="modal-overlay" onClick={() => setViewingUser(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>User Details</h2>
+              <button onClick={() => setViewingUser(null)} className="modal-close">
+                <X size={24} />
+              </button>
+            </div>
+            <div className="modal-body">
+              <div className="view-user-grid">
+                <div className="user-photo-section">
+                  <div className="user-avatar-large" style={{
+                    background: viewingUser.profileImage ? 'transparent' : getAvatarColor(viewingUser.name)
+                  }}>
+                    {viewingUser.profileImage ? (
+                      <img
+                        src={`http://localhost:5000${viewingUser.profileImage}`}
+                        alt={viewingUser.name}
+                      />
+                    ) : (
+                      <span>{getInitial(viewingUser.name)}</span>
+                    )}
+                  </div>
+                </div>
+                <div className="user-info-section">
+                  <div className="info-row">
+                    <span className="info-label">Name:</span>
+                    <span className="info-value">{viewingUser.name}</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Email:</span>
+                    <span className="info-value">{viewingUser.email}</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Contact:</span>
+                    <span className="info-value">{viewingUser.contact}</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Designation:</span>
+                    <span className="info-value">{viewingUser.designation || 'N/A'}</span>
+                  </div>
+                  <div className="info-row">
+                    <span className="info-label">Permissions:</span>
+                    <div className="permission-badges">
+                      {(viewingUser.departments || []).map((d) => (
+                        <span
+                          key={d}
+                          className="badge"
+                          style={{ background: getPermissionColor(d) }}
+                        >
+                          {d}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
