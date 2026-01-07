@@ -5,12 +5,10 @@ import {
   Settings,
   Trash2,
   Search,
-  FileText,
-  FileSpreadsheet,
-  Printer,
   ChevronLeft,
   ChevronRight
 } from "lucide-react";
+import { FaFilePdf, FaFileExcel, FaPrint } from "react-icons/fa";
 import "./ManageUser.css";
 
 const ManageUser = () => {
@@ -90,7 +88,7 @@ const ManageUser = () => {
     } else {
       setSelectedUsers(currentUsers.map(u => u._id));
     }
-};<></>
+  }; <></>
 
   // Toggle individual user selection
   const toggleUserSelection = (userId) => {
@@ -138,35 +136,46 @@ const ManageUser = () => {
     <div className="manage-user-page">
       <div className="manage-header">
         <div className="manage-header-left">
-          <h2 className="manage-title">Manage Users</h2>
-          <p className="manage-subtitle">
-            Use this form to update user profiles.
-          </p>
+          <h2 className="manage-title">User Management</h2>
+          <div className="manage-breadcrumb">
+            <span className="breadcrumb-item">User Modules</span>
+            <ChevronRight size={14} className="breadcrumb-separator" />
+            <span className="breadcrumb-item active">Manage Users</span>
+          </div>
         </div>
       </div>
 
       <div className="manage-table-card">
         <div className="manage-toolbar">
-          <div className="search-box">
-            <Search size={18} />
-            <input
-              type="text"
-              placeholder="Search users..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+          <div className="toolbar-left">
+            <h3 className="toolbar-title">Manage Users</h3>
+            <p className="toolbar-subtitle">Use this form to update user profiles.</p>
           </div>
 
-          <div className="toolbar-actions">
-            <button className="export-btn pdf" onClick={handleExportPDF} title="Export to PDF">
-              <FileText size={16} />
-            </button>
-            <button className="export-btn excel" onClick={handleExportExcel} title="Export to Excel">
-              <FileSpreadsheet size={16} />
-            </button>
-            <button className="export-btn print" onClick={handlePrint} title="Print">
-              <Printer size={16} />
-            </button>
+          <div className="toolbar-right">
+            <div className="search-box">
+              <input
+                type="text"
+                placeholder="Search users..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <Search size={18} />
+            </div>
+
+            <div className="export-group">
+              <button className="export-btn pdf" onClick={handleExportPDF} title="Export to PDF">
+                <FaFilePdf size={18} />
+              </button>
+              <div className="export-divider"></div>
+              <button className="export-btn excel" onClick={handleExportExcel} title="Export to Excel">
+                <FaFileExcel size={18} />
+              </button>
+              <div className="export-divider"></div>
+              <button className="export-btn print" onClick={handlePrint} title="Print">
+                <FaPrint size={18} />
+              </button>
+            </div>
 
             <select
               className="items-per-page"
