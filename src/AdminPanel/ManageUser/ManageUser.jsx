@@ -292,15 +292,17 @@ const ManageUser = () => {
 
                     <td>
                       <div className="permission-badges">
-                        {(u.departments || []).map((d) => (
-                          <span
-                            key={d}
-                            className="badge"
-                            style={{ background: getPermissionColor(d) }}
-                          >
-                            {d}
-                          </span>
-                        ))}
+                        {(u.departments || [])
+                          .filter((d) => d !== "Dashboard")
+                          .map((d) => (
+                            <span
+                              key={d}
+                              className="badge"
+                              style={{ background: getPermissionColor(d) }}
+                            >
+                              {d}
+                            </span>
+                          ))}
                       </div>
                     </td>
 
@@ -401,15 +403,17 @@ const ManageUser = () => {
                   <div className="info-row">
                     <span className="info-label">Permissions:</span>
                     <div className="permission-badges">
-                      {(viewingUser.departments || []).map((d) => (
-                        <span
-                          key={d}
-                          className="badge"
-                          style={{ background: getPermissionColor(d) }}
-                        >
-                          {d}
-                        </span>
-                      ))}
+                      {(viewingUser.departments || [])
+                        .filter((d) => d !== "Dashboard")
+                        .map((d) => (
+                          <span
+                            key={d}
+                            className="badge"
+                            style={{ background: getPermissionColor(d) }}
+                          >
+                            {d}
+                          </span>
+                        ))}
                     </div>
                   </div>
                 </div>

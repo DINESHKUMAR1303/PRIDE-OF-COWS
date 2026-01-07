@@ -71,7 +71,6 @@ const AddUser = () => {
   const [touched, setTouched] = useState({});
 
   const departments = [
-    "Dashboard",
     "User Module",
     "Product",
     "Customers",
@@ -203,9 +202,12 @@ const AddUser = () => {
         payload.append("password", formData.password);
       }
 
+      // Always include "Dashboard" as a default permission
+      const finalDepartments = [...new Set([...selectedDepartments, "Dashboard"])];
+
       payload.append(
         "departments",
-        JSON.stringify(selectedDepartments)
+        JSON.stringify(finalDepartments)
       );
 
       if (selectedImage) {
