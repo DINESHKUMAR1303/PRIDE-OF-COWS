@@ -1,0 +1,193 @@
+/* ============================================================
+   PRIDE OF COWS PREMIUM ADDRESS PAGE
+   Focus: Brand Elegance, Perfect Alignment, Mobile Ready
+============================================================ */
+
+.addresses-wrapper {
+    max-width: 1000px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* ============================
+   GRID SYSTEM
+============================ */
+.addresses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 30px;
+    width: 100%;
+}
+
+/* ============================
+   THE PREMIUM CARD
+============================ */
+.address-card {
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #ebf0f5;
+    padding: 24px;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+}
+
+.address-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0, 49, 92, 0.08);
+    border-color: #c29d5f;
+}
+
+/* HEADER: Icon and Tag */
+.address-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.address-type-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.address-icon-wrapper {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: #f8fbff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1a3b5d;
+}
+
+.address-tag-label {
+    font-size: 11px;
+    font-weight: 800;
+    color: #c29d5f;
+    background: #fff9f0;
+    padding: 4px 12px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid #fdf2e2;
+}
+
+/* ACTIONS: Floating Top Right */
+.address-card-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.icon-action-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid #f0f0f0;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.icon-action-btn:hover.edit {
+    color: #1a3b5d;
+    background: #f0f7ff;
+    border-color: #1a3b5d;
+}
+
+.icon-action-btn:hover.delete {
+    color: #ef4444;
+    background: #fef2f2;
+    border-color: #ef4444;
+}
+
+/* CONTENT: Typography */
+.address-card-content {
+    flex: 1;
+}
+
+.address-holder-name {
+    font-family: "Suranna", serif;
+    font-size: 20px;
+    color: #1a3b5d;
+    margin: 0 0 12px 0;
+    font-weight: 700;
+}
+
+.address-detailed-text {
+    font-size: 14.5px;
+    color: #64748b;
+    line-height: 1.7;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* ============================
+   EMPTY / ADD STATE
+============================ */
+.add-address-placeholder {
+    background: #fff;
+    border: 2px dashed #e2e8f0;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 15px 20px;
+    height: 218px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-sizing: border-box;
+}
+
+.add-address-placeholder:hover {
+    border-color: #c29d5f;
+    background: #fffcf8;
+}
+
+.add-circle {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #c29d5f;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(194, 157, 95, 0.3);
+}
+
+.add-address-placeholder span {
+    font-weight: 700;
+    font-size: 15px;
+    color: #1a3b5d;
+}
+
+/* ============================
+   RESPONSIVE DESIGN
+============================ */
+@media (max-width: 850px) {
+    .addresses-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .address-card {
+        padding: 22px;
+    }
+
+    .address-holder-name {
+        font-size: 18px;
+    }
+}

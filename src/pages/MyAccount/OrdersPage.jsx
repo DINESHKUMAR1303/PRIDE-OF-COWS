@@ -4,8 +4,6 @@ import noOrderImg from "./images/orderbag.png";
 import { getMyOrders } from "../../api/order";
 import "./OrderPage.css";
 
-
-
 // LOCAL PRODUCT LOOKUP (Backend does NOT store images or weights)
 import prod1 from "../../components/ProductCarousel/images/onelitermilk.png";
 import prod2 from "../../components/ProductCarousel/images/purecurd.png";
@@ -31,20 +29,13 @@ const OrdersPage = () => {
     const fetchOrders = async () => {
       try {
         const res = await getMyOrders(token);
-
-        console.log("📦 Orders API Response:", res.data);
-
-        // Fix: Ensure res.data always exists
         const data = res?.data || {};
 
-        // If API returned success:false → no orders
         if (!data.success || !Array.isArray(data.orders)) {
-          console.warn("⚠️ No valid orders found from API");
           setOrders([]);
           return;
         }
 
-        // Format orders for display
         const formatted = data.orders.map((order) => ({
           ...order,
           items: order.items.map((item) => ({
@@ -59,7 +50,7 @@ const OrdersPage = () => {
         setOrders(formatted);
       } catch (err) {
         console.error("❌ Error fetching orders:", err);
-        setOrders([]); // fallback safe state
+        setOrders([]);
       }
     };
 
@@ -69,22 +60,21 @@ const OrdersPage = () => {
   return (
     <div className="orders-wrapper">
       <p className="breadcrumb">
-        <Link to="/" className="breadcrumb-link">HOME</Link>
-        <span> / </span>
-        <Link to="/my-account" className="breadcrumb-link">MY ACCOUNT</Link>
-        <span> / MY ORDERS</span>
+        <Link to="/" className="breadcrumb-link">HOME</Link> /
+        <Link to="/my-account/profile" className="breadcrumb-link">MY ACCOUNT</Link> /
+        <span>MY ORDERS</span>
       </p>
 
-      <h1 className="page-title">Orders</h1>
+      <h1 className="page-title">My Orders</h1>
 
       {/* If NO ORDERS */}
       {orders.length === 0 && (
         <div className="no-order-box">
           <img src={noOrderImg} alt="No Orders" className="no-order-img" />
-          <h2>No Order Found!</h2>
-          <p>Start shopping and experience premium dairy at home.</p>
+          <h2>Hungry for quality?</h2>
+          <p>You haven't placed any orders yet. Start exploring our premium dairy products.</p>
           <Link to="/shop/all" className="explore-btn">
-            EXPLORE MORE PRODUCTS
+            START SHOPPING
           </Link>
         </div>
       )}
@@ -94,52 +84,52 @@ const OrdersPage = () => {
         <div className="orders-list">
           {orders.map((order) => (
             <div key={order._id} className="order-card">
-
               <div className="order-header">
-                <h3>Order #{order._id.slice(-6)}</h3>
-                <span className="order-status">{order.status || "Placed"}</span>
+                <div className="order-header-left">
+                  <span className="order-id">Order #{order._id.slice(-6).toUpperCase()}</span>
+                  <span className="order-date-text">
+                    {new Date(order.deliveryDate).toLocaleDateString("en-IN", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </span>
+                </div>
+                <div className={`order-status-pill ${order.status?.toLowerCase() || 'pending'}`}>
+                  {order.status || "Placed"}
+                </div>
               </div>
-
-              <p className="order-date">
-                Delivery:{" "}
-                <strong>
-                  {new Date(order.deliveryDate).toLocaleDateString("en-IN", {
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
-                  })}
-                </strong>
-              </p>
 
               <div className="order-items">
                 {order.items.map((item, index) => (
                   <div key={index} className="order-item-row">
-
-                    {item.img && (
-                      <img
-                        src={item.img}
-                        alt={item.title}
-                        className="order-item-img"
-                      />
-                    )}
-
-                    <div className="order-item-info">
-                      <p className="item-title">{item.title}</p>
-                      <p className="item-weight">{item.weight}</p>
-                      <p className="item-qty">Qty: {item.qty}</p>
+                    <div className="order-item-img-container">
+                      <img src={item.img} alt={item.title} className="order-item-img" />
                     </div>
-
-                    <p className="item-amount">₹{item.price * item.qty}</p>
+                    <div className="order-item-details">
+                      <p className="item-name">{item.title}</p>
+                      <div className="item-meta">
+                        <span>{item.weight}</span>
+                        <span>Qty: {item.qty}</span>
+                      </div>
+                    </div>
+                    <div className="item-price-col">
+                      ₹{item.price * item.qty}
+                    </div>
                   </div>
                 ))}
               </div>
 
               <div className="order-footer">
-                <p className="order-total">
-                  Total Amount: <strong>₹{order.totalAmount}</strong>
-                </p>
+                <div className="total-summary">
+                  <span className="total-label">Total Amount</span>
+                  <span className="total-amount-val">₹{order.totalAmount}</span>
+                </div>
+                <div className="order-actions">
+                  <button className="details-btn">View Details</button>
+                  <button className="reorder-btn">Reorder</button>
+                </div>
               </div>
-
             </div>
           ))}
         </div>

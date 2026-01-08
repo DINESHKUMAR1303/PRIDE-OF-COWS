@@ -19,7 +19,7 @@ import logoutIcon from "./images/logout.svg";
 
 /* NEW bottom nav icons */
 import homeIcon from "./images/home.svg";
-import shopIcon from "./images/shop.png"; 
+import shopIcon from "./images/shop.png";
 import ordersIcon from "./images/myorder.svg";
 import addressNavIcon from "./images/pin.png";
 import profileNavIcon from "./images/profile.svg";
@@ -96,31 +96,30 @@ const MyAccountLayout = () => {
   return (
     <div className="account-wrapper">
 
-      
+
 
       {/* ---------------- LEFT SIDEBAR ---------------- */}
       <aside className={`account-sidebar ${openMenu ? "open" : ""}`}>
 
         {/* ---- USER INFO CARD ---- */}
         <div className="user-card">
-          <img src={profileIcon} className="user-avatar" alt="User Avatar" />
+          <div className="user-avatar-container">
+            <img src={profileIcon} className="user-avatar" alt="User Avatar" />
+          </div>
 
           <div className="user-info">
-            <div className="name-row">
-              <h3>{user.firstName} {user.lastName}</h3>
-
-              <NavLink
-                to="/my-account/profile"
-                className={({ isActive }) =>
-                  isActive ? "view-profile active" : "view-profile"
-                }
-              >
-                View Profile
-              </NavLink>
-            </div>
-
+            <h3>{user.firstName} {user.lastName}</h3>
             <p className="phone-number">{user.telephone || "—"}</p>
           </div>
+
+          <NavLink
+            to="/my-account/profile"
+            className={({ isActive }) =>
+              isActive ? "view-profile active" : "view-profile"
+            }
+          >
+            View Profile
+          </NavLink>
         </div>
 
         {/* ---- QUICK ACTION BUTTONS ---- */}
