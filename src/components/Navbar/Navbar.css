@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Suranna&display=swap');
 
 /* ===== STICKY FIX — REQUIRED ===== */
-html, body {
+html,
+body {
   overflow-x: hidden !important;
   overflow-y: visible !important;
 }
@@ -11,7 +12,7 @@ html, body {
 }
 
 
-    /* ----- CART----- */
+/* ----- CART----- */
 /* FORCE remove underline from CART link and text */
 .cart,
 .cart * {
@@ -34,51 +35,67 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  background: #f4f4f4;
-  padding: 18px 22px;
-  margin: 18px 0 20px;
+  /* ensures alignment from left */
+  background: #ffffff;
+  padding: 18px 20px;
+  margin: 12px 0 18px;
   width: 100%;
   cursor: pointer;
-  gap: 16px; /* spacing between icon & details */
+  gap: 16px;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(0, 49, 92, 0.08);
+  /* slightly bluer depth */
+  box-sizing: border-box;
+  position: relative;
+  /* for absolute positioning of chevron if needed, or flex is fine */
 }
 
 /* Left Icon */
 .side-user-icon {
-  width: 42px;
-  height: 42px;
+  width: 48px;
+  height: 48px;
   flex-shrink: 0;
+  color: #193B61;
 }
 
 /* Center Details */
 .side-user-details {
   flex-grow: 1;
+  /* PUSHES CHEVRON TO RIGHT */
   display: flex;
   flex-direction: column;
   justify-content: center;
+  line-height: 1.2;
 }
 
 .side-user-details h3 {
-  font-size: 18px;
-  font-weight: 700;
-  font-family: suranna;
+  font-size: 17px;
+  font-weight: 400;
+  font-family: "Suranna", serif;
   margin: 0;
   color: #193B61;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
 }
 
 .side-user-details p {
-  margin: 3px 0 0;
+  margin: 1px 0 3px;
   font-size: 15px;
   font-weight: 700;
-  color: #000;
+  color: #193B61;
 }
 
 .view-profile {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
   color: #193B61;
-  margin-top: 2px;
-  display: block;
+  text-decoration: none;
+  margin-top: 1px;
+}
+
+/* RIGHT CHEVRON ALIGNMENT */
+.side-user-box svg:last-child {
+  margin-left: auto;
+  opacity: 0.8;
 }
 
 /* RIGHT ARROW — HIDDEN (BECAUSE YOUR TARGET UI HAS NO ARROW) */
@@ -128,7 +145,8 @@ html, body {
 
 /* ✅ Optional subtle shadow when sticky (you can keep or remove) */
 .navbar.sticky {
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  ;
   background: #f4f4f4;
 }
 
@@ -144,7 +162,8 @@ html, body {
   display: inline-block;
   font-size: 14px;
   margin-left: 2px;
-  line-height: 1.5; /* prevent clipping */
+  line-height: 1.5;
+  /* prevent clipping */
   color: #193b61;
 }
 
@@ -202,11 +221,13 @@ html, body {
 
 .navbar-user {
   display: flex;
-  flex-direction: column;   /* icon top, username below */
+  flex-direction: column;
+  /* icon top, username below */
   align-items: center;
   gap: 4px;
   cursor: pointer;
-  padding-bottom: 10px;      /* matches LOGIN spacing */
+  padding-bottom: 10px;
+  /* matches LOGIN spacing */
   min-width: 60px;
 }
 
@@ -218,7 +239,8 @@ html, body {
 .navbar-user .user-text {
   font-size: 12px;
   font-weight: bold;
-  color: #c29d5f;           /* GOLD LIKE LOGIN */
+  color: #c29d5f;
+  /* GOLD LIKE LOGIN */
   text-align: center;
   letter-spacing: 0.5px;
   display: block;
@@ -242,7 +264,7 @@ html, body {
   padding-bottom: 20px;
 }
 
-.menu > li {
+.menu>li {
   font-weight: bold;
   font-size: 15px;
   cursor: pointer;
@@ -254,7 +276,7 @@ html, body {
   color: #193b61;
 }
 
-.menu > li:hover {
+.menu>li:hover {
   color: #c29d5f;
 }
 
@@ -277,18 +299,19 @@ html, body {
 }
 
 /* Optional hover underline effect (only for top menu) */
-.menu > li::after {
+.menu>li::after {
   content: "";
   position: absolute;
   left: 0;
   bottom: -3px;
   width: 0;
   height: 2px;
-  background: #c29d5f; /* gold underline */
+  background: #c29d5f;
+  /* gold underline */
   transition: width 0.3s ease;
 }
 
-.menu > li:hover::after {
+.menu>li:hover::after {
   width: 100%;
 }
 
@@ -297,10 +320,10 @@ html, body {
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: #f4f4f4; 
+  background-color: #f4f4f4;
   border: none;
   z-index: 1000;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   min-width: 500px;
   padding: 0;
   border-radius: 6px;
@@ -346,7 +369,8 @@ html, body {
   cursor: pointer;
   transition: color 0.3s ease;
   position: relative;
-  color: rgba(0,0,0,0.85); /* default black */
+  color: rgba(0, 0, 0, 0.85);
+  /* default black */
 }
 
 /* Text wrapper (for underline animation) */
@@ -365,7 +389,8 @@ html, body {
   left: 0;
   width: 0;
   height: 1.5px;
-  background-color: #c29d5f; /* gold */
+  background-color: #c29d5f;
+  /* gold */
   transition: width 0.3s ease;
 }
 
@@ -373,19 +398,21 @@ html, body {
 .shop-list li a,
 .shop-list li a:visited,
 .shop-list li a:active {
-  color: rgba(0,0,0,0.85) !important;
+  color: rgba(0, 0, 0, 0.85) !important;
   text-decoration: none !important;
 }
 
 /* ⭐ HOVER — Change text to GOLD + underline */
 .shop-list li:hover a,
 .shop-list li:hover span {
-  color: #c29d5f !important;  /* gold text */
+  color: #c29d5f !important;
+  /* gold text */
 }
 
 .shop-list li:hover a::after,
 .shop-list li:hover span::after {
-  width: 100%; /* gold underline */
+  width: 100%;
+  /* gold underline */
 }
 
 /* ⭐ ACTIVE ITEM — stays GOLD */
@@ -449,19 +476,22 @@ html, body {
 /* ================= Right Section ================= */
 .navbar-right {
   display: flex;
-  align-items: flex-end; 
-  gap: 2px; 
+  align-items: flex-end;
+  gap: 2px;
 }
 
 .login,
 .cart {
   display: flex;
-  flex-direction: column; /* ✅ always stacked vertical */
+  flex-direction: column;
+  /* ✅ always stacked vertical */
   align-items: center;
-  gap: 4px; /* reduced gap between icon & text */
+  gap: 4px;
+  /* reduced gap between icon & text */
   cursor: pointer;
   min-width: 60px;
-  padding-bottom: 8px; /* shift down slightly */
+  padding-bottom: 8px;
+  /* shift down slightly */
 }
 
 .right-icon {
@@ -470,7 +500,8 @@ html, body {
 }
 
 .login-text {
-  display: block; /* ✅ always under icon */
+  display: block;
+  /* ✅ always under icon */
   color: #c29d5f;
   font-weight: bold;
   font-size: 12px;
@@ -478,7 +509,8 @@ html, body {
 }
 
 .cart-text {
-  display: block; /* ✅ always under icon */
+  display: block;
+  /* ✅ always under icon */
   font-weight: bold;
   font-size: 12px;
   text-align: center;
@@ -570,10 +602,14 @@ html, body {
 /* ============================= */
 /* ===== Palette ===== */
 :root {
-  --navy: #193b61;   /* primary text/icons */
-  --line: #d3d8de;   /* dividers */
-  --muted: #7E8895;  /* footer labels */
-  --white: #f4f4f4;  /* panel background */
+  --navy: #193b61;
+  /* primary text/icons */
+  --line: #edf2f7;
+  /* cleaner soft dividers */
+  --muted: #7E8895;
+  /* footer labels */
+  --white: #f8f9fa;
+  /* LIGHT GRAY PANEL BACKGROUND */
 }
 
 /* ===== Overlay & Panel ===== */
@@ -583,6 +619,7 @@ html, body {
   background: rgba(0, 0, 0, 0.45);
   z-index: 4000;
 }
+
 .side-menu {
   position: fixed;
   top: 0;
@@ -601,25 +638,31 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
-  padding: 10px 0px;
-  border-bottom: 1px solid var(--line);
+  margin-top: 5px;
+  padding: 15px 0px;
+  border-bottom: none;
+  /* Removed heavy line */
   background: var(--white);
 }
+
 .side-login-left {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
 .side-login-left img {
-  width: 28px; /* bigger login icon */
+  width: 28px;
+  /* bigger login icon */
   height: 28px;
 }
+
 .side-login .login-text {
   font-size: 18px;
   font-weight: 600;
   color: var(--navy);
 }
+
 .close-btn {
   background: none;
   border: none;
@@ -633,7 +676,8 @@ html, body {
 .accordion-header {
   width: 100%;
   display: flex;
-  margin-left: -7px; /* move Shop slightly left */
+  margin-left: -7px;
+  /* move Shop slightly left */
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
@@ -678,20 +722,23 @@ html, body {
 /* ⭐ FIX PURPLE + UNDERLINE + WRONG COLORS */
 .accordion-list li a {
   text-decoration: none !important;
-  color: var(--navy) !important;        /* Navy */
+  color: var(--navy) !important;
+  /* Navy */
   font-weight: 600;
   display: block;
   width: 100%;
 }
 
 .accordion-list li a:hover {
-  color: #c29d5f !important;            /* Gold hover */
+  color: #c29d5f !important;
+  /* Gold hover */
 }
 
 
 /* ===== Section blocks ===== */
 .side-section {
-  border-top: none; /* default: no line */
+  border-top: none;
+  /* default: no line */
 }
 
 /* Add line above only Support & Learn More */
@@ -708,7 +755,8 @@ html, body {
   font-weight: 700;
   color: var(--navy);
   letter-spacing: 0.3px;
-  border: none; /* no borders on heading */
+  border: none;
+  /* no borders on heading */
 }
 
 .side-section ul {
@@ -744,13 +792,22 @@ html, body {
   border-bottom: none;
 }
 
+.side-section.information li {
+  gap: 12px;
+}
+
+.side-section.information li svg {
+  flex: 0 0 22px;
+}
+
 
 /* ============================= */
 /* === Footer Section (Side Menu) === */
 /* ============================= */
 .side-footer {
   border-top: 1px solid var(--line);
-  padding: 40px 0 60px; /* balanced top and bottom spacing */
+  padding: 40px 0 60px;
+  /* balanced top and bottom spacing */
   text-align: center;
   background: var(--white);
 }
@@ -761,17 +818,22 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px; /* even spacing between text & icons */
-  margin-bottom: 25px; /* space between rows */
+  gap: 10px;
+  /* even spacing between text & icons */
+  margin-bottom: 25px;
+  /* space between rows */
 }
 
 /* Footer text */
 .app-links span,
 .social-links span {
-  font-size: 17px; /* slightly larger for readability */
+  font-size: 17px;
+  /* slightly larger for readability */
   font-family: 'Suranna', serif;
-  color: #616161; /* subtle grey like original */
-  margin-right: 8px; /* little gap before icons */
+  color: #616161;
+  /* subtle grey like original */
+  margin-right: 8px;
+  /* little gap before icons */
   line-height: 1;
   display: flex;
   align-items: center;
@@ -813,7 +875,8 @@ html, body {
   justify-content: center;
   align-items: center;
   z-index: 5000;
-  backdrop-filter: blur(3px); /* ⭐ Premium blur effect */
+  backdrop-filter: blur(3px);
+  /* ⭐ Premium blur effect */
 }
 
 .modal {
@@ -822,7 +885,7 @@ html, body {
   border-radius: 18px;
   width: 420px;
   max-width: 92%;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -832,8 +895,15 @@ html, body {
 
 /* POP-IN ANIMATION */
 @keyframes popIn {
-  0% { transform: scale(0.85); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* ⭐ Title */
@@ -860,9 +930,12 @@ html, body {
   background: #fafafa;
   color: #193b61;
 
-  text-align: center;         /* center text */
-  padding: 0 25px;            /* ⭐ give left/right space so text never touches edges */
-  box-sizing: border-box;     /* ⭐ ensures width stays inside modal */
+  text-align: center;
+  /* center text */
+  padding: 0 25px;
+  /* ⭐ give left/right space so text never touches edges */
+  box-sizing: border-box;
+  /* ⭐ ensures width stays inside modal */
 }
 
 /* placeholder centering */
@@ -1044,7 +1117,7 @@ html, body {
     display: flex;
   }
 
-  .menu > li {
+  .menu>li {
     font-size: 14px;
   }
 
@@ -1071,7 +1144,7 @@ html, body {
     gap: 35px;
   }
 
-  .menu > li {
+  .menu>li {
     font-size: 15px;
   }
 }
@@ -1090,7 +1163,7 @@ html, body {
     gap: 45px;
   }
 
-  .menu > li {
+  .menu>li {
     font-size: 16px;
   }
 
@@ -1103,14 +1176,13 @@ html, body {
 
 @media (max-width: 767px) {
   .side-user-details h3 {
-    white-space: nowrap; /* Prevent line break */
+    white-space: nowrap;
+    /* Prevent line break */
     display: inline-block;
   }
 
   .side-user-details {
-    text-align: center;   /* optional */
+    text-align: center;
+    /* optional */
   }
 }
-
-
-

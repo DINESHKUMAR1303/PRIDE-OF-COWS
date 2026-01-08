@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { getUserProfile } from "../../api/user";
+import { Home, ShoppingBag, Package, MapPin, User } from "lucide-react";
 
 import "./MyAccount.css";
 
@@ -19,7 +20,7 @@ import logoutIcon from "./images/logout.svg";
 
 /* NEW bottom nav icons */
 import homeIcon from "./images/home.svg";
-import shopIcon from "./images/shop.png"; 
+import shopIcon from "./images/shop.png";
 import ordersIcon from "./images/myorder.svg";
 import addressNavIcon from "./images/pin.png";
 import profileNavIcon from "./images/profile.svg";
@@ -96,31 +97,30 @@ const MyAccountLayout = () => {
   return (
     <div className="account-wrapper">
 
-      
+
 
       {/* ---------------- LEFT SIDEBAR ---------------- */}
       <aside className={`account-sidebar ${openMenu ? "open" : ""}`}>
 
         {/* ---- USER INFO CARD ---- */}
         <div className="user-card">
-          <img src={profileIcon} className="user-avatar" alt="User Avatar" />
+          <div className="user-avatar-container">
+            <img src={profileIcon} className="user-avatar" alt="User Avatar" />
+          </div>
 
           <div className="user-info">
-            <div className="name-row">
-              <h3>{user.firstName} {user.lastName}</h3>
-
-              <NavLink
-                to="/my-account/profile"
-                className={({ isActive }) =>
-                  isActive ? "view-profile active" : "view-profile"
-                }
-              >
-                View Profile
-              </NavLink>
-            </div>
-
+            <h3>{user.firstName} {user.lastName}</h3>
             <p className="phone-number">{user.telephone || "—"}</p>
           </div>
+
+          <NavLink
+            to="/my-account/profile"
+            className={({ isActive }) =>
+              isActive ? "view-profile active" : "view-profile"
+            }
+          >
+            View Profile
+          </NavLink>
         </div>
 
         {/* ---- QUICK ACTION BUTTONS ---- */}
@@ -206,27 +206,27 @@ const MyAccountLayout = () => {
         <div className="mobile-bottom-nav">
 
           <NavLink to="/" className="mobile-nav-item">
-            <img src={homeIcon} alt="Home" />
+            <Home size={22} />
             <span>Home</span>
           </NavLink>
 
           <NavLink to="/shop/all" className="mobile-nav-item">
-            <img src={shopIcon} alt="Shop" />
+            <ShoppingBag size={22} />
             <span>Shop</span>
           </NavLink>
 
           <NavLink to="/my-account/orders" className="mobile-nav-item">
-            <img src={ordersIcon} alt="Orders" />
+            <Package size={22} />
             <span>Orders</span>
           </NavLink>
 
           <NavLink to="/my-account/addresses" className="mobile-nav-item">
-            <img src={addressNavIcon} alt="Addresses" />
+            <MapPin size={22} />
             <span>Addresses</span>
           </NavLink>
 
           <NavLink to="/my-account/profile" className="mobile-nav-item">
-            <img src={profileNavIcon} alt="Profile" />
+            <User size={22} />
             <span>Profile</span>
           </NavLink>
 

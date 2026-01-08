@@ -79,8 +79,8 @@ const ProfilePage = () => {
       {/* ---------------- Breadcrumb ---------------- */}
       <p className="breadcrumb">
         <Link to="/" className="breadcrumb-link">HOME</Link> /
-        <Link to="/my-account/profile" className="breadcrumb-link"> MY ACCOUNT</Link> /
-        <span> PROFILE</span>
+        <Link to="/my-account/profile" className="breadcrumb-link">MY ACCOUNT</Link> /
+        <span>PROFILE</span>
       </p>
 
       {/* ---------------- Title + Edit/Save Button ---------------- */}

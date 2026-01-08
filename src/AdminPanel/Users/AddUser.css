@@ -18,11 +18,12 @@
 /* LEFT ICON — ONLY FIRST SVG */
 .adduser-input-wrapper>svg {
   position: absolute;
-  left: 12px;
-  top: 35%;
-  /* Slight visual tweak for perfect center */
+  left: 18px;
+  /* Centered in the 60px padding area */
+  top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
+  color: #94a3b8;
 }
 
 /* PASSWORD */
@@ -32,14 +33,17 @@
 
 .adduser-password-toggle {
   position: absolute;
-  right: 16px;
-  top: 40%;
+  right: 18px;
+  top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
   color: #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ================= SELECT ARROW ================= */
@@ -162,9 +166,8 @@
 .adduser-header-search svg {
   position: absolute;
   left: 17px;
-  /* Exact center of 50px padding (50-16)/2 */
-  top: 35%;
-  /* Visual tweak */
+  top: 50%;
+  /* Centered vertically */
   transform: translateY(-50%);
   color: #94a3b8;
   pointer-events: none;
