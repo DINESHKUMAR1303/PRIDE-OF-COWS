@@ -86,19 +86,28 @@ const LoginModal = ({ onClose }) => {
 
       // ⭐ Correctly save nested address object
       const formattedUser = {
+        id: res.user._id || res.user.id,
         name: `${res.user.firstName} ${res.user.lastName}`,
         firstName: res.user.firstName,
         lastName: res.user.lastName,
         email: res.user.email,
-        phone: res.user.telephone,
+        phone: res.user.telephone || res.user.phone,
 
-        // ⭐ Save nested address properly
-        address: res.user.address || {},
-        city: res.user.address?.city || "",
-        pincode: res.user.address?.pincode || "",
-        state: res.user.address?.state || "",
-        country: res.user.address?.country || "",
+        // ⭐ Save normalized address
+        address: {
+          name: res.user.address?.name || `${res.user.firstName} ${res.user.lastName}`,
+          type: res.user.address?.type || res.user.type || "Home",
+          fullAddress: res.user.address?.fullAddress || res.user.address || res.user.fullAddress || "",
+          city: res.user.address?.city || res.user.city || "",
+          state: res.user.address?.state || res.user.state || "",
+          country: res.user.address?.country || res.user.country || "India",
+          pincode: res.user.address?.pincode || res.user.pincode || "",
+        }
       };
+
+      // Also keep flat copies for legacy if needed, but address is primary
+      formattedUser.city = formattedUser.address.city;
+      formattedUser.pincode = formattedUser.address.pincode;
 
       localStorage.setItem("poc_token", res.token);
       localStorage.setItem("poc_user", JSON.stringify(formattedUser));
@@ -189,19 +198,28 @@ const LoginModal = ({ onClose }) => {
       });
 
       const formattedUser = {
+        id: loginRes.user._id || loginRes.user.id,
         name: `${loginRes.user.firstName} ${loginRes.user.lastName}`,
         firstName: loginRes.user.firstName,
         lastName: loginRes.user.lastName,
         email: loginRes.user.email,
-        phone: loginRes.user.telephone,
+        phone: loginRes.user.telephone || loginRes.user.phone,
 
-        // ⭐ Fix incorrect address structure
-        address: loginRes.user.address || {},
-        city: loginRes.user.address?.city || "",
-        pincode: loginRes.user.address?.pincode || "",
-        state: loginRes.user.address?.state || "",
-        country: loginRes.user.address?.country || "",
+        // ⭐ Save normalized address
+        address: {
+          name: loginRes.user.address?.name || `${loginRes.user.firstName} ${loginRes.user.lastName}`,
+          type: loginRes.user.address?.type || loginRes.user.type || "Home",
+          fullAddress: loginRes.user.address?.fullAddress || loginRes.user.address || loginRes.user.fullAddress || "",
+          city: loginRes.user.address?.city || loginRes.user.city || "",
+          state: loginRes.user.address?.state || loginRes.user.state || "",
+          country: loginRes.user.address?.country || loginRes.user.country || "India",
+          pincode: loginRes.user.address?.pincode || loginRes.user.pincode || "",
+        }
       };
+
+      // Also keep flat copies for legacy
+      formattedUser.city = formattedUser.address.city;
+      formattedUser.pincode = formattedUser.address.pincode;
 
       localStorage.setItem("poc_token", loginRes.token);
       localStorage.setItem("poc_user", JSON.stringify(formattedUser));

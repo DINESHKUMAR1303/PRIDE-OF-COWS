@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Outlet, NavLink, useNavigate } from "react-router-dom";
+import { Outlet, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { getUserProfile } from "../../api/user";
 import { Home, ShoppingBag, Package, MapPin, User } from "lucide-react";
@@ -28,8 +28,26 @@ import profileNavIcon from "./images/profile.svg";
 const MyAccountLayout = () => {
   const { user, setUser } = useAuth();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const [loading, setLoading] = useState(true);
+
+  // ⭐ Scroll to top on route change (Aggressive Reset)
+  useEffect(() => {
+    const scrollReset = () => {
+      const contentArea = document.querySelector(".account-content");
+      if (contentArea) {
+        contentArea.scrollTo(0, 0);
+        contentArea.scrollTop = 0;
+      }
+      window.scrollTo(0, 0);
+    };
+
+    scrollReset();
+    // Second pass with a tiny delay to ensure render is complete
+    const timer = setTimeout(scrollReset, 50);
+    return () => clearTimeout(timer);
+  }, [pathname]);
 
   /* ⭐ NEW: Mobile sidebar toggle states */
   const [openMenu, setOpenMenu] = useState(false);

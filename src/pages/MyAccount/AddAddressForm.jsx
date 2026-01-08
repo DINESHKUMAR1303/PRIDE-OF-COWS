@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { getUserAddress, updateAddress } from "../../api/user";
+import { useAuth } from "../../context/AuthContext";
 import "./AddAddressForm.css";
 
 
 const AddAddressForm = ({ onClose, onSaved }) => {
+  const { user, setUser } = useAuth();
   const localUser = JSON.parse(localStorage.getItem("poc_user"));
 
   const [formData, setFormData] = useState({
-    name: localUser ? `${localUser.firstName} ${localUser.lastName}` : "",
+    name: user?.firstName ? `${user.firstName} ${user.lastName}` : (localUser ? `${localUser.firstName} ${localUser.lastName}` : ""),
     fullAddress: "",
     street: "",
     city: "",
@@ -79,6 +81,16 @@ const AddAddressForm = ({ onClose, onSaved }) => {
         "userLocation",
         `${formData.city.toUpperCase()} (${formData.pincode})`
       );
+
+      // ⭐ UPDATE GLOBAL USER STATE
+      if (user) {
+        const updatedUser = {
+          ...user,
+          address: { ...user.address, ...formData }
+        };
+        setUser(updatedUser);
+        localStorage.setItem("poc_user", JSON.stringify(updatedUser));
+      }
 
       onSaved?.();
       onClose?.();

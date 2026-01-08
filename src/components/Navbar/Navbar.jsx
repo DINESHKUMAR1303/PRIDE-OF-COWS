@@ -124,8 +124,8 @@ const Navbar = () => {
     }
 
     // ⭐ PRIORITY 1: User address from backend
-    if (user?.city && user?.pincode) {
-      setLocation(`${user.city.toUpperCase()} (${user.pincode})`);
+    if (user?.address?.city && user?.address?.pincode) {
+      setLocation(`${user.address.city.toUpperCase()} (${user.address.pincode})`);
     }
     else {
       // ⭐ PRIORITY 2: Saved automatically from AddAddressForm

@@ -30,18 +30,24 @@ export const AuthProvider = ({ children }) => {
       // -------------------------------
       // ⭐ Normalize Address Structure
       // -------------------------------
-      const addressRaw = parsed.address || {};
+      // Check if it's already nested or flat in localStorage
+      const addressLayer = parsed.address || {};
 
       const address = {
         name:
-          addressRaw.name ||
+          addressLayer.name ||
+          parsed.name ||
           `${parsed.firstName || ""} ${parsed.lastName || ""}`.trim(),
-        type: addressRaw.type || "Home",
-        fullAddress: addressRaw.fullAddress || "",
-        city: addressRaw.city || "",
-        state: addressRaw.state || "",
-        country: addressRaw.country || "",
-        pincode: addressRaw.pincode || "",
+        type: addressLayer.type || parsed.type || "Home",
+        fullAddress:
+          addressLayer.fullAddress ||
+          parsed.fullAddress ||
+          parsed.address ||
+          "",
+        city: addressLayer.city || parsed.city || "",
+        state: addressLayer.state || parsed.state || "",
+        country: addressLayer.country || parsed.country || "India",
+        pincode: addressLayer.pincode || parsed.pincode || "",
       };
 
       // -------------------------------
