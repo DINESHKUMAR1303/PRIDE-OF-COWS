@@ -12,6 +12,10 @@ import {
 } from "lucide-react";
 import { FaFilePdf, FaFileExcel } from "react-icons/fa";
 import { MdPrint } from "react-icons/md";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
+import * as XLSX from "xlsx";
+import { Loader2 } from "lucide-react";
 import "./ManageUser.css";
 
 const ManageUser = () => {
@@ -21,6 +25,7 @@ const ManageUser = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [viewingUser, setViewingUser] = useState(null);
+  const [isExporting, setIsExporting] = useState(null); // 'pdf' or 'excel' or null
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -105,14 +110,81 @@ const ManageUser = () => {
   };
 
   // Export handlers
-  const handleExportPDF = () => {
-    console.log("Export to PDF");
-    // Implement PDF export logic
+  const handleExportPDF = async () => {
+    try {
+      setIsExporting("pdf");
+      const doc = new jsPDF();
+
+      const tableColumn = ["Name", "Email", "Contact", "Designation", "Permissions"];
+      const tableRows = (filteredUsers || []).map(user => [
+        user?.name || "N/A",
+        user?.email || "N/A",
+        user?.contact || "N/A",
+        user?.designation || "N/A",
+        (user?.departments || []).join(", ") || "No Permissions"
+      ]);
+
+      // Use the autoTable plugin
+      autoTable(doc, {
+        head: [tableColumn],
+        body: tableRows,
+        startY: 20,
+        theme: 'striped',
+        headStyles: { fillColor: [25, 59, 97], textColor: [255, 255, 255] },
+        styles: { fontSize: 9 },
+        margin: { top: 20 }
+      });
+
+      doc.setFontSize(16);
+      doc.text("User Management Report", 14, 15);
+
+      // Artificial delay for animation
+      await new Promise(resolve => setTimeout(resolve, 800));
+
+      doc.save("user_list_report.pdf");
+    } catch (error) {
+      console.error("PDF Export Error:", error);
+      alert("Failed to export PDF. Please try again.");
+    } finally {
+      setIsExporting(null);
+    }
   };
 
-  const handleExportExcel = () => {
-    console.log("Export to Excel");
-    // Implement Excel export logic
+  const handleExportExcel = async () => {
+    try {
+      setIsExporting("excel");
+      const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+      const fileExtension = ".xlsx";
+
+      const exportData = filteredUsers.map((user) => ({
+        "User Name": user.name || "N/A",
+        "Official Email": user.email || "N/A",
+        "Contact Number": user.contact || "N/A",
+        "Designation": user.designation || "N/A",
+        "Assigned Modules": (user.departments || []).join(", ")
+      }));
+
+      const ws = XLSX.utils.json_to_sheet(exportData);
+      const wb = { Sheets: { data: ws }, SheetNames: ["User_Data"] };
+      const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+      const data = new Blob([excelBuffer], { type: fileType });
+
+      // Artificial delay for animation
+      await new Promise(resolve => setTimeout(resolve, 800));
+
+      const url = window.URL.createObjectURL(data);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "User_Management_Export" + fileExtension);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Excel Export Error:", error);
+      alert("Failed to export Excel. Please try again.");
+    } finally {
+      setIsExporting(null);
+    }
   };
 
   const handlePrint = () => {
@@ -191,15 +263,25 @@ const ManageUser = () => {
             </div>
 
             <div className="export-group">
-              <button className="export-btn pdf" onClick={handleExportPDF} title="Export to PDF">
-                <FaFilePdf size={18} />
+              <button
+                className={`export-btn pdf ${isExporting === 'pdf' ? 'exporting' : ''}`}
+                onClick={handleExportPDF}
+                title="Export to PDF"
+                disabled={isExporting}
+              >
+                {isExporting === 'pdf' ? <Loader2 size={18} className="spin" /> : <FaFilePdf size={18} />}
               </button>
               <div className="export-divider"></div>
-              <button className="export-btn excel" onClick={handleExportExcel} title="Export to Excel">
-                <FaFileExcel size={18} />
+              <button
+                className={`export-btn excel ${isExporting === 'excel' ? 'exporting' : ''}`}
+                onClick={handleExportExcel}
+                title="Export to Excel"
+                disabled={isExporting}
+              >
+                {isExporting === 'excel' ? <Loader2 size={18} className="spin" /> : <FaFileExcel size={18} />}
               </button>
               <div className="export-divider"></div>
-              <button className="export-btn print" onClick={handlePrint} title="Print">
+              <button className="export-btn print" onClick={handlePrint} title="Print" disabled={isExporting}>
                 <MdPrint size={20} />
               </button>
             </div>
