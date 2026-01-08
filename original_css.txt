@@ -1,5 +1,3 @@
-/* src/AdminPanel/Users/AddUser.css */
-
 /* ONLY form inputs inside the Add User card */
 .adduser-card input,
 .adduser-card select {

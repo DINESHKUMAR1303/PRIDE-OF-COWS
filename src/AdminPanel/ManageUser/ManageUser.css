@@ -162,6 +162,16 @@
   color: #2563eb;
 }
 
+.export-group.exporting {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.export-group.exporting .export-btn {
+  cursor: wait;
+  pointer-events: none;
+}
+
 .export-divider {
   width: 1px;
   height: 20px;
@@ -173,18 +183,19 @@
   min-width: 145px;
   width: auto;
   height: 38px;
-  padding: 0 10px;
+  padding: 0 12px;
   margin-bottom: 0px;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
   background: #ffffff;
   font-size: 14px;
+  line-height: 36px;
+  /* Centering text */
   color: #64748b;
   cursor: pointer;
   outline: none;
   font-weight: 500;
   flex-shrink: 0;
-  /* Never shrink */
 }
 
 .pagination-controls {

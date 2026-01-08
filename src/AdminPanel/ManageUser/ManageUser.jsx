@@ -12,6 +12,9 @@ import {
 } from "lucide-react";
 import { FaFilePdf, FaFileExcel } from "react-icons/fa";
 import { MdPrint } from "react-icons/md";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
+import * as XLSX from "xlsx";
 import "./ManageUser.css";
 
 const ManageUser = () => {
@@ -104,15 +107,75 @@ const ManageUser = () => {
     );
   };
 
+  const [isExporting, setIsExporting] = useState(false);
+
   // Export handlers
   const handleExportPDF = () => {
-    console.log("Export to PDF");
-    // Implement PDF export logic
+    try {
+      setIsExporting(true);
+      const doc = new jsPDF();
+
+      // Add Title
+      doc.setFontSize(18);
+      doc.text("User Management Report", 14, 22);
+      doc.setFontSize(11);
+      doc.setTextColor(100);
+
+      // Add date
+      const dateString = new Date().toLocaleString();
+      doc.text(`Generated on: ${dateString}`, 14, 30);
+
+      // Table Data
+      const tableColumn = ["ID", "Name", "Email", "Contact", "Permissions"];
+      const tableRows = (searchTerm ? filteredUsers : users).map(user => [
+        user.userId || "N/A",
+        user.name,
+        user.email,
+        user.contact,
+        (user.departments || []).join(", ")
+      ]);
+
+      autoTable(doc, {
+        head: [tableColumn],
+        body: tableRows,
+        startY: 35,
+        styles: { fontSize: 9, cellPadding: 3 },
+        headStyles: { fillColor: [30, 41, 59], textColor: [255, 255, 255] },
+        alternateRowStyles: { fillColor: [248, 250, 252] },
+      });
+
+      doc.save(`User_List_${new Date().getTime()}.pdf`);
+    } catch (err) {
+      console.error("PDF Export Failed:", err);
+      alert("Failed to export PDF");
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   const handleExportExcel = () => {
-    console.log("Export to Excel");
-    // Implement Excel export logic
+    try {
+      setIsExporting(true);
+      const dataToExport = (searchTerm ? filteredUsers : users).map(user => ({
+        "User ID": user.userId || "N/A",
+        "Name": user.name,
+        "Email": user.email,
+        "Contact": user.contact,
+        "Designation": user.designation || "N/A",
+        "Permissions": (user.departments || []).join(", ")
+      }));
+
+      const ws = XLSX.utils.json_to_sheet(dataToExport);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Users");
+
+      XLSX.writeFile(wb, `User_List_${new Date().getTime()}.xlsx`);
+    } catch (err) {
+      console.error("Excel Export Failed:", err);
+      alert("Failed to export Excel");
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   const handlePrint = () => {
@@ -190,16 +253,31 @@ const ManageUser = () => {
               <Search size={18} />
             </div>
 
-            <div className="export-group">
-              <button className="export-btn pdf" onClick={handleExportPDF} title="Export to PDF">
+            <div className={`export-group ${isExporting ? 'exporting' : ''}`}>
+              <button
+                className="export-btn pdf"
+                onClick={handleExportPDF}
+                title="Export to PDF"
+                disabled={isExporting}
+              >
                 <FaFilePdf size={18} />
               </button>
               <div className="export-divider"></div>
-              <button className="export-btn excel" onClick={handleExportExcel} title="Export to Excel">
+              <button
+                className="export-btn excel"
+                onClick={handleExportExcel}
+                title="Export to Excel"
+                disabled={isExporting}
+              >
                 <FaFileExcel size={18} />
               </button>
               <div className="export-divider"></div>
-              <button className="export-btn print" onClick={handlePrint} title="Print">
+              <button
+                className="export-btn print"
+                onClick={handlePrint}
+                title="Print"
+                disabled={isExporting}
+              >
                 <MdPrint size={20} />
               </button>
             </div>
