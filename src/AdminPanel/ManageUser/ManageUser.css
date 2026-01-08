@@ -532,9 +532,12 @@
 
   .items-per-page {
     font-size: 12px;
-    min-width: 120px;   /* ✅ prevents text cut */
-    width: auto;        /* ✅ allows natural sizing */
-    padding-right: 28px; /* ✅ space for dropdown arrow */
+    min-width: 120px;
+    /* ✅ prevents text cut */
+    width: auto;
+    /* ✅ allows natural sizing */
+    padding-right: 28px;
+    /* ✅ space for dropdown arrow */
   }
 
   .manage-table thead th {
@@ -592,6 +595,7 @@
 }
 
 .modal-content {
+  position: relative;
   background: #ffffff;
   border-radius: 16px;
   width: 90%;
@@ -616,21 +620,28 @@
   margin: 0;
 }
 
-.modal-close {
-  background: none;
+.modal-close-outside {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  background: #f1f5f9;
   border: none;
   color: #64748b;
   cursor: pointer;
-  padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
-  transition: background 0.2s ease;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  z-index: 10;
 }
 
-.modal-close:hover {
-  background: #f1f5f9;
+.modal-close-outside:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+  transform: rotate(90deg);
 }
 
 .modal-body {
@@ -692,6 +703,3 @@
   color: #0f172a;
   font-weight: 500;
 }
-
-
-

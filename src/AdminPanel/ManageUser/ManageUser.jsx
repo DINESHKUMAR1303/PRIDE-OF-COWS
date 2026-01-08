@@ -361,11 +361,11 @@ const ManageUser = () => {
       {viewingUser && (
         <div className="modal-overlay" onClick={() => setViewingUser(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button onClick={() => setViewingUser(null)} className="modal-close-outside">
+              <X size={20} />
+            </button>
             <div className="modal-header">
               <h2>User Details</h2>
-              <button onClick={() => setViewingUser(null)} className="modal-close">
-                <X size={24} />
-              </button>
             </div>
             <div className="modal-body">
               <div className="view-user-grid">
