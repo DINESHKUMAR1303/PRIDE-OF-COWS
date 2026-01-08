@@ -8,6 +8,7 @@ import {
   Search,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   X
 } from "lucide-react";
 import { FaFilePdf, FaFileExcel } from "react-icons/fa";
@@ -24,6 +25,7 @@ const ManageUser = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [viewingUser, setViewingUser] = useState(null);
+  const [isPerPageDropdownOpen, setIsPerPageDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -282,19 +284,31 @@ const ManageUser = () => {
               </button>
             </div>
 
-            <select
-              className="items-per-page"
-              value={itemsPerPage}
-              onChange={(e) => {
-                setItemsPerPage(Number(e.target.value));
-                setCurrentPage(1);
-              }}
-            >
-              <option value={5}>5 per page</option>
-              <option value={10}>10 per page</option>
-              <option value={20}>20 per page</option>
-              <option value={50}>50 per page</option>
-            </select>
+            <div className={`items-per-page-wrapper ${isPerPageDropdownOpen ? 'active' : ''}`} onClick={() => setIsPerPageDropdownOpen(!isPerPageDropdownOpen)}>
+              <div className="custom-select-trigger items-per-page-trigger">
+                <span>{itemsPerPage} per page</span>
+                <ChevronDown size={16} className={`custom-select-arrow ${isPerPageDropdownOpen ? 'open' : ''}`} />
+              </div>
+
+              {isPerPageDropdownOpen && (
+                <div className="custom-dropdown-menu items-per-page-menu">
+                  {[5, 10, 20, 50].map((num) => (
+                    <div
+                      key={num}
+                      className={`custom-dropdown-item ${itemsPerPage === num ? 'selected' : ''}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setItemsPerPage(num);
+                        setCurrentPage(1);
+                        setIsPerPageDropdownOpen(false);
+                      }}
+                    >
+                      {num} per page
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
 
             <div className="pagination-controls">
               <button

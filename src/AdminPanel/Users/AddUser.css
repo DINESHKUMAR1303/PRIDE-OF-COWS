@@ -1,7 +1,8 @@
 /* src/AdminPanel/Users/AddUser.css */
 
 /* ONLY form inputs inside the Add User card */
-.adduser-card input,
+/* We exclude the custom trigger from this general rule to have specific control */
+.adduser-card input:not(.custom-select-trigger),
 .adduser-card select {
   height: 48px !important;
   width: 100%;
@@ -13,18 +14,19 @@
   border-radius: 4px !important;
   border: 1px solid #e2e8f0 !important;
   box-sizing: border-box;
-  background: #ffffff !important;
+  background-color: #ffffff !important;
 }
 
 /* LEFT ICON — ONLY FIRST SVG */
-/* LEFT ICON — ONLY FIRST SVG */
-.adduser-input-wrapper>svg {
+.adduser-input-wrapper>svg:first-child {
   position: absolute;
   left: 12px;
-  top: 35%;
-  /* Slight visual tweak for perfect center */
+  top: 50%;
+  /* Center vertically in the relative container */
   transform: translateY(-50%);
   pointer-events: none;
+  z-index: 10;
+  color: #9ca3af;
 }
 
 /* PASSWORD */
@@ -35,25 +37,95 @@
 .adduser-password-toggle {
   position: absolute;
   right: 16px;
-  top: 40%;
+  top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
   color: #9ca3af;
+  display: flex;
+  align-items: center;
 }
 
-/* ================= SELECT ARROW ================= */
-.adduser-select-wrapper::after {
-  content: "▼";
-  position: absolute;
-  right: 18px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 11px;
+/* ================= CUSTOM DROPDOWN ================= */
+.custom-select-trigger {
+  height: 48px;
+  width: 100%;
+  padding-left: 60px;
+  padding-right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #0f172a;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.custom-select-trigger:hover {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+
+.custom-select-arrow {
   color: #9ca3af;
-  pointer-events: none;
+  transition: transform 0.2s ease;
+}
+
+.custom-select-arrow.open {
+  transform: rotate(180deg);
+}
+
+.custom-dropdown-menu {
+  position: absolute;
+  top: 54px;
+  /* 48px height + margin */
+  left: 0;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  z-index: 50;
+  overflow: hidden;
+  animation: fadeIn 0.15s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.custom-dropdown-item {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #334155;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.custom-dropdown-item:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.custom-dropdown-item.selected {
+  background: #ecfdf5;
+  color: #000000;
+  font-weight: 500;
 }
 
 /* ================= PAGE ================= */
@@ -285,7 +357,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px 100px;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 }
 
 .adduser-designation-group>label {
@@ -303,11 +375,6 @@
 .adduser-input-wrapper input::placeholder {
   color: #9ca3af;
   opacity: 1;
-}
-
-.adduser-input-wrapper select {
-  appearance: none;
-  -webkit-appearance: none;
 }
 
 .adduser-upload-btn input[type="file"] {
@@ -688,7 +755,6 @@
     padding-left: 54px !important;
   }
 
-  /* Profile Box */
   .adduser-profile-box {
     padding: 16px 20px;
     margin-bottom: 26px;
@@ -797,47 +863,5 @@
 
   .adduser-header-search input {
     width: 230px;
-  }
-
-  .adduser-form-main-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px 80px;
-  }
-
-  /* Permissions - 6 Columns */
-  .adduser-permission-grid {
-    grid-template-columns: repeat(6, 1fr);
-    gap: 12px;
-  }
-
-  .adduser-checkbox-item {
-    font-size: 13px;
-  }
-}
-
-/* ---------- EXTRA LARGE DESKTOP (≥1440px) ---------- */
-@media (min-width: 1440px) {
-
-  .adduser-top-header {
-    padding: 0 32px;
-  }
-
-  .adduser-header-search input {
-    width: 240px;
-  }
-
-  .adduser-form-main-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px 100px;
-  }
-
-  /* Permissions - Full 7 Columns */
-  .adduser-permission-grid {
-    grid-template-columns: repeat(7, 1fr);
-    gap: 12px;
-  }
-
-  .adduser-checkbox-item {
-    font-size: 13px;
   }
 }

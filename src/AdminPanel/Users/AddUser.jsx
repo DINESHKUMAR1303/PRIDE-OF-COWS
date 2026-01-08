@@ -14,7 +14,8 @@ import {
   Search,
   Eye,
   EyeOff,
-  Hash
+  Hash,
+  ChevronDown
 } from "lucide-react";
 import "./AddUser.css";
 import { createStaff, updateStaff } from "../../api/user";
@@ -28,6 +29,7 @@ const AddUser = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // Initialize counter from localStorage
   const [userCounter, setUserCounter] = useState(() => {
@@ -380,18 +382,30 @@ const AddUser = () => {
 
             {/* Row 3: Designation + PASSWORD */}
             <div className="adduser-form-group adduser-designation-group">
-              <div className="adduser-input-wrapper adduser-select-wrapper">
+              <div className="adduser-input-wrapper adduser-select-wrapper" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
                 <Briefcase size={18} />
-                <select
-                  name="designation"
-                  value={formData.designation}
-                  onChange={handleInputChange}
-                >
-                  <option>Administrator</option>
-                  <option>Manager</option>
-                  <option>Staff</option>
-                  <option>Employee</option>
-                </select>
+                <div className="custom-select-trigger">
+                  <span>{formData.designation}</span>
+                  <ChevronDown size={16} className={`custom-select-arrow ${isDropdownOpen ? 'open' : ''}`} />
+                </div>
+
+                {isDropdownOpen && (
+                  <div className="custom-dropdown-menu">
+                    {["Administrator", "Manager", "Staff", "Employee"].map((role) => (
+                      <div
+                        key={role}
+                        className={`custom-dropdown-item ${formData.designation === role ? 'selected' : ''}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setFormData(prev => ({ ...prev, designation: role }));
+                          setIsDropdownOpen(false);
+                        }}
+                      >
+                        {role}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 
