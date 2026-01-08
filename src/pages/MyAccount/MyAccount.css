@@ -532,18 +532,22 @@
 /* EACH NAV ITEM */
 .mobile-nav-item {
   flex: 1;
-  /* ✅ EQUAL WIDTH */
   text-decoration: none;
-  color: #ffffff;
-  font-size: 12px;
+  color: #193B61;
+  /* Brand Navy */
+  font-size: 11px;
   display: flex;
   flex-direction: column;
-  /* icon above text */
   align-items: center;
   justify-content: center;
   text-align: center;
-  opacity: 0.8;
-  transition: opacity 0.2s ease, color 0.2s ease;
+  transition: 0.2s ease;
+  font-weight: 700;
+}
+
+.mobile-nav-item svg {
+  margin-bottom: 4px;
+  stroke: currentColor;
 }
 
 /* ICON */
@@ -555,7 +559,7 @@
 
 /* ACTIVE STATE */
 .mobile-nav-item.active {
-  color: #c29d5f;
+  color: #193B61;
   opacity: 1;
 }
 

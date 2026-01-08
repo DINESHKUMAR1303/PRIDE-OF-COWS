@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { getUserProfile } from "../../api/user";
+import { Home, ShoppingBag, Package, MapPin, User } from "lucide-react";
 
 import "./MyAccount.css";
 
@@ -205,27 +206,27 @@ const MyAccountLayout = () => {
         <div className="mobile-bottom-nav">
 
           <NavLink to="/" className="mobile-nav-item">
-            <img src={homeIcon} alt="Home" />
+            <Home size={22} />
             <span>Home</span>
           </NavLink>
 
           <NavLink to="/shop/all" className="mobile-nav-item">
-            <img src={shopIcon} alt="Shop" />
+            <ShoppingBag size={22} />
             <span>Shop</span>
           </NavLink>
 
           <NavLink to="/my-account/orders" className="mobile-nav-item">
-            <img src={ordersIcon} alt="Orders" />
+            <Package size={22} />
             <span>Orders</span>
           </NavLink>
 
           <NavLink to="/my-account/addresses" className="mobile-nav-item">
-            <img src={addressNavIcon} alt="Addresses" />
+            <MapPin size={22} />
             <span>Addresses</span>
           </NavLink>
 
           <NavLink to="/my-account/profile" className="mobile-nav-item">
-            <img src={profileNavIcon} alt="Profile" />
+            <User size={22} />
             <span>Profile</span>
           </NavLink>
 
