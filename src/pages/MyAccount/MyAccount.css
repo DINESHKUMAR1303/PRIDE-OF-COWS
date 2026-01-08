@@ -3,7 +3,7 @@
 ============================ */
 .account-wrapper {
   display: flex;
-  gap: 15px;
+  gap: 30px;
   padding: 30px 40px;
   background: #f9f9f9;
   box-sizing: border-box;
@@ -11,31 +11,26 @@
 }
 
 .account-sidebar {
-  width: 320px;
+  width: 400px;
   background: #edecea;
   padding: 15px;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
   transition: 0.3s ease;
 
-  height: calc(100vh - 60px);
-  /* ⭐ fits inside wrapper padding */
-  overflow-y: auto;
-  /* ⭐ scroll sidebar internally */
-  overflow-x: hidden;
-  /* clean */
+  height: calc(100vh - 60px);  /* ⭐ fits inside wrapper padding */
+  overflow-y: auto;            /* ⭐ scroll sidebar internally */
+  overflow-x: hidden;          /* clean */
 }
 
 
 .account-content {
   flex: 1;
   background: #f4f4f4;
-  overflow-y: auto;
-  /* ⭐ ONLY THIS SCROLLS */
-  padding: 30px 40px;
-  /* FIX YOUR BROKEN padding: px */
+  overflow-y: auto;         /* ⭐ ONLY THIS SCROLLS */
+  padding: 20px 25px;       /* FIX YOUR BROKEN padding: px */
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
   box-sizing: border-box;
 }
 
@@ -68,67 +63,56 @@
    USER CARD — UPDATED EXACTLY
 ============================ */
 .user-card {
-  padding: 16px 20px;
+  border: 1px solid #ddd;
+  padding: 18px 20px;
   background: #fff;
-  border-radius: 18px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-.user-avatar-container {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  gap: 18px;
 }
 
 .user-avatar {
-  width: 100%;
-  height: 100%;
+  width: 55px;
+  height: 55px;
 }
 
-.account-sidebar .user-info {
-  flex: 1;
+.user-info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 
-.account-sidebar .user-info h3 {
-  margin: 0;
-  font-size: 16px;
-  font-family: 'Suranna', serif;
-  font-weight: 700;
-  color: #1a3b5d;
-  line-height: 1.2;
+.name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.account-sidebar .phone-number {
+.name-row h3 {
   margin: 0;
-  font-size: 14px;
+  font-size: 18px;
+  font-family: suranna,serif;
+  font-weight: 600;
+  color: #193b61;
+}
+
+.phone-number {
+  margin: 0;
+  font-size: 15px;
   font-weight: 700;
-  color: #1a3b5d;
+  color: #00315c;
 }
 
 .view-profile {
-  font-size: 12px;
-  font-weight: 700;
-  color: #000 !important;
+  margin-left: 50px;
+  margin-bottom: -10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2b2b2b !important;
   text-decoration: none !important;
-  white-space: nowrap;
-}
-
-/* Updated section title */
-.section-title {
-  font-size: 15px;
-  font-weight: 700;
-  color: #1a3b5d;
-  margin-bottom: 8px;
+  padding-top: 18px;
+  cursor: pointer;
 }
 
 /* STILL KEEPING OLD STRUCTURE */
@@ -152,53 +136,47 @@
 }
 
 /* ============================
-   QUICK ACTION BUTTONS (SCOPED)
+   QUICK BUTTONS
 ============================ */
-.account-sidebar .action-buttons {
-  display: grid !important;
-  grid-template-columns: repeat(2, 1fr) !important;
-  gap: 8px !important;
-  margin-bottom: 20px !important;
-  width: 100% !important;
-}
-
-.account-sidebar .action-buttons button {
+.action-buttons button {
   width: 100%;
-  padding: 12px 10px;
+  margin-top: 12px;
+  padding: 14px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 10px;
-  border-radius: 10px;
-  border: 1px solid #1a3b5d;
+  gap: 12px;
+  border-radius: 12px;
+  border: 1px solid #00315c;
   background: #fff;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  color: #1a3b5d;
-  transition: transform 0.2s;
-  box-sizing: border-box;
+  font-size: 15px;
+  transition: none !important;
 }
 
-.account-sidebar .action-buttons button:hover {
-  background: #f8fafc !important;
-  transform: translateY(-2px);
+.action-buttons button:hover {
+  background: #fff !important;
+  color: inherit !important;
 }
 
-.account-sidebar .action-buttons img {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
+.action-buttons img {
+  width: 22px;
+  filter: none !important;
+  opacity: 1 !important;
 }
 
 /* ============================
    SIDEBAR SECTIONS
 ============================ */
 .sidebar-section {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
-
+.section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0c2c4a;
+  margin-bottom: 12px;
+}
 
 .sidebar-section ul {
   list-style: none;
@@ -251,12 +229,10 @@
 ============================ */
 .account-wrapper {
   display: flex;
-  height: 100vh;
-  /* ⭐ FULL PAGE HEIGHT */
-  overflow: hidden;
-  /* ⭐ prevents page scroll */
+  height: 100vh;            /* ⭐ FULL PAGE HEIGHT */
+  overflow: hidden;         /* ⭐ prevents page scroll */
   gap: 30px;
-  padding: 0px 40px;
+  padding: 30px 40px;
   background: #f9f9f9;
   box-sizing: border-box;
 }
@@ -267,13 +243,10 @@
   color: #555;
   margin-bottom: 10px;
 
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  white-space: nowrap;
-  margin: 0;
-  padding: 0;
-  text-align: left;
+  display: flex;          /* keeps items in one line */
+  gap: 6px;               /* space between items */
+  align-items: center;    /* vertical alignment */
+  white-space: nowrap;    /* ⛔ prevents line break */
 }
 
 .breadcrumb a {
@@ -331,7 +304,7 @@
   align-items: flex-end;
 }
 
-.row>.input-group {
+.row > .input-group {
   flex: 1;
   min-width: 0;
 }
@@ -376,21 +349,18 @@
 ============================ */
 .checkbox-row {
   display: flex;
-  align-items: center;
-  /* keeps checkbox + text aligned */
+  align-items: center;   /* keeps checkbox + text aligned */
   gap: 10px;
   font-size: 15px;
   margin-top: 10px;
-  white-space: nowrap;
-  /* prevents text from breaking into 2 lines */
+  white-space: nowrap;   /* prevents text from breaking into 2 lines */
 }
 
 .checkbox-row input {
   width: 18px;
   height: 18px;
   cursor: pointer;
-  margin: 0;
-  /* remove unwanted bottom spacing */
+  margin: 0;             /* remove unwanted bottom spacing */
 }
 
 .checkbox-row label {
@@ -403,12 +373,8 @@
    ORDERS PAGE
 ============================ */
 .orders-wrapper {
-  text-align: left;
-  width: 100%;
-}
-
-.orders-wrapper .no-order-box {
   text-align: center;
+  width: 100%;
 }
 
 .no-order-box {
@@ -444,9 +410,7 @@
 
 .explore-btn:hover {
   opacity: 0.9;
-}
-
-*/
+} */
 
 /* ============================
    MODAL OVERLAY
@@ -454,7 +418,7 @@
 .address-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0,0,0,0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -493,6 +457,117 @@
   color: #666;
 }
 
+/* ============================
+   ADDRESS HEADER — GLOBAL FIX
+============================ */
+.address-header {
+  display: flex;
+  justify-content: space-between; /* Moves Home to right */
+  align-items: center;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.address-name {
+  font-weight: 700;
+  font-size: 16px;
+  color: #0a2540;
+}
+
+.address-tag {
+  background: #fde3b4;
+  color: #7b4b00;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+
+/* ============================
+   FORM INPUTS
+============================ */
+.address-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 22px;
+}
+
+.address-field label {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.address-field input,
+.address-field select {
+  padding: 14px 18px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.address-field input:focus,
+.address-field select:focus {
+  border-bottom: 1px solid #0a2b4f;
+}
+
+/* ============================
+   TWO COLUMN (CITY + PINCODE)
+============================ */
+.address-row {
+  display: flex;
+  gap: 25px;
+  margin-bottom: 22px;
+}
+
+.address-row > div {
+  flex: 1;
+}
+
+.address-row label {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.address-row input {
+  width: 100%;
+  padding: 14px 18px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  outline: none;
+}
+
+/* ============================
+   SAVE BUTTON
+============================ */
+.address-save-btn {
+  width: 100%;
+  background: #0a2b4f;
+  padding: 14px 0;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: 0.2s;
+}
+
+.address-save-btn:hover {
+  opacity: 0.9;
+}
+
+/* ERROR */
+.address-error {
+  color: red;
+  margin-bottom: 15px;
+}
 
 /* ============================
    RESPONSIVE
@@ -510,7 +585,7 @@
 }
 
 /* ==================================================
-   🎯 CONSOLIDATED MOBILE BOTTOM NAV
+   ⭐⭐⭐ MOBILE BOTTOM NAVBAR ⭐⭐⭐
 ================================================== */
 .mobile-bottom-nav {
   position: fixed;
@@ -519,42 +594,79 @@
   width: 100%;
   height: 64px;
   background: #ae8a49;
+  display: flex;
+  flex-direction: row;              /* ✅ FORCE HORIZONTAL */
+  justify-content: space-around;
+  align-items: center;
+  padding: 6px 0;
+  z-index: 99999 !important;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
+}
+
+/* EACH NAV ITEM */
+.mobile-nav-item {
+  flex: 1;                          /* ✅ EQUAL WIDTH */
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;           /* icon above text */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  opacity: 0.8;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+/* ICON */
+.mobile-nav-item img {
+  width: 22px;
+  height: 22px;
+  margin-bottom: 4px;
+}
+
+/* ACTIVE STATE */
+.mobile-nav-item.active {
+  color: #c29d5f;
+  opacity: 1;
+}
+
+/* HOVER (SAFE FOR TOUCH DEVICES) */
+.mobile-nav-item:hover {
+  opacity: 1;
+}
+
+/* HIDE ON DESKTOP */
+@media (min-width: 769px) {
+  .mobile-bottom-nav {
+    display: none !important;
+  }
+}
+
+
+/* ==================================================
+   🔥 FORCE MOBILE BOTTOM NAV HORIZONTAL (OVERRIDE ALL)
+================================================== */
+.mobile-bottom-nav {
   display: flex !important;
   flex-direction: row !important;
   justify-content: space-around !important;
   align-items: center !important;
-  padding: 6px 0;
-  z-index: 99999 !important;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
 }
 
-.mobile-nav-item {
+/* Force each item to stay inline */
+.mobile-bottom-nav .mobile-nav-item {
   flex: 1 !important;
   display: flex !important;
-  flex-direction: column !important;
+  flex-direction: column !important;   /* icon top, text bottom */
   align-items: center !important;
   justify-content: center !important;
   text-align: center !important;
-  text-decoration: none;
-  color: #0c2c4a !important;
-  font-size: 11px;
-  font-weight: 700;
-  transition: 0.2s ease;
-  opacity: 1 !important;
 }
 
-.mobile-nav-item svg {
-  margin-bottom: 4px;
-  stroke: currentColor;
-}
-
-.mobile-nav-item span {
-  font-size: 12px !important;
-  color: inherit !important;
-}
-
-.mobile-nav-item.active {
-  opacity: 1 !important;
+/* Prevent vertical stacking caused by anchors */
+.mobile-bottom-nav a {
+  display: flex !important;
 }
 
 
@@ -654,16 +766,12 @@
    ⭐ FIX MOBILE & TABLET ALIGNMENT (767–768px)
 =========================================================== */
 @media (max-width: 768px) {
-
   /* MAIN CONTENT SPACING FOR MOBILE */
   .account-content {
-    padding: 20px 16px !important;
-    /* Fixed the "px" typo */
-    padding-bottom: 110px !important;
-    /* more space so section never touches bottom nav */
+    padding: 20px 16px !important; /* Fixed the "px" typo */
+    padding-bottom: 110px !important; /* more space so section never touches bottom nav */
     box-sizing: border-box;
   }
-
   /* FIX BREADCRUMB LINE-BREAK */
   .breadcrumb {
     display: flex !important;
@@ -671,17 +779,16 @@
     white-space: nowrap !important;
     align-items: center !important;
     gap: 6px !important;
-    margin-bottom: 20px !important;
-    font-size: 11px !important;
+    margin-bottom: 12px !important;
+    margin-left: auto;
+    font-size: 12.5px !important;
   }
-
   /* HEADING ALIGNMENT */
   .page-title {
     font-size: 26px !important;
     margin-bottom: 12px !important;
     text-align: left !important;
   }
-
   /* FORM FIXES */
   .row {
     flex-direction: column !important;
@@ -689,11 +796,9 @@
     align-items: flex-start !important;
     width: 100% !important;
   }
-
   .row .input-group {
     width: 100% !important;
   }
-
   /* CHECKBOX FIX — stay in one line */
   .checkbox-row {
     display: flex !important;
@@ -702,73 +807,84 @@
     white-space: nowrap !important;
     margin-top: 10px !important;
   }
-
   .checkbox-row input {
     margin: 0 !important;
     width: 18px !important;
     height: 18px !important;
   }
-
   /* ORDERS PAGE FIX */
   .orders-wrapper {
     text-align: center !important;
     width: 100% !important;
   }
-
   .no-order-box {
     margin: 0 auto !important;
     padding: 10px !important;
   }
-
   .no-order-img {
     max-width: 70% !important;
     margin: 0 auto 15px auto !important;
   }
-}
+  /* ADDRESS PAGE FIX — FULL RESPONSIVE */
+  .address-card {
+    margin: 15px 0 !important;
+    width: 100% !important;
+    max-width: none !important; /* Allow full width on mobile */
+    padding: 16px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+ 
 
+
+  .full-address {
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+    word-break: break-word !important;
+  }
+  .addresses-wrapper {
+    padding-bottom: 20px !important;
+  }
+  /* Global overflow prevention */
+  .account-content,
+  .addresses-wrapper {
+    overflow-x: hidden !important;
+  }
+}
 /* ===========================================================
    ⭐ FIX BOTTOM GAP ON SMALL DEVICES (320px–360px)
 =========================================================== */
 @media (max-width: 360px) {
   .account-content {
     padding: 16px 12px !important;
-    padding-bottom: 140px !important;
-    /* more space for tiny screens */
+    padding-bottom: 140px !important; /* more space for tiny screens */
   }
-
   .addresses-wrapper,
   .orders-wrapper {
     padding-bottom: 130px !important;
   }
-
   .address-card {
     padding: 14px !important;
   }
-
   /* Ensure nothing pushes up behind the bottom nav */
   body {
     padding-bottom: 0 !important;
     margin-bottom: 0 !important;
   }
-
-  html,
-  body {
+  html, body {
     overflow-x: hidden !important;
   }
 }
-
 /* =====================================================
    HIDE NEWSLETTER + FOOTER ON MY ACCOUNT MOBILE PAGES
 ===================================================== */
 @media (max-width: 768px) {
-
   /* Newsletter section */
   .newsletter-section,
   .subscribe-section,
   .footer-signup-section {
     display: none !important;
   }
-
   /* Main website footer */
   footer,
   .site-footer,

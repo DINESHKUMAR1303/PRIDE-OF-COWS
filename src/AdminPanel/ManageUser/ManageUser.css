@@ -470,21 +470,24 @@
     font-size: 13px;
   }
 
-  .manage-table thead th {
-    font-size: 11px;
-    padding: 10px 8px;
-  }
-
+  .manage-table thead th,
   .manage-table tbody td {
-    padding: 10px 8px;
-    font-size: 13px;
+    padding: 10px 12px;
+    white-space: nowrap;
   }
 
-  .items-per-page {
-    font-size: 12px;
-    min-width: 120px;
-    width: auto;
-    padding-right: 24px;
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .action-buttons {
+    gap: 6px;
+  }
+
+  .btn {
+    width: 32px;
+    height: 32px;
   }
 
   .table-footer {
@@ -492,25 +495,6 @@
     text-align: center;
     gap: 10px;
     padding: 16px;
-  }
-
-  /* 🔧 FIX input text cutting issue */
-  .search-box {
-    height: auto;
-    min-height: 44px;
-  }
-
-  .search-box input {
-    height: auto;
-    line-height: 1.4;
-    padding: 8px 0;
-  }
-
-  .items-per-page {
-    height: auto;
-    min-height: 44px;
-    line-height: 1.4;
-    padding: 8px 12px;
   }
 
   /* Modal Adjustments */
@@ -539,20 +523,42 @@
   }
 
   .toolbar-right {
-    gap: 6px;
-    justify-content: center;
+    gap: 8px;
   }
 
-  .export-group {
-    width: 100%;
+  .export-btn {
+    width: 34px;
+  }
+
+  .items-per-page {
+    font-size: 12px;
+    min-width: 120px;
+    /* ✅ prevents text cut */
+    width: auto;
+    /* ✅ allows natural sizing */
+    padding-right: 28px;
+    /* ✅ space for dropdown arrow */
   }
 
   .manage-table thead th {
     font-size: 10px;
+    padding: 10px 8px;
+  }
+
+  .manage-table tbody td {
+    padding: 10px 8px;
   }
 
   .modal-content {
     width: 95%;
+  }
+
+  .modal-header {
+    padding: 16px;
+  }
+
+  .modal-body {
+    padding: 16px;
   }
 }
 
@@ -696,39 +702,4 @@
   font-size: 14px;
   color: #0f172a;
   font-weight: 500;
-}
-
-/* ================= EXPORT ANIMATIONS ================= */
-.export-btn.exporting {
-  opacity: 0.7;
-  pointer-events: none;
-  background: #f1f5f9;
-}
-
-.spin {
-  animation: spin 1s linear infinite;
-  color: #64748b;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.export-btn:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-.export-group button {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.export-btn:active:not(:disabled) {
-  transform: scale(0.95);
 }

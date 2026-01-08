@@ -6,7 +6,6 @@ import "./Navbar.css";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
 import { useLogin } from "../../context/LoginContext/LoginContext";
-import { User, Package, Home, ChevronRight } from "lucide-react";
 
 // === Icons ===
 import logo from "../../images/icons/logo.png";
@@ -116,36 +115,36 @@ const Navbar = () => {
   // =======================
   // LOCATION & STICKY
   // =======================
-  useEffect(() => {
-    // ⭐ If user logged out → reset to default
-    if (!user) {
-      setLocation("ENTER A PINCODE");
-      return;
-    }
+useEffect(() => {
+  // ⭐ If user logged out → reset to default
+  if (!user) {
+    setLocation("ENTER A PINCODE");
+    return;
+  }
 
-    // ⭐ PRIORITY 1: User address from backend
-    if (user?.city && user?.pincode) {
-      setLocation(`${user.city.toUpperCase()} (${user.pincode})`);
-    }
+  // ⭐ PRIORITY 1: User address from backend
+  if (user?.city && user?.pincode) {
+    setLocation(`${user.city.toUpperCase()} (${user.pincode})`);
+  } 
+  else {
+    // ⭐ PRIORITY 2: Saved automatically from AddAddressForm
+    const savedCity = localStorage.getItem("user_city");
+    const savedPin = localStorage.getItem("user_pincode");
+
+    if (savedCity && savedPin) {
+      setLocation(`${savedCity.toUpperCase()} (${savedPin})`);
+    } 
     else {
-      // ⭐ PRIORITY 2: Saved automatically from AddAddressForm
-      const savedCity = localStorage.getItem("user_city");
-      const savedPin = localStorage.getItem("user_pincode");
-
-      if (savedCity && savedPin) {
-        setLocation(`${savedCity.toUpperCase()} (${savedPin})`);
-      }
-      else {
-        // ⭐ PRIORITY 3: Old manual pincode modal
-        const saved = localStorage.getItem("userLocation");
-        if (saved) setLocation(saved);
-      }
+      // ⭐ PRIORITY 3: Old manual pincode modal
+      const saved = localStorage.getItem("userLocation");
+      if (saved) setLocation(saved);
     }
+  }
 
-    const scrollHandler = () => setIsSticky(window.scrollY > 150);
-    window.addEventListener("scroll", scrollHandler);
-    return () => window.removeEventListener("scroll", scrollHandler);
-  }, [user]);
+  const scrollHandler = () => setIsSticky(window.scrollY > 150);
+  window.addEventListener("scroll", scrollHandler);
+  return () => window.removeEventListener("scroll", scrollHandler);
+}, [user]);
 
 
   const handleSaveLocation = () => {
@@ -293,16 +292,16 @@ const Navbar = () => {
 
             {/* LOGIN STATUS */}
             {user ? (
-              <div
-                className="navbar-user"
-                onClick={() => navigate("/my-account")}   // ⭐ CLICK ANYWHERE
-                style={{ cursor: "pointer" }}
-              >
-                <img src={loginIcon} className="right-icon" />
-                <span className="user-text">
-                  {user.firstName?.toUpperCase()}
-                </span>
-              </div>
+             <div
+  className="navbar-user"
+  onClick={() => navigate("/my-account")}   // ⭐ CLICK ANYWHERE
+  style={{ cursor: "pointer" }}
+>
+  <img src={loginIcon} className="right-icon" />
+  <span className="user-text">
+    {user.firstName?.toUpperCase()}
+  </span>
+</div>
 
             ) : (
               <div className="login" onClick={() => setLoginOpen(true)}>
@@ -385,53 +384,33 @@ const Navbar = () => {
           {/* ========================= */}
           <div className="side-login">
 
-            {user ? (
-              <div className="side-user-box" onClick={() => navigate("/my-account")}>
+           {user ? (
+  <div className="side-user-box" onClick={() => navigate("/my-account")}>
+    
+    {/* LEFT ICON */}
+    <img src={loginIcon} className="side-user-icon" />
 
-                {/* LEFT ICON */}
-                <img src={loginIcon} className="side-user-icon" />
+    {/* CENTER TEXT */}
+    <div className="side-user-details">
+      <h3>{user.firstName?.toUpperCase()} {user.lastName?.toUpperCase()}</h3>
+      <p>{user.phone}</p>
+     
+    </div>
 
-                {/* CENTER TEXT */}
-                <div className="side-user-details">
-                  <h3>{user.firstName?.toUpperCase()} {user.lastName?.toUpperCase()}</h3>
-                  <p>{user.phone}</p>
-                  <span className="view-profile">View Profile</span>
-                </div>
+    
+  </div>
+) : (
+  <div className="side-login-left" onClick={() => setLoginOpen(true)}>
+    <img src={loginIcon} className="right-icon" />
+    <span className="login-text">Login</span>
+  </div>
+)}
 
-                {/* RIGHT CHEVRON */}
-                <ChevronRight size={20} color="#000" />
 
-              </div>
-            ) : (
-              <div className="side-login-left" onClick={() => setLoginOpen(true)}>
-                <img src={loginIcon} className="right-icon" />
-                <span className="login-text">Login</span>
-              </div>
-            )}
-            {!user && (
-              <button className="close-btn" onClick={() => setMenuOpen(false)}>
-                <FaTimes />
-              </button>
-            )}
+            <button className="close-btn" onClick={() => setMenuOpen(false)}>
+              <FaTimes />
+            </button>
           </div>
-
-          {/* INFORMATION SECTION (ONLY WHEN LOGGED IN) */}
-          {user && (
-            <div className="side-section information">
-              <h4>Information</h4>
-              <ul>
-                <li onClick={() => { setMenuOpen(false); navigate("/my-account/profile"); }}>
-                  <User size={20} strokeWidth={1.5} color="#193B61" /> My Account
-                </li>
-                <li onClick={() => { setMenuOpen(false); navigate("/my-account/orders"); }}>
-                  <Package size={20} strokeWidth={1.5} color="#193B61" /> My Orders
-                </li>
-                <li onClick={() => { setMenuOpen(false); navigate("/my-account/addresses"); }}>
-                  <Home size={20} strokeWidth={1.5} color="#193B61" /> My Addresses
-                </li>
-              </ul>
-            </div>
-          )}
 
           {/* SHOP */}
           <div className="accordion">
@@ -483,23 +462,23 @@ const Navbar = () => {
               <h4>Other</h4>
               <ul>
                 <li
-                  onClick={() => {
-                    setUser(null);
+                 onClick={() => {
+  setUser(null);
 
-                    // REMOVE ALL SAVED USER + LOCATION DATA
-                    localStorage.removeItem("poc_user");
-                    localStorage.removeItem("poc_token");
+  // REMOVE ALL SAVED USER + LOCATION DATA
+  localStorage.removeItem("poc_user");
+  localStorage.removeItem("poc_token");
 
-                    // ⭐ These 3 store the location — REMOVE THEM
-                    localStorage.removeItem("user_city");
-                    localStorage.removeItem("user_pincode");
-                    localStorage.removeItem("userLocation");
+  // ⭐ These 3 store the location — REMOVE THEM
+  localStorage.removeItem("user_city");
+  localStorage.removeItem("user_pincode");
+  localStorage.removeItem("userLocation");
 
-                    navigate("/", { replace: true });
+  navigate("/", { replace: true });
 
-                    // Force location reset visually
-                    window.location.reload();
-                  }}
+  // Force location reset visually
+  window.location.reload();
+}}
 
                   style={{ color: "#d9534f", fontWeight: "bold", cursor: "pointer" }}
                 >
