@@ -315,7 +315,7 @@ const AddUser = () => {
       )}
 
       <div className="adduser-card">
-      
+
         <div className="adduser-card-title">
           <h2>{editUser ? "Edit User Details" : "New User Details"}</h2>
           <User size={48} className="adduser-title-icon" />

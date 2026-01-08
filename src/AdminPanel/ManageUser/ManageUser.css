@@ -470,24 +470,21 @@
     font-size: 13px;
   }
 
-  .manage-table thead th,
+  .manage-table thead th {
+    font-size: 11px;
+    padding: 10px 8px;
+  }
+
   .manage-table tbody td {
-    padding: 10px 12px;
-    white-space: nowrap;
+    padding: 10px 8px;
+    font-size: 13px;
   }
 
-  .user-avatar {
-    width: 36px;
-    height: 36px;
-  }
-
-  .action-buttons {
-    gap: 6px;
-  }
-
-  .btn {
-    width: 32px;
-    height: 32px;
+  .items-per-page {
+    font-size: 12px;
+    min-width: 120px;
+    width: auto;
+    padding-right: 24px;
   }
 
   .table-footer {
@@ -495,6 +492,25 @@
     text-align: center;
     gap: 10px;
     padding: 16px;
+  }
+
+  /* 🔧 FIX input text cutting issue */
+  .search-box {
+    height: auto;
+    min-height: 44px;
+  }
+
+  .search-box input {
+    height: auto;
+    line-height: 1.4;
+    padding: 8px 0;
+  }
+
+  .items-per-page {
+    height: auto;
+    min-height: 44px;
+    line-height: 1.4;
+    padding: 8px 12px;
   }
 
   /* Modal Adjustments */
@@ -523,42 +539,20 @@
   }
 
   .toolbar-right {
-    gap: 8px;
+    gap: 6px;
+    justify-content: center;
   }
 
-  .export-btn {
-    width: 34px;
-  }
-
-  .items-per-page {
-    font-size: 12px;
-    min-width: 120px;
-    /* ✅ prevents text cut */
-    width: auto;
-    /* ✅ allows natural sizing */
-    padding-right: 28px;
-    /* ✅ space for dropdown arrow */
+  .export-group {
+    width: 100%;
   }
 
   .manage-table thead th {
     font-size: 10px;
-    padding: 10px 8px;
-  }
-
-  .manage-table tbody td {
-    padding: 10px 8px;
   }
 
   .modal-content {
     width: 95%;
-  }
-
-  .modal-header {
-    padding: 16px;
-  }
-
-  .modal-body {
-    padding: 16px;
   }
 }
 
