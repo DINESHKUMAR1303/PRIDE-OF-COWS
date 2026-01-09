@@ -81,7 +81,6 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  /* Reduced gap slightly for more space */
   flex-shrink: 0;
 }
 
