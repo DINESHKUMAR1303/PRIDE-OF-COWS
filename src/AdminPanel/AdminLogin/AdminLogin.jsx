@@ -31,7 +31,7 @@ const AdminLogin = ({ onLoginSuccess }) => {
     if (email === "admin@gmail.com" && password === "admin123") {
       const superAdminData = {
         name: "Admin User",
-        designation: "Super Admin", // Grants full access via hasPermission
+        designation: "Super Admin",
         departments: [],
         profileImage: ""
       };

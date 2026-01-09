@@ -10,7 +10,7 @@
 ### Frontend (Client)
 *   **Framework**: React 18 (via Vite)
 *   **Routing**: React Router DOM v6
-*   **Styling**: Vanilla CSS, Responsive Design (Mobile-First approach)
+*   **Styling**: CSS, Responsive Design 
 *   **Icons**: Lucide React, React Icons
 *   **State Management**: React Context API (`AuthContext`) + Local Component State
 *   **Utilities**: `jspdf` (PDF Generation), `xlsx` (Excel Export), `axios` (HTTP Requests)
@@ -148,6 +148,6 @@ This module allows the "Super Admin" or authorized staff to manage the internal 
     -   **Visuals**: Uses standard Avatars with hashed color generation if no image is uploaded.
 
 ### 7.3. Admin Styling
--   **Framework**: CSS Modules / Vanilla CSS.
+-   **Framework**: CSS Modules 
 -   **Theme**: Uses a clean, professional color palette (Slate/Gray scaling) with specific accent colors (Green `#16c784`) for primary actions and active states.
 -   **Components**: heavily utilizes custom-built UI elements (like the formatted Dropdowns and Modals) rather than relying on default browser inputs, ensuring a premium "app-like" feel.
