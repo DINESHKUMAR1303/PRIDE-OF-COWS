@@ -1,217 +1,28 @@
 /* src/AdminPanel/AddProduct/AddProduct.css */
 
-.addproduct-card {
-    margin: 0;
-    padding: 30px;
-    border-radius: 20px;
-    background: #ffffff;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-    position: relative;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.addproduct-top-header {
+/* --- Container & Card --- */
+.ap-container {
+    padding: 20px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    border-bottom: 1px solid #f1f5f9;
-    padding-bottom: 20px;
-}
-
-.addproduct-title {
-    font-size: 24px;
-    font-weight: 700;
-    color: #0f172a;
-    margin: 0;
-}
-
-.addproduct-subtitle {
-    font-size: 14px;
-    color: #64748b;
-    margin-top: 4px;
-}
-
-/* Form Grid */
-.addproduct-form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 30px;
-}
-
-.addproduct-full-width {
-    grid-column: 1 / -1;
-}
-
-/* Input Group */
-.addproduct-input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.addproduct-label {
-    font-size: 14px;
-    font-weight: 600;
-    color: #334155;
-}
-
-.addproduct-input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: 48px;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    background: #ffffff;
-    padding: 0 16px;
-    transition: all 0.2s;
-}
-
-.addproduct-input-wrapper:focus-within {
-    border-color: #16c784;
-    box-shadow: 0 0 0 3px rgba(22, 199, 132, 0.1);
-}
-
-.addproduct-icon {
-    color: #94a3b8;
-    margin-right: 12px;
-}
-
-.addproduct-input {
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-size: 14px;
-    color: #0f172a;
-    width: 100%;
-    height: 100%;
-}
-
-.addproduct-select {
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-size: 14px;
-    color: #0f172a;
-    width: 100%;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-}
-
-/* Image Upload */
-.addproduct-upload-box {
-    border: 2px dashed #e2e8f0;
-    border-radius: 12px;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    background: #f8fafc;
-    min-height: 160px;
+    align-items: flex-start;
+    min-height: 100%;
 }
 
-.addproduct-upload-box:hover {
-    border-color: #16c784;
-    background: #f0fdf4;
-}
-
-.addproduct-upload-icon {
-    width: 48px;
-    height: 48px;
-    color: #16c784;
-    margin-bottom: 12px;
-}
-
-.addproduct-upload-text {
-    font-size: 14px;
-    font-weight: 500;
-    color: #0f172a;
-}
-
-.addproduct-upload-subtext {
-    font-size: 12px;
-    color: #64748b;
-    margin-top: 4px;
-}
-
-.addproduct-preview-img {
-    width: 100%;
-    height: 200px;
-    object-fit: contain;
-    border-radius: 8px;
-}
-
-/* Actions */
-.addproduct-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 16px;
-    border-top: 1px solid #f1f5f9;
-    padding-top: 24px;
-}
-
-.addproduct-btn-cancel {
-    padding: 12px 24px;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
+.ap-card {
     background: #ffffff;
-    color: #64748b;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 850px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
+    padding: 40px;
+    animation: slideUp 0.4s ease-out;
 }
 
-.addproduct-btn-cancel:hover {
-    background: #f1f5f9;
-}
-
-.addproduct-btn-submit {
-    padding: 12px 32px;
-    border-radius: 8px;
-    background: #16c784;
-    color: #ffffff;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s;
-}
-
-.addproduct-btn-submit:hover {
-    background: #15803d;
-    transform: translateY(-1px);
-}
-
-/* Success Alert */
-.addproduct-alert {
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 24px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: #166534;
-    animation: slideDown 0.3s ease-out;
-}
-
-@keyframes slideDown {
+@keyframes slideUp {
     from {
         opacity: 0;
-        transform: translateY(-10px);
+        transform: translateY(20px);
     }
 
     to {
@@ -220,8 +31,332 @@
     }
 }
 
+/* --- Header --- */
+.ap-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 24px;
+}
+
+.ap-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.ap-subtitle {
+    font-size: 15px;
+    color: #64748b;
+    margin-top: 6px;
+    font-weight: 500;
+}
+
+.ap-icon-badge {
+    width: 48px;
+    height: 48px;
+    background: #f0fdf4;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Form Layout --- */
+.ap-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.ap-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+/* --- Input Groups --- */
+.ap-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ap-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+    margin-left: 2px;
+}
+
+/* --- Input Wrapper (The fix for double border) --- */
+.ap-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.ap-input-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    pointer-events: none;
+    transition: color 0.2s;
+    z-index: 2;
+}
+
+/* --- The Input Field Itself --- */
+.ap-input {
+    width: 100%;
+    height: 52px;
+    padding: 0 16px 0 48px;
+    /* Left padding creates space for icon */
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #0f172a;
+    transition: all 0.2s ease;
+    outline: none;
+
+    /* Critical Resets */
+    appearance: none;
+    -webkit-appearance: none;
+    box-shadow: none;
+}
+
+.ap-input::placeholder {
+    color: #cbd5e1;
+}
+
+.ap-input:hover {
+    background: #ffffff;
+    border-color: #cbd5e1;
+}
+
+.ap-input:focus {
+    background: #ffffff;
+    border-color: #16c784;
+    box-shadow: 0 0 0 4px rgba(22, 199, 132, 0.1);
+}
+
+.ap-input:focus~.ap-input-icon {
+    color: #16c784;
+}
+
+/* Fix Autofill Background */
+.ap-input:-webkit-autofill,
+.ap-input:-webkit-autofill:hover,
+.ap-input:-webkit-autofill:focus,
+.ap-input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #f8fafc inset !important;
+    -webkit-text-fill-color: #0f172a !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.ap-input:focus:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #ffffff inset !important;
+}
+
+/* --- Image Upload --- */
+.ap-upload-area {
+    border: 2px dashed #e2e8f0;
+    border-radius: 16px;
+    background: #f8fafc;
+    min-height: 180px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.ap-upload-area:hover {
+    border-color: #16c784;
+    background: #f0fdf4;
+}
+
+.ap-upload-label {
+    width: 100%;
+    height: 100%;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.ap-upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.ap-upload-icon-circle {
+    width: 56px;
+    height: 56px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #16c784;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.ap-upload-primary-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.ap-upload-secondary-text {
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+.ap-image-preview-container {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ap-preview-img {
+    max-height: 250px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.ap-remove-image-btn {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: #fee2e2;
+    color: #ef4444;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.ap-remove-image-btn:hover {
+    background: #fecaca;
+}
+
+/* --- Actions --- */
+.ap-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-top: 16px;
+    padding-top: 24px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.ap-btn-cancel {
+    padding: 14px 28px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: white;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.ap-btn-cancel:hover {
+    background: #f8fafc;
+    color: #334155;
+}
+
+.ap-btn-submit {
+    padding: 14px 32px;
+    border-radius: 12px;
+    background: #16c784;
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 12px rgba(22, 199, 132, 0.25);
+    transition: all 0.2s;
+}
+
+.ap-btn-submit:hover {
+    background: #10b981;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(22, 199, 132, 0.3);
+}
+
+.ap-btn-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* --- Alerts --- */
+.ap-alert {
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+    animation: fadeIn 0.3s;
+}
+
+.ap-alert-success {
+    background: #ecfdf5;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.ap-alert-error {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+.ap-alert-close {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.ap-alert-close:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* --- Mobile --- */
 @media (max-width: 768px) {
-    .addproduct-form-grid {
+    .ap-form-row {
         grid-template-columns: 1fr;
+    }
+
+    .ap-container {
+        padding: 10px;
+    }
+
+    .ap-card {
+        padding: 24px;
     }
 }
