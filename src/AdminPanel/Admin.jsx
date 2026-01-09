@@ -11,6 +11,8 @@ import AdminLayout from "./AdminLayout";
 import Dashboard from "./Dashboard/Dashboard";
 import AddUser from "./Users/AddUser";
 import ManageUser from "./ManageUser/ManageUser";
+import AddProduct from "./AddProduct/AddProduct";
+import ManageProduct from "./ManageProduct/ManageProduct";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -47,6 +49,10 @@ const Admin = () => {
         {/* User Module */}
         <Route path="users/add" element={<AddUser />} />
         <Route path="users/manage" element={<ManageUser />} />
+
+        {/* Product Module */}
+        <Route path="products/add" element={<AddProduct />} />
+        <Route path="products/manage" element={<ManageProduct />} />
       </Route>
     </Routes>
   );

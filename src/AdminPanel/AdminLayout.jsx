@@ -66,6 +66,11 @@ const AdminLayout = () => {
     location.pathname.includes("/admin/users")
   );
 
+  // Product Module submenu state
+  const [productMenuOpen, setProductMenuOpen] = useState(
+    location.pathname.includes("/admin/products")
+  );
+
   // Mobile sidebar toggle state
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -156,15 +161,39 @@ const AdminLayout = () => {
               </div>
             )}
 
-            {/* Product */}
+            {/* Product Module */}
             {hasPermission("Product") && (
-              <button
-                className={`nav-item ${location.pathname.includes("/admin/products") ? "active" : ""}`}
-                onClick={() => { navigate("/admin/products"); closeSidebar(); }}
-              >
-                <Package size={20} />
-                <span>Product</span>
-              </button>
+              <div className={`user-module ${productMenuOpen ? "open" : ""}`}>
+                <button
+                  className={`nav-item user-module-btn ${location.pathname.includes("/admin/products") ? "active" : ""}`}
+                  onClick={() => setProductMenuOpen(!productMenuOpen)}
+                >
+                  <div className="user-module-left">
+                    <Package size={20} />
+                    <span>Product</span>
+                  </div>
+                  <ChevronRight size={18} className="chevron" />
+                </button>
+
+                {productMenuOpen && (
+                  <div className="user-submenu">
+                    <button
+                      className={`submenu-item ${location.pathname === "/admin/products/add" ? "active" : ""}`}
+                      onClick={() => { navigate("/admin/products/add"); closeSidebar(); }}
+                    >
+                      <Package size={16} />
+                      <span>Add Product</span>
+                    </button>
+                    <button
+                      className={`submenu-item ${location.pathname === "/admin/products/manage" ? "active" : ""}`}
+                      onClick={() => { navigate("/admin/products/manage"); closeSidebar(); }}
+                    >
+                      <Folder size={16} />
+                      <span>Manage Product</span>
+                    </button>
+                  </div>
+                )}
+              </div>
             )}
 
             {/* Customers */}

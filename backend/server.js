@@ -15,6 +15,7 @@ import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import staffRoutes from "./routes/staffRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
 
 // ================= CONFIG =================
 dotenv.config();
@@ -60,6 +61,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/admin/staff", staffRoutes);
+app.use("/api/admin/products", productRoutes);
 app.use("/api/admin", adminRoutes);
 
 // ================= ROOT ROUTE =================
@@ -83,4 +85,5 @@ const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`✅ Product Routes registered at /api/admin/products`);
 });

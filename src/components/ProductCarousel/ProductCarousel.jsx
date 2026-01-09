@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import { useSwipeable } from "react-swipeable";
-import { useNavigate } from "react-router-dom"; // ⭐ ADDED
+import { useNavigate } from "react-router-dom";
 import "./ProductCarousel.css";
+import { fetchProducts } from "../../api/product";
 
 // === IMPORT GLOBAL CART CONTEXT ===
 import { useCart } from "../../context/CartContext";
@@ -13,7 +14,7 @@ import sourced from "./images/sourcrd.png";
 import innovation from "./images/innovation.png";
 import healthier from "./images/healthier.png";
 
-// === PRODUCT IMAGES ===
+// === PRODUCT IMAGES (Fallback) ===
 import prod1 from "./images/onelitermilk.png";
 import prod2 from "./images/purecurd.png";
 import prod3 from "./images/ghee.png";
@@ -21,14 +22,14 @@ import prod4 from "./images/panner.png";
 import prod5 from "./images/proteinbar.png";
 import prod6 from "./images/proteinbarpack.png";
 
-// === PRODUCT DATA ===
-const products = [
-  { id: 1, img: prod1, title: "Milk", price: "₹120", weight: "1L", path: "/shop/milk" },
-  { id: 2, img: prod2, title: "Curd", price: "₹95", weight: "320g", path: "/shop/curd" },
-  { id: 3, img: prod3, title: "Ghee", price: "₹495", weight: "200ml", oldPrice: "₹550", path: "/shop/ghee" },
-  { id: 4, img: prod4, title: "Paneer", price: "₹195", weight: "200g", path: "/shop/paneer" },
-  { id: 5, img: prod5, title: "Protein Wafer Bar", price: "₹60", weight: "40g", path: "/shop/protein-wafer-bar" },
-  { id: 6, img: prod6, title: "Protein Box Pack", price: "₹475", weight: "320g", path: "/shop/protein-box" },
+// === DEFAULT PRODUCTS (Fallback) ===
+const DEFAULT_PRODUCTS = [
+  { _id: "1", productName: "Milk", price: 120, weight: "1L", image: prod1 },
+  { _id: "2", productName: "Curd", price: 95, weight: "320g", image: prod2 },
+  { _id: "3", productName: "Ghee", price: 495, weight: "200ml", mrp: 550, image: prod3 },
+  { _id: "4", productName: "Paneer", price: 195, weight: "200g", image: prod4 },
+  { _id: "5", productName: "Protein Wafer Bar", price: 60, weight: "40g", image: prod5 },
+  { _id: "6", productName: "Protein Box Pack", price: 475, weight: "320g", image: prod6 },
 ];
 
 // === FEATURE DATA ===
@@ -40,11 +41,33 @@ const features = [
 ];
 
 const ProductCarousel = () => {
-  
-  const navigate = useNavigate(); // ⭐ NEW
 
-  // GLOBAL CART
+  const navigate = useNavigate();
   const { cartItems, increaseItem, decreaseItem } = useCart();
+
+  // State to hold dynamic products
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch from API
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const res = await fetchProducts();
+        if (res.data && res.data.length > 0) {
+          setProducts(res.data);
+        } else {
+          setProducts(DEFAULT_PRODUCTS);
+        }
+      } catch (err) {
+        console.error("Failed to load carousel products, using default", err);
+        setProducts(DEFAULT_PRODUCTS);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadData();
+  }, []);
 
   const getItemsToShow = () => {
     const w = window.innerWidth;
@@ -56,10 +79,19 @@ const ProductCarousel = () => {
   };
 
   const [itemsToShow, setItemsToShow] = useState(getItemsToShow());
+
+  const extendedProducts = useMemo(() => {
+    if (products.length === 0) return [];
+    return [...products, ...products, ...products];
+  }, [products]);
+
   const total = products.length;
-  const extendedProducts = useMemo(() => [...products, ...products, ...products], []);
   const [current, setCurrent] = useState(total);
   const transitionRef = useRef(true);
+
+  useEffect(() => {
+    if (products.length > 0) setCurrent(products.length);
+  }, [products]);
 
   useEffect(() => {
     const handleResize = () => setItemsToShow(getItemsToShow());
@@ -87,68 +119,79 @@ const ProductCarousel = () => {
           Our Promise — Holistic cow care and fresh delivery within 24 hours of milking.
         </p>
 
-        <div className="product-carousel-wrapper" {...handlers}>
-          <div
-            className="product-carousel-inner"
-            style={{
-              transform: `translateX(-${current * (100 / itemsToShow)}%)`,
-              transition: transitionRef.current ? "transform 0.5s ease-in-out" : "none",
-            }}
-          >
-            {extendedProducts.map((prod, index) => {
-              const qty = cartItems[prod.id] || 0;
+        {loading ? (
+          <div style={{ textAlign: "center", padding: "30px" }}>Loading products...</div>
+        ) : (
+          <div className="product-carousel-wrapper" {...handlers}>
+            <div
+              className="product-carousel-inner"
+              style={{
+                transform: `translateX(-${current * (100 / itemsToShow)}%)`,
+                transition: transitionRef.current ? "transform 0.5s ease-in-out" : "none",
+              }}
+            >
+              {extendedProducts.map((prod, index) => {
+                const qty = cartItems[prod._id] || 0;
 
-              return (
-                <div key={`${prod.id}-${index}`} className="product-carousel-item">
+                // Image logic
+                const isLocalImage = !prod.image.startsWith("/uploads");
+                const imgSrc = isLocalImage ? prod.image : `http://localhost:5000${prod.image}`;
 
-                  {/* ⭐ CARD CLICK = GO TO PAGE ⭐ */}
-                  <div
-                    className="product-card-inner"
-                    onClick={() => navigate(prod.path)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <div className="product-image-wrap">
-                      <img src={prod.img} alt={prod.title} loading="lazy" />
-                    </div>
+                return (
+                  <div key={`${prod._id}-${index}`} className="product-carousel-item">
 
-                    <div className="product-meta">
-                      <span className="product-weight">{prod.weight}</span>
-                      <span className="product-price">
-                        {prod.price}{" "}
-                        {prod.oldPrice && <span className="old-price">{prod.oldPrice}</span>}
-                      </span>
-                    </div>
-
-                    <p className="product-title">{prod.title}</p>
-
-                    {/* ⭐ buttons should NOT trigger routing */}
-                    {qty === 0 ? (
-                      <button
-                        className="product-cta"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          increaseItem(prod.id);
-                        }}
-                      >
-                        Add to Cart
-                      </button>
-                    ) : (
-                      <div
-                        className="qty-box"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <button className="qty-btn" onClick={() => decreaseItem(prod.id)}>–</button>
-                        <span className="qty-value">{qty}</span>
-                        <button className="qty-btn" onClick={() => increaseItem(prod.id)}>+</button>
+                    <div
+                      className="product-card-inner"
+                      style={{ cursor: "pointer" }}
+                    >
+                      <div className="product-image-wrap">
+                        <img
+                          src={imgSrc}
+                          alt={prod.productName}
+                          loading="lazy"
+                          onError={(e) => e.target.src = "https://via.placeholder.com/150"}
+                        />
                       </div>
-                    )}
-                  </div>
 
-                </div>
-              );
-            })}
+                      <div className="product-meta">
+                        <span className="product-weight">{prod.weight}</span>
+                        <span className="product-price">
+                          ₹{prod.price}{" "}
+                          {prod.mrp && <span className="old-price">₹{prod.mrp}</span>}
+                        </span>
+                      </div>
+
+                      <p className="product-title">{prod.productName}</p>
+
+                      {/* ⭐ buttons */}
+                      {qty === 0 ? (
+                        <button
+                          className="product-cta"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            increaseItem(prod._id);
+                          }}
+                        >
+                          Add to Cart
+                        </button>
+                      ) : (
+                        <div
+                          className="qty-box"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <button className="qty-btn" onClick={() => decreaseItem(prod._id)}>–</button>
+                          <span className="qty-value">{qty}</span>
+                          <button className="qty-btn" onClick={() => increaseItem(prod._id)}>+</button>
+                        </div>
+                      )}
+                    </div>
+
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="carousel-controls">
           <button className="arrow-button" onClick={prevSlide}>

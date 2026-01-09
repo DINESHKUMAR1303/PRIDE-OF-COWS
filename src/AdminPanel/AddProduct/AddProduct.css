@@ -1,0 +1,227 @@
+/* src/AdminPanel/AddProduct/AddProduct.css */
+
+.addproduct-card {
+    margin: 0;
+    padding: 30px;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.addproduct-top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 20px;
+}
+
+.addproduct-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+}
+
+.addproduct-subtitle {
+    font-size: 14px;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+/* Form Grid */
+.addproduct-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 30px;
+}
+
+.addproduct-full-width {
+    grid-column: 1 / -1;
+}
+
+/* Input Group */
+.addproduct-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.addproduct-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.addproduct-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 48px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #ffffff;
+    padding: 0 16px;
+    transition: all 0.2s;
+}
+
+.addproduct-input-wrapper:focus-within {
+    border-color: #16c784;
+    box-shadow: 0 0 0 3px rgba(22, 199, 132, 0.1);
+}
+
+.addproduct-icon {
+    color: #94a3b8;
+    margin-right: 12px;
+}
+
+.addproduct-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    color: #0f172a;
+    width: 100%;
+    height: 100%;
+}
+
+.addproduct-select {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    color: #0f172a;
+    width: 100%;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+/* Image Upload */
+.addproduct-upload-box {
+    border: 2px dashed #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #f8fafc;
+    min-height: 160px;
+}
+
+.addproduct-upload-box:hover {
+    border-color: #16c784;
+    background: #f0fdf4;
+}
+
+.addproduct-upload-icon {
+    width: 48px;
+    height: 48px;
+    color: #16c784;
+    margin-bottom: 12px;
+}
+
+.addproduct-upload-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #0f172a;
+}
+
+.addproduct-upload-subtext {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+.addproduct-preview-img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* Actions */
+.addproduct-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 24px;
+}
+
+.addproduct-btn-cancel {
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    color: #64748b;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.addproduct-btn-cancel:hover {
+    background: #f1f5f9;
+}
+
+.addproduct-btn-submit {
+    padding: 12px 32px;
+    border-radius: 8px;
+    background: #16c784;
+    color: #ffffff;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.addproduct-btn-submit:hover {
+    background: #15803d;
+    transform: translateY(-1px);
+}
+
+/* Success Alert */
+.addproduct-alert {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #166534;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .addproduct-form-grid {
+        grid-template-columns: 1fr;
+    }
+}
