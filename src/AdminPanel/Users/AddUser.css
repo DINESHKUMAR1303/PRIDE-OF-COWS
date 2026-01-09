@@ -57,10 +57,7 @@
     pointer-events: none;
 }
 
-/* PASSWORD TOGGLE - Now Flex Item */
-.adduser-password-wrapper {
-    /* wrapper already handles flex */
-}
+
 
 .adduser-password-toggle {
     position: static;
@@ -91,7 +88,7 @@
     color: #0f172a;
     cursor: pointer;
     user-select: none;
-    padding: 0 0 0 12px !important;
+    padding: 0 0 0 20px !important;
 }
 
 .custom-select-trigger:hover {
