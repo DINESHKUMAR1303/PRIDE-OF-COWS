@@ -10,7 +10,7 @@ import AdminLayout from "./AdminLayout";
 /* ===== PAGES ===== */
 import Dashboard from "./Dashboard/Dashboard";
 import AddUser from "./Users/AddUser";
-import ManageUser from "./ManageUser/ManageUser"; // ✅ ADD THIS
+import ManageUser from "./ManageUser/ManageUser";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -46,8 +46,7 @@ const Admin = () => {
 
         {/* User Module */}
         <Route path="users/add" element={<AddUser />} />
-        <Route path="users/manage" element={<ManageUser />} /> {/* ✅ NEW */}
-
+        <Route path="users/manage" element={<ManageUser />} />
       </Route>
     </Routes>
   );

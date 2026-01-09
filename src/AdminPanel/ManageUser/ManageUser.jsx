@@ -32,6 +32,16 @@ const ManageUser = () => {
     loadUsers();
   }, []);
 
+  // Scroll to top when page changes
+  useEffect(() => {
+    const adminContainer = document.querySelector(".main-content");
+    if (adminContainer) {
+      adminContainer.scrollTo({ top: 0, priority: "instant" });
+    }
+    // Mobile fallback (window)
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
   const loadUsers = async () => {
     try {
       const res = await fetchStaff();

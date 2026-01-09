@@ -52,15 +52,16 @@ const App = () => {
 
   return (
     <>
+      {/* ✅ MUST stay here — handles route change scroll */}
       <ScrollToTop />
 
       {/* ❌ Hide on admin routes */}
       {!isAdminRoute && <NotificationBar />}
       {!isAdminRoute && <Navbar />}
 
+      {/* 🔥 MAIN SCROLL CONTAINER */}
       <div className="page-wrapper">
         <Routes>
-
           {/* ---------------- HOME ---------------- */}
           <Route path="/" element={<Home />} />
 
@@ -92,12 +93,11 @@ const App = () => {
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsConditions />} />
 
-          {/* ================= ADMIN (FIXED) ================= */}
+          {/* ================= ADMIN ================= */}
           <Route path="/admin/*" element={<Admin />} />
 
           {/* ---------------- CATCH ALL ---------------- */}
           <Route path="*" element={<Navigate to="/" replace />} />
-
         </Routes>
       </div>
 
