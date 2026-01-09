@@ -3,7 +3,7 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
-import { addProduct, getProducts, deleteProduct, updateProduct } from "../controllers/productController.js";
+import { addProduct, getProducts, deleteProduct, updateProduct, toggleProductStatus } from "../controllers/productController.js";
 
 const router = express.Router();
 
@@ -30,6 +30,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Routes
+console.log("Product Routes Loading...");
+router.put("/status/:id", toggleProductStatus);
 router.post("/add", upload.single("image"), addProduct);
 router.get("/", getProducts);
 router.delete("/delete/:id", deleteProduct);

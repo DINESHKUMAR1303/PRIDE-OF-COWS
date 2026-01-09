@@ -17,7 +17,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import * as XLSX from "xlsx";
 
-import { fetchProducts, deleteProduct } from "../../api/product";
+import { fetchProducts, deleteProduct, updateProductStatus } from "../../api/product";
 import "./ManageProduct.css";
 
 const ManageProduct = () => {
@@ -45,6 +45,7 @@ const ManageProduct = () => {
         try {
             const res = await fetchProducts();
             // Backend returns { data: [...] }
+            console.log("Fetched Products:", res.data);
             setProducts(res.data || []);
         } catch (error) {
             console.error("Failed to load products", error);
@@ -212,17 +213,18 @@ const ManageProduct = () => {
                                 </th>
                                 <th>Image</th>
                                 <th>Product Name</th>
-                                <th>Weight / Volume</th>
+                                <th>Weight</th>
                                 <th>Price (₹)</th>
                                 <th>MRP (₹)</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {loading ? (
-                                <tr><td colSpan="7" className="no-data">Loading products...</td></tr>
+                                <tr><td colSpan="8" className="no-data">Loading products...</td></tr>
                             ) : paginatedData.length === 0 ? (
-                                <tr><td colSpan="7" className="no-data">No products found</td></tr>
+                                <tr><td colSpan="8" className="no-data">No products found</td></tr>
                             ) : (
                                 paginatedData.map((product) => (
                                     <tr key={product._id}>
@@ -250,6 +252,42 @@ const ManageProduct = () => {
                                         </td>
                                         <td><strong>₹{product.price}</strong></td>
                                         <td style={{ textDecoration: 'line-through', color: '#94a3b8' }}>₹{product.mrp}</td>
+                                        <td>
+                                            <div className="status-toggle-wrapper">
+                                                <div className="switch-container">
+                                                    <label className="switch">
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={product.isActive !== false}
+                                                            onChange={async (e) => {
+                                                                const newStatus = e.target.checked;
+                                                                // Optimistic update locally
+                                                                const updatedList = products.map(p =>
+                                                                    p._id === product._id ? { ...p, isActive: newStatus } : p
+                                                                );
+                                                                setProducts(updatedList);
+
+                                                                try {
+                                                                    console.log(`Sending status update for ${product._id}: ${newStatus}`);
+                                                                    await updateProductStatus(product._id, newStatus);
+                                                                    console.log("Status update success, reloading data...");
+                                                                    await loadData(); // Verify persistence
+                                                                } catch (error) {
+                                                                    console.error("Failed to update status", error);
+                                                                    // Revert on failure
+                                                                    loadData();
+                                                                    alert("Failed to update status");
+                                                                }
+                                                            }}
+                                                        />
+                                                        <span className="slider round"></span>
+                                                    </label>
+                                                </div>
+                                                <span className={`status-text ${String(product.isActive) !== "false" ? "active" : "inactive"}`}>
+                                                    {String(product.isActive) !== "false" ? "Enabled" : "Disabled"}
+                                                </span>
+                                            </div>
+                                        </td>
                                         <td>
                                             <div className="action-buttons">
                                                 <button className="btn view" onClick={() => setViewProduct(product)} title="View">

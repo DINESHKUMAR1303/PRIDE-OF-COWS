@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { useSwipeable } from "react-swipeable";
 import { useNavigate } from "react-router-dom";
 import "./ProductCarousel.css";
@@ -14,23 +14,6 @@ import sourced from "./images/sourcrd.png";
 import innovation from "./images/innovation.png";
 import healthier from "./images/healthier.png";
 
-// === PRODUCT IMAGES (Fallback) ===
-import prod1 from "./images/onelitermilk.png";
-import prod2 from "./images/purecurd.png";
-import prod3 from "./images/ghee.png";
-import prod4 from "./images/panner.png";
-import prod5 from "./images/proteinbar.png";
-import prod6 from "./images/proteinbarpack.png";
-
-// === DEFAULT PRODUCTS (Fallback) ===
-const DEFAULT_PRODUCTS = [
-  { _id: "1", productName: "Milk", price: 120, weight: "1L", image: prod1 },
-  { _id: "2", productName: "Curd", price: 95, weight: "320g", image: prod2 },
-  { _id: "3", productName: "Ghee", price: 495, weight: "200ml", mrp: 550, image: prod3 },
-  { _id: "4", productName: "Paneer", price: 195, weight: "200g", image: prod4 },
-  { _id: "5", productName: "Protein Wafer Bar", price: 60, weight: "40g", image: prod5 },
-  { _id: "6", productName: "Protein Box Pack", price: 475, weight: "320g", image: prod6 },
-];
 
 // === FEATURE DATA ===
 const features = [
@@ -51,25 +34,34 @@ const ProductCarousel = () => {
 
   // Fetch from API
   useEffect(() => {
+    let isMounted = true;
     const loadData = async () => {
       try {
-        const res = await fetchProducts();
-        if (res.data && res.data.length > 0) {
-          setProducts(res.data);
-        } else {
-          setProducts(DEFAULT_PRODUCTS);
+        const res = await fetchProducts(true); // Fetch only active products
+        if (isMounted) {
+          if (res.data && res.data.length > 0) {
+            // Deduplicate products by _id
+            const uniqueProducts = Array.from(
+              new Map(res.data.map((item) => [item._id, item])).values()
+            );
+            setProducts(uniqueProducts);
+          } else {
+            setProducts([]);
+          }
         }
       } catch (err) {
-        console.error("Failed to load carousel products, using default", err);
-        setProducts(DEFAULT_PRODUCTS);
+        console.error("Failed to load carousel products", err);
+        if (isMounted) setProducts([]);
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
     loadData();
+    return () => { isMounted = false; };
   }, []);
 
   const getItemsToShow = () => {
+    if (typeof window === "undefined") return 1;
     const w = window.innerWidth;
     if (w < 768) return 1;
     if (w < 992) return 2;
@@ -79,28 +71,34 @@ const ProductCarousel = () => {
   };
 
   const [itemsToShow, setItemsToShow] = useState(getItemsToShow());
+  const [current, setCurrent] = useState(0);
 
-  const extendedProducts = useMemo(() => {
-    if (products.length === 0) return [];
-    return [...products, ...products, ...products];
-  }, [products]);
-
-  const total = products.length;
-  const [current, setCurrent] = useState(total);
-  const transitionRef = useRef(true);
-
+  // Handle window resize
   useEffect(() => {
-    if (products.length > 0) setCurrent(products.length);
-  }, [products]);
-
-  useEffect(() => {
-    const handleResize = () => setItemsToShow(getItemsToShow());
+    const handleResize = () => {
+      setItemsToShow(getItemsToShow());
+      // Reset to 0 on resize to prevent out-of-bounds
+      setCurrent(0);
+    };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const nextSlide = () => setCurrent((prev) => prev + 1);
-  const prevSlide = () => setCurrent((prev) => prev - 1);
+  // Determine max scroll index (start of the last visible page)
+  const maxScroll = Math.max(0, products.length - itemsToShow);
+
+  // Slide Handlers
+  const nextSlide = () => {
+    if (current < maxScroll) {
+      setCurrent((prev) => prev + 1);
+    }
+  };
+
+  const prevSlide = () => {
+    if (current > 0) {
+      setCurrent((prev) => prev - 1);
+    }
+  };
 
   const handlers = useSwipeable({
     onSwipedLeft: nextSlide,
@@ -127,10 +125,10 @@ const ProductCarousel = () => {
               className="product-carousel-inner"
               style={{
                 transform: `translateX(-${current * (100 / itemsToShow)}%)`,
-                transition: transitionRef.current ? "transform 0.5s ease-in-out" : "none",
+                transition: "transform 0.5s ease-in-out",
               }}
             >
-              {extendedProducts.map((prod, index) => {
+              {products.map((prod, index) => {
                 const qty = cartItems[prod._id] || 0;
 
                 // Image logic
@@ -193,23 +191,37 @@ const ProductCarousel = () => {
           </div>
         )}
 
-        <div className="carousel-controls">
-          <button className="arrow-button" onClick={prevSlide}>
-            <svg width="27" height="13" viewBox="0 0 27 13" fill="none">
-              <path d="M6 1L1 6.5L6 12" stroke="#193B61" />
-              <line x1="1" y1="6.5" x2="26" y2="6.5" stroke="#193B61" />
-            </svg>
-          </button>
+        {/* Controls - Hide if not scrollable */}
+        {products.length > itemsToShow && (
+          <div className="carousel-controls">
+            <button
+              className="arrow-button"
+              onClick={prevSlide}
+              disabled={current === 0}
+              style={{ opacity: current === 0 ? 0.5 : 1 }}
+            >
+              <svg width="27" height="13" viewBox="0 0 27 13" fill="none">
+                <path d="M6 1L1 6.5L6 12" stroke="#193B61" />
+                <line x1="1" y1="6.5" x2="26" y2="6.5" stroke="#193B61" />
+              </svg>
+            </button>
 
-          <div className="line"></div>
+            <div className="line"></div>
 
-          <button className="arrow-button" onClick={nextSlide}>
-            <svg width="27" height="13" viewBox="0 0 27 13" fill="none">
-              <path d="M21 1L26 6.5L21 12" stroke="#193B61" />
-              <line x1="1" y1="6.5" x2="26" y2="6.5" stroke="#193B61" />
-            </svg>
-          </button>
-        </div>
+            <button
+              className="arrow-button"
+              onClick={nextSlide}
+              disabled={current === maxScroll}
+              style={{ opacity: current === maxScroll ? 0.5 : 1 }}
+            >
+              <svg width="27" height="13" viewBox="0 0 27 13" fill="none">
+                <path d="M21 1L26 6.5L21 12" stroke="#193B61" />
+                <line x1="1" y1="6.5" x2="26" y2="6.5" stroke="#193B61" />
+              </svg>
+            </button>
+          </div>
+        )}
+
       </section>
 
       {/* ================= SINGLE ORIGIN SECTION ================= */}

@@ -18,9 +18,10 @@ export const addProduct = async (formData) => {
 };
 
 // Get All Products
-export const fetchProducts = async () => {
+export const fetchProducts = async (activeOnly = false) => {
     try {
-        const res = await axios.get(API_URL);
+        const url = activeOnly ? `${API_URL}?active=true` : API_URL;
+        const res = await axios.get(url);
         return res.data;
     } catch (error) {
         throw error.response?.data?.message || "Failed to fetch products";
@@ -48,5 +49,16 @@ export const updateProduct = async (id, formData) => {
         return res.data;
     } catch (error) {
         throw error.response?.data?.message || "Failed to update product";
+    }
+};
+
+// Toggle Product Status (JSON)
+export const updateProductStatus = async (id, isActive) => {
+    try {
+        // Send JSON to dedicated status endpoint
+        const res = await axios.put(`${API_URL}/status/${id}`, { isActive });
+        return res.data;
+    } catch (error) {
+        throw error.response?.data?.message || "Failed to update status";
     }
 };

@@ -7,6 +7,7 @@ const productSchema = new mongoose.Schema(
         price: { type: Number, required: true },  // Selling Price
         mrp: { type: Number, required: true },    // Maximum Retail Price
         image: { type: String, required: true },  // Store URL path
+        isActive: { type: Boolean, default: true }, // Status
     },
     { timestamps: true }
 );

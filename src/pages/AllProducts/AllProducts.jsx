@@ -7,26 +7,6 @@ import bannerImg from "./images/allwebbanner.png";
 import "./AllProducts.css";
 
 // Import Default Images
-import milk from "./images/milk.png";
-import fatfree from "./images/fatfree.png";
-import ghee from "./images/ghee.png";
-import curd from "./images/curd.png";
-import paneer from "./images/panner.png";
-import milkpowder from "./images/milkpowder.png";
-import highproteinpaneer from "./images/paneerfatfree.png";
-import waferbar from "./images/protein_bar.png";
-
-// Default Products (Fallback)
-const DEFAULT_PRODUCTS = [
-  { _id: "1", productName: "Milk", mrp: 120, price: 120, weight: "1L", image: milk },
-  { _id: "2", productName: "Fat Free Milk", mrp: 130, price: 130, weight: "1L", image: fatfree },
-  { _id: "3", productName: "Ghee", mrp: 1890, price: 1890, weight: "1L", image: ghee },
-  { _id: "4", productName: "Curd", mrp: 80, price: 80, weight: "500g", image: curd },
-  { _id: "5", productName: "Paneer", mrp: 160, price: 160, weight: "200g", image: paneer },
-  { _id: "6", productName: "Milk Powder", mrp: 350, price: 350, weight: "500g", image: milkpowder },
-  { _id: "7", productName: "LowFat Paneer", mrp: 235, price: 235, weight: "200gm", image: highproteinpaneer },
-  { _id: "8", productName: "Wafer Bar", mrp: 80, price: 80, weight: "40gm", image: waferbar },
-];
 
 const AllProducts = () => {
   const { cartItems, increaseItem, decreaseItem } = useCart();
@@ -38,16 +18,16 @@ const AllProducts = () => {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const res = await fetchProducts();
+        const res = await fetchProducts(true); // Fetch only active products
 
         if (res.data && res.data.length > 0) {
           setProducts(res.data);
         } else {
-          setProducts(DEFAULT_PRODUCTS);
+          setProducts([]);
         }
       } catch (err) {
-        console.error("Failed to load products, using default", err);
-        setProducts(DEFAULT_PRODUCTS);
+        console.error("Failed to load products", err);
+        setProducts([]);
       } finally {
         setLoading(false);
       }

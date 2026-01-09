@@ -129,7 +129,7 @@ const AddProduct = () => {
                                 <input
                                     type="text"
                                     name="weight"
-                                    placeholder="e.g. 1L or 500g"
+                                    placeholder="e.g. 1L , 100ml , 500g"
                                     className="ap-input"
                                     value={formData.weight}
                                     onChange={handleChange}
