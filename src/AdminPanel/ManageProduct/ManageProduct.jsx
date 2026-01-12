@@ -198,11 +198,11 @@ const ManageProduct = () => {
             {/* Header */}
             <div className="manage-header">
                 <div className="manage-header-left">
-                    <h1 className="manage-title">Manage Products</h1>
+                    <h1 className="manage-title">Product Management</h1>
                     <div className="manage-breadcrumb">
-                        <span>Dashboard</span>
-                        <span className="breadcrumb-separator">/</span>
-                        <span className="breadcrumb-item active">Products</span>
+                        <span>Product Modules</span>
+                        <span className="breadcrumb-separator">›</span>
+                        <span className="breadcrumb-item active">Manage Product</span>
                     </div>
                 </div>
 
@@ -219,8 +219,8 @@ const ManageProduct = () => {
                 {/* Toolbar */}
                 <div className="manage-toolbar">
                     <div className="toolbar-left">
-                        <h2 className="toolbar-title">Product List</h2>
-                        <p className="toolbar-subtitle">Manage your inventory items</p>
+                        <h2 className="toolbar-title">Product Management</h2>
+                        <p className="toolbar-subtitle">Product Modules › <strong>Manage Product</strong></p>
                     </div>
 
                     <div className="toolbar-right">

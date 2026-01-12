@@ -111,14 +111,30 @@ const AddProduct = () => {
 
     return (
         <div className="ap-container">
-            <div className="ap-card">
-                <div className="ap-header">
-                    <div className="ap-header-content">
-                        <h2 className="ap-title">{editProduct ? "Edit Product" : "Add New Product"}</h2>
-                        <p className="ap-subtitle">{editProduct ? "Update product details below." : "Fill in the details to add a new item to your inventory."}</p>
+            {/* Top Header */}
+            <div className="ap-top-header">
+                <div className="ap-top-header-left">
+                    <h1>Product Management</h1>
+                    <div className="ap-breadcrumb">
+                        Product Modules <span>›</span> <strong>{editProduct ? "Edit Product" : "Add Product"}</strong>
                     </div>
-                    <div className="ap-icon-badge">
-                        <Type size={24} color="#16c784" />
+                </div>
+                <div className="ap-top-header-right">
+                    <div className="ap-header-bell">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <div className="ap-bell-dot"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="ap-card">
+                <div className="ap-card-title">
+                    <h2>{editProduct ? "Edit Product" : "Add New Product"}</h2>
+                    <div className="ap-title-icon">
+                        <CheckCircle size={24} />
                     </div>
                 </div>
 
