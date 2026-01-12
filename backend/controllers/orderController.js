@@ -142,3 +142,37 @@ export const getAllOrders = async (req, res) => {
     });
   }
 };
+
+/* ============================================================
+   ⭐ DELETE ORDER (Admin)
+============================================================ */
+export const deleteOrder = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(`🔥 DELETE ORDER HIT: ${id}`);
+
+    const order = await Order.findByIdAndDelete(id);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    console.log(`✅ ORDER DELETED: ${id}`);
+
+    return res.status(200).json({
+      success: true,
+      message: "Order deleted successfully",
+    });
+  } catch (err) {
+    console.error("❌ deleteOrder ERROR:", err);
+
+    return res.status(500).json({
+      success: false,
+      message: "Server error while deleting order",
+      error: err.message,
+    });
+  }
+};

@@ -42,3 +42,16 @@ export const getAllOrders = async () => {
   return res;
 };
 
+// ============================
+// DELETE ORDER (Admin)
+// ============================
+export const deleteOrder = async (id) => {
+  const token = localStorage.getItem("admin_token") || localStorage.getItem("poc_token"); // Try admin token first
+
+  const res = await axios.delete(`${API}/orders/${id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return res;
+};
+

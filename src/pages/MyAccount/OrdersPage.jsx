@@ -23,8 +23,33 @@ const productData = {
 
 const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
+  const [productMap, setProductMap] = useState({});
   const token = localStorage.getItem("poc_token");
 
+  // 1️⃣ Fetch Products to create a lookup map
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const { fetchProducts } = await import("../../api/product");
+        const res = await fetchProducts(false); // Fetch all (even inactive)
+        const map = {};
+        if (res.data) {
+          res.data.forEach((p) => {
+            map[p._id] = {
+              img: p.image,
+              weight: p.weight
+            };
+          });
+        }
+        setProductMap(map);
+      } catch (err) {
+        console.error("Failed to load products map", err);
+      }
+    };
+    loadProducts();
+  }, []);
+
+  // 2️⃣ Fetch Orders
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -36,18 +61,7 @@ const OrdersPage = () => {
           return;
         }
 
-        const formatted = data.orders.map((order) => ({
-          ...order,
-          items: order.items.map((item) => ({
-            title: item.name,
-            qty: item.quantity,
-            price: item.price,
-            img: productData[item.productId]?.img || "",
-            weight: productData[item.productId]?.weight || ""
-          }))
-        }));
-
-        setOrders(formatted);
+        setOrders(data.orders);
       } catch (err) {
         console.error("❌ Error fetching orders:", err);
         setOrders([]);
@@ -56,6 +70,21 @@ const OrdersPage = () => {
 
     fetchOrders();
   }, [token]);
+
+  // Helper to get product details
+  const getProductDetails = (id) => {
+    if (productMap[id]) return productMap[id];
+    // Fallback for old integer IDs if any exist
+    const fallbackData = {
+      1: { img: prod1, weight: "1L" },
+      2: { img: prod2, weight: "320g" },
+      3: { img: prod3, weight: "200ml" },
+      4: { img: prod4, weight: "200g" },
+      5: { img: prod5, weight: "40g" },
+      6: { img: prod6, weight: "320g" }
+    };
+    return fallbackData[id] || { img: "", weight: "" };
+  };
 
   return (
     <div className="orders-wrapper">
@@ -101,23 +130,31 @@ const OrdersPage = () => {
               </div>
 
               <div className="order-items">
-                {order.items.map((item, index) => (
-                  <div key={index} className="order-item-row">
-                    <div className="order-item-img-container">
-                      <img src={item.img} alt={item.title} className="order-item-img" />
-                    </div>
-                    <div className="order-item-details">
-                      <p className="item-name">{item.title}</p>
-                      <div className="item-meta">
-                        <span>{item.weight}</span>
-                        <span>Qty: {item.qty}</span>
+                {order.items.map((item, index) => {
+                  const details = getProductDetails(item.productId);
+                  const isLocal = details.img && !details.img.startsWith("/uploads");
+                  const imgSrc = details.img
+                    ? (isLocal ? details.img : `http://localhost:5000${details.img}`)
+                    : "https://via.placeholder.com/150?text=No+Image";
+
+                  return (
+                    <div key={index} className="order-item-row">
+                      <div className="order-item-img-container">
+                        <img src={imgSrc} alt={item.name} className="order-item-img" onError={(e) => e.target.src = "https://via.placeholder.com/150"} />
+                      </div>
+                      <div className="order-item-details">
+                        <p className="item-name">{item.name}</p>
+                        <div className="item-meta">
+                          <span>{details.weight}</span>
+                          <span>Qty: {item.quantity}</span>
+                        </div>
+                      </div>
+                      <div className="item-price-col">
+                        ₹{item.price * item.quantity}
                       </div>
                     </div>
-                    <div className="item-price-col">
-                      ₹{item.price * item.qty}
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               <div className="order-footer">

@@ -1,6 +1,6 @@
 // backend/routes/orderRoutes.js
 import express from "express";
-import { createOrder, getUserOrders, getAllOrders } from "../controllers/orderController.js";
+import { createOrder, getUserOrders, getAllOrders, deleteOrder } from "../controllers/orderController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -23,5 +23,10 @@ router.get("/my-orders", authMiddleware, getUserOrders);
 ============================================================ */
 router.get("/all", authMiddleware, getAllOrders);
 
+/* ============================================================
+   ⭐ DELETE ORDER (Admin)
+   DELETE → /api/orders/:id
+============================================================ */
+router.delete("/:id", authMiddleware, deleteOrder);
 
 export default router;

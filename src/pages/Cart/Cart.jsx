@@ -122,7 +122,7 @@ const Cart = () => {
             price: p.price
           };
         }),
-        address: address.fullAddress,
+        address: `${address.name}, ${address.fullAddress}, ${address.city} - ${address.pincode}`,
         deliveryDate: selectedDate,
         totalAmount: itemTotal
       };
