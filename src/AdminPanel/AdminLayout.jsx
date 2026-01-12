@@ -196,16 +196,6 @@ const AdminLayout = () => {
               </div>
             )}
 
-            {/* Customers */}
-            {hasPermission("Customers") && (
-              <button
-                className={`nav-item ${location.pathname.includes("/admin/customers") ? "active" : ""}`}
-                onClick={() => { navigate("/admin/customers"); closeSidebar(); }}
-              >
-                <UserCheck size={20} />
-                <span>Customers</span>
-              </button>
-            )}
 
             {/* Booking */}
             {hasPermission("Booking") && (
@@ -217,6 +207,18 @@ const AdminLayout = () => {
                 <span>Booking</span>
               </button>
             )}
+
+            {/* Customers */}
+            {hasPermission("Customers") && (
+              <button
+                className={`nav-item ${location.pathname.includes("/admin/customers") ? "active" : ""}`}
+                onClick={() => { navigate("/admin/customers"); closeSidebar(); }}
+              >
+                <UserCheck size={20} />
+                <span>Customers</span>
+              </button>
+            )}
+
 
             {/* Reports */}
             {hasPermission("Reports") && (
