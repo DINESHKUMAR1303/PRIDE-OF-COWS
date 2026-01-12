@@ -83,7 +83,10 @@ const AllProducts = () => {
                       <span className="product-size">{item.weight}</span>
                     </div>
 
-                    <p className="product-price">MRP: ₹{item.mrp}</p>
+                    <div className="price-block">
+                      <span className="selling-price">₹{item.price}</span>
+                      {item.mrp && <span className="mrp-strike">MRP: ₹{item.mrp}</span>}
+                    </div>
                     <p className="tax-text">(Price inclusive of all taxes)</p>
 
                     {/* ⭐ Prevent card click when pressing cart buttons ⭐ */}

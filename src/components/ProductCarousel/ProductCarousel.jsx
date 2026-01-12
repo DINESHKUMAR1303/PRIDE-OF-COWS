@@ -162,15 +162,15 @@ const ProductCarousel = () => {
                         />
                       </div>
 
+                      <p className="product-title">{prod.productName}</p>
+
                       <div className="product-meta">
                         <span className="product-weight">{prod.weight}</span>
-                        <span className="product-price">
-                          ₹{prod.price}{" "}
+                        <span className="carousel-product-price">
+                          <span>₹{prod.price}</span>
                           {prod.mrp && <span className="old-price">MRP: ₹{prod.mrp}</span>}
                         </span>
                       </div>
-
-                      <p className="product-title">{prod.productName}</p>
 
                       {/* ⭐ buttons */}
                       {qty === 0 ? (

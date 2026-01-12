@@ -146,12 +146,24 @@
 /* PRICE */
 /* ============================================================= */
 
-.product-price,
-.main-mrp {
-  font-size: 17px;
-  font-weight: 300;
-  margin: 0 0 -15px;
+.price-block {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: -25px 0 0px;
+}
+
+.selling-price {
+  font-size: 18px;
+  font-weight: 600;
   color: #0C3B60;
+}
+
+.mrp-strike {
+  font-size: 14px;
+  text-decoration: line-through;
+  color: #999;
+  font-weight: 400;
 }
 
 .old-price-row {
