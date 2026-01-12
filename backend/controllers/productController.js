@@ -63,43 +63,75 @@ export const deleteProduct = async (req, res) => {
     }
 };
 
+// Bulk Delete Products
+export const deleteBulkProducts = async (req, res) => {
+    try {
+        const { ids } = req.body;
+        if (!ids || !Array.isArray(ids) || ids.length === 0) {
+            return res.status(400).json({ message: "No product IDs provided" });
+        }
+
+        // Optional: Delete images from FS for these products before DB deletion
+        // const products = await Product.find({ _id: { $in: ids } });
+        // products.forEach(p => ...delete image...);
+
+        const result = await Product.deleteMany({ _id: { $in: ids } });
+
+        res.status(200).json({
+            message: "Products deleted successfully",
+            deletedCount: result.deletedCount
+        });
+    } catch (error) {
+        console.error("Bulk delete error:", error);
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
+
 // Update Product
 export const updateProduct = async (req, res) => {
+    console.log(`[UpdateProduct] Request received for ID: ${req.params.id}`);
+    console.log("[UpdateProduct] Body:", req.body);
+    console.log("[UpdateProduct] File:", req.file);
+
     try {
         const { productName, weight, price, mrp, isActive } = req.body;
         const product = await Product.findById(req.params.id);
 
-        if (!product) return res.status(404).json({ message: "Product not found" });
-
-        let imagePath = product.image;
-        if (req.file) {
-            imagePath = `/uploads/products/${req.file.filename}`;
+        if (!product) {
+            console.error("[UpdateProduct] Product not found in DB");
+            return res.status(404).json({ message: "Product not found" });
         }
 
-        product.productName = productName || product.productName;
-        product.weight = weight || product.weight;
-        product.price = price || product.price;
-        product.mrp = mrp || product.mrp;
-        product.image = imagePath;
+        let imagePath = product.image;
+        // Handle file upload (support both single and any/array)
+        const file = req.file || (req.files && req.files.length > 0 ? req.files[0] : null);
 
-        // Handle boolean toggle specifically
-        // Handle boolean toggle specifically
-        if (typeof isActive !== 'undefined') {
-            console.log(`[UpdateProduct] Toggling status for ${product._id}: received ${isActive} (${typeof isActive})`);
-
-            // Normalize value: convert string 'false' to boolean false
-            const isTrue = String(isActive) === 'true';
-
-            // Explicitly set the value to avoid coercion issues
-            product.isActive = isTrue;
-            console.log(`[UpdateProduct] New status set to: ${product.isActive}`);
+        if (file) {
+            console.log("[UpdateProduct] New file detected:", file.filename);
+            imagePath = `/uploads/products/${file.filename}`;
         } else {
-            console.log(`[UpdateProduct] No status change received for ${product._id}`);
+            console.log("[UpdateProduct] No new file uploaded, keeping old image.");
+        }
+
+        console.log(`[UpdateProduct] Updating Name: '${productName}' vs Old: '${product.productName}'`);
+        console.log(`[UpdateProduct] Updating Price: '${price}' vs Old: '${product.price}'`);
+
+        if (req.body.productName !== undefined) product.productName = req.body.productName;
+        if (req.body.weight !== undefined) product.weight = req.body.weight;
+        if (req.body.price !== undefined) product.price = req.body.price;
+        if (req.body.mrp !== undefined) product.mrp = req.body.mrp;
+        if (imagePath) product.image = imagePath;
+
+        // Handle boolean toggle specifically
+        if (typeof req.body.isActive !== 'undefined') {
+            product.isActive = String(req.body.isActive) === 'true';
         }
 
         await product.save();
+        console.log("[UpdateProduct] Successfully updated product:", product);
         res.status(200).json({ message: "Product updated successfully", data: product });
     } catch (error) {
+        console.error("[UpdateProduct] Error:", error);
         res.status(500).json({ message: "Server error", error: error.message });
     }
 };

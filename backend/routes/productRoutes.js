@@ -3,7 +3,7 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
-import { addProduct, getProducts, deleteProduct, updateProduct, toggleProductStatus } from "../controllers/productController.js";
+import { addProduct, getProducts, deleteProduct, updateProduct, toggleProductStatus, deleteBulkProducts } from "../controllers/productController.js";
 
 const router = express.Router();
 
@@ -34,7 +34,8 @@ console.log("Product Routes Loading...");
 router.put("/status/:id", toggleProductStatus);
 router.post("/add", upload.single("image"), addProduct);
 router.get("/", getProducts);
+router.post("/delete-bulk", deleteBulkProducts);
 router.delete("/delete/:id", deleteProduct);
-router.put("/update/:id", upload.single("image"), updateProduct);
+router.put("/update/:id", upload.any(), updateProduct);
 
 export default router;

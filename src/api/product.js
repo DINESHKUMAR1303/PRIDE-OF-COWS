@@ -6,11 +6,7 @@ const API_URL = "http://localhost:5000/api/admin/products";
 // Add Product
 export const addProduct = async (formData) => {
     try {
-        const res = await axios.post(`${API_URL}/add`, formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
+        const res = await axios.post(`${API_URL}/add`, formData);
         return res.data;
     } catch (error) {
         throw error.response?.data?.message || "Failed to add product";
@@ -38,14 +34,20 @@ export const deleteProduct = async (id) => {
     }
 };
 
+// Bulk Delete Products
+export const deleteBulkProducts = async (ids) => {
+    try {
+        const res = await axios.post(`${API_URL}/delete-bulk`, { ids });
+        return res.data;
+    } catch (error) {
+        throw error.response?.data?.message || "Failed to delete products";
+    }
+};
+
 // Update Product
 export const updateProduct = async (id, formData) => {
     try {
-        const res = await axios.put(`${API_URL}/update/${id}`, formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
+        const res = await axios.put(`${API_URL}/update/${id}`, formData);
         return res.data;
     } catch (error) {
         throw error.response?.data?.message || "Failed to update product";

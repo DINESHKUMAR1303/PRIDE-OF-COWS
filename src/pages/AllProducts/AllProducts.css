@@ -22,6 +22,7 @@
   .ap-image-wrapper {
     margin-top: -20px;
   }
+
   .ap-image {
     max-height: 450px;
   }
@@ -32,6 +33,7 @@
   .ap-image-wrapper {
     margin-top: 0px;
   }
+
   .ap-image {
     max-height: 300px;
   }
@@ -125,7 +127,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: -38px;
+  margin-bottom: -15px;
 }
 
 .product-name {
@@ -148,12 +150,12 @@
 .main-mrp {
   font-size: 17px;
   font-weight: 300;
-  margin: 0 0 -25px;
+  margin: 0 0 -15px;
   color: #0C3B60;
 }
 
 .old-price-row {
-  margin: 0 0 4px;
+  margin: 0;
 }
 
 .strike {
@@ -171,7 +173,7 @@
 .tax-text {
   font-size: 12px;
   color: #777;
-  margin-bottom: 14px;
+  margin-bottom: 0;
 }
 
 /* ============================================================= */

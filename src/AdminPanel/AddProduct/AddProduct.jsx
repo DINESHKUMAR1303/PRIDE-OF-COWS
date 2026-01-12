@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
     Type,
     DollarSign,
@@ -8,21 +9,33 @@ import {
     Scale,
     Image as ImageIcon
 } from "lucide-react";
-import { addProduct } from "../../api/product";
+import { addProduct, updateProduct } from "../../api/product";
 import "./AddProduct.css";
 
 const AddProduct = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const editProduct = location.state?.editProduct;
+
+    console.log("[AddProduct] Component mounted", { editProduct });
+
     const [formData, setFormData] = useState({
-        productName: "",
-        weight: "",
-        price: "",
-        mrp: ""
+        productName: editProduct?.productName || "",
+        weight: editProduct?.weight || "",
+        price: editProduct?.price || "",
+        mrp: editProduct?.mrp || ""
     });
     const [image, setImage] = useState(null);
-    const [preview, setPreview] = useState(null);
+    const [preview, setPreview] = useState(editProduct ? `http://localhost:5000${editProduct.image}` : null);
     const [loading, setLoading] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [error, setError] = useState("");
+
+    // Add error boundary
+    useEffect(() => {
+        console.log("[AddProduct] Form data:", formData);
+        console.log("[AddProduct] Edit mode:", !!editProduct);
+    }, [formData, editProduct]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -38,34 +51,58 @@ const AddProduct = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("[AddProduct] Form submitted", { editProduct: !!editProduct });
         setLoading(true);
         setError("");
         setShowSuccess(false);
 
         try {
-            if (!image) throw new Error("Please upload an image");
+            if (!editProduct && !image) throw new Error("Please upload an image");
 
             const payload = new FormData();
             payload.append("productName", formData.productName);
             payload.append("weight", formData.weight);
             payload.append("price", formData.price);
             payload.append("mrp", formData.mrp);
-            payload.append("image", image);
+            if (image) {
+                payload.append("image", image);
+            }
 
-            await addProduct(payload);
-
-            setShowSuccess(true);
-            setFormData({
-                productName: "",
-                weight: "",
-                price: "",
-                mrp: ""
+            console.log("[AddProduct] Payload created:", {
+                productName: formData.productName,
+                weight: formData.weight,
+                price: formData.price,
+                mrp: formData.mrp,
+                hasImage: !!image
             });
-            setImage(null);
-            setPreview(null);
-            setTimeout(() => setShowSuccess(false), 3000);
+
+            if (editProduct) {
+                console.log("[AddProduct] Updating product with ID:", editProduct._id);
+                const response = await updateProduct(editProduct._id, payload);
+                console.log("[AddProduct] Update response:", response);
+                setShowSuccess(true);
+                setTimeout(() => {
+                    console.log("[AddProduct] Navigating to /admin/products/manage");
+                    navigate('/admin/products/manage');
+                }, 1500);
+            } else {
+                console.log("[AddProduct] Adding new product");
+                const response = await addProduct(payload);
+                console.log("[AddProduct] Add response:", response);
+                setShowSuccess(true);
+                setFormData({
+                    productName: "",
+                    weight: "",
+                    price: "",
+                    mrp: ""
+                });
+                setImage(null);
+                setPreview(null);
+                setTimeout(() => setShowSuccess(false), 3000);
+            }
 
         } catch (err) {
+            console.error("[AddProduct] Error:", err);
             setError(err.toString());
         } finally {
             setLoading(false);
@@ -77,8 +114,8 @@ const AddProduct = () => {
             <div className="ap-card">
                 <div className="ap-header">
                     <div className="ap-header-content">
-                        <h2 className="ap-title">Add New Product</h2>
-                        <p className="ap-subtitle">Fill in the details to add a new item to your inventory.</p>
+                        <h2 className="ap-title">{editProduct ? "Edit Product" : "Add New Product"}</h2>
+                        <p className="ap-subtitle">{editProduct ? "Update product details below." : "Fill in the details to add a new item to your inventory."}</p>
                     </div>
                     <div className="ap-icon-badge">
                         <Type size={24} color="#16c784" />
@@ -88,7 +125,8 @@ const AddProduct = () => {
                 {showSuccess && (
                     <div className="ap-alert ap-alert-success">
                         <CheckCircle size={20} />
-                        <span>Product added successfully!</span>
+
+                        <span>{editProduct ? "Product updated successfully!" : "Product added successfully!"}</span>
                         <button className="ap-alert-close" onClick={() => setShowSuccess(false)}>
                             <X size={18} />
                         </button>
@@ -221,7 +259,7 @@ const AddProduct = () => {
                             {loading ? "Saving..." : (
                                 <>
                                     <CheckCircle size={18} />
-                                    Save Product
+                                    {editProduct ? "Update Product" : "Save Product"}
                                 </>
                             )}
                         </button>

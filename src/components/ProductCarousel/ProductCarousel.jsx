@@ -38,14 +38,19 @@ const ProductCarousel = () => {
     const loadData = async () => {
       try {
         const res = await fetchProducts(true); // Fetch only active products
+        console.log("[ProductCarousel] Raw API response:", res);
+
         if (isMounted) {
           if (res.data && res.data.length > 0) {
             // Deduplicate products by _id
             const uniqueProducts = Array.from(
               new Map(res.data.map((item) => [item._id, item])).values()
             );
+            console.log("[ProductCarousel] Unique products:", uniqueProducts.length);
+            console.log("[ProductCarousel] Product IDs:", uniqueProducts.map(p => p._id));
             setProducts(uniqueProducts);
           } else {
+            console.log("[ProductCarousel] No products found");
             setProducts([]);
           }
         }
@@ -87,16 +92,22 @@ const ProductCarousel = () => {
   // Determine max scroll index (start of the last visible page)
   const maxScroll = Math.max(0, products.length - itemsToShow);
 
-  // Slide Handlers
+  // Slide Handlers with Infinite Loop
   const nextSlide = () => {
     if (current < maxScroll) {
       setCurrent((prev) => prev + 1);
+    } else {
+      // Loop back to the beginning
+      setCurrent(0);
     }
   };
 
   const prevSlide = () => {
     if (current > 0) {
       setCurrent((prev) => prev - 1);
+    } else {
+      // Loop to the end
+      setCurrent(maxScroll);
     }
   };
 
@@ -155,7 +166,7 @@ const ProductCarousel = () => {
                         <span className="product-weight">{prod.weight}</span>
                         <span className="product-price">
                           ₹{prod.price}{" "}
-                          {prod.mrp && <span className="old-price">₹{prod.mrp}</span>}
+                          {prod.mrp && <span className="old-price">MRP: ₹{prod.mrp}</span>}
                         </span>
                       </div>
 
@@ -197,8 +208,6 @@ const ProductCarousel = () => {
             <button
               className="arrow-button"
               onClick={prevSlide}
-              disabled={current === 0}
-              style={{ opacity: current === 0 ? 0.5 : 1 }}
             >
               <svg width="27" height="13" viewBox="0 0 27 13" fill="none">
                 <path d="M6 1L1 6.5L6 12" stroke="#193B61" />
@@ -211,8 +220,6 @@ const ProductCarousel = () => {
             <button
               className="arrow-button"
               onClick={nextSlide}
-              disabled={current === maxScroll}
-              style={{ opacity: current === maxScroll ? 0.5 : 1 }}
             >
               <svg width="27" height="13" viewBox="0 0 27 13" fill="none">
                 <path d="M21 1L26 6.5L21 12" stroke="#193B61" />
