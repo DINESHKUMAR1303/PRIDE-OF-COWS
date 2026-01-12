@@ -28,3 +28,17 @@ export const getMyOrders = async () => {
 
   return res; // IMPORTANT: return full axios response
 };
+
+// ============================
+// GET ALL ORDERS (Admin)
+// ============================
+export const getAllOrders = async () => {
+  const token = localStorage.getItem("admin_token") || localStorage.getItem("poc_token"); // Try admin token first
+
+  const res = await axios.get(`${API}/orders/all`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  return res;
+};
+

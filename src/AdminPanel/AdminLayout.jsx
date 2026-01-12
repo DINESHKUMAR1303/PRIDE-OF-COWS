@@ -13,6 +13,7 @@ import {
   LogOut,
   ChevronRight,
   CalendarCheck,
+  ShoppingBag,
   Menu, // Hamburger icon
   X,    // Close icon
 } from "lucide-react";
@@ -197,14 +198,14 @@ const AdminLayout = () => {
             )}
 
 
-            {/* Booking */}
-            {hasPermission("Booking") && (
+            {/* Orders */}
+            {hasPermission("Orders") && (
               <button
-                className={`nav-item ${location.pathname.includes("/admin/booking") ? "active" : ""}`}
-                onClick={() => { navigate("/admin/booking"); closeSidebar(); }}
+                className={`nav-item ${location.pathname.includes("/admin/orders") ? "active" : ""}`}
+                onClick={() => { navigate("/admin/orders"); closeSidebar(); }}
               >
-                <CalendarCheck size={20} />
-                <span>Booking</span>
+                <ShoppingBag size={20} />
+                <span>Orders</span>
               </button>
             )}
 

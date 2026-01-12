@@ -112,3 +112,33 @@ export const getUserOrders = async (req, res) => {
     });
   }
 };
+
+/* ============================================================
+   ⭐ GET ALL ORDERS (Admin)
+============================================================ */
+export const getAllOrders = async (req, res) => {
+  try {
+    console.log("🔥 GET ALL ORDERS HIT (Admin)");
+
+    // Populate userId to get customer name/email
+    const orders = await Order.find()
+      .populate("userId", "name email")
+      .sort({ createdAt: -1 });
+
+    console.log("📦 ALL ORDERS RETURNED:", orders.length);
+
+    return res.status(200).json({
+      success: true,
+      orders: orders || [],
+    });
+  } catch (err) {
+    console.error("❌ getAllOrders ERROR:", err);
+
+    return res.status(500).json({
+      success: false,
+      message: "Server error while fetching all orders",
+      error: err.message,
+      orders: [],
+    });
+  }
+};

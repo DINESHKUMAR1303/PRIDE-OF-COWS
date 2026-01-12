@@ -13,6 +13,7 @@ import AddUser from "./Users/AddUser";
 import ManageUser from "./ManageUser/ManageUser";
 import AddProduct from "./AddProduct/AddProduct";
 import ManageProduct from "./ManageProduct/ManageProduct";
+import Orders from "./Orders/Orders";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -53,6 +54,9 @@ const Admin = () => {
         {/* Product Module */}
         <Route path="products/add" element={<AddProduct />} />
         <Route path="products/manage" element={<ManageProduct />} />
+
+        {/* Orders */}
+        <Route path="orders" element={<Orders />} />
       </Route>
     </Routes>
   );

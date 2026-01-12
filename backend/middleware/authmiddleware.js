@@ -31,6 +31,15 @@ const authMiddleware = async (req, res, next) => {
     }
 
     // ---------------------------------------
+    // SPECIAL DEV BYPASS: Allow Hardcoded "mock-super-admin-token"
+    // ---------------------------------------
+    if (token === "mock-super-admin-token") {
+      console.log("⚠️ USING MOCK ADMIN TOKEN (DEV MODE) ⚠️");
+      req.user = { _id: "mock_admin_id", name: "Super Admin", role: "Super Admin" };
+      return next();
+    }
+
+    // ---------------------------------------
     // Verify token
     // ---------------------------------------
     let decoded;
@@ -42,13 +51,19 @@ const authMiddleware = async (req, res, next) => {
     }
 
     // ---------------------------------------
-    // Load user from DB
+    // Load user from DB (Check User then Staff)
     // ---------------------------------------
-    const user = await User.findById(decoded.id).select("-password");
+    let user = await User.findById(decoded.id).select("-password");
 
     if (!user) {
-      console.log("⛔ Token user does not exist anymore");
-      return res.status(401).json({ message: "User no longer exists" });
+      // If not in User, check Staff (for Admin actions)
+      const Staff = (await import("../models/Staff.js")).default;
+      user = await Staff.findById(decoded.id).select("-password");
+    }
+
+    if (!user) {
+      console.log("⛔ Token user/staff does not exist anymore");
+      return res.status(401).json({ message: "User/Staff no longer exists" });
     }
 
     // Attach user to request

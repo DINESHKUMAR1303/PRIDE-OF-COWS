@@ -1,6 +1,6 @@
 // backend/routes/orderRoutes.js
 import express from "express";
-import { createOrder, getUserOrders } from "../controllers/orderController.js";
+import { createOrder, getUserOrders, getAllOrders } from "../controllers/orderController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
@@ -16,5 +16,12 @@ router.post("/", authMiddleware, createOrder);
    GET → /api/orders/my-orders
 ============================================================ */
 router.get("/my-orders", authMiddleware, getUserOrders);
+
+/* ============================================================
+   ⭐ GET ALL ORDERS (Admin)
+   GET → /api/orders/all
+============================================================ */
+router.get("/all", authMiddleware, getAllOrders);
+
 
 export default router;

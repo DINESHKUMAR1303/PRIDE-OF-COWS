@@ -8,47 +8,49 @@ import { useLogin } from "../../context/LoginContext/LoginContext";
 import "./Cart.css";
 import DatePicker from "../../components/DatePicker/DatePicker";
 
-import prod1 from "../../components/ProductCarousel/images/onelitermilk.png";
-import prod2 from "../../components/ProductCarousel/images/purecurd.png";
-import prod3 from "../../components/ProductCarousel/images/ghee.png";
-import prod4 from "../../components/ProductCarousel/images/panner.png";
-import prod5 from "../../components/ProductCarousel/images/proteinbar.png";
-import prod6 from "../../components/ProductCarousel/images/proteinbarpack.png";
-
 import deliveryIcon from "./images/deliveryboy.svg";
 import emptyCartImg from "./images/emptycart.svg";
 
 import { createOrder } from "../../api/order";
 import { getUserProfile } from "../../api/user";
-
-
-
-const cartProducts = [
-  { id: 1, title: "Milk", weight: "1L", price: 120, img: prod1 },
-  { id: 2, title: "Curd", weight: "320g", price: 95, img: prod2 },
-  { id: 3, title: "Ghee", weight: "200ml", price: 495, img: prod3 },
-  { id: 4, title: "Paneer", weight: "200g", price: 195, img: prod4 },
-  { id: 5, title: "Protein Wafer Bar", weight: "40g", price: 60, img: prod5 },
-  { id: 6, title: "Protein Box Pack", weight: "320g", price: 475, img: prod6 },
-];
+import { fetchProducts } from "../../api/product"; // ⭐ Import fetchProducts
 
 const Cart = () => {
-const { cartItems, increaseItem, decreaseItem, clearCart } = useCart();
+  const { cartItems, increaseItem, decreaseItem, clearCart } = useCart();
 
   const { user } = useAuth();
   const isLoggedIn = !!user;
   const { setLoginOpen } = useLogin();
 
-  const cartList = Object.keys(cartItems).filter((id) =>
-    cartProducts.find((p) => p.id === Number(id))
-  );
+  // ⭐ Dynamic Products State
+  const [products, setProducts] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
 
-  const itemTotal = cartList.reduce((sum, id) => {
-    const item = cartProducts.find((p) => p.id === Number(id));
-    return sum + item.price * cartItems[id];
+  // ⭐ Fetch Products on Mount
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const res = await fetchProducts(true); // active only
+        if (res.data) {
+          setProducts(res.data);
+        }
+      } catch (err) {
+        console.error("Failed to load products for cart:", err);
+      } finally {
+        setLoadingProducts(false);
+      }
+    };
+    loadProducts();
+  }, []);
+
+  // ⭐ Filter cart items based on fetched products
+  const cartList = products.filter((p) => cartItems[p._id]);
+
+  const itemTotal = cartList.reduce((sum, p) => {
+    return sum + (p.price || 0) * (cartItems[p._id] || 0);
   }, 0);
 
-  const itemCount = cartList.reduce((sum, id) => sum + cartItems[id], 0);
+  const itemCount = cartList.reduce((sum, p) => sum + (cartItems[p._id] || 0), 0);
 
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -70,88 +72,84 @@ const { cartItems, increaseItem, decreaseItem, clearCart } = useCart();
 
   /* ⭐ NEW: ORDER SUCCESS POPUP */
   const [orderSuccess, setOrderSuccess] = useState(false);
+
   /* ⭐ AUTO-LOAD SAVED ADDRESS WHEN USER LOGS IN */
-useEffect(() => {
-  const loadSavedAddress = async () => {
-    if (!user) return;
+  useEffect(() => {
+    const loadSavedAddress = async () => {
+      if (!user) return;
 
-    try {
-      const profile = await getUserProfile();
-      const addr = profile.address;
+      try {
+        const profile = await getUserProfile();
+        const addr = profile.address;
 
-      if (addr) {
-        setAddress({
-          name: addr.name || `${profile.firstName} ${profile.lastName}`,
-          fullAddress: addr.fullAddress,
-          label: addr.type || "Home",
-          city: addr.city,
-          pincode: addr.pincode,
-        });
+        if (addr) {
+          setAddress({
+            name: addr.name || `${profile.firstName} ${profile.lastName}`,
+            fullAddress: addr.fullAddress,
+            label: addr.type || "Home",
+            city: addr.city,
+            pincode: addr.pincode,
+          });
+        }
+      } catch (err) {
+        console.error("Failed to load saved address:", err);
       }
-    } catch (err) {
-      console.error("Failed to load saved address:", err);
-    }
-  };
-
-  loadSavedAddress();
-}, [user]);
-
-
-
-  
-const handleProceedToPay = async () => {
-  if (!isLoggedIn) {
-    setLoginOpen(true);
-    return;
-  }
-
-  if (!address) {
-    alert("Please add a delivery address before placing the order.");
-    return;
-  }
-
-  try {
-    const token = localStorage.getItem("poc_token");
-
-    const orderData = {
-      items: cartList.map((id) => {
-        const item = cartProducts.find((p) => p.id === Number(id));
-        return {
-          productId: item.id,
-          name: item.title,
-          quantity: cartItems[id],
-          price: item.price
-        };
-      }),
-      address: address.fullAddress,
-      deliveryDate: selectedDate,
-      totalAmount: itemTotal
     };
 
-    console.log("Sending order:", orderData);
+    loadSavedAddress();
+  }, [user]);
 
-    // ⭐ SEND ORDER TO BACKEND
-    const res = await createOrder(orderData, token);
-    console.log("ORDER RESPONSE:", res);
+  const handleProceedToPay = async () => {
+    if (!isLoggedIn) {
+      setLoginOpen(true);
+      return;
+    }
 
-    // Show success popup
-    setOrderSuccess(true);
+    if (!address) {
+      alert("Please add a delivery address before placing the order.");
+      return;
+    }
 
-    // Clear cart
-    clearCart();
+    try {
+      const token = localStorage.getItem("poc_token");
 
-    // Redirect
-    setTimeout(() => {
-      setOrderSuccess(false);
-      window.location.href = "/myaccount/orders";
-    }, 2000);
+      const orderData = {
+        items: cartList.map((p) => {
+          return {
+            productId: p._id,
+            name: p.productName,
+            quantity: cartItems[p._id],
+            price: p.price
+          };
+        }),
+        address: address.fullAddress,
+        deliveryDate: selectedDate,
+        totalAmount: itemTotal
+      };
 
-  } catch (err) {
-    console.error("ORDER FAILED:", err);
-    alert("Failed to place order. Check console.");
-  }
-};
+      console.log("Sending order:", orderData);
 
+      // ⭐ SEND ORDER TO BACKEND
+      const res = await createOrder(orderData, token);
+      console.log("ORDER RESPONSE:", res);
+
+      // Show success popup
+      setOrderSuccess(true);
+
+      // Clear cart
+      clearCart();
+
+      // Redirect
+      setTimeout(() => {
+        setOrderSuccess(false);
+        window.location.href = "/myaccount/orders";
+      }, 2000);
+
+    } catch (err) {
+      console.error("ORDER FAILED:", err);
+      alert("Failed to place order. Check console.");
+    }
+  };
 
   const handleAddAddressClick = () => {
     if (!isLoggedIn) {
@@ -182,8 +180,7 @@ const handleProceedToPay = async () => {
     month: "short",
   });
 
- if (cartList.length === 0 && !orderSuccess) {
-
+  if (!loadingProducts && cartList.length === 0 && !orderSuccess) {
     return (
       <div className="empty-cart-container">
         <p className="empty-breadcrumb">
@@ -238,19 +235,19 @@ const handleProceedToPay = async () => {
               </div>
 
               <p className="address-line">
-  {address.fullAddress
-    ?.split(",")
-    .map((line, i) => (
-      <span key={i}>{line.trim()}<br /></span>
-    ))}
+                {address.fullAddress
+                  ?.split(",")
+                  .map((line, i) => (
+                    <span key={i}>{line.trim()}<br /></span>
+                  ))}
 
-  {address.city && address.pincode && (
-    <span>
-      {address.city}, {address.pincode}
-      <br />
-    </span>
-  )}
-</p>
+                {address.city && address.pincode && (
+                  <span>
+                    {address.city}, {address.pincode}
+                    <br />
+                  </span>
+                )}
+              </p>
 
             </div>
           )}
@@ -258,46 +255,57 @@ const handleProceedToPay = async () => {
           {/* PRODUCTS */}
           <h3 className="section-title">Products</h3>
 
-          {cartList.map((id) => {
-            const item = cartProducts.find((p) => p.id === Number(id));
-            const qty = cartItems[id];
+          {loadingProducts ? (
+            <p>Loading Cart Items...</p>
+          ) : (
+            cartList.map((p) => {
+              const qty = cartItems[p._id];
+              // Image Handling
+              const isLocalImage = !p.image.startsWith("/uploads");
+              const imgSrc = isLocalImage ? p.image : `http://localhost:5000${p.image}`;
 
-            return (
-              <div key={id} className="checkout-product-row">
+              return (
+                <div key={p._id} className="checkout-product-row">
 
-                <div className="cp-img-box">
-                  <img src={item.img} alt={item.title} className="cp-img" />
-                </div>
+                  <div className="cp-img-box">
+                    <img
+                      src={imgSrc}
+                      alt={p.productName}
+                      className="cp-img"
+                      onError={(e) => e.target.src = "https://via.placeholder.com/150"}
+                    />
+                  </div>
 
-                <div className="cp-info">
-                  <p className="cp-title">{item.title}</p>
-                  <p className="cp-size">{item.weight}</p>
-                  <p className="cp-price">₹{item.price}</p>
+                  <div className="cp-info">
+                    <p className="cp-title">{p.productName}</p>
+                    <p className="cp-size">{p.weight}</p>
+                    <p className="cp-price">₹{p.price}</p>
 
-                  <div className="cp-delivery-box">
-                    <img src={deliveryIcon} className="cp-delivery-icon" />
-                    <div>
-                      <p className="cp-delivery-text">Expected Delivery Date:</p>
-                      <p className="cp-delivery-date">{deliveryDateLabel}</p>
+                    <div className="cp-delivery-box">
+                      <img src={deliveryIcon} className="cp-delivery-icon" />
+                      <div>
+                        <p className="cp-delivery-text">Expected Delivery Date:</p>
+                        <p className="cp-delivery-date">{deliveryDateLabel}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="cp-qty-section">
-                  <div className="cp-qty-box">
-                    <button className="cp-qty-btn" onClick={() => decreaseItem(item.id)}>–</button>
-                    <span className="cp-qty-value">{qty}</span>
-                    <button className="cp-qty-btn" onClick={() => increaseItem(item.id)}>+</button>
+                  <div className="cp-qty-section">
+                    <div className="cp-qty-box">
+                      <button className="cp-qty-btn" onClick={() => decreaseItem(p._id)}>–</button>
+                      <span className="cp-qty-value">{qty}</span>
+                      <button className="cp-qty-btn" onClick={() => increaseItem(p._id)}>+</button>
+                    </div>
+
+                    <button className="cp-change-btn" onClick={() => setIsDateModalOpen(true)}>
+                      Change Date
+                    </button>
                   </div>
 
-                  <button className="cp-change-btn" onClick={() => setIsDateModalOpen(true)}>
-                    Change Date
-                  </button>
                 </div>
-
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
 
         {/* RIGHT SIDE */}
@@ -388,15 +396,6 @@ const handleProceedToPay = async () => {
                   required
                 />
               </div>
-
-              {/* <div className="form-group">
-                <label>Street / Area (optional)</label>
-                <input
-                  type="text"
-                  value={addressForm.line2}
-                  onChange={(e) => setAddressForm({ ...addressForm, line2: e.target.value })}
-                />
-              </div> */}
 
               <div className="form-row-2">
                 <div className="form-group">
