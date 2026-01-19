@@ -86,28 +86,34 @@
 }
 
 /* Filter Dropdowns specifically for Product Toolbar */
-.filter-select {
-    height: 38px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    padding: 0 12px;
-    background: #ffffff;
-    color: #475569;
-    font-size: 13px;
-    cursor: pointer;
-    outline: none;
+.filter-dropdown-wrapper {
+    position: relative;
+    width: auto;
+    min-width: 170px;
 }
 
+.filter-trigger {
+    justify-content: space-between;
+    padding: 0 12px;
+}
+
+/* Search Box */
 .search-box {
     display: flex;
     align-items: center;
     gap: 10px;
     background: #ffffff;
-    border: 1px solid #cbd5e1;
+    border: 1px solid #94a3b8 !important;
     border-radius: 8px;
     padding: 0 14px;
     height: 38px;
     width: 240px;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.search-box:hover {
+    border-color: #64748b !important;
 }
 
 .search-box svg {
@@ -129,12 +135,13 @@
 .export-group {
     display: flex;
     align-items: center;
-    border: 1px solid #cbd5e1;
+    border: 1px solid #94a3b8 !important;
     border-radius: 8px;
     background: #ffffff;
     height: 38px;
     overflow: hidden;
     flex-shrink: 0;
+    box-sizing: border-box;
 }
 
 .export-btn {
@@ -651,7 +658,8 @@ input:checked+.slider:before {
     align-items: center;
     justify-content: space-between;
     background: #ffffff;
-    border: 1px solid #cbd5e1;
+    border: 1px solid #94a3b8 !important;
+    /* Made darker and forced */
     border-radius: 8px;
     font-size: 14px;
     color: #64748b;

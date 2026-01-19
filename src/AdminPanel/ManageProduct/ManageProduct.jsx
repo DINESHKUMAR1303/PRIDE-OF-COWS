@@ -8,7 +8,8 @@ import {
     Pencil,
     Eye,
     ChevronDown,
-    X
+    X,
+    Filter // Added Filter icon
 } from "lucide-react";
 import { FaFilePdf, FaFileExcel } from "react-icons/fa";
 import { MdPrint } from "react-icons/md";
@@ -31,6 +32,10 @@ const ManageProduct = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    // Status Filter
+    const [statusFilter, setStatusFilter] = useState("All");
+    const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
 
     // Bulk selection
     const [selectedIds, setSelectedIds] = useState([]);
@@ -79,9 +84,21 @@ const ManageProduct = () => {
         if (!Array.isArray(products)) return [];
         return products.filter(item => {
             if (!item || !item.productName) return false;
-            return item.productName.toLowerCase().includes(search.toLowerCase());
+
+            // Search Filter
+            const matchesSearch = item.productName.toLowerCase().includes(search.toLowerCase());
+
+            // Status Filter
+            let matchesStatus = true;
+            if (statusFilter === "Active") {
+                matchesStatus = item.isActive !== false;
+            } else if (statusFilter === "Disabled") {
+                matchesStatus = item.isActive === false;
+            }
+
+            return matchesSearch && matchesStatus;
         });
-    }, [products, search]);
+    }, [products, search, statusFilter]);
 
     // 3. Pagination Logic
     const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -234,6 +251,36 @@ const ManageProduct = () => {
                                 value={search}
                                 onChange={handleSearch}
                             />
+                        </div>
+
+                        {/* Status Filter Dropdown */}
+                        <div className="filter-dropdown-wrapper" onClick={() => setIsStatusDropdownOpen(!isStatusDropdownOpen)}>
+                            <div className="custom-select-trigger filter-trigger">
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                    <Filter size={16} />
+                                    <span>{statusFilter === "All" ? "Filter by Status" : statusFilter}</span>
+                                </div>
+                                <ChevronDown size={16} className={`custom-select-arrow ${isStatusDropdownOpen ? 'open' : ''}`} />
+                            </div>
+
+                            {isStatusDropdownOpen && (
+                                <div className="custom-dropdown-menu">
+                                    {["All", "Active", "Disabled"].map((status) => (
+                                        <div
+                                            key={status}
+                                            className={`custom-dropdown-item ${statusFilter === status ? 'selected' : ''}`}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setStatusFilter(status);
+                                                setIsStatusDropdownOpen(false);
+                                                setCurrentPage(1);
+                                            }}
+                                        >
+                                            {status}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
 
                         {/* Export */}

@@ -74,7 +74,7 @@
 
 /* ================= CUSTOM DROPDOWN ================= */
 /* Trigger is now just a child filling the flex parent */
-.custom-select-trigger {
+.adduser-input-wrapper .custom-select-trigger {
     height: 100% !important;
     width: 100%;
     flex: 1;
@@ -91,7 +91,7 @@
     padding: 0 0 0 20px !important;
 }
 
-.custom-select-trigger:hover {
+.adduser-input-wrapper .custom-select-trigger:hover {
     background: transparent;
 }
 

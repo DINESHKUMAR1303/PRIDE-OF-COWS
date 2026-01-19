@@ -295,7 +295,7 @@ const Orders = () => {
 
                             {isPerPageDropdownOpen && (
                                 <div className="custom-dropdown-menu">
-                                    {[10, 20, 50].map(num => (
+                                    {[5, 10, 20, 50].map(num => (
                                         <div
                                             key={num}
                                             className={`custom-dropdown-item ${itemsPerPage === num ? 'selected' : ''}`}
