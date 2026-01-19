@@ -176,3 +176,51 @@ export const deleteOrder = async (req, res) => {
     });
   }
 };
+
+/* ============================================================
+   ⭐ UPDATE ORDER STATUS (Admin)
+============================================================ */
+export const updateOrderStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    console.log(`🔥 UPDATE ORDER STATUS HIT: ${id} -> ${status}`);
+
+    if (!status) {
+      return res.status(400).json({
+        success: false,
+        message: "Status is required",
+      });
+    }
+
+    const order = await Order.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    console.log(`✅ ORDER STATUS UPDATED: ${id} -> ${status}`);
+
+    return res.status(200).json({
+      success: true,
+      message: "Order status updated successfully",
+      order,
+    });
+  } catch (err) {
+    console.error("❌ updateOrderStatus ERROR:", err);
+
+    return res.status(500).json({
+      success: false,
+      message: "Server error while updating order status",
+      error: err.message,
+    });
+  }
+};

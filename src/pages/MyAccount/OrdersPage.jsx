@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { X } from "lucide-react";
+import { useCart } from "../../context/CartContext";
 import noOrderImg from "./images/orderbag.png";
 import { getMyOrders } from "../../api/order";
 import "./OrderPage.css";
@@ -24,7 +26,10 @@ const productData = {
 const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
   const [productMap, setProductMap] = useState({});
+  const [selectedOrder, setSelectedOrder] = useState(null);
   const token = localStorage.getItem("poc_token");
+  const navigate = useNavigate();
+  const { increaseItem } = useCart();
 
   // 1️⃣ Fetch Products to create a lookup map
   useEffect(() => {
@@ -84,6 +89,20 @@ const OrdersPage = () => {
       6: { img: prod6, weight: "320g" }
     };
     return fallbackData[id] || { img: "", weight: "" };
+  };
+
+  const handleReorder = (order) => {
+    order.items.forEach(item => {
+      // Add quantity times (since context only supports +1)
+      for (let i = 0; i < item.quantity; i++) {
+        increaseItem(item.productId);
+      }
+    });
+    navigate("/cart");
+  };
+
+  const handleViewDetails = (order) => {
+    setSelectedOrder(order);
   };
 
   return (
@@ -163,12 +182,68 @@ const OrdersPage = () => {
                   <span className="total-amount-val">₹{order.totalAmount}</span>
                 </div>
                 <div className="order-actions">
-                  <button className="details-btn">View Details</button>
-                  <button className="reorder-btn">Reorder</button>
+                  <button className="details-btn" onClick={() => handleViewDetails(order)}>View Details</button>
+                  <button className="reorder-btn" onClick={() => handleReorder(order)}>Reorder</button>
                 </div>
               </div>
             </div>
           ))}
+        </div>
+      )}
+      {/* ORDER DETAILS MODAL */}
+      {selectedOrder && (
+        <div className="modal-overlay" onClick={() => setSelectedOrder(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>Order Details</h3>
+              <button className="close-btn" onClick={() => setSelectedOrder(null)}>
+                <X size={24} />
+              </button>
+            </div>
+
+            <div className="modal-body">
+              <div className="modal-row">
+                <strong>Order ID:</strong> #{selectedOrder._id.slice(-6).toUpperCase()}
+              </div>
+              <div className="modal-row">
+                <strong>Date:</strong> {new Date(selectedOrder.deliveryDate).toLocaleDateString()}
+              </div>
+              <div className="modal-row">
+                <strong>Status:</strong> <span className={`status-text ${selectedOrder.status}`}>{selectedOrder.status}</span>
+              </div>
+              <div className="modal-row address-row">
+                <strong>Address:</strong>
+                <p>{selectedOrder.address}</p>
+              </div>
+
+              <div className="modal-items">
+                <h4>Items</h4>
+                {selectedOrder.items.map((item, idx) => {
+                  const details = getProductDetails(item.productId);
+                  const isLocal = details.img && !details.img.startsWith("/uploads");
+                  const imgSrc = details.img
+                    ? (isLocal ? details.img : `http://localhost:5000${details.img}`)
+                    : "https://via.placeholder.com/150?text=No+Image";
+
+                  return (
+                    <div key={idx} className="modal-item">
+                      <img src={imgSrc} alt={item.name} />
+                      <div className="modal-item-info">
+                        <span className="name">{item.name}</span>
+                        <span className="qty">Qty: {item.quantity}</span>
+                        <span className="price">₹{item.price}</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="modal-footer">
+                <span className="total-label">Total Amount:</span>
+                <span className="total-value">₹{selectedOrder.totalAmount}</span>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>

@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { FaFilePdf, FaFileExcel } from "react-icons/fa";
 import { MdPrint } from "react-icons/md";
-import { getAllOrders, deleteOrder } from "../../api/order";
+import { getAllOrders, deleteOrder, updateOrder } from "../../api/order";
 import "./Orders.css";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
@@ -182,6 +182,22 @@ const Orders = () => {
                 console.error("Bulk delete failed", err);
                 alert("Some orders could not be deleted.");
             }
+        }
+    };
+
+    const handleStatusUpdate = async (id, newStatus) => {
+        try {
+            const res = await updateOrder(id, newStatus);
+            if (res.data?.success) {
+                setOrders(prev => prev.map(o =>
+                    o.id === id ? { ...o, status: newStatus } : o
+                ));
+            } else {
+                alert("Failed to update status");
+            }
+        } catch (err) {
+            console.error("Status update failed", err);
+            alert("Error updating status");
         }
     };
 
@@ -385,10 +401,19 @@ const Orders = () => {
                                             </div>
                                         </td>
                                         <td className="price-text">₹{order.totalAmount}</td>
-                                        <td>
-                                            <span className={`status-badge ${order.status.toLowerCase()}`}>
-                                                {order.status}
-                                            </span>
+                                        <td className="status-cell">
+                                            <select
+                                                className={`status-select ${order.status.toLowerCase()}`}
+                                                value={order.status}
+                                                onChange={(e) => handleStatusUpdate(order.id, e.target.value)}
+                                                onClick={(e) => e.stopPropagation()}
+                                            >
+                                                <option value="Pending">Pending</option>
+                                                <option value="Confirmed">Confirmed</option>
+                                                <option value="Shipped">Shipped</option>
+                                                <option value="Delivered">Delivered</option>
+                                                <option value="Cancelled">Cancelled</option>
+                                            </select>
                                         </td>
                                         <td>{order.date}</td>
                                         <td>

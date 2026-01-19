@@ -3,6 +3,7 @@ import { useSwipeable } from "react-swipeable";
 import { useNavigate } from "react-router-dom";
 import "./ProductCarousel.css";
 import { fetchProducts } from "../../api/product";
+import { Truck } from "lucide-react";
 
 // === IMPORT GLOBAL CART CONTEXT ===
 import { useCart } from "../../context/CartContext";
@@ -31,6 +32,14 @@ const ProductCarousel = () => {
   // State to hold dynamic products
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showToast, setShowToast] = useState(false);
+
+  // Helper to trigger toast
+  const handleAddToCart = (id) => {
+    increaseItem(id);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
+  };
 
   // Fetch from API
   useEffect(() => {
@@ -177,8 +186,7 @@ const ProductCarousel = () => {
                         <button
                           className="product-cta"
                           onClick={(e) => {
-                            e.stopPropagation();
-                            increaseItem(prod._id);
+                            handleAddToCart(prod._id);
                           }}
                         >
                           Add to Cart
@@ -251,6 +259,15 @@ const ProductCarousel = () => {
 
         <button className="know-more-btn">KNOW MORE</button>
       </section>
+
+      {/* PREMIUM ADDED TO BAG TOAST */}
+      <div className={`premium-toast ${showToast ? "show" : ""}`}>
+        <div className="toast-arrow"></div>
+        <div className="toast-content">
+          <Truck size={24} color="#b88619" strokeWidth={2} />
+          <span className="toast-text">ADDED TO BAG</span>
+        </div>
+      </div>
     </>
   );
 };

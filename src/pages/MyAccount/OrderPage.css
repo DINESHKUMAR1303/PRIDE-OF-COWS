@@ -94,13 +94,33 @@
 }
 
 .order-status-pill.pending {
-  background: #fff4e5;
-  color: #ff9800;
+  background: #f59e0b;
+  /* Orange */
+  color: #ffffff;
+}
+
+.order-status-pill.confirmed {
+  background: #2563eb;
+  /* Blue */
+  color: #ffffff;
+}
+
+.order-status-pill.shipped {
+  background: #8b5cf6;
+  /* Violet */
+  color: #ffffff;
 }
 
 .order-status-pill.delivered {
-  background: #e7f9ed;
-  color: #2e7d32;
+  background: #16a34a;
+  /* Green */
+  color: #ffffff;
+}
+
+.order-status-pill.cancelled {
+  background: #ef4444;
+  /* Red */
+  color: #ffffff;
 }
 
 /* BODY: Items */
@@ -315,4 +335,186 @@
     flex: 1;
     text-align: center;
   }
+}
+
+/* =======================================
+   MODAL STYLES
+======================================= */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-family: "Suranna", serif;
+  color: #1a3b5d;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  padding: 4px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.close-btn:hover {
+  background: #f0f0f0;
+}
+
+.modal-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #444;
+}
+
+.modal-row.address-row {
+  flex-direction: column;
+  gap: 4px;
+}
+
+.modal-row.address-row p {
+  margin: 0;
+  color: #666;
+  font-size: 13px;
+  line-height: 1.4;
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.status-text {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Modal Items */
+.modal-items {
+  margin-top: 10px;
+  border-top: 1px dashed #e0e0e0;
+  padding-top: 10px;
+}
+
+.modal-items h4 {
+  margin: 0 0 10px 0;
+  font-size: 14px;
+  color: #1a3b5d;
+}
+
+.modal-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f9f9f9;
+}
+
+.modal-item:last-child {
+  border-bottom: none;
+}
+
+.modal-item img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  background: #f4f4f4;
+  border-radius: 6px;
+  padding: 2px;
+}
+
+.modal-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-item-info .name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+.modal-item-info .qty {
+  font-size: 11px;
+  color: #888;
+}
+
+.modal-item-info .price {
+  font-weight: 600;
+  color: #1a3b5d;
+  font-size: 13px;
+}
+
+.modal-footer {
+  margin-top: 10px;
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-footer .total-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+}
+
+.modal-footer .total-value {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1a3b5d;
 }

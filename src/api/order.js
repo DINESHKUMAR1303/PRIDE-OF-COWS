@@ -51,6 +51,18 @@ export const deleteOrder = async (id) => {
   const res = await axios.delete(`${API}/orders/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
+  return res;
+};
+
+// ============================
+// UPDATE ORDER STATUS (Admin)
+// ============================
+export const updateOrder = async (id, status) => {
+  const token = localStorage.getItem("admin_token") || localStorage.getItem("poc_token");
+
+  const res = await axios.put(`${API}/orders/${id}/status`, { status }, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
 
   return res;
 };
