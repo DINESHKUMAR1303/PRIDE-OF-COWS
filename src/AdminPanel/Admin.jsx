@@ -15,6 +15,8 @@ import AddProduct from "./AddProduct/AddProduct";
 import ManageProduct from "./ManageProduct/ManageProduct";
 import Orders from "./Orders/Orders";
 
+import Customers from "./Customers/Customers";
+
 const Admin = () => {
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem("admin_token");
@@ -50,6 +52,7 @@ const Admin = () => {
         {/* User Module */}
         <Route path="users/add" element={<AddUser />} />
         <Route path="users/manage" element={<ManageUser />} />
+        <Route path="customers" element={<Customers />} />
 
         {/* Product Module */}
         <Route path="products/add" element={<AddProduct />} />

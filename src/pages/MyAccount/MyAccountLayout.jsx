@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { useCart } from "../../context/CartContext";
 import { getUserProfile } from "../../api/user";
 import { Home, ShoppingBag, Package, MapPin, User } from "lucide-react";
 
@@ -27,6 +28,7 @@ import profileNavIcon from "./images/profile.svg";
 
 const MyAccountLayout = () => {
   const { user, setUser } = useAuth();
+  const { clearCart } = useCart();
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -104,10 +106,13 @@ const MyAccountLayout = () => {
   }
 
   const handleLogout = () => {
+    clearCart();
     localStorage.removeItem("poc_user");
     localStorage.removeItem("poc_token");
+    localStorage.removeItem("poc_cart"); // ⭐ Clear Cart
     setUser(null);
     navigate("/login", { replace: true });
+    window.location.reload(); // Ensure clean state
   };
 
   const isMobile = windowWidth < 768;

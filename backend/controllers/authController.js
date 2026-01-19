@@ -143,6 +143,13 @@ export const loginUser = async (req, res) => {
       return res.status(400).json({ message: "User not found" });
     }
 
+    // 🔒 CHECK IF BLOCKED
+    if (user.isActive === false) {
+      return res.status(403).json({
+        message: "Your account has been blocked by the admin. Please contact support."
+      });
+    }
+
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       return res.status(400).json({ message: "Incorrect password" });

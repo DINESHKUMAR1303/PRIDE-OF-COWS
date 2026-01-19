@@ -5,6 +5,7 @@ import logo from "./images/logo.png";
 import sideImage from "./images/milk.webp";
 
 import { registerUser, loginUser } from "../../api/auth";
+import { Eye, EyeOff } from "lucide-react";
 
 // ⭐ Auth Context
 import { useAuth } from "../../context/AuthContext";
@@ -45,6 +46,11 @@ const LoginModal = ({ onClose }) => {
 
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState("");
+
+  // Password Visibility States
+  const [showLoginPass, setShowLoginPass] = useState(false);
+  const [showRegPass, setShowRegPass] = useState(false);
+  const [showConfirmPass, setShowConfirmPass] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -122,6 +128,9 @@ const LoginModal = ({ onClose }) => {
 
       if (msg.includes("Password"))
         return setLoginErrors({ password: "Incorrect password" });
+
+      if (msg.includes("blocked"))
+        return setApiError(msg);
 
       setApiError(msg);
     }
@@ -309,13 +318,22 @@ const LoginModal = ({ onClose }) => {
               )}
 
               <label>Password</label>
-              <input
-                name="password"
-                type="password"
-                value={loginData.password}
-                onChange={handleLoginChange}
-                className={loginErrors.password ? "input-error shake" : ""}
-              />
+              <div className="password-wrapper">
+                <input
+                  name="password"
+                  type={showLoginPass ? "text" : "password"}
+                  value={loginData.password}
+                  onChange={handleLoginChange}
+                  className={loginErrors.password ? "input-error shake" : ""}
+                />
+                <button
+                  type="button"
+                  className="password-toggle-icon"
+                  onClick={() => setShowLoginPass(!showLoginPass)}
+                >
+                  {showLoginPass ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
               {loginErrors.password && (
                 <p className="error-text">{loginErrors.password}</p>
               )}
@@ -378,23 +396,41 @@ const LoginModal = ({ onClose }) => {
               )}
 
               <label>Password</label>
-              <input
-                name="password"
-                type="password"
-                value={registerData.password}
-                onChange={handleRegisterChange}
-                className={errors.password ? "input-error shake" : ""}
-              />
+              <div className="password-wrapper">
+                <input
+                  name="password"
+                  type={showRegPass ? "text" : "password"}
+                  value={registerData.password}
+                  onChange={handleRegisterChange}
+                  className={errors.password ? "input-error shake" : ""}
+                />
+                <button
+                  type="button"
+                  className="password-toggle-icon"
+                  onClick={() => setShowRegPass(!showRegPass)}
+                >
+                  {showRegPass ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
               {errors.password && <p className="error-text">{errors.password}</p>}
 
               <label>Confirm Password</label>
-              <input
-                name="confirmPassword"
-                type="password"
-                value={registerData.confirmPassword}
-                onChange={handleRegisterChange}
-                className={errors.confirmPassword ? "input-error shake" : ""}
-              />
+              <div className="password-wrapper">
+                <input
+                  name="confirmPassword"
+                  type={showConfirmPass ? "text" : "password"}
+                  value={registerData.confirmPassword}
+                  onChange={handleRegisterChange}
+                  className={errors.confirmPassword ? "input-error shake" : ""}
+                />
+                <button
+                  type="button"
+                  className="password-toggle-icon"
+                  onClick={() => setShowConfirmPass(!showConfirmPass)}
+                >
+                  {showConfirmPass ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
               {errors.confirmPassword && (
                 <p className="error-text">{errors.confirmPassword}</p>
               )}

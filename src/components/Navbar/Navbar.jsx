@@ -68,7 +68,7 @@ const CustomMenuIcon = ({
 };
 
 const Navbar = () => {
-  const { cartCount } = useCart();
+  const { cartCount, clearCart } = useCart();
   const { user, setUser } = useAuth();
   const { loginOpen, setLoginOpen } = useLogin();
   const navigate = useNavigate();
@@ -485,10 +485,12 @@ const Navbar = () => {
                 <li
                   onClick={() => {
                     setUser(null);
+                    clearCart(); // ⭐ Clear Context State
 
                     // REMOVE ALL SAVED USER + LOCATION DATA
                     localStorage.removeItem("poc_user");
                     localStorage.removeItem("poc_token");
+                    localStorage.removeItem("poc_cart"); // ⭐ Clear Cart Storage
 
                     // ⭐ These 3 store the location — REMOVE THEM
                     localStorage.removeItem("user_city");

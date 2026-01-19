@@ -132,3 +132,109 @@ export const updateUserAddress = async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 };
+
+/* ============================================================
+   ⭐ GET ALL USERS (ADMIN PANEL)
+   GET /api/user/all
+============================================================ */
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find().select("-password").sort({ createdAt: -1 });
+    // Use formatAddress for consistent structure if needed, or just return as is
+    const formattedUsers = users.map(user => ({
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      telephone: user.telephone,
+      address: formatAddress(user), // Use the helper
+      isActive: user.isActive !== false,
+      createdAt: user.createdAt
+    }));
+
+    return res.status(200).json({
+      success: true,
+      data: formattedUsers
+    });
+  } catch (err) {
+    console.error("❌ GET ALL USERS ERROR:", err);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+/* ============================================================
+   ⭐ UPDATE USER STATUS (ENABLE/DISABLE)
+   PATCH /api/user/status/:id
+============================================================ */
+export const updateUserStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { isActive } = req.body;
+
+    const user = await User.findByIdAndUpdate(
+      id,
+      { isActive },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.json({
+      success: true,
+      message: `User ${isActive ? 'enabled' : 'disabled'} successfully`,
+      data: user
+    });
+  } catch (err) {
+    console.error("❌ UPDATE STATUS ERROR:", err);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+/* ============================================================
+   ⭐ DELETE SINGLE USER
+   DELETE /api/user/:id
+============================================================ */
+export const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findByIdAndDelete(id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.json({
+      success: true,
+      message: "User deleted successfully"
+    });
+  } catch (err) {
+    console.error("❌ DELETE USER ERROR:", err);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+/* ============================================================
+   ⭐ BULK DELETE USERS
+   POST /api/user/bulk-delete
+============================================================ */
+export const bulkDeleteUsers = async (req, res) => {
+  try {
+    const { ids } = req.body;
+
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ message: "No user IDs provided" });
+    }
+
+    await User.deleteMany({ _id: { $in: ids } });
+
+    return res.json({
+      success: true,
+      message: `${ids.length} users deleted successfully`
+    });
+  } catch (err) {
+    console.error("❌ BULK DELETE ERROR:", err);
+    return res.status(500).json({ message: "Server error" });
+  }
+};

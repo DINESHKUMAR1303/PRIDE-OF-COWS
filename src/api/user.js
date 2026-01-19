@@ -16,18 +16,26 @@ const STAFF_API = axios.create({
 });
 
 /* ============================================================
-   ⭐ INTERCEPTOR → Attach JWT token automatically
+   ⭐ INTERCEPTORS
 ============================================================ */
-const attachToken = (config) => {
+
+// Attach User Token (Customer)
+USER_API.interceptors.request.use((config) => {
   const token = localStorage.getItem("poc_token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
-};
+}, Promise.reject);
 
-USER_API.interceptors.request.use(attachToken, Promise.reject);
-STAFF_API.interceptors.request.use(attachToken, Promise.reject);
+// Attach Admin Token (Staff/Admin)
+STAFF_API.interceptors.request.use((config) => {
+  const token = localStorage.getItem("admin_token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, Promise.reject);
 
 /* ============================================================
    ⭐ USER APIs
@@ -76,6 +84,75 @@ export const updateAddress = async (addressData) => {
     return res.data;
   } catch (err) {
     throw err.response?.data || { message: "Failed to update address" };
+  }
+};
+
+/**
+ * GET /api/user/all (Admin Only)
+ * Uses direct axios call with admin_token because USER_API uses poc_token
+ */
+export const fetchAllUsers = async () => {
+  try {
+    const token = localStorage.getItem("admin_token");
+    const res = await axios.get("http://localhost:5000/api/user/all", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return res.data;
+  } catch (err) {
+    throw err.response?.data || { message: "Failed to fetch users" };
+  }
+};
+
+/**
+ * PATCH /api/user/status/:id (Admin Only)
+ */
+export const updateUserStatus = async (id, isActive) => {
+  try {
+    const token = localStorage.getItem("admin_token");
+    const res = await axios.put(`http://localhost:5000/api/user/status/${id}`, { isActive }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return res.data;
+  } catch (err) {
+    throw err.response?.data || { message: "Failed to update user status" };
+  }
+};
+
+/**
+ * DELETE /api/user/:id (Admin Only)
+ */
+export const deleteUser = async (id) => {
+  try {
+    const token = localStorage.getItem("admin_token");
+    const res = await axios.delete(`http://localhost:5000/api/user/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return res.data;
+  } catch (err) {
+    throw err.response?.data || { message: "Failed to delete user" };
+  }
+};
+
+/**
+ * POST /api/user/bulk-delete (Admin Only)
+ */
+export const bulkDeleteUsers = async (ids) => {
+  try {
+    const token = localStorage.getItem("admin_token");
+    const res = await axios.post("http://localhost:5000/api/user/bulk-delete", { ids }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return res.data;
+  } catch (err) {
+    throw err.response?.data || { message: "Failed to bulk delete users" };
   }
 };
 

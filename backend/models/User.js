@@ -92,6 +92,11 @@ const userSchema = new mongoose.Schema(
       type: addressSchema,
       default: () => ({}),
     },
+
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
   },
   { timestamps: true }
 );

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
     Type,
-    DollarSign,
+    IndianRupee,
     CheckCircle,
     Upload,
     X,
@@ -198,11 +198,11 @@ const AddProduct = () => {
                         <div className="ap-input-group">
                             <label className="ap-label">Selling Price (₹)</label>
                             <div className="ap-input-wrapper">
-                                <DollarSign className="ap-input-icon" size={18} />
+                                <IndianRupee className="ap-input-icon" size={18} />
                                 <input
                                     type="number"
                                     name="price"
-                                    placeholder="0.00"
+                                    placeholder="Selling Price"
                                     className="ap-input"
                                     value={formData.price}
                                     onChange={handleChange}
@@ -215,11 +215,11 @@ const AddProduct = () => {
                         <div className="ap-input-group">
                             <label className="ap-label">MRP (₹)</label>
                             <div className="ap-input-wrapper">
-                                <DollarSign className="ap-input-icon" size={18} />
+                                <IndianRupee className="ap-input-icon" size={18} />
                                 <input
                                     type="number"
                                     name="mrp"
-                                    placeholder="0.00"
+                                    placeholder="MRP"
                                     className="ap-input"
                                     value={formData.mrp}
                                     onChange={handleChange}

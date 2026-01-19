@@ -252,7 +252,7 @@ const ManageUser = () => {
           <div className="toolbar-right">
             {selectedUsers.length > 0 && (
               <button className="bulk-delete-btn" onClick={handleBulkDelete}>
-                <Trash2 size={18} />
+                <Trash2 size={18} /> Delete ({selectedUsers.length})
               </button>
             )}
             <div className="search-box">
