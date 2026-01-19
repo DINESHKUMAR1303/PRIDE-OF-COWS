@@ -236,8 +236,8 @@ const ManageProduct = () => {
                 {/* Toolbar */}
                 <div className="manage-toolbar">
                     <div className="toolbar-left">
-                        <h2 className="toolbar-title">Product Management</h2>
-                        <p className="toolbar-subtitle">Product Modules › <strong>Manage Product</strong></p>
+                        <h2 className="toolbar-title">Products List</h2>
+                        <p className="toolbar-subtitle">Manage your product inventory</p>
                     </div>
 
                     <div className="toolbar-right">

@@ -307,6 +307,28 @@ const Orders = () => {
                                 </div>
                             )}
                         </div>
+
+                        {/* Pagination Controls */}
+                        <div className="pagination-controls">
+                            <button
+                                className="pagination-btn"
+                                disabled={currentPage === 1}
+                                onClick={() => setCurrentPage(p => p - 1)}
+                            >
+                                <ChevronLeft size={18} />
+                            </button>
+                            {/* Removed the middle button with page number as it usually isn't in toolbar styles if arrows are there, 
+                                but user image shows text in middle? No, user image shows < > buttons. 
+                                ManageProduct just has < > buttons. I will follow ManageProduct style which just has < > buttons. 
+                            */}
+                            <button
+                                className="pagination-btn"
+                                disabled={currentPage === totalPages}
+                                onClick={() => setCurrentPage(p => p + 1)}
+                            >
+                                <ChevronRight size={18} />
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -396,24 +418,8 @@ const Orders = () => {
                         Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredOrders.length)} of {filteredOrders.length} entries
                     </div>
 
-                    <div className="pagination-controls">
-                        <button
-                            className="pagination-btn"
-                            disabled={currentPage === 1}
-                            onClick={() => setCurrentPage(p => p - 1)}
-                        >
-                            <ChevronLeft size={18} />
-                        </button>
-                        <button className="pagination-btn disabled">
-                            {currentPage}
-                        </button>
-                        <button
-                            className="pagination-btn"
-                            disabled={currentPage === totalPages}
-                            onClick={() => setCurrentPage(p => p + 1)}
-                        >
-                            <ChevronRight size={18} />
-                        </button>
+                    <div className="page-info">
+                        Page {currentPage} of {totalPages || 1}
                     </div>
                 </div>
             </div>
