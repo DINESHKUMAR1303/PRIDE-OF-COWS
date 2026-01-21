@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { fetchAllUsers, updateUserStatus, deleteUser, bulkDeleteUsers } from "../../api/user";
+import { fetchAllUsers } from "../../api/user";
 import {
     Eye,
     Search,
@@ -7,8 +7,7 @@ import {
     ChevronRight,
     ChevronDown,
     X,
-    Filter,
-    Trash2
+    Filter
 } from "lucide-react";
 import { FaFilePdf, FaFileExcel } from "react-icons/fa";
 import { MdPrint } from "react-icons/md";
@@ -30,8 +29,7 @@ const Customers = () => {
     const [statusFilter, setStatusFilter] = useState("All");
     const [isStatusDropdownOpen, setIsStatusDropdownOpen] = useState(false);
 
-    // Bulk selection
-    const [selectedIds, setSelectedIds] = useState([]);
+
 
     useEffect(() => {
         loadUsers();
@@ -99,61 +97,7 @@ const Customers = () => {
 
     const [isExporting, setIsExporting] = useState(false);
 
-    const handleSelectAll = (e) => {
-        if (e.target.checked) {
-            setSelectedIds(currentUsers.map(u => u._id));
-        } else {
-            setSelectedIds([]);
-        }
-    };
 
-    const handleSelectRow = (id) => {
-        if (selectedIds.includes(id)) {
-            setSelectedIds(selectedIds.filter(itemId => itemId !== id));
-        } else {
-            setSelectedIds([...selectedIds, id]);
-        }
-    };
-
-    const handleDeleteUser = async (id) => {
-        if (window.confirm("Are you sure you want to delete this customer?")) {
-            try {
-                await deleteUser(id);
-                loadUsers();
-                setSelectedIds(prev => prev.filter(itemId => itemId !== id));
-            } catch (err) {
-                alert("Failed to delete user");
-            }
-        }
-    };
-
-    const handleBulkDelete = async () => {
-        if (window.confirm(`Are you sure you want to delete ${selectedIds.length} selected customers?`)) {
-            try {
-                await bulkDeleteUsers(selectedIds);
-                setSelectedIds([]);
-                loadUsers();
-            } catch (err) {
-                alert("Failed to delete users");
-            }
-        }
-    };
-
-    const handleStatusToggle = async (user, newStatus) => {
-        // Optimistic update
-        const updatedUsers = users.map(u => u._id === user._id ? { ...u, isActive: newStatus } : u);
-        setUsers(updatedUsers);
-
-        try {
-            await updateUserStatus(user._id, newStatus);
-            // Optionally reload to be sure
-            // loadUsers();
-        } catch (err) {
-            console.error("Failed to update status", err);
-            alert("Failed to update status");
-            loadUsers(); // Revert
-        }
-    };
 
     const handleExportPDF = () => {
         try {
@@ -222,11 +166,7 @@ const Customers = () => {
                     </div>
                 </div>
 
-                {selectedIds.length > 0 && (
-                    <button className="bulk-delete-btn" onClick={handleBulkDelete}>
-                        <Trash2 size={16} /> Delete ({selectedIds.length})
-                    </button>
-                )}
+
             </div>
 
             <div className="manage-table-card">
@@ -340,36 +280,21 @@ const Customers = () => {
                     <table className="manage-table">
                         <thead>
                             <tr>
-                                <th style={{ width: '40px' }}>
-                                    <input
-                                        type="checkbox"
-                                        onChange={handleSelectAll}
-                                        checked={currentUsers.length > 0 && selectedIds.length === currentUsers.length}
-                                    />
-                                </th>
                                 <th style={{ width: '60px', textAlign: 'center' }}>Photo</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
                                 <th>Location</th>
-                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
 
                         <tbody>
                             {loading ? (
-                                <tr><td colSpan="8" className="no-data">Loading customers...</td></tr>
+                                <tr><td colSpan="6" className="no-data">Loading customers...</td></tr>
                             ) : currentUsers.length > 0 ? (
                                 currentUsers.map((u) => (
                                     <tr key={u._id}>
-                                        <td>
-                                            <input
-                                                type="checkbox"
-                                                checked={selectedIds.includes(u._id)}
-                                                onChange={() => handleSelectRow(u._id)}
-                                            />
-                                        </td>
                                         <td>
                                             <div className="user-avatar" style={{ margin: '0 auto', background: getAvatarColor(u.firstName) }}>
                                                 <span>{getInitial(u.firstName)}</span>
@@ -380,23 +305,6 @@ const Customers = () => {
                                         <td className="email">{u.email}</td>
                                         <td className="contact">{u.telephone || "N/A"}</td>
                                         <td className="contact">{u.address?.city || "N/A"}</td>
-                                        <td>
-                                            <div className="status-toggle-wrapper">
-                                                <div className="switch-container">
-                                                    <label className="switch">
-                                                        <input
-                                                            type="checkbox"
-                                                            checked={u.isActive !== false}
-                                                            onChange={(e) => handleStatusToggle(u, e.target.checked)}
-                                                        />
-                                                        <span className="slider round"></span>
-                                                    </label>
-                                                </div>
-                                                <span className={`status-text ${u.isActive !== false ? "active" : "inactive"}`}>
-                                                    {u.isActive !== false ? "Enabled" : "Disabled"}
-                                                </span>
-                                            </div>
-                                        </td>
 
                                         <td>
                                             <div className="action-buttons">
@@ -407,20 +315,13 @@ const Customers = () => {
                                                 >
                                                     <Eye size={14} />
                                                 </button>
-                                                <button
-                                                    className="btn delete"
-                                                    onClick={() => handleDeleteUser(u._id)}
-                                                    title="Delete Customer"
-                                                >
-                                                    <Trash2 size={14} />
-                                                </button>
                                             </div>
                                         </td>
                                     </tr>
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan="8" className="no-data">
+                                    <td colSpan="6" className="no-data">
                                         {searchTerm ? "No customers found matching your search" : "No customers found"}
                                     </td>
                                 </tr>

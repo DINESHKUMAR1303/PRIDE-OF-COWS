@@ -32,8 +32,8 @@ body {
   justify-content: flex-end;
   align-items: center;
   z-index: 9999;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  /* backdrop-filter: blur(6px); */
+  /* -webkit-backdrop-filter: blur(6px); */
 }
 
 /* ============================================
@@ -315,9 +315,11 @@ select:focus {
 /* Custom Select Arrow */
 select {
   appearance: none;
-  background-image: url("data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjEwIiB2aWV3Qm94PSIwIDAgMTAgNiIgd2lkdGg9IjE2IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwb2x5bGluZSBwb2ludHM9IjAgMCA1IDYgMTAgMCIgc3Ryb2tlPSIjYzI5ZDVmIiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-position: right 18px center;
   background-repeat: no-repeat;
+  background-size: 16px;
+  padding-right: 40px !important;
 }
 
 /* ============================================

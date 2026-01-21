@@ -73,6 +73,7 @@ const Orders = () => {
                         customer: {
                             name: (() => {
                                 // 1. Try User Profile Name
+                                if (order.userId?.firstName) return `${order.userId.firstName} ${order.userId.lastName}`;
                                 if (order.userId?.name && order.userId.name !== "Guest") return order.userId.name;
 
                                 // 2. Try Extraction from Address (Format: "Name, Address...")
@@ -110,7 +111,7 @@ const Orders = () => {
                         }),
                         totalAmount: order.totalAmount,
                         status: order.status || "Pending",
-                        date: new Date(order.deliveryDate).toLocaleDateString("en-IN", {
+                        date: new Date(order.createdAt).toLocaleDateString("en-IN", {
                             day: "numeric", month: "short", year: "numeric"
                         })
                     }));

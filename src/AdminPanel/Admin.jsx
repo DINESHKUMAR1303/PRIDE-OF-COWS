@@ -16,6 +16,7 @@ import ManageProduct from "./ManageProduct/ManageProduct";
 import Orders from "./Orders/Orders";
 
 import Customers from "./Customers/Customers";
+import Reports from "./Reports/Reports";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -60,6 +61,9 @@ const Admin = () => {
 
         {/* Orders */}
         <Route path="orders" element={<Orders />} />
+
+        {/* Reports */}
+        <Route path="reports" element={<Reports />} />
       </Route>
     </Routes>
   );

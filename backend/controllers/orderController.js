@@ -122,7 +122,7 @@ export const getAllOrders = async (req, res) => {
 
     // Populate userId to get customer name/email
     const orders = await Order.find()
-      .populate("userId", "name email")
+      .populate("userId", "firstName lastName name email")
       .sort({ createdAt: -1 });
 
     console.log("📦 ALL ORDERS RETURNED:", orders.length);

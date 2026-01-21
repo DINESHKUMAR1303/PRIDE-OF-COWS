@@ -1,4 +1,4 @@
-// backend/server.js
+// backend/server.js - Restart Trigger
 
 import express from "express";
 import mongoose from "mongoose";
