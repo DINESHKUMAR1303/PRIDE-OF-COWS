@@ -220,17 +220,17 @@ const Reports = () => {
                                     className={`custom-reports-dropdown ${isReportTypeOpen ? 'open' : ''}`}
                                     onClick={() => setIsReportTypeOpen(!isReportTypeOpen)}
                                 >
-                                    <div className="custom-select-trigger">
+                                    <div className="report-select-trigger">
                                         <span>{reportTypeMap[reportType]}</span>
-                                        <ChevronDown size={16} className={`custom-select-arrow ${isReportTypeOpen ? 'open' : ''}`} />
+                                        <ChevronDown size={16} className={`report-select-arrow ${isReportTypeOpen ? 'open' : ''}`} />
                                     </div>
 
                                     {isReportTypeOpen && (
-                                        <div className="custom-dropdown-menu">
+                                        <div className="report-dropdown-menu">
                                             {Object.entries(reportTypeMap).map(([key, label]) => (
                                                 <div
                                                     key={key}
-                                                    className={`custom-dropdown-item ${reportType === key ? 'selected' : ''}`}
+                                                    className={`report-dropdown-item ${reportType === key ? 'selected' : ''}`}
                                                     onClick={(e) => {
                                                         e.stopPropagation();
                                                         setReportType(key);
@@ -278,17 +278,17 @@ const Reports = () => {
                                     className={`custom-reports-dropdown ${isStatusOpen ? 'open' : ''}`}
                                     onClick={() => setIsStatusOpen(!isStatusOpen)}
                                 >
-                                    <div className="custom-select-trigger">
+                                    <div className="report-select-trigger">
                                         <span>{statusMap[statusFilter]}</span>
-                                        <ChevronDown size={16} className={`custom-select-arrow ${isStatusOpen ? 'open' : ''}`} />
+                                        <ChevronDown size={16} className={`report-select-arrow ${isStatusOpen ? 'open' : ''}`} />
                                     </div>
 
                                     {isStatusOpen && (
-                                        <div className="custom-dropdown-menu">
+                                        <div className="report-dropdown-menu">
                                             {Object.entries(statusMap).map(([key, label]) => (
                                                 <div
                                                     key={key}
-                                                    className={`custom-dropdown-item ${statusFilter === key ? 'selected' : ''}`}
+                                                    className={`report-dropdown-item ${statusFilter === key ? 'selected' : ''}`}
                                                     onClick={(e) => {
                                                         e.stopPropagation();
                                                         setStatusFilter(key);
