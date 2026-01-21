@@ -251,12 +251,12 @@
 ============================ */
 .account-wrapper {
   display: flex;
-  height: 100vh;
-  /* ⭐ FULL PAGE HEIGHT */
+  height: calc(100vh - 100px);
+  /* Adjusted to account for header height */
   overflow: hidden;
-  /* ⭐ prevents page scroll */
   gap: 30px;
-  padding: 0px 40px;
+  padding: 20px 40px;
+  /* Added top padding */
   background: #f9f9f9;
   box-sizing: border-box;
 }

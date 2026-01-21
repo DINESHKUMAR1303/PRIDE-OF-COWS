@@ -4,6 +4,8 @@ import { useCart } from "../../context/CartContext";
 
 import { useAuth } from "../../context/AuthContext";
 import { useLogin } from "../../context/LoginContext/LoginContext";
+import { MapPin, Home, Briefcase, Edit2 } from "lucide-react";
+
 
 import "./Cart.css";
 import DatePicker from "../../components/DatePicker/DatePicker";
@@ -201,6 +203,18 @@ const Cart = () => {
     );
   }
 
+
+
+
+  const getAddressIcon = (type) => {
+    switch (type?.toLowerCase()) {
+      case "home": return <Home size={18} />;
+      case "work": return <Briefcase size={18} />;
+      case "office": return <Briefcase size={18} />;
+      default: return <MapPin size={18} />;
+    }
+  };
+
   return (
     <>
       <div className="checkout-wrapper">
@@ -216,39 +230,41 @@ const Cart = () => {
           <div className="address-section">
             <h2>Delivery Address:</h2>
 
-            {!address ? (
+            {!address && (
               <button className="add-address-btn" onClick={handleAddAddressClick}>
                 Add Address
-              </button>
-            ) : (
-              <button className="add-address-btn" onClick={() => setIsAddressModalOpen(true)}>
-                Edit Address
               </button>
             )}
           </div>
 
           {address && (
-            <div className="address-card">
-              <div className="address-card-header">
-                <p className="address-name">{address.name}</p>
-                <span className="address-label">{address.label}</span>
+            <div className="cart-address-card">
+              {/* LEFT: ICON */}
+              <div className="cart-address-icon-box">
+                {getAddressIcon(address.label)}
               </div>
 
-              <p className="address-line">
-                {address.fullAddress
-                  ?.split(",")
-                  .map((line, i) => (
-                    <span key={i}>{line.trim()}<br /></span>
-                  ))}
+              {/* MIDDLE: INFO */}
+              <div className="cart-address-info-content">
+                <div className="cart-address-row-header">
+                  <span className="cart-address-holder-name">{address.name}</span>
+                  <span className="cart-address-tag-label">{address.label || "Home"}</span>
+                </div>
+                <p className="cart-address-detailed-text">
+                  {address.fullAddress}
+                  {address.city ? `, ${address.city}` : ""}
+                  {address.pincode ? ` - ${address.pincode}` : ""}
+                </p>
+              </div>
 
-                {address.city && address.pincode && (
-                  <span>
-                    {address.city}, {address.pincode}
-                    <br />
-                  </span>
-                )}
-              </p>
-
+              {/* RIGHT: ACTION */}
+              <button
+                className="cart-icon-action-btn edit"
+                onClick={() => setIsAddressModalOpen(true)}
+                title="Edit Address"
+              >
+                <Edit2 size={16} />
+              </button>
             </div>
           )}
 

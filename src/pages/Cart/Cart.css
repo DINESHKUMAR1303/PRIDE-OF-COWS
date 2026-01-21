@@ -6,11 +6,12 @@
 .checkout-breadcrumb {
   font-size: 14px;
   color: #777;
-  margin-bottom: 35px;
+  margin-bottom: 20px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  text-align: center;
-  margin-top: 40px;
+  text-align: left;
+  /* Changed from center to left */
+  margin-top: 10px;
 }
 
 .crumb-link {
@@ -128,42 +129,113 @@
 
 /* ADDRESS CARD */
 
-.address-card {
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 14px 16px;
-  margin-bottom: 25px;
-  background: #fffdf5;
-}
-
-.address-card-header {
+/* PREMIUM ADDRESS CARD (Horizontal & Compact) */
+.cart-address-card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e6e6e6;
+  padding: 16px;
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  flex-direction: row !important;
   align-items: center;
-  margin-bottom: 6px;
+  gap: 16px;
+  /* Slightly increased gap */
+  margin-bottom: 18px;
+  box-sizing: border-box;
+  box-shadow: none;
 }
 
-.address-label {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+/* STRICTLY Remove Hover Effects */
+.cart-address-card:hover {
+  transform: none !important;
+  box-shadow: none !important;
+  border: 1px solid #e6e6e6 !important;
+}
+
+/* LEFT: ICON BOX */
+.cart-address-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: #f8fbff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a3b5d;
+  flex-shrink: 0;
+}
+
+/* MIDDLE: INFO CONTENT */
+.cart-address-info-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Ensure vertical center */
+  gap: 3px;
+  /* Tighter vertical gap */
+}
+
+.cart-address-row-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cart-address-holder-name {
+  font-family: "Suranna", serif;
+  font-size: 18px;
+  /* Slight bump */
+  color: #1a3b5d;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.cart-address-tag-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: #c29d5f;
+  background: #fff9f0;
   padding: 2px 8px;
-  border-radius: 999px;
-  background: #ffe3ba;
-  color: #8c5b00;
-  font-weight: 600;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 1px solid #fdf2e2;
+  margin-top: 2px;
+  /* Visual alignment with serif font */
 }
 
-.address-name {
-  margin: 0;
-  font-weight: 600;
-  color: #193B61;
-}
-
-.address-line {
-  margin: 0;
+.cart-address-detailed-text {
   font-size: 13px;
-  color: #555;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+/* RIGHT: ACTION BUTTON */
+.cart-icon-action-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #f0f0f0;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: none;
+  /* No transition needed if no hover */
+  flex-shrink: 0;
+}
+
+.cart-icon-action-btn:hover {
+  background: #fff;
+  border-color: #f0f0f0;
+  color: #94a3b8;
+  /* Remove hover effect on button too */
 }
 
 .section-title {
@@ -435,7 +507,7 @@
 .modal-overlay-cart {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.45);
+  background: rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
@@ -450,7 +522,7 @@
   background: #ffffff;
   padding: 35px;
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
   animation: scaleIn 0.25s ease;
   position: relative;
 }
@@ -581,7 +653,7 @@
 .order-success-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -596,7 +668,7 @@
   padding: 40px 30px;
   border-radius: 16px;
   text-align: center;
-  box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
   animation: scaleIn 0.3s ease;
 }
 
@@ -619,4 +691,3 @@
   color: #333;
   margin-top: 10px;
 }
-
