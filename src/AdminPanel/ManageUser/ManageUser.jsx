@@ -350,6 +350,7 @@ const ManageUser = () => {
                     onChange={toggleSelectAll}
                   />
                 </th>
+                <th>USER ID</th>
                 <th>PHOTO</th>
                 <th>NAME</th>
                 <th>EMAIL</th>
@@ -370,6 +371,12 @@ const ManageUser = () => {
                         checked={selectedUsers.includes(u._id)}
                         onChange={() => toggleUserSelection(u._id)}
                       />
+                    </td>
+
+                    <td className="user-id">
+                      <span style={{ fontWeight: '500', color: '#64748b' }}>
+                        #{u.userId || u._id.substring(0, 6)}
+                      </span>
                     </td>
 
                     <td>
@@ -438,7 +445,7 @@ const ManageUser = () => {
 
               {currentUsers.length === 0 && (
                 <tr>
-                  <td colSpan="8" className="no-data">
+                  <td colSpan="9" className="no-data">
                     {searchTerm ? "No users found matching your search" : "No users found"}
                   </td>
                 </tr>
