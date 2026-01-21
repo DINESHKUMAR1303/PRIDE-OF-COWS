@@ -20,11 +20,31 @@ const Reports = () => {
     const [endDate, setEndDate] = useState("");
     const [statusFilter, setStatusFilter] = useState("all");
 
+    // Dropdown States
+    const [isReportTypeOpen, setIsReportTypeOpen] = useState(false);
+    const [isStatusOpen, setIsStatusOpen] = useState(false);
+
     const [reportData, setReportData] = useState([]);
     const [reportColumns, setReportColumns] = useState([]);
     const [generatedTitle, setGeneratedTitle] = useState("");
     const [generatedDate, setGeneratedDate] = useState("");
     const [loading, setLoading] = useState(false);
+
+    // Mappings for Display
+    const reportTypeMap = {
+        "Sales": "Sales Report",
+        "Orders": "Orders Report",
+        "Customers": "Customer Registration"
+    };
+
+    const statusMap = {
+        "all": "All Statuses",
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "shipped": "Shipped",
+        "delivered": "Delivered",
+        "cancelled": "Cancelled"
+    };
 
     const fetchReportData = async () => {
         let tableColumn = [];
@@ -34,7 +54,7 @@ const Reports = () => {
         // Fetch and process data based on report type
         if (reportType === "Orders" || reportType === "Sales") {
             const res = await getAllOrders();
-            const responseData = res.data || res; // Handle if res is axios obj or data
+            const responseData = res.data || res;
 
             if (responseData && (responseData.success || Array.isArray(responseData.orders))) {
                 fetchedData = responseData.orders || [];
@@ -72,7 +92,7 @@ const Reports = () => {
                         col2: new Date(order.createdAt).toLocaleDateString(),
                         col3: order.userId ? ((order.userId.firstName ? `${order.userId.firstName} ${order.userId.lastName}` : order.userId.name) || (order.userId.email ? order.userId.email.split('@')[0] : "Guest")) : "Guest",
                         col4: order.items?.length || 0,
-                        col5: `₹${order.totalAmount || order.totalPrice}`, // Handle potential field name variance
+                        col5: `₹${order.totalAmount || order.totalPrice}`,
                         col6: order.status
                     }));
                 } else {
@@ -105,11 +125,8 @@ const Reports = () => {
                 }
 
                 // Status filter (Active/Inactive) if applicable
-                if (statusFilter === "Completed") { // Map 'Completed' to Active
-                    fetchedData = fetchedData.filter(u => u.isActive !== false);
-                } else if (statusFilter === "Cancelled") { // Map to Inactive
-                    fetchedData = fetchedData.filter(u => u.isActive === false);
-                }
+                // Note: User status isn't "pending/confirmed", so mapped roughly or ignored if not relevant
+                // For simplicity, ignoring status filter for Customers unless explicitly mapped
 
                 tableColumn = ["Name", "Email", "Phone", "City", "Joined Date", "Status"];
                 data = fetchedData.map(user => ({
@@ -119,31 +136,6 @@ const Reports = () => {
                     col4: user.address?.city || "N/A",
                     col5: new Date(user.createdAt).toLocaleDateString(),
                     col6: user.isActive !== false ? "Active" : "Inactive"
-                }));
-            }
-        } else if (reportType === "Products") {
-            const res = await fetchProducts();
-            if (res.success) {
-                fetchedData = res.products || [];
-
-                // Optional: Filter by creation date if set
-                if (startDate && endDate) {
-                    const start = new Date(startDate);
-                    const end = new Date(endDate);
-                    end.setHours(23, 59, 59);
-                    fetchedData = fetchedData.filter(item => {
-                        const date = new Date(item.createdAt);
-                        return date >= start && date <= end;
-                    });
-                }
-
-                tableColumn = ["Product Name", "Category", "Price", "Stock", "Status"];
-                data = fetchedData.map(product => ({
-                    col1: product.name,
-                    col2: product.category,
-                    col3: `₹${product.price}`,
-                    col4: product.stock || "N/A",
-                    col5: product.isActive ? "Active" : "Inactive"
                 }));
             }
         }
@@ -165,7 +157,7 @@ const Reports = () => {
             } else {
                 setReportColumns(tableColumn);
                 setReportData(data);
-                setGeneratedTitle(`${reportType} Report`);
+                setGeneratedTitle(`${reportTypeMap[reportType]} Result`);
                 setGeneratedDate(startDate && endDate ? `From ${startDate} to ${endDate}` : `Generated on ${new Date().toLocaleDateString()}`);
             }
         } catch (err) {
@@ -185,11 +177,10 @@ const Reports = () => {
         doc.text(generatedTitle, 14, 22);
         doc.setFontSize(11);
         doc.text(generatedDate, 14, 30);
-        if (statusFilter !== "All") {
-            doc.text(`Status: ${statusFilter}`, 14, 36);
+        if (statusFilter !== "all") {
+            doc.text(`Status: ${statusMap[statusFilter]}`, 14, 36);
         }
 
-        // Convert object data back to array for autoTable
         const tableRows = reportData.map(row => Object.values(row));
 
         autoTable(doc, {
@@ -222,20 +213,35 @@ const Reports = () => {
 
                     <form onSubmit={handleGenerateReport} className="reports-form">
                         <div className="form-grid">
-                            {/* Report Type */}
+                            {/* Report Type (Custom Dropdown) */}
                             <div className="report-form-group">
                                 <label>Report Type</label>
-                                <div className="select-wrapper">
-                                    <select
-                                        value={reportType}
-                                        onChange={(e) => setReportType(e.target.value)}
-                                        className="form-select"
-                                    >
-                                        <option value="Sales">Sales Report</option>
-                                        <option value="Orders">Orders Report</option>
-                                        <option value="Customers">Customer Registration</option>
-                                        <option value="Products">Product Inventory</option>
-                                    </select>
+                                <div
+                                    className={`custom-reports-dropdown ${isReportTypeOpen ? 'open' : ''}`}
+                                    onClick={() => setIsReportTypeOpen(!isReportTypeOpen)}
+                                >
+                                    <div className="custom-select-trigger">
+                                        <span>{reportTypeMap[reportType]}</span>
+                                        <ChevronDown size={16} className={`custom-select-arrow ${isReportTypeOpen ? 'open' : ''}`} />
+                                    </div>
+
+                                    {isReportTypeOpen && (
+                                        <div className="custom-dropdown-menu">
+                                            {Object.entries(reportTypeMap).map(([key, label]) => (
+                                                <div
+                                                    key={key}
+                                                    className={`custom-dropdown-item ${reportType === key ? 'selected' : ''}`}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setReportType(key);
+                                                        setIsReportTypeOpen(false);
+                                                    }}
+                                                >
+                                                    {label}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
 
@@ -265,22 +271,35 @@ const Reports = () => {
                                 </div>
                             </div>
 
-                            {/* Status Filter */}
+                            {/* Status Filter (Custom Dropdown) */}
                             <div className="report-form-group">
                                 <label>Status</label>
-                                <div className="select-wrapper">
-                                    <select
-                                        value={statusFilter}
-                                        onChange={(e) => setStatusFilter(e.target.value)}
-                                        className="form-select"
-                                    >
-                                        <option value="all">All Statuses</option>
-                                        <option value="pending">Pending</option>
-                                        <option value="confirmed">Confirmed</option>
-                                        <option value="shipped">Shipped</option>
-                                        <option value="delivered">Delivered</option>
-                                        <option value="cancelled">Cancelled</option>
-                                    </select>
+                                <div
+                                    className={`custom-reports-dropdown ${isStatusOpen ? 'open' : ''}`}
+                                    onClick={() => setIsStatusOpen(!isStatusOpen)}
+                                >
+                                    <div className="custom-select-trigger">
+                                        <span>{statusMap[statusFilter]}</span>
+                                        <ChevronDown size={16} className={`custom-select-arrow ${isStatusOpen ? 'open' : ''}`} />
+                                    </div>
+
+                                    {isStatusOpen && (
+                                        <div className="custom-dropdown-menu">
+                                            {Object.entries(statusMap).map(([key, label]) => (
+                                                <div
+                                                    key={key}
+                                                    className={`custom-dropdown-item ${statusFilter === key ? 'selected' : ''}`}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setStatusFilter(key);
+                                                        setIsStatusOpen(false);
+                                                    }}
+                                                >
+                                                    {label}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
