@@ -60,11 +60,13 @@
 .header-left {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 20px;
 }
 
 .card-icon {
     color: #16c784;
+    display: flex;
+    flex-shrink: 0;
 }
 
 .card-header h3 {
@@ -72,6 +74,12 @@
     font-size: 18px;
     font-weight: 600;
     color: #1e293b;
+    line-height: 1;
+    /* Tighter line height for better centering */
+    display: flex;
+    align-items: center;
+    padding-top: 2px;
+    /* Micro-adjustment for visual center */
 }
 
 /* Form Styles */
