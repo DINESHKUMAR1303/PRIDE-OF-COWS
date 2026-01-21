@@ -62,9 +62,9 @@
 }
 
 .settings-sidebar button.active {
-    background: #e0f2fe;
-    /* Light blue matching theme */
-    color: #0284c7;
+    background: #ecfdf5;
+    /* Light green matching theme */
+    color: #059669;
     font-weight: 600;
 }
 
@@ -111,13 +111,13 @@
 }
 
 .st-input:focus {
-    border-color: #0284c7;
-    box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.1);
+    border-color: #16c784;
+    box-shadow: 0 0 0 3px rgba(22, 199, 132, 0.1);
 }
 
 .st-btn {
     padding: 10px 20px;
-    background: #1a3b5d;
+    background: #16c784;
     color: white;
     border: none;
     border-radius: 8px;
@@ -128,7 +128,7 @@
 }
 
 .st-btn:hover {
-    background: #142e4a;
+    background: #059669;
 }
 
 .st-toggle-row {
