@@ -187,35 +187,7 @@ const Customers = () => {
                             <Search size={18} />
                         </div>
 
-                        {/* Status Filter Dropdown */}
-                        <div className="filter-dropdown-wrapper" onClick={() => setIsStatusDropdownOpen(!isStatusDropdownOpen)}>
-                            <div className="custom-select-trigger filter-trigger">
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                    <Filter size={16} />
-                                    <span>{statusFilter === "All" ? "Filter by Status" : statusFilter}</span>
-                                </div>
-                                <ChevronDown size={16} className={`custom-select-arrow ${isStatusDropdownOpen ? 'open' : ''}`} />
-                            </div>
 
-                            {isStatusDropdownOpen && (
-                                <div className="custom-dropdown-menu">
-                                    {["All", "Enabled", "Disabled"].map((status) => (
-                                        <div
-                                            key={status}
-                                            className={`custom-dropdown-item ${statusFilter === status ? 'selected' : ''}`}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                setStatusFilter(status);
-                                                setIsStatusDropdownOpen(false);
-                                                setCurrentPage(1);
-                                            }}
-                                        >
-                                            {status}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
 
                         <div className={`export-group ${isExporting ? 'exporting' : ''}`}>
                             <button className="export-btn pdf" onClick={handleExportPDF} title="Export PDF">
