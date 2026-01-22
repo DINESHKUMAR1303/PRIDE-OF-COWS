@@ -7,7 +7,17 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(() => {
     try {
       const saved = localStorage.getItem("poc_cart");
-      return saved ? JSON.parse(saved) : {};
+      const parsed = saved ? JSON.parse(saved) : {};
+
+      // Strict Cleanup: Keep only valid MongoDB ObjectIds (24 hex chars)
+      // Removes legacy "1" and placeholders like "active-ghee-id"
+      const cleaned = {};
+      Object.keys(parsed).forEach(key => {
+        if (/^[0-9a-fA-F]{24}$/.test(key)) {
+          cleaned[key] = parsed[key];
+        }
+      });
+      return cleaned;
     } catch (error) {
       return {};
     }
@@ -46,6 +56,16 @@ export const CartProvider = ({ children }) => {
     });
   };
 
+
+  // ➤ REMOVE ITEM COMPLETELY
+  const removeFromCart = (id) => {
+    setCartItems((prev) => {
+      const updated = { ...prev };
+      delete updated[id];
+      return updated;
+    });
+  };
+
   // ⭐ ➤ CLEAR CART COMPLETELY (NEW STEP 4)
   const clearCart = () => {
     setCartItems({});
@@ -61,6 +81,7 @@ export const CartProvider = ({ children }) => {
         increaseItem,
         decreaseItem,
         cartCount,  // Navbar uses this
+        removeFromCart, // ⭐ NEW 
         clearCart,  // ⭐ NEW — used after placing order
       }}
     >

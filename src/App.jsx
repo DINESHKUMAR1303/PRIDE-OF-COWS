@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import AllProducts from "./pages/AllProducts/AllProducts";
 import Cart from "./pages/Cart/Cart";
 import Milk from "./pages/Milk/Milk";
+import Ghee from "./pages/Ghee/Ghee";
 
 // ---------------- Policy Pages ----------------
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
@@ -68,6 +69,7 @@ const App = () => {
           {/* ---------------- SHOP ---------------- */}
           <Route path="/shop/all" element={<AllProducts />} />
           <Route path="/shop/milk" element={<Milk />} />
+          <Route path="/shop/ghee" element={<Ghee />} />
 
           {/* ---------------- CART ---------------- */}
           <Route path="/cart" element={<Cart />} />

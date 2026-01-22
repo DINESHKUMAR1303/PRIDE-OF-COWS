@@ -29,6 +29,19 @@ const ProductCarousel = () => {
   const navigate = useNavigate();
   const { cartItems, increaseItem, decreaseItem } = useCart();
 
+  // Helper for navigation
+  const handleProductClick = (name, productId) => {
+    if (!name) return;
+    const lower = name.toLowerCase();
+
+    // Pass ID to ensure exact sync
+    if (lower.includes("milk")) navigate(`/shop/milk?id=${productId}`);
+    else if (lower.includes("ghee")) navigate(`/shop/ghee?id=${productId}`);
+    else if (lower.includes("curd")) navigate("/shop/curd");
+    else if (lower.includes("paneer")) navigate("/shop/paneer");
+    else navigate("/shop/all");
+  };
+
   // State to hold dynamic products
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -125,6 +138,7 @@ const ProductCarousel = () => {
     onSwipedRight: prevSlide,
     preventDefaultTouchmoveEvent: true,
     trackMouse: true,
+
   });
 
   return (
@@ -161,6 +175,7 @@ const ProductCarousel = () => {
                     <div
                       className="product-card-inner"
                       style={{ cursor: "pointer" }}
+                      onClick={() => handleProductClick(prod.productName, prod._id)}
                     >
                       <div className="product-image-wrap">
                         <img
@@ -186,6 +201,7 @@ const ProductCarousel = () => {
                         <button
                           className="product-cta"
                           onClick={(e) => {
+                            e.stopPropagation();
                             handleAddToCart(prod._id);
                           }}
                         >
@@ -260,14 +276,7 @@ const ProductCarousel = () => {
         <button className="know-more-btn">KNOW MORE</button>
       </section>
 
-      {/* PREMIUM ADDED TO BAG TOAST */}
-      <div className={`premium-toast ${showToast ? "show" : ""}`}>
-        <div className="toast-arrow"></div>
-        <div className="toast-content">
-          <Truck size={24} color="#b88619" strokeWidth={2} />
-          <span className="toast-text">ADDED TO BAG</span>
-        </div>
-      </div>
+
     </>
   );
 };

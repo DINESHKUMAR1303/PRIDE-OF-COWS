@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./ProductDetail.css";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useCart } from "../../../context/CartContext";
+import { fetchProducts } from "../../../api/product";
 
 // Import your DatePicker component
 import DatePicker from "../../../components/DatePicker/DatePicker";
@@ -44,12 +46,65 @@ const ProductDetail = () => {
 
   const [deliveryDate, setDeliveryDate] = useState(getTomorrow());
 
-  const productData = {
+
+  // Init with safe defaults
+  const [productData, setProductData] = useState({
     id: 1,
     title: "Milk",
-    price: 120,
+    originalPrice: 146,
+    price: 120, // Fallback safe price
     img: selectedImage,
-  };
+  });
+  const [loading, setLoading] = useState(true);
+
+  // Access URL params
+  const location = useLocation();
+
+  useEffect(() => {
+    const loadProduct = async () => {
+      try {
+        const res = await fetchProducts(true);
+        const allProducts = res.data || []; // Fix: Access .data
+
+        // 1. Check URL ID first (Highest Priority)
+        const params = new URLSearchParams(location.search);
+        const urlId = params.get("id");
+
+        let targetProduct = null;
+
+        if (urlId) {
+          targetProduct = allProducts.find(p => p._id === urlId);
+        }
+
+        if (!targetProduct) {
+          // 2. Fallback: Filter all matches for "milk"
+          // Safe filtering
+          const matches = allProducts.filter(p => p.productName && p.productName.toLowerCase().includes("milk"));
+
+          // Sort by name length
+          matches.sort((a, b) => a.productName.length - b.productName.length);
+          targetProduct = matches[0];
+        }
+
+        if (targetProduct) {
+          setProductData({
+            id: targetProduct._id,
+            title: targetProduct.productName,
+            price: targetProduct.price,
+            originalPrice: targetProduct.mrp,
+            weight: targetProduct.weight,
+            img: selectedImage
+          });
+        }
+      } catch (err) {
+        console.error("Failed to load product details", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadProduct();
+  }, [location.search]);
+
 
   const inCartQty = cartItems[productData.id] || 0;
   const isInCart = inCartQty > 0;
@@ -57,10 +112,9 @@ const ProductDetail = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    if (isInCart) {
-      setQuantity(inCartQty);
-    }
-  }, [inCartQty, isInCart]);
+    // Sync quantity
+    setQuantity(inCartQty > 0 ? inCartQty : 1);
+  }, [inCartQty]);
 
   // Quantity
   const handleIncrease = () => {
@@ -102,6 +156,10 @@ const ProductDetail = () => {
     setDeliveryDate(newDate);     // Update delivery
     setShowDatePicker(false);     // Close popup
   };
+
+  if (loading) {
+    return <div className="pd-wrapper" style={{ textAlign: 'center', marginTop: '100px' }}>Loading Product Details...</div>;
+  }
 
   return (
     <>
@@ -154,7 +212,9 @@ const ProductDetail = () => {
 
           {/* RIGHT */}
           <div className="pd-right">
-            <h1 className="pd-title">{productData.title} (1 lit)</h1>
+            <h1 className="pd-title">
+              {productData.title} {productData.weight ? `(${productData.weight})` : ""}
+            </h1>
 
             <h3 className="pd-subtitle">Product Description</h3>
 
@@ -163,13 +223,16 @@ const ProductDetail = () => {
               from farm to your doorstep using a fully mechanised process.
             </p>
 
-            <p className="pd-price">MRP : ₹{productData.price}</p>
+            <div className="pd-pricing">
+              <span className="pd-price">₹{productData.price}</span>
+              {productData.originalPrice > productData.price && (
+                <span className="pd-mrp">MRP: ₹{productData.originalPrice}</span>
+              )}
+            </div>
+            {/* <p className="pd-price">MRP : ₹{productData.price}</p> removed old price */}
             <p className="pd-price-note">(Price inclusive of all taxes)</p>
 
-            <p className="pd-crown">
-              <img src={crownIcon} alt="crown" className="pd-crown-icon" />
-              You will earn 1 crown with this product
-            </p>
+
 
             {/* QUANTITY */}
             <div className="pd-qty-container">

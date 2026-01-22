@@ -1,0 +1,473 @@
+/* =======================================
+   MAIN WRAPPER 
+======================================= */
+.gd-wrapper {
+    width: 100%;
+    min-height: auto;
+    display: flex;
+    justify-content: center;
+    background: #f4f4f4;
+    padding: 20px 16px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+/* MAIN BOX */
+.gd-main-box {
+    width: 95%;
+    max-width: 1400px;
+    display: flex;
+    gap: 100px;
+    background: #f4f4f4;
+    border-radius: 20px;
+    padding-bottom: 40px;
+    box-sizing: border-box;
+}
+
+/* ================= LEFT SIDE ================= */
+.gd-left {
+    display: flex;
+    gap: 25px;
+    flex-shrink: 0;
+}
+
+.gd-thumbnails {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 20px;
+}
+
+.gd-thumbnail {
+    width: 90px;
+    height: 98px;
+    background: #f4f4f4;
+    border-radius: 14px;
+    border: 2px solid #e6e6e6;
+    padding: 8px;
+    object-fit: contain;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.gd-thumbnail:hover {
+    border-color: #bdbdbd;
+}
+
+.active-thumb {
+    border-color: #0b2f4e !important;
+}
+
+.gd-main-image-box {
+    width: 560px;
+    height: 580px;
+    background: #f4f4f4;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.gd-main-img {
+    width: 530px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* ================= RIGHT SIDE ================= */
+.gd-right {
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+}
+
+.gd-title {
+    font-size: 42px;
+    font-family: suranna, serif;
+    font-weight: 400;
+    margin: -10px 0 -32px;
+    color: #2B2B2B;
+}
+
+.gd-subtitle {
+    font-size: 22px;
+    font-family: suranna, serif;
+    font-weight: 600;
+    margin-top: 10px;
+    /* Reduced from 40px */
+    color: #000;
+}
+
+.gd-desc {
+    margin-top: 5px;
+    /* Reduced from 10px */
+    line-height: 1.6;
+    width: 95%;
+    color: #333;
+    font-size: 16px;
+    font-family: "Times New Roman", serif;
+}
+
+/* PRICING ROW */
+.gd-pricing {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-top: 10px;
+    /* Reduced from 20px */
+    font-family: suranna, serif;
+}
+
+.gd-price {
+    font-size: 28px;
+    font-weight: 400;
+    color: #2B2B2B;
+}
+
+.gd-mrp {
+    font-size: 20px;
+    color: #777;
+    text-decoration: line-through;
+}
+
+.gd-discount {
+    font-size: 20px;
+    color: #D32F2F;
+    /* Red color for discount */
+    font-weight: 700;
+}
+
+.gd-price-note {
+    color: #666;
+    font-size: 14px;
+    margin-top: 2px;
+}
+
+/* CROWNS */
+.gd-crown {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #c7a045;
+    font-weight: 600;
+    margin-top: 10px;
+    /* Reduced from 15px */
+    font-size: 16px;
+}
+
+.gd-crown-icon {
+    width: 22px;
+}
+
+/* QUANTITY */
+.gd-qty-container {
+    width: 100%;
+    max-width: 480px;
+    min-height: 50px;
+    /* Reduced height */
+    background: #EFF2F6;
+    /* Slightly bluish grey as in image */
+    border: none;
+    border-radius: 8px;
+    padding: 12px 25px;
+    /* Reduced padding */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px 0 0;
+    /* Reduced from 25px */
+    box-sizing: border-box;
+}
+
+.qty-left-text {
+    font-size: 18px;
+    color: #3b4d61;
+    font-weight: 500;
+}
+
+.qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.qty-controls button {
+    font-size: 26px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #0C3B60;
+    padding: 0 10px;
+}
+
+.qty-controls span {
+    font-size: 20px;
+    color: #0C3B60;
+    font-weight: 600;
+}
+
+.user-select-none {
+    user-select: none;
+}
+
+/* BUTTONS */
+.gd-buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+/* Matching Milk page button styles */
+.gd-buy-now,
+.gd-subscribe {
+    width: 260px;
+    max-width: 100%;
+    height: 48px;
+    padding: 12px 0;
+    border-radius: 14px;
+    font-size: 18px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.25s ease-in-out;
+}
+
+.gd-buy-now {
+    background: #0C3B60;
+    color: white;
+}
+
+.gd-subscribe {
+    background: #c7a045;
+    color: white;
+}
+
+.gd-buy-now:hover {
+    background: #082a45;
+}
+
+.gd-subscribe:hover {
+    background: #b08d38;
+}
+
+/* DELIVERY BOX */
+.gd-delivery-box {
+    margin-top: 20px;
+    background: #F9F9F9;
+    /* Very light grey as per image */
+    border: 1px solid #E0E0E0;
+    /* Subtle border */
+    padding: 16px 24px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 100%;
+    /* Image implies full width of the container */
+    box-sizing: border-box;
+}
+
+.gd-delivery-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    color: #0C3B60;
+    /* Deep Blue title */
+    font-size: 16px;
+}
+
+.gd-icon {
+    width: 24px;
+}
+
+.gd-delivery-date {
+    margin-top: 4px;
+    font-size: 15px;
+    color: #333;
+    padding-left: 34px;
+    /* Align under text, not icon */
+}
+
+.gd-change-date-btn {
+    padding: 10px 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    /* Slightly tighter radius */
+    background: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #000;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: 0.2s;
+}
+
+.gd-change-date-btn:hover {
+    background: #f0f0f0;
+}
+
+.gd-change-date-btn img {
+    width: 18px;
+}
+
+/* POPUP */
+.added-popup {
+    position: fixed;
+    top: 120px;
+    right: 95px;
+    background: #f3f5f7;
+    color: #07253D;
+    padding: 14px 28px;
+    border-radius: 20px;
+    border: 2px solid #07253D;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    font-size: 15px;
+    box-shadow: 0px 12px 35px rgba(0, 0, 0, 0.28);
+    animation: popupFadeDown 0.35s ease-out;
+    max-width: 260px;
+}
+
+.popup-arrow {
+    position: absolute;
+    top: -14px;
+    left: 55%;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #0C3B60;
+}
+
+.popup-cart-img {
+    width: 34px;
+    padding-right: 20px;
+    height: auto;
+    opacity: 0.95;
+}
+
+.run-slide {
+    animation: truckSlide 0.8s ease-out forwards;
+}
+
+@keyframes truckSlide {
+    0% {
+        transform: translateX(-22px);
+        opacity: 0;
+    }
+
+    40% {
+        transform: translateX(6px);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes popupFadeDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-12px) scale(0.96);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+    .gd-main-box {
+        flex-direction: column;
+        align-items: center;
+        gap: 50px;
+        padding: 40px 20px;
+    }
+
+    .gd-main-image-box {
+        width: 100%;
+        max-width: 500px;
+        height: 500px;
+    }
+
+    .gd-main-img {
+        width: 90%;
+    }
+
+    .gd-left {
+        flex-direction: column-reverse;
+        /* Thumbnails below main image on tablet */
+        align-items: center;
+    }
+
+    .gd-thumbnails {
+        flex-direction: row;
+    }
+
+    .gd-right {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .gd-desc {
+        text-align: center;
+    }
+
+    .gd-pricing {
+        justify-content: center;
+    }
+
+    .gd-crown {
+        justify-content: center;
+    }
+
+    .gd-qty-container,
+    .gd-buttons,
+    .gd-delivery-box {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .gd-main-image-box {
+        height: 400px;
+    }
+
+    .gd-title {
+        font-size: 32px;
+    }
+
+    .gd-buttons {
+        width: 100%;
+    }
+
+    .gd-delivery-box {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .gd-delivery-date {
+        padding-left: 0;
+    }
+}
