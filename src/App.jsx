@@ -7,6 +7,7 @@ import AllProducts from "./pages/AllProducts/AllProducts";
 import Cart from "./pages/Cart/Cart";
 import Milk from "./pages/Milk/Milk";
 import Ghee from "./pages/Ghee/Ghee";
+import Curd from "./pages/Curd/Curd";
 
 // ---------------- Policy Pages ----------------
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
@@ -70,6 +71,7 @@ const App = () => {
           <Route path="/shop/all" element={<AllProducts />} />
           <Route path="/shop/milk" element={<Milk />} />
           <Route path="/shop/ghee" element={<Ghee />} />
+          <Route path="/shop/curd" element={<Curd />} />
 
           {/* ---------------- CART ---------------- */}
           <Route path="/cart" element={<Cart />} />
