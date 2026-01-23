@@ -16,6 +16,7 @@ import Yogurt from "./pages/Yogurt/Yogurt";
 // ---------------- Policy Pages ----------------
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions/TermsConditions";
+import AboutUs from "./pages/AboutUs/AboutUs";
 
 // ---------------- My Account (Nested Routes) ----------------
 import MyAccountLayout from "./pages/MyAccount/MyAccountLayout";
@@ -106,6 +107,7 @@ const App = () => {
           <Route path="/terms-and-conditions" element={<TermsConditions />} />
 
           {/* ================= ADMIN ================= */}
+          <Route path="/about-us" element={<AboutUs />} />
           <Route path="/admin/*" element={<Admin />} />
 
           {/* ---------------- CATCH ALL ---------------- */}

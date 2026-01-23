@@ -55,7 +55,7 @@ const Footer = () => {
           {/* LEARN */}
           <div className="footer-column">
             <h3 className="footer-heading">Learn</h3>
-            <p>About Us</p>
+            <p><Link to="/about-us">About Us</Link></p>
             <p>Compliance</p>
             <p>Our Process</p>
             <p>Sustainability</p>
