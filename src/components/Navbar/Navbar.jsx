@@ -97,7 +97,7 @@ const Navbar = () => {
     { name: "Ghee", img: gheeImg, link: "/shop/ghee" },
     { name: "Curd", img: curdImg, link: "/shop/curd" },
     { name: "Paneer", img: paneerImg, link: "/shop/paneer" },
-    { name: "Whole Milk Powder", img: powderImg, link: "/shop/whole-milk-powder" },
+    { name: "Milk Powder", img: powderImg, link: "/shop/whole-milk-powder" },
     { name: "Yogurt", img: yogurtImg, link: "/shop/yogurt" },
     { name: "Protein Bar", img: proteinImg, link: "/shop/protein-bar" },
   ];

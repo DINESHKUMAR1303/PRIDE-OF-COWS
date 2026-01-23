@@ -1,0 +1,381 @@
+/* =======================================
+   YOGURT PAGE (Adapted from ProteinBar/Curd)
+======================================= */
+
+.yg-wrapper {
+    width: 100%;
+    min-height: auto !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f4f4f4;
+    padding: 40px 16px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    gap: 80px;
+    /* Space between yogurt sections */
+}
+
+/* MAIN CONTENT BOX */
+.yg-main-box {
+    width: 95%;
+    max-width: 1400px;
+    display: flex;
+    gap: 100px;
+    background: #f4f4f4;
+    border-radius: 20px;
+    padding-bottom: 40px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #ddd;
+    /* Separator */
+}
+
+.yg-main-box:last-child {
+    border-bottom: none;
+}
+
+/* ================= LEFT SIDE ================= */
+.yg-left {
+    display: flex;
+    gap: 25px;
+    flex-shrink: 0;
+}
+
+.yg-thumbnails {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 20px;
+}
+
+.yg-thumbnail {
+    width: 90px;
+    height: 98px;
+    background: #f4f4f4;
+    border-radius: 14px;
+    border: 2px solid #e6e6e6;
+    padding: 8px;
+    object-fit: contain;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.yg-thumbnail:hover {
+    border-color: #bdbdbd;
+}
+
+.active-thumb {
+    border-color: #0b2f4e !important;
+}
+
+.yg-main-image-box {
+    width: 560px;
+    height: 580px;
+    background: #f4f4f4;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.yg-main-img {
+    width: 530px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* ================= RIGHT SIDE ================= */
+.yg-right {
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+}
+
+.yg-title {
+    font-size: 42px;
+    font-family: suranna, serif;
+    font-weight: 400;
+    margin: -10px 0 -32px;
+    color: #2B2B2B;
+}
+
+.yg-subtitle {
+    font-size: 22px;
+    font-family: suranna, serif;
+    font-weight: 600;
+    margin-top: 10px;
+    color: #000;
+}
+
+.yg-desc {
+    margin-top: -20px;
+    line-height: 1.7;
+    width: 90%;
+    color: #333;
+    font-size: 16px;
+    font-family: Inter, sans-serif;
+}
+
+/* PRICING ROW */
+.yg-pricing {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.yg-price {
+    font-size: 28px;
+    font-family: suranna, serif;
+    font-weight: 400;
+    color: #2B2B2B;
+}
+
+.yg-mrp {
+    font-size: 20px;
+    color: #777;
+    text-decoration: line-through;
+    font-family: suranna, serif;
+}
+
+.yg-discount {
+    font-size: 20px;
+    color: #D32F2F;
+    font-weight: 700;
+    font-family: suranna, serif;
+}
+
+.yg-price-note {
+    color: #666;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+/* QUANTITY BOX */
+.yg-qty-container {
+    width: 100%;
+    max-width: 480px;
+    min-height: 56px;
+    background: #f5f1f8;
+    border: 1px solid #e3e0e8;
+    border-radius: 14px;
+    padding: 18px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 25px 0 0;
+    box-sizing: border-box;
+}
+
+.qty-left-text {
+    font-size: 20px;
+    color: #0C3B60;
+    font-weight: 600;
+}
+
+.qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.qty-controls button {
+    font-size: 26px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    color: #0C3B60;
+}
+
+.qty-controls span {
+    font-size: 22px;
+    color: #0C3B60;
+}
+
+/* BUTTONS */
+.yg-buttons {
+    margin-top: 30px;
+    display: flex;
+    gap: 20px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.yg-buy-now,
+.yg-subscribe {
+    width: 260px;
+    max-width: 100%;
+    height: 47px;
+    padding: 12px 0;
+    border-radius: 14px;
+    font-size: 18px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.25s ease-in-out;
+}
+
+.yg-buy-now {
+    background: #0C3B60;
+    color: white;
+}
+
+.yg-subscribe {
+    background: #c7a045;
+    color: white;
+}
+
+.yg-buy-now:hover {
+    background: #082a45;
+}
+
+.yg-subscribe:hover {
+    background: #b0893b;
+}
+
+/* DELIVERY BOX */
+.yg-delivery-box {
+    margin-top: 35px;
+    border: 1px solid #ddd;
+    padding: 18px 20px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 100%;
+}
+
+.yg-delivery-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    color: #0C3B60;
+}
+
+.yg-icon {
+    width: 28px;
+}
+
+.yg-delivery-date {
+    margin-top: 6px;
+    font-size: 16px;
+    color: #444;
+    padding-left: 40px;
+}
+
+.yg-change-date-btn {
+    padding: 10px 20px;
+    border: 1px solid #aaa;
+    border-radius: 12px;
+    background: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #000;
+    white-space: nowrap;
+}
+
+.yg-change-date-btn:hover {
+    background: #f0f0f0;
+}
+
+.yg-change-date-btn img {
+    width: 20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1439px) {
+    .yg-buttons {
+        justify-content: center !important;
+    }
+
+    .yg-qty-container,
+    .yg-delivery-box {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 1024px) {
+    .yg-main-box {
+        flex-direction: column;
+        align-items: center;
+        gap: 50px;
+        padding: 40px 20px;
+    }
+
+    .yg-left {
+        justify-content: center;
+    }
+
+    .yg-right {
+        text-align: center;
+    }
+
+    .yg-desc {
+        width: 100%;
+        text-align: center;
+    }
+
+    .yg-buttons {
+        width: 100%;
+        justify-content: center !important;
+    }
+
+    .yg-buy-now,
+    .yg-subscribe {
+        width: 90%;
+        max-width: 420px;
+    }
+
+    .yg-delivery-box {
+        width: 80%;
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .yg-wrapper {
+        padding: 16px 12px;
+    }
+
+    .yg-left {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .yg-thumbnails {
+        order: 2;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .yg-main-image-box {
+        width: 100%;
+        max-width: 440px;
+        height: 480px;
+    }
+
+    .yg-title {
+        font-size: 36px;
+    }
+
+    .yg-buy-now,
+    .yg-subscribe {
+        width: 100%;
+        max-width: 380px;
+    }
+}

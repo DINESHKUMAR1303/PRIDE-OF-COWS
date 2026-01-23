@@ -8,6 +8,10 @@ import Cart from "./pages/Cart/Cart";
 import Milk from "./pages/Milk/Milk";
 import Ghee from "./pages/Ghee/Ghee";
 import Curd from "./pages/Curd/Curd";
+import Panner from "./pages/Paneer/Panner";
+import MilkPowder from "./pages/Milk Powder/Milk Powder";
+import ProteinBar from "./pages/Protein Bar/ProteinBar";
+import Yogurt from "./pages/Yogurt/Yogurt";
 
 // ---------------- Policy Pages ----------------
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
@@ -72,6 +76,10 @@ const App = () => {
           <Route path="/shop/milk" element={<Milk />} />
           <Route path="/shop/ghee" element={<Ghee />} />
           <Route path="/shop/curd" element={<Curd />} />
+          <Route path="/shop/paneer" element={<Panner />} />
+          <Route path="/shop/whole-milk-powder" element={<MilkPowder />} />
+          <Route path="/shop/protein-bar" element={<ProteinBar />} />
+          <Route path="/shop/yogurt" element={<Yogurt />} />
 
           {/* ---------------- CART ---------------- */}
           <Route path="/cart" element={<Cart />} />
