@@ -760,20 +760,24 @@
 /* =====================================================
    HIDE NEWSLETTER + FOOTER ON MY ACCOUNT MOBILE PAGES
 ===================================================== */
+/* =====================================================
+   HIDE NEWSLETTER + FOOTER ON MY ACCOUNT MOBILE PAGES
+===================================================== */
 @media (max-width: 768px) {
 
   /* Newsletter section */
-  .newsletter-section,
-  .subscribe-section,
-  .footer-signup-section {
+  body.my-account-active .newsletter-section,
+  body.my-account-active .subscribe-section,
+  body.my-account-active .footer-signup-section {
     display: none !important;
   }
 
   /* Main website footer */
-  footer,
-  .site-footer,
-  #footer,
-  .main-footer {
+  body.my-account-active footer,
+  body.my-account-active .site-footer,
+  body.my-account-active #footer,
+  body.my-account-active .main-footer,
+  body.my-account-active .footer-bottom {
     display: none !important;
   }
 }

@@ -59,7 +59,13 @@ const MyAccountLayout = () => {
     const resizeHandler = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", resizeHandler);
 
-    return () => window.removeEventListener("resize", resizeHandler);
+    // ⭐ Toggle styling class for My Account pages
+    document.body.classList.add('my-account-active');
+
+    return () => {
+      window.removeEventListener("resize", resizeHandler);
+      document.body.classList.remove('my-account-active');
+    };
   }, []);
 
   /* ============================================================
