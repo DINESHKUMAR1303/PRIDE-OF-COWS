@@ -18,7 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <LoginProvider>
         <CartProvider>
           {/* ⭐ THE ONLY BrowserRouter IN YOUR ENTIRE PROJECT */}
-          <BrowserRouter basename="/PRIDE-OF-COWS">
+          <BrowserRouter basename={import.meta.env.BASE_URL}>
             <App />
           </BrowserRouter>
         </CartProvider>
