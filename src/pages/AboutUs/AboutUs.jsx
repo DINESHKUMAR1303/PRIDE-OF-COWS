@@ -135,7 +135,7 @@ const AboutUs = () => {
                                 <span>Pure Water</span>
                             </div>
                             <div className="au-philo-item">
-                                <div className="au-philo-icon">❤️</div>
+                                <div className="au-philo-icon">hi</div>
                                 <span>Caring Staff</span>
                             </div>
                         </div>
