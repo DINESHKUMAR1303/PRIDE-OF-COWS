@@ -18,7 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <LoginProvider>
         <CartProvider>
           {/* ⭐ THE ONLY BrowserRouter IN YOUR ENTIRE PROJECT */}
-          <BrowserRouter>
+          <BrowserRouter basename="/PRIDE-OF-COWS">
             <App />
           </BrowserRouter>
         </CartProvider>
