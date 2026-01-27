@@ -35,15 +35,10 @@ const YogurtSection = ({ defaultData, imagesArray, searchKeyword }) => {
     const [showPopup, setShowPopup] = useState(false);
     const [animateCart, setAnimateCart] = useState(false);
     const [showDatePicker, setShowDatePicker] = useState(false);
-    const [productData, setProductData] = useState({
-        id: `loading-${searchKeyword}`,
-        title: defaultData.title,
-        variant: defaultData.variant,
-        price: 0,
-        mrp: 0,
-        discount: "",
-        desc: defaultData.desc
-    });
+
+    // Start as null to avoid showing default data if product is disabled
+    const [productData, setProductData] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const getTomorrow = () => {
         const tomorrow = new Date();
@@ -57,6 +52,7 @@ const YogurtSection = ({ defaultData, imagesArray, searchKeyword }) => {
 
     // Fetch product details for this specific yogurt flavor
     useEffect(() => {
+        let isMounted = true;
         const loadProduct = async () => {
             try {
                 const res = await fetchProducts(true);
@@ -69,57 +65,75 @@ const YogurtSection = ({ defaultData, imagesArray, searchKeyword }) => {
                 matches.sort((a, b) => a.productName.length - b.productName.length);
                 const targetProduct = matches[0];
 
-                if (targetProduct) {
-                    const discountVal = targetProduct.mrp > targetProduct.price
-                        ? (Math.round((targetProduct.mrp - targetProduct.price) / targetProduct.mrp * 100) + "% off")
-                        : "";
+                if (isMounted) {
+                    if (targetProduct) {
+                        const discountVal = targetProduct.mrp > targetProduct.price
+                            ? (Math.round((targetProduct.mrp - targetProduct.price) / targetProduct.mrp * 100) + "% off")
+                            : "";
 
-                    setProductData(prev => ({
-                        ...prev,
-                        id: targetProduct._id,
-                        title: targetProduct.productName,
-                        variant: targetProduct.weight || prev.variant,
-                        price: targetProduct.price,
-                        mrp: targetProduct.mrp,
-                        discount: discountVal
-                    }));
+                        setProductData({
+                            id: targetProduct._id,
+                            title: targetProduct.productName,
+                            variant: targetProduct.weight || defaultData.variant,
+                            price: targetProduct.price,
+                            mrp: targetProduct.mrp,
+                            desc: defaultData.desc,
+                            discount: discountVal
+                        });
+                    } else {
+                        // Product not found (disabled or deleted)
+                        setProductData(null);
+                    }
                 }
             } catch (err) {
                 console.error(`Failed to load ${defaultData.title} details`, err);
+                if (isMounted) setProductData(null);
+            } finally {
+                if (isMounted) setLoading(false);
             }
         };
         loadProduct();
-    }, [searchKeyword]);
+        return () => { isMounted = false; };
+    }, [searchKeyword, defaultData]); // Added defaultData to dependencies
 
-    const productId = productData.id;
-    const inCartQty = cartItems[productId] || 0;
+    // Safe derived state
+    const productId = productData ? productData.id : null;
+    const inCartQty = (productId && cartItems[productId]) ? cartItems[productId] : 0;
     const isInCart = inCartQty > 0;
-    const [isEditing, setIsEditing] = useState(false);
 
+    // Sync quantity hook (must be before return)
     useEffect(() => {
         setQuantity(inCartQty > 0 ? inCartQty : 1);
     }, [inCartQty]);
 
+    if (loading) return null;
+    if (!productData) return null;
+
+    // We can't use hooks conditionally, so we moved the early return AFTER hooks.
+    // However, hooks like useState/useEffect MUST be at top level.
+    // The previous implementation had hooks before render check, which is correct.
+    // BUT we need to handle specific hooks that depend on productData?? 
+    // No, local state like 'quantity', 'showPopup' is fine.
+
+    // Helper to sync quantity
+    // ERROR: Logic below depends on render.
+    // We extracted logic into variables. Now continue with render logic.
+
     const handleIncrease = () => {
         setQuantity(prev => prev + 1);
-        setIsEditing(true);
     };
 
     const handleDecrease = () => {
         setQuantity(prev => (prev > 1 ? prev - 1 : 1));
-        setIsEditing(true);
     };
 
     const handleUpdateCart = () => {
-        if (productId.startsWith("loading-")) return;
-
         const diff = quantity - inCartQty;
         if (diff > 0) {
             for (let i = 0; i < diff; i++) increaseItem(productId);
         } else if (diff < 0) {
             for (let i = 0; i < Math.abs(diff); i++) decreaseItem(productId);
         }
-        setIsEditing(false);
         setShowPopup(true);
         setAnimateCart(true);
         setTimeout(() => setAnimateCart(false), 800);
@@ -128,8 +142,9 @@ const YogurtSection = ({ defaultData, imagesArray, searchKeyword }) => {
 
     const getButtonLabel = () => {
         if (!isInCart) return "Add to Cart";
-        if (isInCart && !isEditing) return "Added to Cart";
-        if (isEditing) return "Update Cart";
+        // Simple logic: if qty matches cart, show 'Added', else 'Update'
+        // Logic simplification:
+        return quantity !== inCartQty && isInCart ? "Update Cart" : (isInCart ? "Added to Cart" : "Add to Cart");
     };
 
     const handleDateSelect = (newDate) => {
@@ -140,11 +155,11 @@ const YogurtSection = ({ defaultData, imagesArray, searchKeyword }) => {
     return (
         <div className="yg-main-box">
             {showPopup && (
-                <div className="added-popup" style={{ top: '120px' }}> {/* Fixed top for simplicity within sections */}
+                <div className="added-popup" style={{ top: '120px' }}>
                     <div className="popup-arrow"></div>
                     <div className="popup-content">
                         <img src={addedCartIcon} className={`popup-cart-img ${animateCart ? "run-slide" : ""}`} alt="cart" />
-                        <span>{isEditing ? "UPDATED CART" : "ADDED TO BAG"}</span>
+                        <span>{quantity !== inCartQty && isInCart ? "UPDATED CART" : "ADDED TO BAG"}</span>
                     </div>
                 </div>
             )}

@@ -43,18 +43,11 @@ const Curd = () => {
     };
     const [deliveryDate, setDeliveryDate] = useState(getTomorrow());
 
-    // Product Data State
-    const [productData, setProductData] = useState({
-        id: "loading-curd",
-        title: "Curd",
-        variant: "400g",
-        price: 80,
-        mrp: 90,
-        discount: "",
-        desc: "Our curd is made from fresh, high-quality milk, rich in probiotics to aid digestion and boost immunity. Thick, creamy, and delicious."
-    });
+    // Product Data State - Start null to avoid default data if disabled
+    const [productData, setProductData] = useState(null);
 
     useEffect(() => {
+        let isMounted = true;
         const loadProduct = async () => {
             try {
                 const res = await fetchProducts(true);
@@ -76,32 +69,38 @@ const Curd = () => {
                     targetProduct = matches[0];
                 }
 
-                if (targetProduct) {
-                    const discountVal = targetProduct.mrp > targetProduct.price
-                        ? (Math.round((targetProduct.mrp - targetProduct.price) / targetProduct.mrp * 100) + "% off")
-                        : "";
+                if (isMounted) {
+                    if (targetProduct) {
+                        const discountVal = targetProduct.mrp > targetProduct.price
+                            ? (Math.round((targetProduct.mrp - targetProduct.price) / targetProduct.mrp * 100) + "% off")
+                            : "";
 
-                    setProductData(prev => ({
-                        ...prev,
-                        id: targetProduct._id,
-                        title: targetProduct.productName,
-                        variant: targetProduct.weight || prev.variant,
-                        price: targetProduct.price,
-                        mrp: targetProduct.mrp,
-                        discount: discountVal
-                    }));
+                        setProductData({
+                            id: targetProduct._id,
+                            title: targetProduct.productName,
+                            variant: targetProduct.weight || "400g",
+                            price: targetProduct.price,
+                            mrp: targetProduct.mrp,
+                            discount: discountVal,
+                            desc: "Our curd is made from fresh, high-quality milk, rich in probiotics to aid digestion and boost immunity. Thick, creamy, and delicious."
+                        });
+                    } else {
+                        setProductData(null);
+                    }
                 }
             } catch (err) {
                 console.error("Failed to load Curd details", err);
+                if (isMounted) setProductData(null);
             } finally {
-                setLoading(false);
+                if (isMounted) setLoading(false);
             }
         };
         loadProduct();
+        return () => { isMounted = false; };
     }, [location.search]);
 
-    const productId = productData.id;
-    const inCartQty = cartItems[productId] || 0;
+    const productId = productData ? productData.id : null;
+    const inCartQty = (productId && cartItems[productId]) ? cartItems[productId] : 0;
     const isInCart = inCartQty > 0;
     const [isEditing, setIsEditing] = useState(false);
 
@@ -120,7 +119,7 @@ const Curd = () => {
     };
 
     const handleUpdateCart = () => {
-        if (loading || productId === "loading-curd") return;
+        if (loading || !productId) return;
 
         const diff = quantity - inCartQty;
         if (diff > 0) {
@@ -148,6 +147,10 @@ const Curd = () => {
 
     if (loading) {
         return <div className="cd-wrapper" style={{ textAlign: 'center', marginTop: '100px' }}>Loading Curd Details...</div>;
+    }
+
+    if (!productData) {
+        return <div className="cd-wrapper" style={{ textAlign: 'center', marginTop: '100px' }}><h2>Product Currently Unavailable</h2></div>;
     }
 
     return (

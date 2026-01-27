@@ -40,22 +40,14 @@ const GheeDetails = () => {
     };
     const [deliveryDate, setDeliveryDate] = useState(getTomorrow());
 
-    // Static Desc + Dynamic ID/Price
-    const [productData, setProductData] = useState({
-        id: "active-ghee-id", // Placeholder until fetch
-        title: "Ghee",
-        variant: "1 lit",
-        price: 2190, // Fallback
-        mrp: 2500,
-        discount: "12.4% off",
-        crowns: 18,
-        desc: "Pride of Cows Ghee is single-origin, made from fresh milk from our owm farms. Untouched by human hands, it has an unmatched aroma and taste."
-    });
+    // Product Data - null initially
+    const [productData, setProductData] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const location = useLocation();
 
     useEffect(() => {
+        let isMounted = true;
         const loadProduct = async () => {
             try {
                 const res = await fetchProducts(true);
@@ -78,30 +70,37 @@ const GheeDetails = () => {
                     targetProduct = matches[0];
                 }
 
-                if (targetProduct) {
-                    setProductData(prev => ({
-                        ...prev,
-                        id: targetProduct._id,
-                        title: targetProduct.productName,
-                        variant: targetProduct.weight || prev.variant,
-                        price: targetProduct.price,
-                        mrp: targetProduct.mrp,
-                        // crowns: ... 
-                    }));
+                if (isMounted) {
+                    if (targetProduct) {
+                        setProductData({
+                            id: targetProduct._id,
+                            title: targetProduct.productName,
+                            variant: targetProduct.weight || "1 lit",
+                            price: targetProduct.price,
+                            mrp: targetProduct.mrp,
+                            // crowns: ... 
+                            discount: "12.4% off", // Static for now as per original code context, or calculate dynamically
+                            desc: "Pride of Cows Ghee is single-origin, made from fresh milk from our owm farms. Untouched by human hands, it has an unmatched aroma and taste."
+                        });
+                    } else {
+                        setProductData(null);
+                    }
                 }
             } catch (err) {
                 console.error("Failed to load Ghee details", err);
+                if (isMounted) setProductData(null);
             } finally {
-                setLoading(false);
+                if (isMounted) setLoading(false);
             }
         };
         loadProduct();
+        return () => { isMounted = false; };
     }, [location.search]);
 
-    // Use Dynamic ID
-    const productId = productData.id;
+    // Use Dynamic ID safely
+    const productId = productData ? productData.id : null;
 
-    const inCartQty = cartItems[productId] || 0;
+    const inCartQty = (productId && cartItems[productId]) ? cartItems[productId] : 0;
     const isInCart = inCartQty > 0;
     const [isEditing, setIsEditing] = useState(false);
 
@@ -121,6 +120,7 @@ const GheeDetails = () => {
     };
 
     const handleUpdateCart = () => {
+        if (!productId) return;
         const diff = quantity - inCartQty;
         if (diff > 0) {
             for (let i = 0; i < diff; i++) increaseItem(productId);
@@ -147,6 +147,10 @@ const GheeDetails = () => {
 
     if (loading) {
         return <div className="pd-wrapper" style={{ textAlign: 'center', marginTop: '100px' }}>Loading Ghee Details...</div>;
+    }
+
+    if (!productData) {
+        return <div className="pd-wrapper" style={{ textAlign: 'center', marginTop: '100px' }}><h2>Product Currently Unavailable</h2></div>;
     }
 
     return (

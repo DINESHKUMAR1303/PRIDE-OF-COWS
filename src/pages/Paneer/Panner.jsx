@@ -43,18 +43,11 @@ const Panner = () => {
     };
     const [deliveryDate, setDeliveryDate] = useState(getTomorrow());
 
-    // Product Data State
-    const [productData, setProductData] = useState({
-        id: "loading-paneer",
-        title: "Paneer",
-        variant: "200g",
-        price: 0,
-        mrp: 0,
-        discount: "",
-        desc: "Our Paneer is made from fresh, high-quality milk. It is soft, creamy, and rich in protein, making it perfect for your favorite dishes."
-    });
+    // Product Data State - Start null to avoid default data if disabled
+    const [productData, setProductData] = useState(null);
 
     useEffect(() => {
+        let isMounted = true;
         const loadProduct = async () => {
             try {
                 const res = await fetchProducts(true);
@@ -79,36 +72,38 @@ const Panner = () => {
                     targetProduct = matches[0];
                 }
 
-                if (targetProduct) {
-                    const discountVal = targetProduct.mrp > targetProduct.price
-                        ? (Math.round((targetProduct.mrp - targetProduct.price) / targetProduct.mrp * 100) + "% off")
-                        : "";
+                if (isMounted) {
+                    if (targetProduct) {
+                        const discountVal = targetProduct.mrp > targetProduct.price
+                            ? (Math.round((targetProduct.mrp - targetProduct.price) / targetProduct.mrp * 100) + "% off")
+                            : "";
 
-                    setProductData(prev => ({
-                        ...prev,
-                        id: targetProduct._id,
-                        title: targetProduct.productName,
-                        variant: targetProduct.weight || prev.variant,
-                        price: targetProduct.price,
-                        mrp: targetProduct.mrp,
-                        discount: discountVal
-                    }));
-                } else {
-                    // Fallback if no product found in DB - prevent stuck loading state but maybe keep default or set to unavailable
-                    // For now, we keep defaults but log warning
-                    console.warn("Paneer product not found in backend");
+                        setProductData({
+                            id: targetProduct._id,
+                            title: targetProduct.productName,
+                            variant: targetProduct.weight || "200g",
+                            price: targetProduct.price,
+                            mrp: targetProduct.mrp,
+                            discount: discountVal,
+                            desc: "Our Paneer is made from fresh, high-quality milk. It is soft, creamy, and rich in protein, making it perfect for your favorite dishes."
+                        });
+                    } else {
+                        setProductData(null);
+                    }
                 }
             } catch (err) {
                 console.error("Failed to load Paneer details", err);
+                if (isMounted) setProductData(null);
             } finally {
-                setLoading(false);
+                if (isMounted) setLoading(false);
             }
         };
         loadProduct();
+        return () => { isMounted = false; };
     }, [location.search]);
 
-    const productId = productData.id;
-    const inCartQty = cartItems[productId] || 0;
+    const productId = productData ? productData.id : null;
+    const inCartQty = (productId && cartItems[productId]) ? cartItems[productId] : 0;
     const isInCart = inCartQty > 0;
     const [isEditing, setIsEditing] = useState(false);
 
@@ -127,7 +122,7 @@ const Panner = () => {
     };
 
     const handleUpdateCart = () => {
-        if (loading || productId === "loading-paneer") return;
+        if (loading || !productId) return;
 
         const diff = quantity - inCartQty;
         if (diff > 0) {
@@ -155,6 +150,10 @@ const Panner = () => {
 
     if (loading) {
         return <div className="pn-wrapper" style={{ textAlign: 'center', marginTop: '100px' }}>Loading Paneer Details...</div>;
+    }
+
+    if (!productData) {
+        return <div className="pn-wrapper" style={{ textAlign: 'center', marginTop: '100px' }}><h2>Product Currently Unavailable</h2></div>;
     }
 
     return (

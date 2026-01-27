@@ -13,6 +13,74 @@ import sourced from "./images/sourcrd.png";
 import innovation from "./images/innovation.png";
 import healthier from "./images/healthier.png";
 
+// Import Real Product Images for Default State
+import milkImg from "../ProductDetail/images/image1.png";
+import gheeImg from "../../Ghee/images/Ghee.png";
+import curdImg from "../../Curd/images/curd.png";
+import paneerImg from "../../Paneer/images/panner.png";
+import yogurtImg from "../../Yogurt/images/blueberry.png";
+import milkPowderImg from "../../Milk Powder/images/Milk Powder.png";
+import proteinBarImg from "../../Protein Bar/images/protein bar.png";
+
+const DEFAULT_PRODUCTS = [
+  {
+    _id: "default_milk",
+    productName: "Pride of Cows Milk",
+    weight: "1 L",
+    price: 120,
+    mrp: 140,
+    image: milkImg
+  },
+  {
+    _id: "default_ghee",
+    productName: "Pride of Cows Ghee",
+    weight: "1 L",
+    price: 2190,
+    mrp: 2500,
+    image: gheeImg
+  },
+  {
+    _id: "default_curd",
+    productName: "Pride of Cows Curd",
+    weight: "400g",
+    price: 80,
+    mrp: 90,
+    image: curdImg
+  },
+  {
+    _id: "default_paneer",
+    productName: "Pride of Cows Paneer",
+    weight: "200g",
+    price: 150,
+    mrp: 180,
+    image: paneerImg
+  },
+  {
+    _id: "default_yogurt",
+    productName: "Blueberry Yogurt",
+    weight: "120g",
+    price: 95,
+    mrp: 122,
+    image: yogurtImg
+  },
+  {
+    _id: "default_milk_powder",
+    productName: "Milk Powder",
+    weight: "500g",
+    price: 440,
+    mrp: 500,
+    image: milkPowderImg
+  },
+  {
+    _id: "default_protein_bar",
+    productName: "Protein Bar",
+    weight: "50g",
+    price: 120,
+    mrp: 150,
+    image: proteinBarImg
+  }
+];
+
 const Products = () => {
   const navigate = useNavigate();
   // Using direct cart context like ProductCarousel
@@ -35,12 +103,12 @@ const Products = () => {
             );
             setProducts(uniqueProducts);
           } else {
-            setProducts([]);
+            setProducts(DEFAULT_PRODUCTS);
           }
         }
       } catch (err) {
         console.error("Failed to load products", err);
-        if (isMounted) setProducts([]);
+        if (isMounted) setProducts(DEFAULT_PRODUCTS);
       } finally {
         if (isMounted) setLoading(false);
       }
