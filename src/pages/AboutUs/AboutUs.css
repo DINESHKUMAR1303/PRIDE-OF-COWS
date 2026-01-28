@@ -156,7 +156,154 @@
 }
 
 /* 6. PHILOSOPHY & CULTURE */
-.au-philosophy-section,
+/* 6. PHILOSOPHY & CULTURE */
+.au-philosophy-section {
+    padding: 80px 5%;
+    background-color: #f6f6f6;
+    /* Light grey bg as per image */
+}
+
+.au-philo-header {
+    text-align: center;
+    margin-bottom: 60px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.au-philo-content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* Align top initially */
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 50px;
+    /* Space for hanging image */
+}
+
+.au-philo-points {
+    flex: 0 0 50%;
+    /* Give points strict width */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px 30px;
+    /* Increased vertical gap */
+    margin-top: 10px;
+}
+
+.au-philo-row {
+    display: contents;
+    /* Let children partake in the flex wrap of parent if possible, or just keep rows */
+}
+
+/* Actually, let's stick to the row structure or just make points a grid */
+.au-philo-points {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px 40px;
+    margin-top: 20px;
+}
+
+.au-philo-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Default Circle (Outlined) */
+.au-philo-img-circle {
+    width: 80px;
+    height: 80px;
+    border: 1.5px solid #193B61;
+    /* Outer Ring */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.au-philo-img-circle img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+/* FIRST CARD ONLY rules removed to match others as per user request */
+
+.au-philo-card p {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.4;
+    margin: 0;
+    text-align: left;
+}
+
+/* Right side Stacked Images */
+.au-philo-images-stack {
+    flex: 0 0 45%;
+    position: relative;
+    height: 380px;
+    /* Slightly taller to accommodate stack */
+    margin-top: 0px;
+}
+
+.au-philo-img-1 {
+    width: 75%;
+    position: absolute;
+    top: 0;
+    left: 10%;
+    /* Center it a bit more relative to container */
+    border-radius: 0px;
+    /* Sharp corners as per new image? Or slight radius. Ref looks crisp. */
+    z-index: 1;
+    object-fit: cover;
+    height: 260px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.au-philo-img-2 {
+    width: 60%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    /* Aligned to right edge */
+    border-radius: 0px;
+    z-index: 2;
+    border: 5px solid #fff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    object-fit: cover;
+    height: 200px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .au-philo-content-wrapper {
+        flex-direction: column-reverse;
+        /* Image on top? Or bottom. Standard usually stacked. Let's stack default. */
+    }
+
+    .au-philo-header {
+        text-align: center;
+    }
+
+    .au-philo-row {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .au-philo-card {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}
+
+
+/* Culture Section Restoration */
 .au-culture-section {
     padding: 80px 20px;
     max-width: 1200px;
@@ -180,37 +327,6 @@
     object-fit: cover;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-}
-
-/* Philosophy Grid */
-.au-philosophy-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    margin-top: 30px;
-}
-
-.au-philo-item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.au-philo-icon {
-    width: 50px;
-    height: 50px;
-    background: #f0f4f8;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-}
-
-.au-philo-item span {
-    font-weight: 600;
-    color: #0b2f4e;
-    font-size: 16px;
 }
 
 /* Culture List */

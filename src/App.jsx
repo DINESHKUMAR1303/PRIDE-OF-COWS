@@ -17,6 +17,7 @@ import Yogurt from "./pages/Yogurt/Yogurt";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions/TermsConditions";
 import AboutUs from "./pages/AboutUs/AboutUs";
+import OurProcess from "./pages/OurProcess/OurProcess";
 
 // ---------------- My Account (Nested Routes) ----------------
 import MyAccountLayout from "./pages/MyAccount/MyAccountLayout";
@@ -108,6 +109,7 @@ const App = () => {
 
           {/* ================= ADMIN ================= */}
           <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/our-process" element={<OurProcess />} />
           <Route path="/admin/*" element={<Admin />} />
 
           {/* ---------------- CATCH ALL ---------------- */}

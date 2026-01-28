@@ -1,0 +1,229 @@
+/* Global Page Wrapper */
+.op-page {
+    width: 100%;
+    overflow-x: hidden;
+    color: #1a1a1a;
+    font-family: 'Outfit', sans-serif;
+}
+
+/* SECTION 1: HERO */
+.op-hero {
+    width: 100%;
+    height: 60vh;
+    min-height: 400px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.op-hero-overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.op-hero h1 {
+    color: #fff;
+    font-size: 3rem;
+    font-family: 'Unna', serif;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* SECTION 2: INTRO / TECH */
+.op-intro-section {
+    padding: 80px 10%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    background-color: #fbfbfb;
+}
+
+.op-intro-content {
+    flex: 1;
+    max-width: 500px;
+}
+
+.op-intro-images {
+    flex: 1;
+    display: flex;
+    gap: 20px;
+}
+
+.op-intro-img {
+    width: 48%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+}
+
+/* SECTION 3: PROMISE / HEALTH */
+.op-promise-section {
+    padding: 60px 10%;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+.op-promise-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.op-promise-item {
+    flex: 1;
+    min-width: 250px;
+    text-align: center;
+    padding: 20px;
+}
+
+.op-promise-icon {
+    font-family: 'Unna', serif;
+    font-size: 2.5rem;
+    color: #ae8b5d;
+    margin-bottom: 15px;
+}
+
+.op-promise-item h3 {
+    font-size: 1.2rem;
+    color: #193B61;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.op-promise-item p {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Typography Shared */
+.op-subtitle {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ae8b5d;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.op-title {
+    font-family: 'Unna', serif;
+    font-size: 2.5rem;
+    color: #193B61;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.op-intro-content p,
+.op-process-desc {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* SECTION 4: PROCESS */
+.op-process-section {
+    padding: 80px 5%;
+    background-color: #fff;
+    text-align: center;
+}
+
+.op-header-center {
+    max-width: 700px;
+    margin: 0 auto 50px auto;
+}
+
+.op-process-main-img {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto 40px auto;
+    display: block;
+    border-radius: 8px;
+}
+
+.op-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.op-step {
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.op-step-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: rgba(174, 139, 93, 0.2);
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 0;
+}
+
+.op-step h3 {
+    font-size: 1.2rem;
+    color: #193B61;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+}
+
+.op-step p {
+    font-size: 0.9rem;
+    color: #666;
+    position: relative;
+    z-index: 1;
+}
+
+
+/* SECTION 5: PRODUCT */
+.op-product-section {
+    padding: 60px 0;
+    background-color: #f8f8f8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .op-intro-section {
+        flex-direction: column;
+        padding: 50px 5%;
+    }
+
+    .op-intro-images {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .op-hero {
+        height: 40vh;
+    }
+
+    .op-title {
+        font-size: 2rem;
+    }
+
+    .op-promise-grid {
+        flex-direction: column;
+    }
+}

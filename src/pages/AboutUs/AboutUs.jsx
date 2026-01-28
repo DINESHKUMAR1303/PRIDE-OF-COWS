@@ -11,6 +11,10 @@ import smitaImg from './images/smita.jpg';
 import familyCaringImg from './images/family_caring.jpg';
 import cultureImg from './images/culture.jpg';
 import philosophyImg from './images/philosophy.jpeg';
+import philoIcon1 from './images/philosophy1.png';
+import philoIcon2 from './images/philosophy2.png';
+import philoIcon3 from './images/philosophy3.png';
+import philoIcon4 from './images/philosophy4.png';
 import partner1 from './images/partners1.jpg';
 import partner2 from './images/partners2.jpg';
 import partner3 from './images/partners3.jpg';
@@ -115,35 +119,55 @@ const AboutUs = () => {
                 </div>
             </section>
 
+
             {/* 6. PHILOSOPHY & CULTURE */}
             <section className="au-philosophy-section">
-                <h2 className="au-title" style={{ textAlign: 'center', marginBottom: '50px' }}>Our Philosophy</h2>
-                <div className="au-split-container">
-                    <div className="au-split-text">
-                        {/* Philosophy Icons Grid */}
-                        <div className="au-philosophy-grid">
-                            <div className="au-philo-item">
-                                <div className="au-philo-icon">🌿</div>
-                                <span>100% Natural</span>
+                <div className="au-philo-header">
+                    <span className="au-sub-title">A PLACE FULL OF LOVE</span>
+                    <h2 className="au-title">Our Philosophy</h2>
+                </div>
+
+                <div className="au-philo-content-wrapper">
+                    {/* Left: Icons Grid used to be a separate grid, now part of split layout */}
+                    <div className="au-philo-points">
+
+                        <div className="au-philo-row">
+                            <div className="au-philo-card">
+                                <div className="au-philo-img-circle">
+                                    <img src={philoIcon1} alt="Hygienic" />
+                                </div>
+                                <p>Hygienic, antibiotic-<br />free milk products</p>
                             </div>
-                            <div className="au-philo-item">
-                                <div className="au-philo-icon">🚫</div>
-                                <span>No Antibiotics</span>
-                            </div>
-                            <div className="au-philo-item">
-                                <div className="au-philo-icon">💧</div>
-                                <span>Pure Water</span>
-                            </div>
-                            <div className="au-philo-item">
-                                <div className="au-philo-icon">❤️</div>
-                                <span>Caring Staff</span>
+                            <div className="au-philo-card">
+                                <div className="au-philo-img-circle">
+                                    <img src={philoIcon2} alt="Technology" />
+                                </div>
+                                <p>Innovative global<br />dairy technology</p>
                             </div>
                         </div>
-                        <p className="au-paragraph" style={{ marginTop: '30px' }}>
-                            We believe that giving back to nature what we take helps in maintaining a sustainable ecosystem.
-                        </p>
+
+                        <div className="au-philo-row">
+                            <div className="au-philo-card">
+                                <div className="au-philo-img-circle">
+                                    <img src={philoIcon3} alt="Feedback" />
+                                </div>
+                                <p>Feedback-driven<br />improvements</p>
+                            </div>
+                            <div className="au-philo-card">
+                                <div className="au-philo-img-circle">
+                                    <img src={philoIcon4} alt="Environment" />
+                                </div>
+                                <p>Value, uplift, and<br />conserve the environment</p>
+                            </div>
+                        </div>
+
                     </div>
-                    <img src={philosophyImg} className="au-split-img" alt="Philosophy" />
+
+                    {/* Right: Images Stack */}
+                    <div className="au-philo-images-stack">
+                        <img src={philosophyImg} className="au-philo-img-1" alt="Cow and Calf" />
+                        <img src={familyCaringImg} className="au-philo-img-2" alt="Barn Workers" />
+                    </div>
                 </div>
             </section>
 
