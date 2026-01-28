@@ -29,9 +29,10 @@ const AboutUs = () => {
         <div className="au-wrapper">
 
             {/* 1. HERO SECTION */}
-            <div className="au-hero" style={{ backgroundImage: `url(${heroImg})` }}>
+            <div className="au-hero">
+                <img src={heroImg} alt="About Pride of Cows" className="au-hero-img" />
                 <div className="au-hero-overlay">
-                    {/* <h1>About Us</h1>  -- Removed text to match clean image look if desired, or keep it. Keeping for now. */}
+                    {/* Overlay content if any */}
                 </div>
             </div>
 
@@ -167,6 +168,54 @@ const AboutUs = () => {
                     <div className="au-philo-images-stack">
                         <img src={philosophyImg} className="au-philo-img-1" alt="Cow and Calf" />
                         <img src={familyCaringImg} className="au-philo-img-2" alt="Barn Workers" />
+                    </div>
+                </div>
+            </section>
+
+            {/* 6.1 OUR BELIEF SECTION */}
+            <section className="au-belief-section">
+                <div className="au-belief-container">
+                    <span className="au-belief-subtitle">Our Belief–One Source, One Promise</span>
+                    <h2 className="au-title">Our Belief</h2>
+                    <p>
+                        Premium Single Origin milk and milk products from our certified Bhagyalaxmi Dairy farm, where our elite consumers trust us for nutrient-rich, 100% unadulterated milk that boosts bone and brain health.
+                    </p>
+                    <p>
+                        It meets daily protein needs, provides essential amino acids, strengthens immunity, and comes from happy cows receiving mindful care, balanced nutrition (from automated Total Meal Ration), and natural homeopathic and naturopathy treatments.
+                    </p>
+                    <p>
+                        Our commitment to complete cattle care ensures a happy herd and a superior milk experience as part of your daily wholesome diet.
+                    </p>
+                </div>
+            </section>
+
+            {/* 6.2 OUR TECHNOLOGY SECTION */}
+            <section className="au-tech-section">
+                <div className="au-tech-container">
+                    {/* Left: Text Content */}
+                    <div className="au-tech-text">
+                        <h2 className="au-title">Our Technology</h2>
+                        <p>
+                            Finest international technology for milking process with our 50-point automated rotary milking parlour.
+                        </p>
+                        <p>
+                            Automated, state-of-the-art dairy farm ensures low bacterial count, untouched, antibiotic-free milk with high nutritional value at 4 degrees Celsius at all stages of the milking process delivered in Tamper-proof PET bottles (global packaging expert, Serac, France).
+                        </p>
+                        <p>
+                            We support farmers with contact farming, organic manures, and training workshops for high-quality green fodder and modern dairy practices.
+                        </p>
+                        <p>
+                            Innovation - Pride of Cows, a premium dairy provider under Parag Milk Foods, aimed to break the tradition of middlemen and fulfill the market demand for 100% pure and fresh milk.
+                        </p>
+                        <p>
+                            With a decade-long vision, we brought state-of-the-art technology to India, scaling production to deliver authentic, unadulterated, and delicious single-origin milk for you and your family.
+                        </p>
+                    </div>
+
+                    {/* Right: Images Stack */}
+                    <div className="au-tech-images-stack">
+                        <img src={partner3} className="au-tech-img-1" alt="Rotary Milking Parlour" />
+                        <img src={partner1} className="au-tech-img-2" alt="Bottling Line" />
                     </div>
                 </div>
             </section>

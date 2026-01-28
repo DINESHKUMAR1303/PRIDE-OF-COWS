@@ -3,6 +3,7 @@ import './OurProcess.css';
 import ProductCarousel from '../../components/ProductCarousel/ProductCarousel';
 
 // Images
+// Images
 import headImg from './images/head.jpg';
 import processImg from './images/ourprocess.jpg';
 import tech1 from './images/tech1.jpg';
@@ -23,85 +24,113 @@ const OurProcess = () => {
                 </div>
             </div>
 
-            {/* SECTION 2: INTRO / TECHNOLOGY */}
-            <div className="op-intro-section">
-                <div className="op-intro-content">
-                    <span className="op-subtitle">OUR TECHNOLOGY & CARE</span>
-                    <h2 className="op-title">State-of-the-Art Farming</h2>
+            {/* SECTION 2: OUR BELIEF (Text Only) */}
+            <div className="op-belief-section">
+                <div className="op-belief-container">
+                    <span className="op-belief-subtitle">Our Belief–One Source, One Promise</span>
+                    <h2 className="op-title">Our Belief</h2>
                     <p>
-                        At Pride of Cows, we believe that the best milk comes from the happiest cows.
-                        Our farm is equipped with the latest technology to ensure that our cows are comfortable,
-                        healthy, and well-cared for. From automated milking parlors to climate-controlled barns,
-                        every detail is designed to maintain the highest standards of hygiene and quality.
+                        Premium Single Origin milk and milk products from our certified Bhagyalaxmi Dairy farm, where our elite consumers trust us for nutrient-rich, 100% unadulterated milk that boosts bone and brain health.
+                    </p>
+                    <p>
+                        It meets daily protein needs, provides essential amino acids, strengthens immunity, and comes from happy cows receiving mindful care, balanced nutrition (from automated Total Meal Ration), and natural homeopathic and naturopathy treatments.
+                    </p>
+                    <p>
+                        Our commitment to complete cattle care ensures a happy herd and a superior milk experience as part of your daily wholesome diet.
                     </p>
                 </div>
-                <div className="op-intro-images">
-                    <img src={tech1} alt="Technology 1" className="op-intro-img" />
-                    <img src={tech2} alt="Technology 2" className="op-intro-img" />
+            </div>
+
+            {/* SECTION 3: OUR TECHNOLOGY (Text + Stacked Images) */}
+            <div className="op-tech-section">
+                <div className="op-tech-container">
+                    {/* Left: Text Content */}
+                    <div className="op-tech-text">
+                        <h2 className="op-title">Our Technology</h2>
+                        <p>
+                            Finest international technology for milking process with our 50-point automated rotary milking parlour.
+                        </p>
+                        <p>
+                            Automated, state-of-the-art dairy farm ensures low bacterial count, untouched, antibiotic-free milk with high nutritional value at 4 degrees Celsius at all stages of the milking process delivered in Tamper-proof PET bottles (global packaging expert, Serac, France).
+                        </p>
+                        <p>
+                            We support farmers with contact farming, organic manures, and training workshops for high-quality green fodder and modern dairy practices.
+                        </p>
+                        <p>
+                            Innovation - Pride of Cows, a premium dairy provider under Parag Milk Foods, aimed to break the tradition of middlemen and fulfill the market demand for 100% pure and fresh milk.
+                        </p>
+                        <p>
+                            With a decade-long vision, we brought state-of-the-art technology to India, scaling production to deliver authentic, unadulterated, and delicious single-origin milk for you and your family.
+                        </p>
+                    </div>
+
+                    {/* Right: Images Stack */}
+                    <div className="op-tech-images-stack">
+                        <img src={tech1} className="op-tech-img-1" alt="Rotary Milking Parlour" />
+                        <img src={tech2} className="op-tech-img-2" alt="Bottling Line" />
+                    </div>
                 </div>
             </div>
 
-            {/* SECTION 2.5: PROMISE / HEALTH (The 'Third' Section) */}
-            <div className="op-promise-section">
-                <div className="op-promise-grid">
-                    <div className="op-promise-item">
-                        <div className="op-promise-icon">01</div>
-                        <h3>Purity Guaranteed</h3>
-                        <p>Untouched by human hands, 100% pure.</p>
-                    </div>
-                    <div className="op-promise-item">
-                        <div className="op-promise-icon">02</div>
-                        <h3>Nutrient Rich</h3>
-                        <p>Balanced diet for cows means better milk for you.</p>
-                    </div>
-                    <div className="op-promise-item">
-                        <div className="op-promise-icon">03</div>
-                        <h3>Fresh Delivery</h3>
-                        <p>Delivered within hours of milking.</p>
-                    </div>
-                </div>
-            </div>
-
-            {/* SECTION 3: OUR PROCESS */}
+            {/* SECTION 4: OUR PROCESS (SPLIT LAYOUT) */}
             <div className="op-process-section">
                 <div className="op-header-center">
-                    <span className="op-subtitle">THE JOURNEY</span>
+                    <span className="op-subtitle">THE BEST AT WHAT WE DO</span>
                     <h2 className="op-title">Our Process</h2>
-                    <p className="op-process-desc">
-                        From our farm to your doorstep, we ensure purity at every step.
-                    </p>
                 </div>
 
-                <div className="op-process-visual">
-                    {/* Using the provided process image as the main visual */}
-                    <img src={processImg} alt="Our Process Diagram" className="op-process-main-img" />
+                <div className="op-process-container">
+                    {/* Left: Main Feature Image */}
+                    <div className="op-process-left-img">
+                        <img src={processImg} alt="Our Process - Vet Checking Cow" />
+                    </div>
 
-                    {/* Fallback graphical representation if image serves as background or part of layout */}
-                    <div className="op-steps-grid">
-                        <div className="op-step">
-                            <div className="op-step-number">01</div>
-                            <h3>Milking</h3>
-                            <p>Touch-free milking ensures zero contamination.</p>
+                    {/* Right: Scrollable Steps */}
+                    <div className="op-process-right-content">
+                        <div className="op-step-item">
+                            <h3>Step 1: Pampering Our Cows</h3>
+                            <p>
+                                Complete cow comfort keep cows relaxed and in good health, which releases good hormones and keep them happy that leads to a good outcome.
+                            </p>
+                            <p>
+                                Continuous monitoring of cow health and regular checks on automated systems.
+                            </p>
+                            <p>
+                                Expert team allotted to keep cows in good health all the time.
+                            </p>
+                            <p>
+                                Cleanliness is our top priority in keeping cows in the best of health.
+                            </p>
                         </div>
-                        <div className="op-step">
-                            <div className="op-step-number">02</div>
-                            <h3>Chilling</h3>
-                            <p>Milk is instantly chilled to 4°C to retain freshness.</p>
+
+                        <div className="op-step-item">
+                            <h3>Step 2: Milking</h3>
+                            <p>
+                                Milking is through automated systems, ensuring zero human contact to maintain absolute purity and hygiene.
+                            </p>
+                            <p>
+                                The milk is instantly chilled to 4°C within minutes of milking to seize bacterial growth and lock in freshness.
+                            </p>
                         </div>
-                        <div className="op-step">
-                            <div className="op-step-number">03</div>
-                            <h3>Testing</h3>
-                            <p>Rigorous quality checks for every batch.</p>
+
+                        <div className="op-step-item">
+                            <h3>Step 3: Quality Testing</h3>
+                            <p>
+                                Every batch undergoes rigorous testing in our state-of-the-art laboratories to ensure it meets the highest standards of safety and nutrition.
+                            </p>
+                            <p>
+                                We test for adulteration, antibiotics, and nutritional consistency before bottling.
+                            </p>
                         </div>
-                        <div className="op-step">
-                            <div className="op-step-number">04</div>
-                            <h3>Bottling</h3>
-                            <p>Automated bottling and sealing.</p>
-                        </div>
-                        <div className="op-step">
-                            <div className="op-step-number">05</div>
-                            <h3>Delivery</h3>
-                            <p>Cold chain delivery to your doorstep.</p>
+
+                        <div className="op-step-item">
+                            <h3>Step 4: Bottling & Delivery</h3>
+                            <p>
+                                The milk is bottled in tamper-proof, eco-friendly bottles and sealed automatically.
+                            </p>
+                            <p>
+                                Delivered to your doorstep in refrigerated vans, ensuring the Cold Chain is never broken from farm to home.
+                            </p>
                         </div>
                     </div>
                 </div>

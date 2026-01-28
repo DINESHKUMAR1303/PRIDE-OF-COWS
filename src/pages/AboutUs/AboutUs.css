@@ -14,12 +14,15 @@
 .au-hero {
     position: relative;
     width: 100%;
-    height: 600px;
-    /* Taller hero */
+    /* Remove fixed height so image dictates height */
+    height: auto;
     background-color: #e0e0e0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+}
+
+.au-hero-img {
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 /* 2. TEXT SECTIONS */
@@ -245,39 +248,178 @@
 
 /* Right side Stacked Images */
 .au-philo-images-stack {
-    flex: 0 0 45%;
+    flex: 0 0 50%;
+    /* gave a bit more space to container */
     position: relative;
-    height: 380px;
-    /* Slightly taller to accommodate stack */
+    height: 650px;
+    /* Taller to allow separation */
     margin-top: 0px;
 }
 
 .au-philo-img-1 {
-    width: 75%;
+    width: 60%;
+    /* Less width -> less overlap */
     position: absolute;
     top: 0;
-    left: 10%;
-    /* Center it a bit more relative to container */
-    border-radius: 0px;
-    /* Sharp corners as per new image? Or slight radius. Ref looks crisp. */
+    left: 0;
+    border-radius: 4px;
     z-index: 1;
-    object-fit: cover;
-    height: 260px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    object-fit: contain;
+    height: 420px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .au-philo-img-2 {
-    width: 60%;
+    width: 65%;
     position: absolute;
     bottom: 0;
     right: 0;
-    /* Aligned to right edge */
-    border-radius: 0px;
+    border-radius: 4px;
     z-index: 2;
     border: 5px solid #fff;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    object-fit: contain;
+    height: 420px;
+    /* Extended Height */
+}
+
+/* 6.1 OUR BELIEF SECTION */
+.au-belief-section {
+    padding: 80px 5%;
+    background-color: #fafafa;
+    /* Light bg to match image */
+    text-align: center;
+}
+
+.au-belief-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.au-belief-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: #193B61;
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+.au-belief-section .au-title {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 40px;
+    color: #222;
+    /* Darker, almost black for the main title */
+    font-size: 56px;
+    /* Larger as per image */
+    font-weight: 400;
+}
+
+.au-belief-container p {
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    /* Reduced from 1.8 */
+    color: #444;
+    margin-bottom: 15px;
+    /* Reduced from 25px */
+    font-weight: 400;
+}
+
+/* 6.2 OUR TECHNOLOGY SECTION */
+.au-tech-section {
+    padding: 80px 5%;
+    background-color: #dbe7f0;
+    /* Light Steel Blue/Grey match */
+    position: relative;
+    overflow: hidden;
+    /* Ensure images don't spill */
+}
+
+.au-tech-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    /* Vertical Center */
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.au-tech-text {
+    flex: 0 0 45%;
+    text-align: left;
+}
+
+.au-tech-text .au-title {
+    /* Reuse Playfair from belief/general */
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    color: #222;
+    margin-bottom: 30px;
+}
+
+.au-tech-text p {
+    font-family: 'Lato', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Tech Images Stack similar logic but specific positions */
+.au-tech-images-stack {
+    flex: 0 0 50%;
+    position: relative;
+    height: 500px;
+}
+
+/* Rotary Parlor (Top Right) */
+.au-tech-img-1 {
+    width: 75%;
+    height: 380px;
     object-fit: cover;
-    height: 200px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    /* Aligned Right */
+    z-index: 1;
+    border: 4px solid #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Bottling Line (Bottom Left) */
+.au-tech-img-2 {
+    width: 55%;
+    height: 300px;
+    object-fit: cover;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    /* Aligned Left */
+    z-index: 2;
+    /* Overlaps */
+    border: 4px solid #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .au-tech-container {
+        flex-direction: column;
+    }
+
+    .au-tech-text,
+    .au-tech-images-stack {
+        flex: 0 0 100%;
+        width: 100%;
+    }
+
+    .au-tech-images-stack {
+        height: 400px;
+        margin-top: 40px;
+    }
 }
 
 /* Responsive */
