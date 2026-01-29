@@ -395,20 +395,34 @@
 }
 
 /* Responsive */
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
     .au-tech-container {
-        flex-direction: column;
+        flex-direction: column !important;
     }
 
     .au-tech-text,
     .au-tech-images-stack {
-        flex: 0 0 100%;
-        width: 100%;
+        flex: 0 0 100% !important;
+        width: 100% !important;
+        min-width: 0 !important;
     }
 
     .au-tech-images-stack {
-        height: 400px;
+        height: auto !important;
         margin-top: 40px;
+        margin-bottom: 20px;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 20px;
+    }
+
+    .au-tech-img-1,
+    .au-tech-img-2 {
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        max-height: 400px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
 }
 
@@ -669,5 +683,41 @@
     .au-philo-img-circle img {
         width: 35px;
         height: 35px;
+    }
+}
+
+/* Force Tech Section Responsive Fix */
+@media (max-width: 1024px) {
+    .au-tech-container {
+        flex-direction: column !important;
+        display: flex !important;
+        gap: 0 !important;
+        /* Let margins handle spacing */
+    }
+
+    .au-tech-text,
+    .au-tech-images-stack {
+        flex: 0 0 100% !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .au-tech-images-stack {
+        height: auto !important;
+        margin-top: 30px !important;
+        margin-bottom: 20px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 20px !important;
+    }
+
+    .au-tech-img-1,
+    .au-tech-img-2 {
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        max-height: 400px !important;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important;
     }
 }
