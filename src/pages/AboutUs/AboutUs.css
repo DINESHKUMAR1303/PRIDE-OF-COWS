@@ -587,8 +587,47 @@
 
     .au-health-container,
     .au-split-container,
-    .au-founder-card {
+    .au-founder-card,
+    .au-philo-content-wrapper {
         flex-direction: column;
+    }
+
+    /* Philosophy Specifics */
+    .au-philo-content-wrapper {
+        flex-direction: column-reverse;
+        /* Text first, then images? Or Images first? Let's do Images Top usually. But column-reverse puts bottom element (stack) on top? Stack is 2nd child. So column-reverse makes Stack Top. */
+        gap: 50px;
+    }
+
+    .au-philo-points {
+        flex: 0 0 100%;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .au-philo-images-stack {
+        flex: 0 0 100%;
+        width: 100%;
+        height: 350px;
+        /* Adjusted for tablet/mobile */
+        margin-top: 0;
+        margin-bottom: 30px;
+    }
+
+    .au-philo-img-1 {
+        height: 250px;
+        width: 55%;
+        /* Keep ratio */
+    }
+
+    .au-philo-img-2 {
+        height: 250px;
+        width: 75%;
+    }
+
+    .au-philo-card {
+        width: 100%;
+        margin-bottom: 20px;
     }
 
     .au-health-text,
@@ -597,10 +636,38 @@
     .au-split-img {
         flex: 1 1 100%;
         width: 100%;
-        max-width: 600px;
+        max-width: 100%;
+        min-width: 0;
     }
 
     .au-founder-img {
         height: 400px;
+        width: 100%;
+        /* Ensure full width */
+    }
+
+    .au-hero-text h1 {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 600px) {
+    .au-hero-text h1 {
+        font-size: 28px;
+    }
+
+    .au-belief-section .au-title,
+    .au-family-banner h2 {
+        font-size: 36px;
+    }
+
+    .au-philo-img-circle {
+        width: 60px;
+        height: 60px;
+    }
+
+    .au-philo-img-circle img {
+        width: 35px;
+        height: 35px;
     }
 }

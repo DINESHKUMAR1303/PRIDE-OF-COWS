@@ -310,13 +310,41 @@ This overrides previous if needed or just matches context
 
     .op-hero {
         height: 40vh;
+        min-height: 300px;
     }
 
     .op-title {
-        font-size: 2rem;
+        font-size: 36px;
     }
 
     .op-promise-grid {
         flex-direction: column;
+    }
+
+    /* Process Section Responsive */
+    .op-process-container {
+        flex-direction: column;
+    }
+
+    .op-process-left-img,
+    .op-process-right-content {
+        flex: 0 0 100%;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .op-process-right-content {
+        max-height: none;
+        overflow-y: visible;
+        padding-right: 0;
+    }
+
+    .op-process-left-img img {
+        height: 300px;
+        margin-bottom: 30px;
+    }
+
+    .op-step-item h3 {
+        font-size: 24px;
     }
 }
