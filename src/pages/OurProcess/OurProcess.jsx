@@ -18,10 +18,8 @@ const OurProcess = () => {
     return (
         <div className="op-page">
             {/* SECTION 1: HERO */}
-            <div className="op-hero" style={{ backgroundImage: `url(${headImg})` }}>
-                <div className="op-hero-overlay">
-                    {/* <h1>Our Process</h1> */}
-                </div>
+            <div className="op-hero">
+                <img src={headImg} alt="Our Process Banner" className="op-hero-img" />
             </div>
 
             {/* SECTION 2: OUR BELIEF (Text Only) */}

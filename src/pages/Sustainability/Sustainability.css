@@ -1,0 +1,278 @@
+.sustainability-page {
+    width: 100%;
+    font-family: 'Playfair Display', serif;
+    color: #333;
+    padding-bottom: 50px;
+}
+
+/* Hero Section */
+.sus-hero {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.sus-hero-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Intro */
+.sus-intro {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.sus-intro h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: #333;
+    /* Or slightly softer black */
+    font-weight: 400;
+    margin: 0;
+}
+
+/* Tabs */
+.sus-tabs-container {
+    position: relative;
+    width: 80%;
+    max-width: 900px;
+    margin: 0 auto 60px auto;
+    padding-top: 20px;
+}
+
+.sus-tabs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    margin-bottom: 20px;
+}
+
+.sus-tab-item {
+    cursor: pointer;
+    text-align: center;
+    position: relative;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sus-tab-label {
+    font-size: 2rem;
+    color: #b0bfd6;
+    /* Light gray-blue for inactive */
+    margin: 0 0 15px 0;
+    transition: color 0.3s ease;
+    font-weight: 400;
+}
+
+.sus-tab-item.active .sus-tab-label {
+    color: #1a3c6e;
+    /* Deep blue for active */
+}
+
+.sus-tab-dot {
+    width: 10px;
+    height: 10px;
+    background-color: transparent;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    background: white;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.sus-tab-item.active .sus-tab-dot {
+    background-color: #1a3c6e;
+    border-color: #1a3c6e;
+    transform: scale(1.2);
+}
+
+/* Connecting Line */
+.sus-tabs-line {
+    position: absolute;
+    bottom: 5px;
+    /* Aligns with the dots */
+    left: 50px;
+    /* offset by half tab width approximately */
+    right: 50px;
+    height: 1px;
+    background-color: #e0e0e0;
+    /* Light gray line */
+    z-index: 1;
+}
+
+/* Content Section */
+.sus-content {
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* Left Content */
+.sus-content-left {
+    flex: 1;
+    max-width: 45%;
+    padding-right: 40px;
+}
+
+.sus-item {
+    display: flex;
+    margin-bottom: 40px;
+    align-items: flex-start;
+}
+
+.sus-item-icon-wrapper {
+    width: 60px;
+    margin-right: 20px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.sus-item-icon {
+    width: 40px;
+    height: auto;
+    object-fit: contain;
+}
+
+.sus-item-text h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: #333;
+    margin: 0 0 10px 0;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.sus-item-text p {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Right Content (Collage) */
+.sus-content-right {
+    flex: 1;
+    max-width: 50%;
+    position: relative;
+    height: 500px;
+    /* Fixed height for collage area */
+}
+
+.sus-collage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.sus-img-main,
+.sus-img-sub {
+    position: absolute;
+    object-fit: cover;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.5s ease;
+}
+
+/* Specific Collage Layouts */
+
+/* Unified Layout for All Tabs (Idea, Innovation, Impact) */
+.sus-img-main {
+    width: 55%;
+    height: 60%;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    border: 8px solid white;
+    border-top: 0;
+    border-left: 0;
+}
+
+.sus-img-sub {
+    width: 80%;
+    height: 70%;
+    object-fit: cover;
+    bottom: 0;
+    top: auto;
+    right: 0;
+    z-index: 1;
+    border: none;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sus-content {
+        flex-direction: column;
+    }
+
+    .sus-content-left {
+        max-width: 100%;
+        padding-right: 0;
+        margin-bottom: 40px;
+    }
+
+    .sus-content-right {
+        max-width: 100%;
+        height: 300px;
+    }
+
+    .sus-tab-label {
+        font-size: 1.2rem;
+    }
+
+    .sus-intro h2 {
+        font-size: 2rem;
+    }
+}
+
+/* Green Action Section */
+.sus-action-section {
+    padding: 40px 5%;
+    background-color: #fff;
+    text-align: center;
+}
+
+.sus-action-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.sus-action-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #1a3c6e;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    display: block;
+    font-weight: 600;
+}
+
+.sus-action-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    color: #333;
+    margin: 0 0 40px 0;
+    font-weight: 400;
+}
+
+.sus-action-text p {
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}

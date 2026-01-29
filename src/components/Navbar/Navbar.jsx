@@ -105,7 +105,7 @@ const Navbar = () => {
   const learnItems = [
     { name: "About Us", img: aboutImg, link: "/about-us" },
     { name: "Our Process", img: processImg, link: "/our-process" },
-    { name: "Sustainability", img: sustainImg, link: "/learn/sustainability" },
+    { name: "Sustainability", img: sustainImg, link: "/sustainability" },
   ];
 
   const blogItems = [
