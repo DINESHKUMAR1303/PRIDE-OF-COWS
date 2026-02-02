@@ -4,13 +4,11 @@
 
 .homebanner-wrapper {
   width: 100%;
-  /* ✅ Changed from 100vw */
   max-width: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow-x: hidden;
-  /* ✅ Ensures no horizontal scroll */
+  overflow: hidden; /* ✅ Changed from overflow-x: hidden */
   background: #f5f5f5;
 }
 
@@ -21,21 +19,23 @@
 .carousel {
   position: relative;
   width: 100%;
-  /* ✅ Changed from 100vw */
   overflow: hidden;
   background: #fff;
   margin: 0;
   padding: 0;
+  box-sizing: border-box; /* ✅ Added */
 }
 
 .carousel-inner {
   display: flex;
   transition: transform 0.5s ease-in-out;
+  width: 100%; /* ✅ Added */
 }
 
 .carousel-item {
   flex: 0 0 100%;
   width: 100%;
+  box-sizing: border-box; /* ✅ Added */
 }
 
 .carousel-item img {
@@ -43,6 +43,7 @@
   width: 100%;
   height: auto;
   object-fit: cover;
+  max-width: 100%; /* ✅ Added */
 }
 
 /* ============================= */
@@ -77,17 +78,15 @@
   border: none;
   color: #193B61;
   width: 65px;
-  /* pill width */
   height: 41px;
-  /* pill height */
   border-radius: 9999px;
-  /* smooth pill shape */
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   transition: background 0.25s ease, box-shadow 0.25s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0; /* ✅ Added to prevent button compression */
 }
 
 /* Hover + focus states */
@@ -106,7 +105,6 @@
   height: 13px;
   stroke: #193B61;
   stroke-width: 1;
-  /* thin, elegant line */
   transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
