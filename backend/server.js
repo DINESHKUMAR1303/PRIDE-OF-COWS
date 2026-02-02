@@ -17,6 +17,7 @@ import adminRoutes from "./routes/adminRoutes.js";
 import staffRoutes from "./routes/staffRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 
+
 // ================= CONFIG =================
 dotenv.config();
 
@@ -62,6 +63,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/admin/staff", staffRoutes);
 app.use("/api/admin/products", productRoutes);
+
 app.use("/api/admin", adminRoutes);
 
 // ================= ROOT ROUTE =================

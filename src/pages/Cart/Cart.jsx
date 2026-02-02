@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 
 import { useAuth } from "../../context/AuthContext";
@@ -17,7 +17,9 @@ import { createOrder } from "../../api/order";
 import { getUserProfile } from "../../api/user";
 import { fetchProducts } from "../../api/product"; // ⭐ Import fetchProducts
 
+
 const Cart = () => {
+  const navigate = useNavigate();
   const { cartItems, increaseItem, decreaseItem, clearCart, removeFromCart } = useCart();
 
   const { user } = useAuth();
@@ -129,6 +131,7 @@ const Cart = () => {
     try {
       const token = localStorage.getItem("poc_token");
 
+      // 2. Create Order in Database
       const orderData = {
         items: cartList.map((p) => {
           return {
@@ -145,21 +148,21 @@ const Cart = () => {
 
       console.log("Sending order:", orderData);
 
-      // ⭐ SEND ORDER TO BACKEND
-      const res = await createOrder(orderData, token);
-      console.log("ORDER RESPONSE:", res);
+      const dbOrderRes = await createOrder(orderData, token);
+      console.log("DB ORDER RESPONSE:", dbOrderRes);
 
-      // Show success popup
-      setOrderSuccess(true);
+      if (dbOrderRes.data && dbOrderRes.data.success) {
+        // Success!
+        setOrderSuccess(true);
+        clearCart();
 
-      // Clear cart
-      clearCart();
-
-      // Redirect
-      setTimeout(() => {
-        setOrderSuccess(false);
-        window.location.href = "/myaccount/orders";
-      }, 2000);
+        setTimeout(() => {
+          setOrderSuccess(false);
+          navigate("/myaccount/orders");
+        }, 2000);
+      } else {
+        alert("Failed to place order.");
+      }
 
     } catch (err) {
       console.error("ORDER FAILED:", err);

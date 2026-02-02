@@ -300,6 +300,7 @@ const ProductCarousel = () => {
         {products.length > itemsToShow && (
           <div className="carousel-controls">
             <button
+              type="button"
               className="arrow-button"
               onClick={prevSlide}
             >
@@ -312,6 +313,7 @@ const ProductCarousel = () => {
             <div className="line"></div>
 
             <button
+              type="button"
               className="arrow-button"
               onClick={nextSlide}
             >
