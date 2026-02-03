@@ -1,9 +1,15 @@
 // backend/routes/orderRoutes.js
 import express from "express";
-import { createOrder, getUserOrders, getAllOrders, deleteOrder, updateOrderStatus } from "../controllers/orderController.js";
+import { createOrder, getUserOrders, getAllOrders, deleteOrder, updateOrderStatus, checkout } from "../controllers/orderController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
+
+/* ============================================================
+   ⭐ RAZORPAY CHECKOUT
+   POST → /api/orders/checkout
+   ============================================================ */
+router.post("/checkout", authMiddleware, checkout);
 
 /* ============================================================
    ⭐ CREATE ORDER

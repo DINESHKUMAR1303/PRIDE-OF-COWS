@@ -13,7 +13,7 @@ import DatePicker from "../../components/DatePicker/DatePicker";
 import deliveryIcon from "./images/deliveryboy.svg";
 import emptyCartImg from "./images/emptycart.svg";
 
-import { createOrder } from "../../api/order";
+import { createOrder, checkoutOrder } from "../../api/order";
 import { getUserProfile } from "../../api/user";
 import { fetchProducts } from "../../api/product"; // ⭐ Import fetchProducts
 
@@ -129,44 +129,77 @@ const Cart = () => {
     }
 
     try {
-      const token = localStorage.getItem("poc_token");
+      // 1. Create Razorpay Order
+      const { data: { order, key } } = await checkoutOrder(itemTotal);
 
-      // 2. Create Order in Database
-      const orderData = {
-        items: cartList.map((p) => {
-          return {
-            productId: p._id,
-            name: p.productName,
-            quantity: cartItems[p._id],
-            price: p.price
-          };
-        }),
-        address: `${address.name}, ${address.fullAddress}, ${address.city} - ${address.pincode}`,
-        deliveryDate: selectedDate,
-        totalAmount: itemTotal
+      // 2. Open Razorpay Options
+      const options = {
+        key: key,
+        amount: order.amount,
+        currency: "INR",
+        name: "Pride of Cows",
+        description: "Premium Dairy Products",
+        image: "https://cdn-icons-png.flaticon.com/512/3063/3063822.png", // Cow/Milk Icon
+        order_id: order.id,
+        handler: async function (response) {
+          try {
+            // 3. Payment Success -> Create Order in DB
+            const token = localStorage.getItem("poc_token");
+
+            const orderData = {
+              items: cartList.map((p) => ({
+                productId: p._id,
+                name: p.productName,
+                quantity: cartItems[p._id],
+                price: p.price
+              })),
+              address: `${address.name}, ${address.fullAddress}, ${address.city} - ${address.pincode}`,
+              deliveryDate: selectedDate,
+              totalAmount: itemTotal,
+              // Payment Data
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature
+            };
+
+            const dbOrderRes = await createOrder(orderData, token);
+
+            if (dbOrderRes.data && dbOrderRes.data.success) {
+              setOrderSuccess(true);
+              clearCart();
+
+              setTimeout(() => {
+                setOrderSuccess(false);
+                navigate("/myaccount/orders");
+              }, 2000);
+            } else {
+              alert("Payment successful but order creation failed.");
+            }
+
+          } catch (err) {
+            console.error("Order Creation Failed:", err);
+            alert("Order failed after payment.");
+          }
+        },
+        prefill: {
+          name: address.name,
+          email: user?.email || "",
+          contact: user?.mobile || ""
+        },
+        theme: {
+          color: "#8B5E3C" // Brown/Earthy tone matching cows
+        }
       };
 
-      console.log("Sending order:", orderData);
-
-      const dbOrderRes = await createOrder(orderData, token);
-      console.log("DB ORDER RESPONSE:", dbOrderRes);
-
-      if (dbOrderRes.data && dbOrderRes.data.success) {
-        // Success!
-        setOrderSuccess(true);
-        clearCart();
-
-        setTimeout(() => {
-          setOrderSuccess(false);
-          navigate("/myaccount/orders");
-        }, 2000);
-      } else {
-        alert("Failed to place order.");
-      }
+      const rzp1 = new window.Razorpay(options);
+      rzp1.on('payment.failed', function (response) {
+        alert("Payment Failed: " + response.error.description);
+      });
+      rzp1.open();
 
     } catch (err) {
-      console.error("ORDER FAILED:", err);
-      alert("Failed to place order. Check console.");
+      console.error("CHECKOUT ERROR:", err);
+      alert("Failed to initiate payment. Check console.");
     }
   };
 

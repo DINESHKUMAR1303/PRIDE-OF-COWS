@@ -16,6 +16,17 @@ export const createOrder = async (orderData) => {
   return res; // IMPORTANT: return full axios response
 };
 
+/* ============================================================
+// CHECKOUT (Razorpay Order Creation)
+// ============================================================ */
+export const checkoutOrder = async (amount) => {
+  const token = localStorage.getItem("poc_token");
+  const res = await axios.post(`${API}/orders/checkout`, { amount }, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return res;
+};
+
 // ============================
 // GET USER ORDERS
 // ============================

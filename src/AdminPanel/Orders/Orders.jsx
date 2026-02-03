@@ -110,7 +110,7 @@ const Orders = () => {
                             };
                         }),
                         totalAmount: order.totalAmount,
-                        status: order.status || "Pending",
+                        status: order.status || "pending",
                         date: new Date(order.createdAt).toLocaleDateString("en-IN", {
                             day: "numeric", month: "short", year: "numeric"
                         })
@@ -409,11 +409,11 @@ const Orders = () => {
                                                 onChange={(e) => handleStatusUpdate(order.id, e.target.value)}
                                                 onClick={(e) => e.stopPropagation()}
                                             >
-                                                <option value="Pending">Pending</option>
-                                                <option value="Confirmed">Confirmed</option>
-                                                <option value="Shipped">Shipped</option>
-                                                <option value="Delivered">Delivered</option>
-                                                <option value="Cancelled">Cancelled</option>
+                                                <option value="pending">Pending</option>
+                                                <option value="confirmed">Confirmed</option>
+                                                <option value="shipped">Shipped</option>
+                                                <option value="delivered">Delivered</option>
+                                                <option value="cancelled">Cancelled</option>
                                             </select>
                                         </td>
                                         <td>{order.date}</td>

@@ -1,6 +1,8 @@
 // backend/controllers/orderController.js
 
 import Order from "../models/Order.js";
+import Razorpay from "razorpay";
+import crypto from "crypto";
 
 /* ============================================================
    ⭐ CREATE ORDER
@@ -9,9 +11,17 @@ export const createOrder = async (req, res) => {
   try {
     console.log("🔥 CREATE ORDER HIT");
     console.log("➡️ USER:", req.user?._id);
-    console.log("➡️ BODY:", req.body);
 
-    const { items, address, deliveryDate, totalAmount } = req.body;
+    // ⭐ Extract Payment Details
+    const {
+      items,
+      address,
+      deliveryDate,
+      totalAmount,
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature
+    } = req.body;
 
     // --------------------------
     // VALIDATIONS
@@ -45,6 +55,28 @@ export const createOrder = async (req, res) => {
     }
 
     // --------------------------
+    // ⭐ VERIFY PAYMENT (If Razorpay IDs provided)
+    // --------------------------
+    let paymentStatus = "pending";
+    if (razorpay_payment_id) {
+      const body = razorpay_order_id + "|" + razorpay_payment_id;
+      const expectedSignature = crypto
+        .createHmac("sha256", process.env.RAZORPAY_API_SECRET)
+        .update(body.toString())
+        .digest("hex");
+
+      if (expectedSignature === razorpay_signature) {
+        paymentStatus = "confirmed"; // or 'paid'
+        console.log("✅ PAYMENT VERIFIED");
+      } else {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid Payment Signature",
+        });
+      }
+    }
+
+    // --------------------------
     // CREATE ORDER IN DB
     // --------------------------
     const order = await Order.create({
@@ -53,7 +85,10 @@ export const createOrder = async (req, res) => {
       address,
       deliveryDate: new Date(deliveryDate),
       totalAmount,
-      status: "pending",
+      status: paymentStatus,
+      razorpayOrderId: razorpay_order_id,
+      razorpayPaymentId: razorpay_payment_id,
+      razorpaySignature: razorpay_signature
     });
 
     console.log("✅ ORDER SAVED:", order._id);
@@ -70,6 +105,39 @@ export const createOrder = async (req, res) => {
       success: false,
       message: "Server error while creating order",
       error: err.message,
+    });
+  }
+};
+
+/* ============================================================
+   ⭐ RAZORPAY CHECKOUT (Generate Order ID)
+   POST → /api/orders/checkout
+============================================================ */
+export const checkout = async (req, res) => {
+  try {
+    const options = {
+      amount: Number(req.body.amount * 100), // amount in paise
+      currency: "INR",
+    };
+
+    const instance = new Razorpay({
+      key_id: process.env.RAZORPAY_API_KEY,
+      key_secret: process.env.RAZORPAY_API_SECRET,
+    });
+
+    const order = await instance.orders.create(options);
+    console.log("✅ RAZORPAY ORDER CREATED:", order);
+
+    res.status(200).json({
+      success: true,
+      order,
+      key: process.env.RAZORPAY_API_KEY
+    });
+  } catch (error) {
+    console.error("❌ Razorpay Checkout Error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Razorpay Checkout Error",
     });
   }
 };
