@@ -12,6 +12,7 @@ import DatePicker from "../../components/DatePicker/DatePicker";
 
 import deliveryIcon from "./images/deliveryboy.svg";
 import emptyCartImg from "./images/emptycart.svg";
+import { LOGO_BASE64 } from "../../constants/logoConstant"; // Import Base64 Crown SVG 
 
 import { createOrder, checkoutOrder } from "../../api/order";
 import { getUserProfile } from "../../api/user";
@@ -139,10 +140,12 @@ const Cart = () => {
         currency: "INR",
         name: "Pride of Cows",
         description: "Premium Dairy Products",
-        image: "https://cdn-icons-png.flaticon.com/512/3063/3063822.png", // Cow/Milk Icon
+        image: LOGO_BASE64, // Crown SVG
         order_id: order.id,
         handler: async function (response) {
+          console.log("RAZORPAY SUCCESS. Image used:", LOGO_BASE64 ? "Yes(Length=" + LOGO_BASE64.length + ")" : "No");
           try {
+            console.log("PAYMENT SUCCESS, Logo used was length:", LOGO_BASE64?.length);
             // 3. Payment Success -> Create Order in DB
             const token = localStorage.getItem("poc_token");
 
@@ -187,7 +190,7 @@ const Cart = () => {
           contact: user?.mobile || ""
         },
         theme: {
-          color: "#8B5E3C" // Brown/Earthy tone matching cows
+          color: "#193B61" // Navy Blue matching Logo
         }
       };
 
