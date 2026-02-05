@@ -37,6 +37,21 @@ STAFF_API.interceptors.request.use((config) => {
   return config;
 }, Promise.reject);
 
+// Response Interceptor: Handle 401 Token Expiration (Auto-Logout)
+const handleTokenExpiry = (error) => {
+  if (error.response?.status === 401) {
+    console.warn("⚠️ Session expired or unauthorized. Logging out...");
+    localStorage.removeItem("poc_token");
+    localStorage.removeItem("poc_user");
+    // Use window.location to strictly force a refresh/redirect
+    window.location.href = "/";
+  }
+  return Promise.reject(error);
+};
+
+USER_API.interceptors.response.use((response) => response, handleTokenExpiry);
+STAFF_API.interceptors.response.use((response) => response, handleTokenExpiry);
+
 /* ============================================================
    ⭐ USER APIs
 ============================================================ */

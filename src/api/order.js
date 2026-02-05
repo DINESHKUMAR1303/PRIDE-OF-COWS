@@ -3,13 +3,29 @@ import axios from "axios";
 
 const API = import.meta.env.VITE_API_URL;
 
+// Create axios instance to handle global errors (like 401)
+const orderApi = axios.create();
+
+orderApi.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      console.warn("Session expired. Logging out.");
+      localStorage.removeItem("poc_token");
+      localStorage.removeItem("poc_user");
+      window.location.href = "/";
+    }
+    return Promise.reject(error);
+  }
+);
+
 // ============================
 // CREATE ORDER
 // ============================
 export const createOrder = async (orderData) => {
   const token = localStorage.getItem("poc_token");
 
-  const res = await axios.post(`${API}/orders`, orderData, {
+  const res = await orderApi.post(`${API}/orders`, orderData, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
@@ -21,7 +37,7 @@ export const createOrder = async (orderData) => {
 // ============================================================ */
 export const checkoutOrder = async (amount) => {
   const token = localStorage.getItem("poc_token");
-  const res = await axios.post(`${API}/orders/checkout`, { amount }, {
+  const res = await orderApi.post(`${API}/orders/checkout`, { amount }, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return res;
@@ -33,7 +49,7 @@ export const checkoutOrder = async (amount) => {
 export const getMyOrders = async () => {
   const token = localStorage.getItem("poc_token");
 
-  const res = await axios.get(`${API}/orders/my-orders`, {
+  const res = await orderApi.get(`${API}/orders/my-orders`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
@@ -46,7 +62,7 @@ export const getMyOrders = async () => {
 export const getAllOrders = async () => {
   const token = localStorage.getItem("admin_token") || localStorage.getItem("poc_token"); // Try admin token first
 
-  const res = await axios.get(`${API}/orders/all`, {
+  const res = await orderApi.get(`${API}/orders/all`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 
@@ -59,7 +75,7 @@ export const getAllOrders = async () => {
 export const deleteOrder = async (id) => {
   const token = localStorage.getItem("admin_token") || localStorage.getItem("poc_token"); // Try admin token first
 
-  const res = await axios.delete(`${API}/orders/${id}`, {
+  const res = await orderApi.delete(`${API}/orders/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return res;
@@ -71,7 +87,7 @@ export const deleteOrder = async (id) => {
 export const updateOrder = async (id, status) => {
   const token = localStorage.getItem("admin_token") || localStorage.getItem("poc_token");
 
-  const res = await axios.put(`${API}/orders/${id}/status`, { status }, {
+  const res = await orderApi.put(`${API}/orders/${id}/status`, { status }, {
     headers: { Authorization: `Bearer ${token}` },
   });
 

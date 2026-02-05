@@ -190,7 +190,7 @@ const Cart = () => {
           contact: user?.mobile || ""
         },
         theme: {
-          color: "#193B61" // Navy Blue matching Logo
+          color: "#695fc2ff" // Gold matching Crown
         }
       };
 
