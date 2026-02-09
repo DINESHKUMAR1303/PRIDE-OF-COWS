@@ -35,7 +35,7 @@ const features = [
 const DEFAULT_PRODUCTS = [
   {
     _id: "default_milk",
-    productName: "Pride of Cows Milk",
+    productName: "Milk",
     weight: "1 L",
     price: 120,
     mrp: 140,
@@ -43,7 +43,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     _id: "default_ghee",
-    productName: "Pride of Cows Ghee",
+    productName: "Ghee",
     weight: "1 L",
     price: 2190,
     mrp: 2500,
@@ -51,7 +51,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     _id: "default_curd",
-    productName: "Pride of Cows Curd",
+    productName: "Curd",
     weight: "400g",
     price: 80,
     mrp: 90,
@@ -59,7 +59,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     _id: "default_paneer",
-    productName: "Pride of Cows Paneer",
+    productName: "Paneer",
     weight: "200g",
     price: 150,
     mrp: 180,
