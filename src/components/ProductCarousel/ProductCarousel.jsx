@@ -67,7 +67,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     _id: "default_yogurt",
-    productName: "Blueberry Yogurt",
+    productName: "Yogurt Blueberry",
     weight: "120g",
     price: 95,
     mrp: 122,
