@@ -12,7 +12,7 @@ import proteinBarImg from "../pages/Protein Bar/images/protein bar.png";
 export const MOCK_PRODUCTS = [
     {
         _id: "aaaaaaaabbbbbbbbcccc0001",
-        productName: "Pride of Cows Milk",
+        productName: "Milk",
         weight: "1 L",
         price: 120,
         mrp: 140,
@@ -23,7 +23,7 @@ export const MOCK_PRODUCTS = [
     },
     {
         _id: "aaaaaaaabbbbbbbbcccc0002",
-        productName: "Pride of Cows Ghee",
+        productName: "Ghee",
         weight: "1 L",
         price: 2190,
         mrp: 2500,
@@ -34,7 +34,7 @@ export const MOCK_PRODUCTS = [
     },
     {
         _id: "aaaaaaaabbbbbbbbcccc0003",
-        productName: "Pride of Cows Curd",
+        productName: "Curd",
         weight: "400g",
         price: 80,
         mrp: 90,
@@ -45,7 +45,7 @@ export const MOCK_PRODUCTS = [
     },
     {
         _id: "aaaaaaaabbbbbbbbcccc0004",
-        productName: "Pride of Cows Paneer",
+        productName: "Paneer",
         weight: "200g",
         price: 150,
         mrp: 180,
