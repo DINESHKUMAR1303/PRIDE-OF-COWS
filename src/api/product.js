@@ -1,4 +1,5 @@
 import axios from "axios";
+import { MOCK_PRODUCTS } from "./mockData";
 
 // Base URL for Backend
 const API_URL = "http://localhost:5000/api/admin/products";
@@ -14,13 +15,15 @@ export const addProduct = async (formData) => {
 };
 
 // Get All Products
+
 export const fetchProducts = async (activeOnly = false) => {
     try {
         const url = activeOnly ? `${API_URL}?active=true` : API_URL;
-        const res = await axios.get(url);
+        const res = await axios.get(url, { timeout: 3000 }); // 3s timeout to fallback quickly
         return res.data;
     } catch (error) {
-        throw error.response?.data?.message || "Failed to fetch products";
+        console.warn("API Unreachable or Error. Using Mock Data for Live Demo.");
+        return { data: MOCK_PRODUCTS };
     }
 };
 
