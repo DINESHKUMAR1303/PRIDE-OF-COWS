@@ -3,6 +3,7 @@ import "./ProductDetail.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCart } from "../../../context/CartContext";
 import { fetchProducts } from "../../../api/product";
+import Loader from "../../../components/Loader/Loader";
 
 // Import your DatePicker component
 import DatePicker from "../../../components/DatePicker/DatePicker";
@@ -158,7 +159,7 @@ const ProductDetail = () => {
   };
 
   if (loading) {
-    return <div className="pd-wrapper" style={{ textAlign: 'center', marginTop: '100px' }}>Loading Product Details...</div>;
+    return <Loader text="Loading Product Details..." />;
   }
 
   return (

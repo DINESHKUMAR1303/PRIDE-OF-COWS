@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import "./Milk Powder.css";
 import { useCart } from "../../context/CartContext";
 import { fetchProducts } from "../../api/product";
+import Loader from "../../components/Loader/Loader";
 
 // Shared Components
 import DatePicker from "../../components/DatePicker/DatePicker";
@@ -149,7 +150,7 @@ const MilkPowder = () => {
     };
 
     if (loading) {
-        return <div className="mp-wrapper" style={{ textAlign: 'center', marginTop: '100px' }}>Loading Milk Powder Details...</div>;
+        return <Loader text="Loading Milk Powder Details..." />;
     }
 
     if (!productData) {

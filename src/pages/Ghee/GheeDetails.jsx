@@ -18,6 +18,7 @@ import img3 from "./images/ghee500.png";
 
 // Import API fetch function
 import { fetchProducts } from "../../api/product";
+import Loader from "../../components/Loader/Loader";
 
 const GheeDetails = () => {
     const images = [img1, img2, img3];
@@ -148,7 +149,7 @@ const GheeDetails = () => {
     };
 
     if (loading) {
-        return <div className="pd-wrapper" style={{ textAlign: 'center', marginTop: '100px' }}>Loading Ghee Details...</div>;
+        return <Loader text="Loading Ghee Details..." />;
     }
 
     if (!productData) {

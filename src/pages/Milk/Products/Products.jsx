@@ -6,6 +6,7 @@ import "./Products.css";
 
 // === GLOBAL CART CONTEXT ===
 import { useCart } from "../../../context/CartContext";
+import Loader from "../../../components/Loader/Loader";
 
 // === IMAGES ===
 import unmatched from "./images/unmatched.png";
@@ -116,7 +117,7 @@ const Products = () => {
   });
 
   if (loading) {
-    return <div style={{ textAlign: "center", padding: "50px" }}>Loading products...</div>;
+    return <Loader text="Loading products..." />;
   }
 
   // Not returning null immediately to keep layout stable if empty, or render empty message

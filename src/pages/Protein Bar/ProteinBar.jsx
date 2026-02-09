@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import "./ProteinBar.css";
 import { useCart } from "../../context/CartContext";
 import { fetchProducts } from "../../api/product";
+import Loader from "../../components/Loader/Loader";
 
 // Shared Components
 import DatePicker from "../../components/DatePicker/DatePicker";
@@ -149,7 +150,7 @@ const ProteinBar = () => {
     };
 
     if (loading) {
-        return <div className="pb-wrapper" style={{ textAlign: 'center', marginTop: '100px' }}>Loading Protein Bar Details...</div>;
+        return <Loader text="Loading Protein Bar Details..." />;
     }
 
     if (!productData) {

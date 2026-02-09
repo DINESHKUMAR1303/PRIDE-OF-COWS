@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import "./Curd.css";
 import { useCart } from "../../context/CartContext";
 import { fetchProducts } from "../../api/product";
+import Loader from "../../components/Loader/Loader";
 
 // Shared Components
 import DatePicker from "../../components/DatePicker/DatePicker";
@@ -146,7 +147,7 @@ const Curd = () => {
     };
 
     if (loading) {
-        return <div className="cd-wrapper" style={{ textAlign: 'center', marginTop: '100px' }}>Loading Curd Details...</div>;
+        return <Loader text="Loading Curd Details..." />;
     }
 
     if (!productData) {

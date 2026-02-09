@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import "./Panner.css";
 import { useCart } from "../../context/CartContext";
 import { fetchProducts } from "../../api/product";
+import Loader from "../../components/Loader/Loader";
 
 // Shared Components
 import DatePicker from "../../components/DatePicker/DatePicker";
@@ -149,7 +150,7 @@ const Panner = () => {
     };
 
     if (loading) {
-        return <div className="pn-wrapper" style={{ textAlign: 'center', marginTop: '100px' }}>Loading Paneer Details...</div>;
+        return <Loader text="Loading Paneer Details..." />;
     }
 
     if (!productData) {

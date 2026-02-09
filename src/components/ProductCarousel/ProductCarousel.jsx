@@ -7,6 +7,7 @@ import { Truck } from "lucide-react";
 
 // === IMPORT GLOBAL CART CONTEXT ===
 import { useCart } from "../../context/CartContext";
+import Loader from "../Loader/Loader";
 
 // === SINGLE ORIGIN IMAGES ===
 import logo from "./images/singleoriginlogo.png";
@@ -154,7 +155,7 @@ const ProductCarousel = () => {
         </p>
 
         {loading ? (
-          <div style={{ textAlign: "center", padding: "30px" }}>Loading products...</div>
+          <Loader text="Loading fresh products..." />
         ) : (
           <div className="product-carousel-wrapper" {...handlers}>
             <div

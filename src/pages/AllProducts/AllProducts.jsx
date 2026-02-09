@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useCart } from "../../context/CartContext";
+import Loader from "../../components/Loader/Loader";
 import { useNavigate } from "react-router-dom";
 import { fetchProducts } from "../../api/product";
 
@@ -65,7 +66,7 @@ const AllProducts = () => {
         <h2 className="products-title">Pick Your Perfect Pack</h2>
 
         {loading ? (
-          <div style={{ textAlign: "center", padding: "50px" }}>Loading fresh products...</div>
+          <Loader text="Loading fresh products..." />
         ) : (
           <div className="products-grid">
             {products.map((item) => {

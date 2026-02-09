@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Yogurt.css";
 import { useCart } from "../../context/CartContext";
 import { fetchProducts } from "../../api/product";
+import Loader from "../../components/Loader/Loader";
 
 // Shared Components
 import DatePicker from "../../components/DatePicker/DatePicker";
@@ -106,7 +107,7 @@ const YogurtSection = ({ defaultData, imagesArray, searchKeyword }) => {
         setQuantity(inCartQty > 0 ? inCartQty : 1);
     }, [inCartQty]);
 
-    if (loading) return null;
+    if (loading) return <Loader text={`Loading ${defaultData.title}...`} />;
     if (!productData) return null;
 
     // We can't use hooks conditionally, so we moved the early return AFTER hooks.
