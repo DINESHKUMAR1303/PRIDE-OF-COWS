@@ -85,12 +85,33 @@ const Curd = () => {
                             desc: "Our curd is made from fresh, high-quality milk, rich in probiotics to aid digestion and boost immunity. Thick, creamy, and delicious."
                         });
                     } else {
-                        setProductData(null);
+                        // Fallback to default Curd data
+                        console.log("No Curd product found in API, using fallback data");
+                        setProductData({
+                            id: "default_curd",
+                            title: "Pride of Cows Curd",
+                            variant: "400g",
+                            price: 80,
+                            mrp: 90,
+                            discount: "11% off",
+                            desc: "Our curd is made from fresh, high-quality milk, rich in probiotics to aid digestion and boost immunity. Thick, creamy, and delicious."
+                        });
                     }
                 }
             } catch (err) {
                 console.error("Failed to load Curd details", err);
-                if (isMounted) setProductData(null);
+                if (isMounted) {
+                    // Use fallback data on error
+                    setProductData({
+                        id: "default_curd",
+                        title: "Pride of Cows Curd",
+                        variant: "400g",
+                        price: 80,
+                        mrp: 90,
+                        discount: "11% off",
+                        desc: "Our curd is made from fresh, high-quality milk, rich in probiotics to aid digestion and boost immunity. Thick, creamy, and delicious."
+                    });
+                }
             } finally {
                 if (isMounted) setLoading(false);
             }
