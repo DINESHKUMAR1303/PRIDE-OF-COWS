@@ -85,33 +85,12 @@ const GheeDetails = () => {
                             desc: "Pride of Cows Ghee is single-origin, made from fresh milk from our own farms. Untouched by human hands, it has an unmatched aroma and taste."
                         });
                     } else {
-                        // 3. Fallback to default Ghee data if no product found
-                        console.log("No Ghee product found in API, using fallback data");
-                        setProductData({
-                            id: "default_ghee",
-                            title: "Pride of Cows Ghee",
-                            variant: "1 L",
-                            price: 2179,
-                            mrp: 2500,
-                            discount: "12.4% off",
-                            desc: "Pride of Cows Ghee is single-origin, made from fresh milk from our own farms. Untouched by human hands, it has an unmatched aroma and taste."
-                        });
+                        setProductData(null);
                     }
                 }
             } catch (err) {
                 console.error("Failed to load Ghee details", err);
-                if (isMounted) {
-                    // Use fallback data on error
-                    setProductData({
-                        id: "default_ghee",
-                        title: "Pride of Cows Ghee",
-                        variant: "1 L",
-                        price: 2179,
-                        mrp: 2500,
-                        discount: "12.4% off",
-                        desc: "Pride of Cows Ghee is single-origin, made from fresh milk from our own farms. Untouched by human hands, it has an unmatched aroma and taste."
-                    });
-                }
+                if (isMounted) setProductData(null);
             } finally {
                 if (isMounted) setLoading(false);
             }
