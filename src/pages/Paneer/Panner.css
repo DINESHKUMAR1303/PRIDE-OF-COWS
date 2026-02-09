@@ -441,12 +441,14 @@
         max-width: 380px;
     }
 }
+
 /* ================== ADDITIONAL RESPONSIVE BREAKPOINTS ================== */
 @media (max-width: 1024px) {
     .added-popup {
         right: 50px;
         top: 72px;
     }
+
     .popup-arrow {
         left: 50%;
     }
@@ -454,8 +456,16 @@
 
 @media (max-width: 768px) {
     .added-popup {
-        right: 20px;
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
         top: 70px;
+        width: max-content;
+    }
+
+    .popup-arrow {
+        left: 50%;
+        margin-left: -12px;
     }
 }
 
@@ -464,22 +474,28 @@
         max-width: 340px;
         height: 380px;
     }
+
     .pn-thumbnail {
         width: 75px;
         height: 82px;
     }
+
     .pn-title {
         font-size: 30px;
     }
-    .pn-buy-now, .pn-subscribe {
+
+    .pn-buy-now,
+    .pn-subscribe {
         width: 100%;
         max-width: 350px;
     }
+
     .added-popup {
         top: 65px;
         right: 10px;
         padding: 12px 18px;
     }
+
     .pn-main-img {
         width: 100%;
     }
@@ -490,21 +506,27 @@
         max-width: 300px;
         height: 340px;
     }
+
     .pn-thumbnail {
         width: 68px;
         height: 74px;
     }
+
     .pn-title {
         font-size: 28px;
     }
-    .pn-buy-now, .pn-subscribe {
+
+    .pn-buy-now,
+    .pn-subscribe {
         width: 100%;
         max-width: 300px;
     }
+
     .added-popup {
         right: 8px;
         padding: 10px 16px;
     }
+
     .pn-main-img {
         width: 100%;
     }
@@ -514,32 +536,42 @@
     .pn-main-box {
         gap: 40px;
     }
+
     .pn-main-image-box {
         width: 420px;
         height: 470px;
     }
+
     .pn-main-img {
         width: 390px;
     }
+
     .pn-right {
         width: 100%;
         max-width: 420px;
     }
+
     .pn-title {
         font-size: 34px;
     }
+
     .pn-desc {
         width: 100%;
     }
-    .pn-qty-container, .pn-delivery-box {
+
+    .pn-qty-container,
+    .pn-delivery-box {
         width: 100%;
         max-width: 420px;
         margin-left: 0;
     }
+
     .pn-buttons {
         justify-content: flex-start;
     }
-    .pn-buy-now, .pn-subscribe {
+
+    .pn-buy-now,
+    .pn-subscribe {
         width: 220px;
     }
 }
@@ -549,7 +581,7 @@
     .pn-pricing {
         justify-content: center !important;
     }
-    
+
     .pn-price-note {
         text-align: center;
     }
@@ -560,6 +592,7 @@
     .pn-pricing {
         justify-content: center !important;
     }
+
     .pn-price-note {
         text-align: center;
     }

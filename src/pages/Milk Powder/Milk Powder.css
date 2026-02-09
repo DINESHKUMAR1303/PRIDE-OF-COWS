@@ -441,23 +441,29 @@
         max-width: 380px;
     }
 }
+
 /* ===================================== ADDITIONAL RESPONSIVE BREAKPOINTS ==================================== */
 @media (max-width: 480px) {
     .mp-main-image-box {
         max-width: 340px;
         height: 380px;
     }
+
     .mp-thumbnail {
         width: 75px;
         height: 82px;
     }
+
     .mp-title {
         font-size: 30px;
     }
-    .mp-buy-now, .mp-subscribe {
+
+    .mp-buy-now,
+    .mp-subscribe {
         width: 100%;
         max-width: 350px;
     }
+
     .mp-main-img {
         width: 100%;
     }
@@ -468,17 +474,22 @@
         max-width: 300px;
         height: 340px;
     }
+
     .mp-thumbnail {
         width: 68px;
         height: 74px;
     }
+
     .mp-title {
         font-size: 28px;
     }
-    .mp-buy-now, .mp-subscribe {
+
+    .mp-buy-now,
+    .mp-subscribe {
         width: 100%;
         max-width: 300px;
     }
+
     .mp-main-img {
         width: 100%;
     }
@@ -488,32 +499,42 @@
     .mp-main-box {
         gap: 40px;
     }
+
     .mp-main-image-box {
         width: 420px;
         height: 470px;
     }
+
     .mp-main-img {
         width: 390px;
     }
+
     .mp-right {
         width: 100%;
         max-width: 420px;
     }
+
     .mp-title {
         font-size: 34px;
     }
+
     .mp-desc {
         width: 100%;
     }
-    .mp-qty-container, .mp-delivery-box {
+
+    .mp-qty-container,
+    .mp-delivery-box {
         width: 100%;
         max-width: 420px;
         margin-left: 0;
     }
+
     .mp-buttons {
         justify-content: flex-start;
     }
-    .mp-buy-now, .mp-subscribe {
+
+    .mp-buy-now,
+    .mp-subscribe {
         width: 220px;
     }
 }
@@ -523,7 +544,7 @@
     .mp-pricing {
         justify-content: center !important;
     }
-    
+
     .mp-price-note {
         text-align: center;
     }
@@ -534,7 +555,29 @@
     .mp-pricing {
         justify-content: center !important;
     }
+
     .mp-price-note {
         text-align: center;
+    }
+}
+
+/* Fix Added Popup */
+.added-popup {
+    max-width: 400px !important;
+    white-space: nowrap !important;
+}
+
+@media (max-width: 768px) {
+    .added-popup {
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) !important;
+        top: 80px !important;
+        width: max-content !important;
+    }
+
+    .popup-arrow {
+        left: 50% !important;
+        margin-left: -12px !important;
     }
 }

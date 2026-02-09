@@ -303,7 +303,8 @@
     font-size: 15px;
     box-shadow: 0px 12px 35px rgba(0, 0, 0, 0.28);
     animation: popupFadeDown 0.35s ease-out;
-    max-width: 260px;
+    max-width: 400px;
+    white-space: nowrap;
 }
 
 .popup-arrow {
@@ -554,8 +555,16 @@
     }
 
     .added-popup {
-        right: 12px;
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
         top: 70px;
+        width: max-content;
+    }
+
+    .popup-arrow {
+        left: 50%;
+        margin-left: -12px;
     }
 }
 
@@ -668,12 +677,13 @@
         width: 220px;
     }
 }
+
 /* ===================================== CENTER PRICING ON MOBILE ==================================== */
 @media (max-width: 1024px) {
     .cd-pricing {
         justify-content: center !important;
     }
-    
+
     .cd-price-note {
         text-align: center;
     }
@@ -684,6 +694,7 @@
     .cd-pricing {
         justify-content: center !important;
     }
+
     .cd-price-note {
         text-align: center;
     }
