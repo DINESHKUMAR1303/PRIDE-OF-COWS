@@ -19,6 +19,7 @@ import img3 from "./images/ghee500.png";
 // Import API fetch function
 import { fetchProducts } from "../../api/product";
 import Loader from "../../components/Loader/Loader";
+import { MOCK_PRODUCTS } from "../../api/mockData";
 
 const GheeDetails = () => {
     const images = [img1, img2, img3];
@@ -42,8 +43,36 @@ const GheeDetails = () => {
     const [deliveryDate, setDeliveryDate] = useState(getTomorrow());
 
     // Product Data - null initially
-    const [productData, setProductData] = useState(null);
-    const [loading, setLoading] = useState(true);
+    // --- OPTIMIZATION: Instant Load ---
+    const getInitialData = () => {
+        const params = new URLSearchParams(window.location.search);
+        const urlId = params.get("id");
+        let target = null;
+        if (urlId) target = MOCK_PRODUCTS.find(p => p._id === urlId);
+        if (!target) {
+            const matches = MOCK_PRODUCTS.filter(p => p.productName && p.productName.toLowerCase().includes("ghee"));
+            matches.sort((a, b) => a.productName.length - b.productName.length);
+            target = matches[0];
+        }
+        if (target) {
+            const discountVal = target.mrp > target.price
+                ? (Math.round((target.mrp - target.price) / target.mrp * 100) + "% off")
+                : "";
+            return {
+                id: target._id,
+                title: target.productName,
+                variant: target.weight || "1 L",
+                price: target.price,
+                mrp: target.mrp,
+                discount: discountVal,
+                desc: target.description
+            };
+        }
+        return null;
+    };
+    const initialData = getInitialData();
+    const [productData, setProductData] = useState(initialData);
+    const [loading, setLoading] = useState(!initialData);
 
     const location = useLocation();
 

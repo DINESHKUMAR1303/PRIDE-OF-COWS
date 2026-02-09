@@ -3,6 +3,7 @@ import "./Yogurt.css";
 import { useCart } from "../../context/CartContext";
 import { fetchProducts } from "../../api/product";
 import Loader from "../../components/Loader/Loader";
+import { MOCK_PRODUCTS } from "../../api/mockData";
 
 // Shared Components
 import DatePicker from "../../components/DatePicker/DatePicker";
@@ -37,9 +38,31 @@ const YogurtSection = ({ defaultData, imagesArray, searchKeyword }) => {
     const [animateCart, setAnimateCart] = useState(false);
     const [showDatePicker, setShowDatePicker] = useState(false);
 
-    // Start as null to avoid showing default data if product is disabled
-    const [productData, setProductData] = useState(null);
-    const [loading, setLoading] = useState(true);
+    // --- OPTIMIZATION: Instant Load ---
+    const getInitialData = () => {
+        // Use searchKeyword prop to find matching product
+        const target = MOCK_PRODUCTS.find(p =>
+            p.productName && p.productName.toLowerCase().includes(searchKeyword.toLowerCase())
+        );
+        if (target) {
+            const discountVal = target.mrp > target.price
+                ? (Math.round((target.mrp - target.price) / target.mrp * 100) + "% off")
+                : "";
+            return {
+                id: target._id,
+                title: target.productName,
+                variant: target.weight || "120g",
+                price: target.price,
+                mrp: target.mrp,
+                discount: discountVal,
+                desc: target.description
+            };
+        }
+        return null;
+    };
+    const initialData = getInitialData();
+    const [productData, setProductData] = useState(initialData);
+    const [loading, setLoading] = useState(!initialData); // False if data exists
 
     const getTomorrow = () => {
         const tomorrow = new Date();

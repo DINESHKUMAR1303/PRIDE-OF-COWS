@@ -17,6 +17,7 @@ import { LOGO_BASE64 } from "../../constants/logoConstant"; // Import Base64 Cro
 import { createOrder, checkoutOrder } from "../../api/order";
 import { getUserProfile } from "../../api/user";
 import { fetchProducts } from "../../api/product"; // ⭐ Import fetchProducts
+import { MOCK_PRODUCTS } from "../../api/mockData"; // ⭐ Import Mock Data
 
 
 const Cart = () => {
@@ -27,9 +28,9 @@ const Cart = () => {
   const isLoggedIn = !!user;
   const { setLoginOpen } = useLogin();
 
-  // ⭐ Dynamic Products State
-  const [products, setProducts] = useState([]);
-  const [loadingProducts, setLoadingProducts] = useState(true);
+  // ⭐ Dynamic Products State - Initialize with MOCK_PRODUCTS for instant display
+  const [products, setProducts] = useState(MOCK_PRODUCTS);
+  const [loadingProducts, setLoadingProducts] = useState(false);
 
   // ⭐ Fetch Products on Mount
   useEffect(() => {
@@ -336,36 +337,49 @@ const Cart = () => {
               return (
                 <div key={p._id} className="checkout-product-row">
 
-                  <div className="cp-img-box">
-                    <img
-                      src={imgSrc}
-                      alt={p.productName}
-                      className="cp-img"
-                      onError={(e) => e.target.src = "https://via.placeholder.com/150"}
-                    />
-                  </div>
+                  {/* Top Row: Image + Details + Quantity */}
+                  <div className="cp-top-row">
+                    <div className="cp-img-box">
+                      <img
+                        src={imgSrc}
+                        alt={p.productName}
+                        className="cp-img"
+                        onError={(e) => e.target.src = "https://via.placeholder.com/150"}
+                      />
+                    </div>
 
-                  <div className="cp-info">
-                    <p className="cp-title">{p.productName}</p>
-                    <p className="cp-size">{p.weight}</p>
-                    <p className="cp-price">₹{p.price}</p>
-
-                    <div className="cp-delivery-box">
-                      <img src={deliveryIcon} className="cp-delivery-icon" />
-                      <div>
-                        <p className="cp-delivery-text">Expected Delivery Date:</p>
-                        <p className="cp-delivery-date">{deliveryDateLabel}</p>
+                    <div className="cp-info">
+                      <p className="cp-title">{p.productName}</p>
+                      <p className="cp-size">{p.weight}</p>
+                      <div className="cp-price-row">
+                        <span className="cp-price">₹{p.price}</span>
+                        {p.mrp && p.mrp > p.price && (
+                          <>
+                            <span className="cp-mrp">MRP: ₹{p.mrp}</span>
+                            <span className="cp-discount">
+                              {Math.round((p.mrp - p.price) / p.mrp * 100)}%
+                            </span>
+                          </>
+                        )}
                       </div>
                     </div>
-                  </div>
 
-                  <div className="cp-qty-section">
                     <div className="cp-qty-box">
                       <button className="cp-qty-btn" onClick={() => decreaseItem(p._id)}>–</button>
                       <span className="cp-qty-value">{qty}</span>
                       <button className="cp-qty-btn" onClick={() => increaseItem(p._id)}>+</button>
                     </div>
+                  </div>
 
+                  {/* Bottom Row: Delivery Date */}
+                  <div className="cp-delivery-row">
+                    <div className="cp-delivery-box">
+                      <img src={deliveryIcon} className="cp-delivery-icon" alt="Delivery" />
+                      <div>
+                        <p className="cp-delivery-text">Expected Delivery Date:</p>
+                        <p className="cp-delivery-date">{deliveryDateLabel}</p>
+                      </div>
+                    </div>
                     <button className="cp-change-btn" onClick={() => setIsDateModalOpen(true)}>
                       Change Date
                     </button>

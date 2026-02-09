@@ -8,6 +8,7 @@ import { Truck } from "lucide-react";
 // === IMPORT GLOBAL CART CONTEXT ===
 import { useCart } from "../../context/CartContext";
 import Loader from "../Loader/Loader";
+import { MOCK_PRODUCTS } from "../../api/mockData";
 
 // === SINGLE ORIGIN IMAGES ===
 import logo from "./images/singleoriginlogo.png";
@@ -45,9 +46,9 @@ const ProductCarousel = () => {
     else navigate("/shop/all");
   };
 
-  // State to hold dynamic products
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // State to hold dynamic products - Initialize with MOCK_PRODUCTS for instant display
+  const [products, setProducts] = useState(MOCK_PRODUCTS);
+  const [loading, setLoading] = useState(false);
   const [showToast, setShowToast] = useState(false);
 
   // Helper to trigger toast

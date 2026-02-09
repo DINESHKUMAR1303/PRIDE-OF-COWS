@@ -3,6 +3,7 @@ import { useCart } from "../../context/CartContext";
 import Loader from "../../components/Loader/Loader";
 import { useNavigate } from "react-router-dom";
 import { fetchProducts } from "../../api/product";
+import { MOCK_PRODUCTS } from "../../api/mockData";
 
 import bannerImg from "./images/allwebbanner.png";
 import "./AllProducts.css";
@@ -12,8 +13,8 @@ const AllProducts = () => {
   const { cartItems, increaseItem, decreaseItem } = useCart();
   const navigate = useNavigate();
 
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState(MOCK_PRODUCTS);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const loadProducts = async () => {

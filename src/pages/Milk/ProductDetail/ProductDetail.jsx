@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useCart } from "../../../context/CartContext";
 import { fetchProducts } from "../../../api/product";
 import Loader from "../../../components/Loader/Loader";
+import { MOCK_PRODUCTS } from "../../../api/mockData";
 
 // Import your DatePicker component
 import DatePicker from "../../../components/DatePicker/DatePicker";
@@ -49,14 +50,41 @@ const ProductDetail = () => {
 
 
   // Init with safe defaults
-  const [productData, setProductData] = useState({
-    id: 1,
-    title: "Milk",
-    originalPrice: 146,
-    price: 120, // Fallback safe price
-    img: selectedImage,
-  });
-  const [loading, setLoading] = useState(true);
+  // --- OPTIMIZATION: Instant Load ---
+  const getInitialData = () => {
+    const params = new URLSearchParams(window.location.search);
+    const urlId = params.get("id");
+    let target = null;
+    if (urlId) target = MOCK_PRODUCTS.find(p => p._id === urlId);
+    if (!target) {
+      const matches = MOCK_PRODUCTS.filter(p => p.productName && p.productName.toLowerCase().includes("milk"));
+      matches.sort((a, b) => a.productName.length - b.productName.length);
+      target = matches[0];
+    }
+    if (target) {
+      return {
+        id: target._id,
+        title: target.productName,
+        price: target.price,
+        originalPrice: target.mrp,
+        weight: target.weight,
+        img: selectedImage
+      };
+    }
+    // Fallback default
+    return {
+      id: "aaaaaaaabbbbbbbbcccc0001",
+      title: "Milk",
+      originalPrice: 140,
+      price: 120,
+      weight: "1 L",
+      img: selectedImage,
+    };
+  };
+
+  const initialData = getInitialData();
+  const [productData, setProductData] = useState(initialData);
+  const [loading, setLoading] = useState(false);
 
   // Access URL params
   const location = useLocation();

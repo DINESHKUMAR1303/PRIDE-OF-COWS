@@ -4,6 +4,7 @@ import "./Milk Powder.css";
 import { useCart } from "../../context/CartContext";
 import { fetchProducts } from "../../api/product";
 import Loader from "../../components/Loader/Loader";
+import { MOCK_PRODUCTS } from "../../api/mockData";
 
 // Shared Components
 import DatePicker from "../../components/DatePicker/DatePicker";
@@ -29,9 +30,42 @@ const MilkPowder = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [animateCart, setAnimateCart] = useState(false);
     const [showDatePicker, setShowDatePicker] = useState(false);
-    const [loading, setLoading] = useState(true);
-
     const location = useLocation();
+
+    // --- OPTIMIZATION: Instant Load ---
+    const getInitialData = () => {
+        const params = new URLSearchParams(window.location.search);
+        const urlId = params.get("id");
+        let target = null;
+        if (urlId) target = MOCK_PRODUCTS.find(p => p._id === urlId);
+        if (!target) {
+            const matches = MOCK_PRODUCTS.filter(p =>
+                p.productName && (
+                    p.productName.toLowerCase().includes("powder") ||
+                    p.productName.toLowerCase().includes("milk powder")
+                )
+            );
+            matches.sort((a, b) => a.productName.length - b.productName.length);
+            target = matches[0];
+        }
+        if (target) {
+            const discountVal = target.mrp > target.price
+                ? (Math.round((target.mrp - target.price) / target.mrp * 100) + "% off")
+                : "";
+            return {
+                id: target._id,
+                title: target.productName,
+                variant: target.weight || "500g",
+                price: target.price,
+                mrp: target.mrp,
+                discount: discountVal,
+                desc: target.description
+            };
+        }
+        return null;
+    };
+    const initialData = getInitialData();
+    const [loading, setLoading] = useState(!initialData); // False if data exists
 
     // Date Logic
     const getTomorrow = () => {
@@ -44,8 +78,8 @@ const MilkPowder = () => {
     };
     const [deliveryDate, setDeliveryDate] = useState(getTomorrow());
 
-    // Product Data State - Start null to avoid default data if disabled
-    const [productData, setProductData] = useState(null);
+    // Product Data State
+    const [productData, setProductData] = useState(initialData);
 
     useEffect(() => {
         let isMounted = true;
