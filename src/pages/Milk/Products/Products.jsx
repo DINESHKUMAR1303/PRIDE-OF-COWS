@@ -123,11 +123,11 @@ const Products = () => {
     const lower = name.toLowerCase();
 
     // Pass ID to ensure exact sync
-    if (lower.includes("milk") && lower.includes("powder")) navigate(`/shop/milk-powder?id=${productId}`); // Specific check first
+    if (lower.includes("milk") && lower.includes("powder")) navigate(`/shop/whole-milk-powder?id=${productId}`); // Fixed route
     else if (lower.includes("milk")) navigate(`/shop/milk?id=${productId}`);
     else if (lower.includes("ghee")) navigate(`/shop/ghee?id=${productId}`);
     else if (lower.includes("curd")) navigate(`/shop/curd?id=${productId}`);
-    else if (lower.includes("paneer")) navigate(`/shop/paneer?id=${productId}`);
+    else if (lower.includes("paneer") || lower.includes("panner")) navigate(`/shop/paneer?id=${productId}`); // Added panner variant
     else if (lower.includes("yogurt")) navigate(`/shop/yogurt?id=${productId}`);
     else if (lower.includes("bar")) navigate(`/shop/protein-bar?id=${productId}`);
     else navigate("/shop/all");
@@ -221,7 +221,7 @@ const Products = () => {
                 <div key={`${prod._id}-${index}`} className="product-carousel-item">
                   <div
                     className="product-card-inner"
-                    onClick={() => navigate("/shop/all")} // Navigate generic or specific
+                    onClick={() => handleProductClick(prod.productName, prod._id)}
                     style={{ cursor: "pointer" }}
                   >
                     <div className="product-image-wrap">

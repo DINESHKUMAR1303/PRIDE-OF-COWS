@@ -441,3 +441,100 @@
         max-width: 380px;
     }
 }
+/* ===================================== ADDITIONAL RESPONSIVE BREAKPOINTS ==================================== */
+@media (max-width: 480px) {
+    .pb-main-image-box {
+        max-width: 340px;
+        height: 380px;
+    }
+    .pb-thumbnail {
+        width: 75px;
+        height: 82px;
+    }
+    .pb-title {
+        font-size: 30px;
+    }
+    .pb-buy-now, .pb-subscribe {
+        width: 100%;
+        max-width: 350px;
+    }
+    .pb-main-img {
+        width: 100%;
+    }
+}
+
+@media (max-width: 360px) {
+    .pb-main-image-box {
+        max-width: 300px;
+        height: 340px;
+    }
+    .pb-thumbnail {
+        width: 68px;
+        height: 74px;
+    }
+    .pb-title {
+        font-size: 28px;
+    }
+    .pb-buy-now, .pb-subscribe {
+        width: 100%;
+        max-width: 300px;
+    }
+    .pb-main-img {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1150px) {
+    .pb-main-box {
+        gap: 40px;
+    }
+    .pb-main-image-box {
+        width: 420px;
+        height: 470px;
+    }
+    .pb-main-img {
+        width: 390px;
+    }
+    .pb-right {
+        width: 100%;
+        max-width: 420px;
+    }
+    .pb-title {
+        font-size: 34px;
+    }
+    .pb-desc {
+        width: 100%;
+    }
+    .pb-qty-container, .pb-delivery-box {
+        width: 100%;
+        max-width: 420px;
+        margin-left: 0;
+    }
+    .pb-buttons {
+        justify-content: flex-start;
+    }
+    .pb-buy-now, .pb-subscribe {
+        width: 220px;
+    }
+}
+
+/* ===================================== CENTER PRICING ON MOBILE ==================================== */
+@media (max-width: 1024px) {
+    .pb-pricing {
+        justify-content: center !important;
+    }
+    
+    .pb-price-note {
+        text-align: center;
+    }
+}
+
+/* ===================================== CENTER PRICING ON MOBILE ==================================== */
+@media (max-width: 1024px) {
+    .pb-pricing {
+        justify-content: center !important;
+    }
+    .pb-price-note {
+        text-align: center;
+    }
+}

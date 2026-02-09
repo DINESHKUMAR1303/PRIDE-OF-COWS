@@ -165,32 +165,28 @@
 .gd-qty-container {
     width: 100%;
     max-width: 480px;
-    min-height: 50px;
-    /* Reduced height */
-    background: #EFF2F6;
-    /* Slightly bluish grey as in image */
-    border: none;
-    border-radius: 8px;
-    padding: 12px 25px;
-    /* Reduced padding */
+    min-height: 56px;
+    background: #f5f1f8;
+    border: 1px solid #e3e0e8;
+    border-radius: 14px;
+    padding: 18px 25px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 15px 0 0;
-    /* Reduced from 25px */
+    margin: 25px 0 0;
     box-sizing: border-box;
 }
 
 .qty-left-text {
-    font-size: 18px;
-    color: #3b4d61;
-    font-weight: 500;
+    font-size: 20px;
+    color: #0C3B60;
+    font-weight: 600;
 }
 
 .qty-controls {
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 30px;
 }
 
 .qty-controls button {
@@ -198,14 +194,13 @@
     background: none;
     border: none;
     cursor: pointer;
+    font-weight: bold;
     color: #0C3B60;
-    padding: 0 10px;
 }
 
 .qty-controls span {
-    font-size: 20px;
+    font-size: 22px;
     color: #0C3B60;
-    font-weight: 600;
 }
 
 .user-select-none {
@@ -469,5 +464,27 @@
 
     .gd-delivery-date {
         padding-left: 0;
+    }
+}
+
+/* ===================================== CENTER PRICING ON MOBILE ==================================== */
+@media (max-width: 1024px) {
+    .gd-pricing {
+        justify-content: center !important;
+    }
+
+    .gd-price-note {
+        text-align: center;
+    }
+}
+
+/* ===================================== CENTER PRICING ON MOBILE ==================================== */
+@media (max-width: 1024px) {
+    .gd-pricing {
+        justify-content: center !important;
+    }
+
+    .gd-price-note {
+        text-align: center;
     }
 }

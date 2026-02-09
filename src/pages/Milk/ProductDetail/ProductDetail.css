@@ -623,3 +623,23 @@
     width: 220px;
   }
 }
+/* ===================================== CENTER PRICING ON MOBILE ==================================== */
+@media (max-width: 1024px) {
+    .pd-pricing {
+        justify-content: center !important;
+    }
+    
+    .pd-price-note {
+        text-align: center;
+    }
+}
+
+/* ===================================== CENTER PRICING ON MOBILE ==================================== */
+@media (max-width: 1024px) {
+    .pd-pricing {
+        justify-content: center !important;
+    }
+    .pd-price-note {
+        text-align: center;
+    }
+}

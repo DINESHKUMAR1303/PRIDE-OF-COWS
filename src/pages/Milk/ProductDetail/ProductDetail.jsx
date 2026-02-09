@@ -226,7 +226,12 @@ const ProductDetail = () => {
             <div className="pd-pricing">
               <span className="pd-price">₹{productData.price}</span>
               {productData.originalPrice > productData.price && (
-                <span className="pd-mrp">MRP: ₹{productData.originalPrice}</span>
+                <>
+                  <span className="pd-mrp">MRP: ₹{productData.originalPrice}</span>
+                  <span className="pd-discount">
+                    {Math.round(((productData.originalPrice - productData.price) / productData.originalPrice) * 100)}% off
+                  </span>
+                </>
               )}
             </div>
             {/* <p className="pd-price">MRP : ₹{productData.price}</p> removed old price */}

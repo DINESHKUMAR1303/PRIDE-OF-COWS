@@ -379,3 +379,102 @@
         max-width: 380px;
     }
 }
+/* ===================================== 480px ==================================== */
+@media (max-width: 480px) {
+    .yg-main-image-box {
+        max-width: 340px;
+        height: 380px;
+    }
+    .yg-thumbnail {
+        width: 75px;
+        height: 82px;
+    }
+    .yg-title {
+        font-size: 30px;
+    }
+    .yg-buy-now, .yg-subscribe {
+        width: 100%;
+        max-width: 350px;
+    }
+    .yg-main-img {
+        width: 100%;
+    }
+}
+
+/* ===================================== 360px ==================================== */
+@media (max-width: 360px) {
+    .yg-main-image-box {
+        max-width: 300px;
+        height: 340px;
+    }
+    .yg-thumbnail {
+        width: 68px;
+        height: 74px;
+    }
+    .yg-title {
+        font-size: 28px;
+    }
+    .yg-buy-now, .yg-subscribe {
+        width: 100%;
+        max-width: 300px;
+    }
+    .yg-main-img {
+        width: 100%;
+    }
+}
+
+/* ===================================== 1025px to 1150px FIX ==================================== */
+@media (min-width: 1025px) and (max-width: 1150px) {
+    .yg-main-box {
+        gap: 40px;
+    }
+    .yg-main-image-box {
+        width: 420px;
+        height: 470px;
+    }
+    .yg-main-img {
+        width: 390px;
+    }
+    .yg-right {
+        width: 100%;
+        max-width: 420px;
+    }
+    .yg-title {
+        font-size: 34px;
+    }
+    .yg-desc {
+        width: 100%;
+    }
+    .yg-qty-container, .yg-delivery-box {
+        width: 100%;
+        max-width: 420px;
+        margin-left: 0;
+    }
+    .yg-buttons {
+        justify-content: flex-start;
+    }
+    .yg-buy-now, .yg-subscribe {
+        width: 220px;
+    }
+}
+
+/* ===================================== CENTER PRICING ON MOBILE ==================================== */
+@media (max-width: 1024px) {
+    .yg-pricing {
+        justify-content: center !important;
+    }
+    
+    .yg-price-note {
+        text-align: center;
+    }
+}
+
+/* ===================================== CENTER PRICING ON MOBILE ==================================== */
+@media (max-width: 1024px) {
+    .yg-pricing {
+        justify-content: center !important;
+    }
+    .yg-price-note {
+        text-align: center;
+    }
+}
