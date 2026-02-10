@@ -337,8 +337,10 @@ const Cart = () => {
               return (
                 <div key={p._id} className="checkout-product-row">
 
-                  {/* Top Row: Image + Details + Quantity */}
-                  <div className="cp-top-row">
+                  {/* SINGLE RECIPROCAL ROW */}
+                  <div className="cp-layout-flex">
+
+                    {/* COL 1: Image (Fixed Left) */}
                     <div className="cp-img-box">
                       <img
                         src={imgSrc}
@@ -348,9 +350,24 @@ const Cart = () => {
                       />
                     </div>
 
-                    <div className="cp-info">
-                      <p className="cp-title">{p.productName}</p>
-                      <p className="cp-size">{p.weight}</p>
+                    {/* COL 2: Content Body (Flex Grow) */}
+                    <div className="cp-content-body">
+
+                      {/* ROW A: Title + Qty */}
+                      <div className="cp-row-header">
+                        <div className="cp-meta-group">
+                          <p className="cp-title">{p.productName}</p>
+                          <p className="cp-size">{p.weight}</p>
+                        </div>
+
+                        <div className="cp-qty-box">
+                          <button className="cp-qty-btn" onClick={() => decreaseItem(p._id)}>–</button>
+                          <span className="cp-qty-value">{qty}</span>
+                          <button className="cp-qty-btn" onClick={() => increaseItem(p._id)}>+</button>
+                        </div>
+                      </div>
+
+                      {/* ROW B: Price */}
                       <div className="cp-price-row">
                         <span className="cp-price">₹{p.price}</span>
                         {p.mrp && p.mrp > p.price && (
@@ -362,27 +379,24 @@ const Cart = () => {
                           </>
                         )}
                       </div>
-                    </div>
 
-                    <div className="cp-qty-box">
-                      <button className="cp-qty-btn" onClick={() => decreaseItem(p._id)}>–</button>
-                      <span className="cp-qty-value">{qty}</span>
-                      <button className="cp-qty-btn" onClick={() => increaseItem(p._id)}>+</button>
-                    </div>
-                  </div>
+                      {/* ROW C: Delivery + Change Date */}
+                      <div className="cp-row-delivery">
+                        <div className="cp-delivery-status">
+                          <img src={deliveryIcon} alt="Delivery" className="cp-delivery-icon-sm" />
+                          <div className="cp-delivery-text-group">
+                            <span className="cp-lbl">Expected Delivery Date:</span>
+                            <span className="cp-val">{deliveryDateLabel}</span>
+                          </div>
+                        </div>
 
-                  {/* Bottom Row: Delivery Date */}
-                  <div className="cp-delivery-row">
-                    <div className="cp-delivery-box">
-                      <img src={deliveryIcon} className="cp-delivery-icon" alt="Delivery" />
-                      <div>
-                        <p className="cp-delivery-text">Expected Delivery Date:</p>
-                        <p className="cp-delivery-date">{deliveryDateLabel}</p>
+                        <button className="cp-change-date-btn" onClick={() => setIsDateModalOpen(true)}>
+                          Change Date
+                        </button>
                       </div>
+
                     </div>
-                    <button className="cp-change-btn" onClick={() => setIsDateModalOpen(true)}>
-                      Change Date
-                    </button>
+
                   </div>
 
                 </div>
