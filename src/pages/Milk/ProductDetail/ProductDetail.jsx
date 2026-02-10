@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import AddedToBagPopup from "../../../components/AddedToBagPopup/AddedToBagPopup";
 import "./ProductDetail.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useCart } from "../../../context/CartContext";
@@ -190,23 +191,11 @@ const ProductDetail = () => {
     return <Loader text="Loading Product Details..." />;
   }
 
+
+
   return (
     <>
-      {/* CART POPUP */}
-      {showPopup && (
-        <div className="added-popup">
-          <div className="popup-arrow"></div>
-
-          <div className="popup-content">
-            <img
-              src={addedCartIcon}
-              className={`popup-cart-img ${animateCart ? "run-slide" : ""}`}
-              alt="cart"
-            />
-            <span>{isEditing ? "UPDATED CART" : "ADDED TO BAG"}</span>
-          </div>
-        </div>
-      )}
+      <AddedToBagPopup isVisible={showPopup} />
 
       {/* DATE PICKER POPUP */}
       {showDatePicker && (

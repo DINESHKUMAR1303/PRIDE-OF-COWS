@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import AddedToBagPopup from "../../components/AddedToBagPopup/AddedToBagPopup";
 import "./GheeDetails.css";
 import { useCart } from "../../context/CartContext";
 import { useLocation } from "react-router-dom"; // Added useLocation
@@ -187,15 +188,11 @@ const GheeDetails = () => {
 
     return (
         <>
-            {showPopup && (
-                <div className="added-popup">
-                    <div className="popup-arrow"></div>
-                    <div className="popup-content">
-                        <img src={addedCartIcon} className={`popup-cart-img ${animateCart ? "run-slide" : ""}`} alt="cart" />
-                        <span>{isEditing ? "UPDATED CART" : "ADDED TO BAG"}</span>
-                    </div>
-                </div>
-            )}
+
+
+
+
+            <AddedToBagPopup isVisible={showPopup} />
 
             {showDatePicker && (
                 <DatePicker onSelect={handleDateSelect} onClose={() => setShowDatePicker(false)} />
