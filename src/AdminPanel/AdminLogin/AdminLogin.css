@@ -192,6 +192,26 @@ body {
   box-shadow: 0 0 0 4px rgba(95, 230, 51, 0.1);
 }
 
+.pride-input-with-icon input::placeholder {
+  color: #94a3b8;
+  opacity: 1;
+}
+
+.pride-input-with-icon input::-webkit-input-placeholder {
+  color: #94a3b8;
+  opacity: 1;
+}
+
+.pride-input-with-icon input::-moz-placeholder {
+  color: #94a3b8;
+  opacity: 1;
+}
+
+.pride-input-with-icon input:-ms-input-placeholder {
+  color: #94a3b8;
+  opacity: 1;
+}
+
 .input-icon {
   position: absolute;
   right: 16px;

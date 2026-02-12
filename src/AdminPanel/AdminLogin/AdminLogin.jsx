@@ -108,7 +108,7 @@ const AdminLogin = ({ onLoginSuccess }) => {
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="admin@prideofcows.com"
+                      placeholder="admin@gmail.com"
                       required
                     />
                     <Mail className="input-icon" size={18} />
@@ -127,7 +127,7 @@ const AdminLogin = ({ onLoginSuccess }) => {
                       type={showPassword ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="••••••••"
+                      placeholder="admin123"
                       required
                     />
                     <button
