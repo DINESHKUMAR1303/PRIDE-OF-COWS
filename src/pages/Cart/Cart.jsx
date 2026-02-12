@@ -50,18 +50,19 @@ const Cart = () => {
   }, []);
 
   // ⭐ Auto-Clean Orphan Items (Active Cleaning)
-  useEffect(() => {
-    if (!loadingProducts && products.length > 0) {
-      const validIds = new Set(products.map(p => p._id));
-      Object.keys(cartItems).forEach(cartId => {
-        // If item in cart matches NO active product, remove it
-        if (!validIds.has(cartId)) {
-          console.log("Removing orphan cart item:", cartId);
-          removeFromCart(cartId);
-        }
-      });
-    }
-  }, [loadingProducts, products, cartItems, removeFromCart]);
+  // ⭐ Auto-Clean Orphan Items (Active Cleaning) - DISABLED to prevent data loss when offline
+  // useEffect(() => {
+  //   if (!loadingProducts && products.length > 0) {
+  //     const validIds = new Set(products.map(p => p._id));
+  //     Object.keys(cartItems).forEach(cartId => {
+  //       // If item in cart matches NO active product, remove it
+  //       if (!validIds.has(cartId)) {
+  //         console.log("Removing orphan cart item:", cartId);
+  //         removeFromCart(cartId);
+  //       }
+  //     });
+  //   }
+  // }, [loadingProducts, products, cartItems, removeFromCart]);
 
   // ⭐ Filter cart items based on fetched products
   const cartList = products.filter((p) => cartItems[p._id]);
