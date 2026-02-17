@@ -18,6 +18,7 @@ import { createOrder, checkoutOrder } from "../../api/order";
 import { getUserProfile } from "../../api/user";
 import { fetchProducts } from "../../api/product"; // ⭐ Import fetchProducts
 import { MOCK_PRODUCTS } from "../../api/mockData"; // ⭐ Import Mock Data
+import AddAddressForm from "../MyAccount/AddAddressForm";
 
 
 const Cart = () => {
@@ -49,21 +50,6 @@ const Cart = () => {
     loadProducts();
   }, []);
 
-  // ⭐ Auto-Clean Orphan Items (Active Cleaning)
-  // ⭐ Auto-Clean Orphan Items (Active Cleaning) - DISABLED to prevent data loss when offline
-  // useEffect(() => {
-  //   if (!loadingProducts && products.length > 0) {
-  //     const validIds = new Set(products.map(p => p._id));
-  //     Object.keys(cartItems).forEach(cartId => {
-  //       // If item in cart matches NO active product, remove it
-  //       if (!validIds.has(cartId)) {
-  //         console.log("Removing orphan cart item:", cartId);
-  //         removeFromCart(cartId);
-  //       }
-  //     });
-  //   }
-  // }, [loadingProducts, products, cartItems, removeFromCart]);
-
   // ⭐ Filter cart items based on fetched products
   const cartList = products.filter((p) => cartItems[p._id]);
 
@@ -82,41 +68,32 @@ const Cart = () => {
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [address, setAddress] = useState(null);
 
-  const [addressForm, setAddressForm] = useState({
-    name: "",
-    line1: "",
-    line2: "",
-    city: "",
-    pincode: "",
-    label: "Home",
-  });
-
   /* ⭐ NEW: ORDER SUCCESS POPUP */
   const [orderSuccess, setOrderSuccess] = useState(false);
 
   /* ⭐ AUTO-LOAD SAVED ADDRESS WHEN USER LOGS IN */
-  useEffect(() => {
-    const loadSavedAddress = async () => {
-      if (!user) return;
+  const loadSavedAddress = async () => {
+    if (!user) return;
 
-      try {
-        const profile = await getUserProfile();
-        const addr = profile.address;
+    try {
+      const profile = await getUserProfile();
+      const addr = profile.address;
 
-        if (addr) {
-          setAddress({
-            name: addr.name || `${profile.firstName} ${profile.lastName}`,
-            fullAddress: addr.fullAddress,
-            label: addr.type || "Home",
-            city: addr.city,
-            pincode: addr.pincode,
-          });
-        }
-      } catch (err) {
-        console.error("Failed to load saved address:", err);
+      if (addr) {
+        setAddress({
+          name: addr.name || `${profile.firstName} ${profile.lastName}`,
+          fullAddress: addr.fullAddress,
+          label: addr.type || "Home",
+          city: addr.city,
+          pincode: addr.pincode,
+        });
       }
-    };
+    } catch (err) {
+      console.error("Failed to load saved address:", err);
+    }
+  };
 
+  useEffect(() => {
     loadSavedAddress();
   }, [user]);
 
@@ -216,20 +193,9 @@ const Cart = () => {
     setIsAddressModalOpen(true);
   };
 
-  const handleSaveAddress = (e) => {
-    e.preventDefault();
-
-    const formatted =
-      `${addressForm.line1}` +
-      `${addressForm.line2 ? ", " + addressForm.line2 : ""}` +
-      `, ${addressForm.city}, ${addressForm.pincode}`;
-
-    setAddress({
-      ...addressForm,
-      fullAddress: formatted,
-    });
-
+  const onAddressSaved = () => {
     setIsAddressModalOpen(false);
+    loadSavedAddress(); // Reload to get updated address
   };
 
   const deliveryDateLabel = selectedDate.toLocaleDateString("en-IN", {
@@ -461,81 +427,12 @@ const Cart = () => {
         </div>
       )}
 
-      {/* ADDRESS MODAL */}
+      {/* NEW ADDRESS MODAL COMPONENT */}
       {isAddressModalOpen && (
-        <div className="modal-overlay-cart">
-          <div className="address-modal premium-address-modal">
-
-            <div className="modal-header">
-              <h3>{address ? "Edit Address" : "Add Address"}</h3>
-              <button className="modal-close-btn" onClick={() => setIsAddressModalOpen(false)}>
-                ✕
-              </button>
-            </div>
-
-            <form onSubmit={handleSaveAddress} className="address-form premium-form">
-
-              <div className="form-group">
-                <label>Full Name</label>
-                <input
-                  type="text"
-                  value={addressForm.name}
-                  onChange={(e) => setAddressForm({ ...addressForm, name: e.target.value })}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Street / Area </label>
-                <input
-                  type="text"
-                  value={addressForm.line1}
-                  onChange={(e) => setAddressForm({ ...addressForm, line1: e.target.value })}
-                  required
-                />
-              </div>
-
-              <div className="form-row-2">
-                <div className="form-group">
-                  <label>City</label>
-                  <input
-                    type="text"
-                    value={addressForm.city}
-                    onChange={(e) => setAddressForm({ ...addressForm, city: e.target.value })}
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Pincode</label>
-                  <input
-                    type="text"
-                    value={addressForm.pincode}
-                    onChange={(e) => setAddressForm({ ...addressForm, pincode: e.target.value })}
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label>Address Type</label>
-                <select
-                  value={addressForm.label}
-                  onChange={(e) => setAddressForm({ ...addressForm, label: e.target.value })}
-                >
-                  <option value="Home">Home</option>
-                  <option value="Office">Office</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-
-              <button type="submit" className="save-address-btn premium-save-btn">
-                Save Address
-              </button>
-
-            </form>
-          </div>
-        </div>
+        <AddAddressForm
+          onClose={() => setIsAddressModalOpen(false)}
+          onSaved={onAddressSaved}
+        />
       )}
 
       {isDateModalOpen && (
